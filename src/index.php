@@ -2,7 +2,7 @@
 include("./data/db_creation.php");
 [$conn,$status] = db_create();
 
-$result;
+$result = null;
 if($status){
     $result = $conn->query("SELECT * FROM users_to_delete");
 }
@@ -31,5 +31,8 @@ if($status){
     }
     $conn->close();
     ?>
-</body>
+    <audio controls>
+        <source src="assets/Audio/0112_release_state.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio></body>
 </html>

@@ -4,7 +4,7 @@ include("./data/db_creation.php");
 
 $result = null;
 if($status){
-    $result = $conn->query("SELECT * FROM users_to_delete");
+    $result = $conn->query("SELECT * FROM Users");
 }
 ?>
 
@@ -21,7 +21,7 @@ if($status){
         if ($result->num_rows > 0) {
         // Stampa i dati di ogni utente
         while($row = $result->fetch_assoc()) {
-            echo "ID: " . $row["id"] . " - Username: " . $row["username"] . " - Password: " . $row["password"] . "<br>";
+            echo "Mail: " . $row["mail"] . " - Username: " . $row["username"] . " - Password: " . $row["password"] . "<br>";
         }
         } else {
             echo "Nessun utente trovato";

@@ -1,0 +1,37 @@
+name: Deploy Workflow
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Clean paolotti machine
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.PAOLOTTI_HOST }}
+          username: ${{ secrets.PAOLOTTI_USERNAME }}
+          key: ${{ secrets.SSH_PRIV_GH_TO_PAOLOTTI }}
+          script: |
+            rm -r /home/2/2020/${{ secrets.PAOLOTTI_USERNAME }}/src
+      - name: Copy files to paolotti machine
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.PAOLOTTI_HOST }}
+          username: ${{ secrets.PAOLOTTI_USERNAME }}
+          key: ${{ secrets.SSH_PRIV_GH_TO_PAOLOTTI }}
+          source: "src"
+          target: "/home/2/2020/marango/"
+      - name: Paolotti to tecweb machine clear & copy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.PAOLOTTI_HOST }}
+          username: ${{ secrets.PAOLOTTI_USERNAME }}
+          key: ${{ secrets.SSH_PRIV_GH_TO_PAOLOTTI }}
+          script: |
+            ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} "rm -r /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/src"
+            scp -r ~/src ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }}:/home/${{ secrets.PAOLOTTI_USERNAME }}/public_html

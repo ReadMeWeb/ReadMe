@@ -1,7 +1,7 @@
 <?php
 function db_create() {
-    $host = "mysql"; // Può essere diverso a seconda della configurazione del tuo ambiente Docker
-    $username = "root";
+    $host = "localhost"; // Può essere diverso a seconda della configurazione del tuo ambiente Docker
+    $username = "admin";
     $password = "admin";
     $database = "Orchestra";
 

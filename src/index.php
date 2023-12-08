@@ -1,13 +1,3 @@
-<?php
-include("./data/db_creation.php");
-[$conn,$status] = db_create();
-
-$result = null;
-if($status){
-    $result = $conn->query("SELECT * FROM Users");
-}
-?>
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -16,21 +6,6 @@ if($status){
     <title>Document</title>
 </head>
 <body>
-    <?php
-    if($status){
-        if ($result->num_rows > 0) {
-        // Stampa i dati di ogni utente
-        while($row = $result->fetch_assoc()) {
-            echo "Mail: " . $row["mail"] . " - Username: " . $row["username"] . " - Password: " . $row["password"] . "<br>";
-        }
-        } else {
-            echo "Nessun utente trovato";
-        }
-    }else{
-        echo "Connessione fallita al database";
-    }
-    $conn->close();
-    ?>
     <audio controls>
         <source src="assets/Audio/0112_release_state.mp3" type="audio/mpeg">
         Your browser does not support the audio tag.

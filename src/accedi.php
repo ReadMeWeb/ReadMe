@@ -7,7 +7,15 @@ if (session_start()) {
   //TODO sostituire con il file_get_contents di layout
   $page = "<!DOCTYPE html><html><body>{{content}}</body></html>";
   $accedi = file_get_contents("./components/accedi.html");
-  $errori = !array_key_exists('loginErrors', $_SESSION) ? "" : "<p class=errori>" . (strip_tags($_SESSION['loginErrors'])) .  "</p>";
+  $errori = "";
+  if (array_key_exists('loginErrors', $_SESSION)) {
+    $errori = "<h1>Errore</h1>
+      <p class='error'>"
+      . (strip_tags($_SESSION['loginErrors']->getmessage()))
+      . "</p>";
+  }
+
+  //TODO ripristinare la mail / password all'interno degli input
 
   $page = str_replace("{{content}}", $accedi, $page);
   $page = str_replace("{{errori}}", $errori, $page);

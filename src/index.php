@@ -1,8 +1,8 @@
 <?php
 $user = "NON LOGGATO";
 if (session_start()) {
-  if (array_key_exists("mail", $_SESSION)) {
-    $user = $_SESSION["mail"];
+  if (array_key_exists("user", $_SESSION)) {
+    ['mail' => $user ] = $_SESSION["user"];
   }
 }
 ?>

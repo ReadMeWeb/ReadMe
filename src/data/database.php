@@ -45,7 +45,7 @@ class  Database {
       $result = $database->conn->query($query);
       return match($result) {
         true, false => $result,
-        default => $result->fetch_all(),
+        default => $result->fetch_all(MYSQLI_ASSOC),
       };
     } finally {
       if (isset($result)) {

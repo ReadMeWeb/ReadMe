@@ -15,7 +15,7 @@ if (session_start()) {
 
   //TODO sostituire con il file_get_contents di layout
   $page = "<!DOCTYPE html><html><body>{{content}}</body></html>";
-  $accedi = file_get_contents("./components/accedi.html");
+  $content = file_get_contents("./components/accedi.html");
   $errori = "";
   if ($e = gethandlererror('loginErrors')) {
     $errori = "<h1>Errore</h1>
@@ -24,7 +24,7 @@ if (session_start()) {
 
   //TODO ripristinare la mail / password all'interno degli input
 
-  $page = str_replace("{{content}}", $accedi, $page);
+  $page = str_replace("{{content}}", $content, $page);
   $page = str_replace("{{errori}}", $errori, $page);
   echo $page;
 }

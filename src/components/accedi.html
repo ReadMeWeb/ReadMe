@@ -1,0 +1,17 @@
+<main>
+  <p>
+    {{errori}}
+  <p>
+  <form action="/handlers/accedi.php" method="post">
+    <fieldset>
+      <label for="mail">Email</label><br>
+      <input id="mail" tabindex="1" accesskey="e" name="mail" required aria-required="true" type="email"
+        aria-label="Digita la tua mail" placeholder="Digita la tua mail"><br>
+      <label for="password">Password</label><br>
+      <input id="password" tabindex="2" accesskey="p" name="password" required aria-required="true" type="password"
+        aria-label="Digita la tua password" placeholder="Digita la tua password"><br>
+      <input type="submit" tabindex="3" value="Accedi">
+    </fieldset>
+  </form>
+  <a href="/registrati.php">Sei nuovo ? Clicca per registrarti</a>
+</main>

@@ -43,12 +43,20 @@ class  Database {
         $query = str_replace($name, $replace, $query);
       }
       $result = $database->conn->query($query);
-      return $result->fetch_all(MYSQLI_ASSOC);
+      return match($result) {
+        true, false => $result,
+        default => $result->fetch_all(MYSQLI_ASSOC),
+      };
     } finally {
-      if(isset($result)){
-        $result->free_result();
+      if (isset($result)) {
+        match($result){
+          true, false => $result,
+          default => $result->free_result(),
+        };
       }
-      $database->close();
+      if (isset($database)) {
+        $database->close();
+      }
     }
   }
   

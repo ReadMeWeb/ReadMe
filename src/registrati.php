@@ -1,4 +1,5 @@
 <?php
+
 function gethandlererror($name) {
   if (array_key_exists($name, $_SESSION)) {
     $e = $_SESSION[$name];
@@ -15,14 +16,14 @@ if (session_start()) {
 
   //TODO sostituire con il file_get_contents di layout
   $page = "<!DOCTYPE html><html><body>{{content}}</body></html>";
-  $content = file_get_contents("./components/accedi.html");
+  $content = file_get_contents("./components/registrati.html");
   $errori = "";
-  if ($e = gethandlererror('loginErrors')) {
+  if ($e = gethandlererror('signupErrors')) {
     $errori = "<h1>Errore</h1>
       <p class='error'>" . (strip_tags($e->getmessage())) . "</p>";
   }
 
-  //TODO ripristinare la mail / password all'interno degli input
+  //TODO ripristinare nome utente / mail / password all'interno degli input
 
   $page = str_replace("{{content}}", $content, $page);
   $page = str_replace("{{errori}}", $errori, $page);

@@ -1,0 +1,45 @@
+/*
+################################
+#           Reusable           #
+################################*/
+
+/* --------- COLORS --------- */
+@media (prefers-color-scheme: light) {
+    :root {
+        --text: #151918;
+        --background: #e0e0e0;
+        --primary: #276254;
+        --secondary: #73dec1;
+        --accent: #18dca8;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #e6eae9;
+        --background: #1f1f1f;
+        --primary: #9dd8ca;
+        --secondary: #218c70;
+        --accent: #23e7b2;
+    }
+}
+
+/* --------- NAVBAR --------- */
+nav h1 {
+    background-image: url("../assets/images/Orchestra.png");
+    width: 800px;
+    height: 800px;
+}
+nav h1 span {
+    display: block;
+    height: 0;
+    overflow: hidden;
+}
+
+/* --------- helper --------- */
+.helper {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}

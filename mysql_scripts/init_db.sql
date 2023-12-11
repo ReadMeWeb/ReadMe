@@ -31,6 +31,7 @@ CREATE TABLE Music (
     producer INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     file_name VARCHAR(255) NOT NULL,
+    added_date DATE NOT NULL DEFAULT (CURRENT_TIMESTAMP),
     PRIMARY KEY (producer, name),
     FOREIGN KEY (producer) REFERENCES Artist(id)
 );

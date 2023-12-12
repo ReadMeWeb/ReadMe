@@ -29,18 +29,19 @@ class  Database {
   static public function connect_execute_clean($query,$args) {
     try {
       $database = new Database();
-      foreach($args as $name => $_) {
-        if (strpos($query, $name) === false) {
-          throw new Exception("ERRORE: Database::connect_execute_cleanup -> $name non è contenuta nella query");
-        }
-      }
+      $offset = 0;
       foreach ($args as $name => $data) {
         [$value, $filter] = $data;
         $replace = filter_var($value, $filter);
         if ($replace == null) {
           throw new Exception("ERRORE: Database::connect_execute_cleanup -> il filtro ha ritornato null per $name");
         }
-        $query = str_replace($name, $replace, $query);
+        $idx = strpos($query, $name, $offset);
+        if($idx === false){
+          throw new Exception("ERRORE: Database::connect_execute_cleanup -> $name non è contenuta nella query");
+        }
+        $query = substr_replace($query, $replace, $idx, strlen($name));
+        $offset = $idx + strlen($replace);
       }
       $result = $database->conn->query($query);
       return match($result) {

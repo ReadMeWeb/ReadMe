@@ -14,7 +14,7 @@ if (session_start()) {
   }
 
   //TODO sostituire con il file_get_contents di layout
-  $page = "<!DOCTYPE html><html><body>{{content}}</body></html>";
+  $page = file_get_contents("./components/layout.html");
   $content = file_get_contents("./components/accedi.html");
   $errori = "";
   if ($e = gethandlererror('loginErrors')) {

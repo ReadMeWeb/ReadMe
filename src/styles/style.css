@@ -11,6 +11,7 @@
         --primary: #276254;
         --secondary: #73dec1;
         --accent: #18dca8;
+        --logoUrl: url("../assets/images/OrchestraWideBlack.png");
     }
 }
 @media (prefers-color-scheme: dark) {
@@ -20,19 +21,26 @@
         --primary: #9dd8ca;
         --secondary: #218c70;
         --accent: #23e7b2;
+        --logoUrl: url("../assets/images/OrchestraWideWhite.png");
     }
 }
 
+/*TODO: Impostare già la struttura con i breakpoint delle media query*/
 /* --------- NAVBAR --------- */
 nav h1 {
-    background-image: url("../assets/images/Orchestra.png");
-    width: 800px;
-    height: 800px;
+    background-image: var(--logoUrl);
+    background-size: 200px 50px;
+    width: 200px;
+    height: 50px;
 }
 nav h1 span {
     display: block;
     height: 0;
     overflow: hidden;
+}
+
+h1 {
+    background-color: var(--secondary);
 }
 
 /* --------- helper --------- */

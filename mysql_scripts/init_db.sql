@@ -75,10 +75,10 @@ INSERT INTO Artist (name, biography, file_name) VALUES
     ('Artista2', 'Biografia Artista2', 'artist2_photo.jpg');
 
 -- Inserimento di esempio nella tabella Music
-INSERT INTO Music (producer, name, file_name) VALUES
-    (1, 'Canzone1', 'song1.mp3'),
-    (2, 'Canzone2', 'song2.mp3'),
-    (2, 'Canzone3', 'song3.mp3');
+INSERT INTO Music (producer, name, file_name,  added_date) VALUES
+    (1, 'Canzone1', 'song1.mp3', '2023-01-22'),
+    (2, 'Canzone2', 'song2.mp3', '2023-01-21'),
+    (2, 'Canzone3', 'song3.mp3', '2023-01-20');
 
 -- Inserimento di esempio nella tabella Playlist_Music
 INSERT INTO Playlist_Music (playlist_user, playlist_name, music_producer, music_name) VALUES

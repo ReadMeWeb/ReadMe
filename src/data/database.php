@@ -47,6 +47,11 @@ class  Database {
         return $ret_set;
     }
 
+  public function user_with_mail_password($mail,$password): array {
+    $query =  "SELECT mail,status FROM Users WHERE mail = ? AND password = ? LIMIT 1;";
+    return $this->execute_query($query,$mail,$password);
+  }
+
   // restituisce il numero di artisti
   public function artist_count(): int {
     return $this->execute_query('SELECT COUNT(*) as count FROM Artist')[0]['count'];

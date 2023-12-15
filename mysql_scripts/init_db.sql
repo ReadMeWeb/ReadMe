@@ -26,14 +26,25 @@ CREATE TABLE Artist (
     file_name VARCHAR(255) NOT NULL
 );
 
+-- Codice SQL per creare la tabella Albums
+CREATE TABLE Album (
+   id INT auto_increment PRIMARY KEY,
+   name VARCHAR(255) NOT NULL,
+   artist_id INT NOT NULL,
+   CONSTRAINT unique_fields UNIQUE (name, id),
+   FOREIGN KEY (artist_id) REFERENCES Artist(id)
+);
+
 -- Codice SQL per creare la tabella Music
 CREATE TABLE Music (
     producer INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     file_name VARCHAR(255) NOT NULL,
+    album INT,
     added_date DATE NOT NULL DEFAULT (CURRENT_TIMESTAMP),
     PRIMARY KEY (producer, name),
-    FOREIGN KEY (producer) REFERENCES Artist(id)
+    FOREIGN KEY (producer) REFERENCES Artist(id),
+    FOREIGN KEY (album) REFERENCES Album(id)
 );
 
 -- Codice SQL per creare la tabella Playlist_Music
@@ -44,16 +55,6 @@ CREATE TABLE Playlist_Music (
     music_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (playlist_user, playlist_name, music_producer, music_name),
     FOREIGN KEY (playlist_user, playlist_name) REFERENCES Playlist(user, name),
-    FOREIGN KEY (music_producer, music_name) REFERENCES Music(producer, name)
-);
-
--- Codice SQL per creare la tabella Feats
-CREATE TABLE Feats (
-    artist_id INT NOT NULL,
-    music_producer INT NOT NULL,
-    music_name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (artist_id, music_producer, music_name),
-    FOREIGN KEY (artist_id) REFERENCES Artist(id),
     FOREIGN KEY (music_producer, music_name) REFERENCES Music(producer, name)
 );
 
@@ -74,20 +75,19 @@ INSERT INTO Artist (name, biography, file_name) VALUES
     ('Artista1', 'Biografia Artista1', 'artist1_photo.jpg'),
     ('Artista2', 'Biografia Artista2', 'artist2_photo.jpg');
 
+-- Inserimento di esempio nella tabella Album
+INSERT INTO Album (name, artist_id) VALUES
+    ('Album1', 1),
+    ('Album2', 2);
+
 -- Inserimento di esempio nella tabella Music
-INSERT INTO Music (producer, name, file_name,  added_date) VALUES
-    (1, 'Canzone1', 'song1.mp3', '2023-01-22'),
-    (2, 'Canzone2', 'song2.mp3', '2023-01-21'),
-    (2, 'Canzone3', 'song3.mp3', '2023-01-20');
+INSERT INTO Music (producer, name, file_name,  added_date, album) VALUES
+    (1, 'Canzone1', 'song1.mp3', '2023-01-22', 1),
+    (2, 'Canzone2', 'song2.mp3', '2023-01-21', 2),
+    (2, 'Canzone3', 'song3.mp3', '2023-01-20', null);
 
 -- Inserimento di esempio nella tabella Playlist_Music
 INSERT INTO Playlist_Music (playlist_user, playlist_name, music_producer, music_name) VALUES
     ('user1@example.com', 'Playlist1', 1, 'Canzone1'),
     ('user1@example.com', 'Playlist1', 2, 'Canzone2'),
     ('user2@example.com', 'Playlist3', 2, 'Canzone3');
-
--- Inserimento di esempio nella tabella Feats
-INSERT INTO Feats (artist_id, music_producer, music_name) VALUES
-    (1, 1, 'Canzone1'),
-    (1, 2, 'Canzone2'),
-    (2, 2, 'Canzone2');

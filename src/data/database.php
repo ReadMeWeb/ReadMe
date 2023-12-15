@@ -29,7 +29,10 @@ class  Database {
 
             $stmt->execute();
             $res_set = $stmt->get_result();
-            $ret_set = $res_set->fetch_all(MYSQLI_ASSOC);
+            $ret_set = match($res_set){
+              true, false => $res_set,
+              default => $res_set->fetch_all(MYSQLI_ASSOC),
+            };
 
             $stmt->close();
         } catch (mysqli_sql_exception $ex) {

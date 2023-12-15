@@ -55,8 +55,7 @@ class  Database {
   // restituisce il numero di album
   public function album_count(): int {
     return $this->execute_query('SELECT COUNT(*) as count FROM Album')[0]['count'];
-
-  } 
+  }
 
   // restituisce il numero di canzoni
   public function song_count(): int {

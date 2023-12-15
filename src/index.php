@@ -12,15 +12,13 @@ $db = new Database();
 $song_count = 0;
 $artist_count = 0;
 $latest_music = [];
-
-// TODO: implementare la tabella Album
 $album_count = 0;
-
 
 if($db->status()) {
     $song_count = $db->song_count();
     $artist_count = $db->artist_count();
     $latest_music = $db->latest_releases(3);
+    $album_count = $db->album_count();
 }
 $db->close();
 

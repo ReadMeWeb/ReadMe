@@ -11,7 +11,7 @@
         --primary: #276254;
         --secondary: #73dec1;
         --accent: #18dca8;
-        --logoUrl: url("../assets/images/OrchestraWideBlack.png");
+        --logoUrl: url("./assets/images/OrchestraWideBlack.png");
     }
 }
 @media (prefers-color-scheme: dark) {
@@ -21,7 +21,7 @@
         --primary: #9dd8ca;
         --secondary: #218c70;
         --accent: #23e7b2;
-        --logoUrl: url("../assets/images/OrchestraWideWhite.png");
+        --logoUrl: url("./assets/images/OrchestraWideWhite.png");
     }
 }
 

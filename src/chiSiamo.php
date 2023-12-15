@@ -72,7 +72,7 @@ $placeholdersContentValues = array($membri_html, $vision, $mission);
 $content = str_replace($placeholdersContentTemplates, $placeholdersContentValues, $content);
 
 $placeholdersTemplates = array("{{title}}", "{{description}}", "{{keywords}}", "{{menu}}", "{{breadcrumbs}}", "{{content}}");
-$placeholdersValues = array($title, $description, $keywords, "{{menu}}", "{{breadcrumbs}}", $content);
+$placeholdersValues = array($title, $description, $keywords, navbar(), "{{breadcrumbs}}", $content);
 
 $html = str_replace($placeholdersTemplates, $placeholdersValues, $html);
 

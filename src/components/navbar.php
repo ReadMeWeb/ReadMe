@@ -11,6 +11,7 @@ function navbar(): string{
     //      - AD: Admin.
     $links = array(
         array("index.php","Home",array("UN")),
+        array("chisiamo.php","Chi Siamo",array("UN")),
         array("accedi.php","Accedi",array("UN")),
         array("registrati.php","Registrati",array("UN"))
     );

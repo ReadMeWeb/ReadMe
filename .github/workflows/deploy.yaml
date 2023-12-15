@@ -33,7 +33,7 @@ jobs:
           username: ${{ secrets.PAOLOTTI_USERNAME }}
           key: ${{ secrets.SSH_PRIV_GH_TO_PAOLOTTI }}
           script: |
-            ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} "rm -r /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html"
+            ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} "rm -r /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/*"
             scp -r ~/src/* ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }}:/home/${{ secrets.PAOLOTTI_USERNAME }}/public_html
             ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'root'/'${{ secrets.TEC_USER }}'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/data/database.php
             ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'mysql_server'/'localhost'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/data/database.php

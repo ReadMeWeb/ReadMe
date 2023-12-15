@@ -12,29 +12,19 @@ try {
     "password" => $password,
   ] = $_POST;
 
-  // controllo che la mail non sia già registrata
-  $query = "SELECT COUNT(*) AS num FROM Users WHERE mail = '@MAIL';";
-  $args = ['@MAIL' => [$mail, FILTER_SANITIZE_FULL_SPECIAL_CHARS],];
-  $res = Database::connect_execute_clean($query, $args);
-  if ($res[0]['num'] != "0") {
+  $conn = new Database();
+  if($conn->user_exists($mail)){
     throw new Exception("La mail fornita risulta già registrata.");
   }
-
-  // inserimento del nuovo utente come user
-  $query =  "INSERT INTO Users(mail, password, username, status) VALUES('@MAIL','@PASSWORD','@NAME','USER');";
-  $args = [
-    '@NAME' => [$username, FILTER_SANITIZE_FULL_SPECIAL_CHARS],
-    '@MAIL' => [$mail, FILTER_SANITIZE_EMAIL],
-    '@PASSWORD' => [$password, FILTER_SANITIZE_FULL_SPECIAL_CHARS]
-  ];
-  $res = Database::connect_execute_clean($query, $args);
-  if ($res !== true) {
+  if ($conn->user_sign_up($username,$mail,$password) !== true) {
     // Questo caso non dovrebbe mai succedere
     throw new Exception("Errore del database.");
   }
+  $conn->close();
 
-  $_SESSION['user'] = ['mail' => $mail, 'status' => "USER"];
-  //TODO reindirizzamento a una pagina più appropriata
+  //NOT TODO reindirizzamento a una pagina più appropriata <- delegato a handlers/accedi.php
+  //TODO reindirizzamento a handlers/accedi.php con accesso automatico
+  $_SESSION['user'] = ['username' => $username, 'mail' => $mail, 'status' => "USER"];
   header("Location: /");
 } catch (Exception $e) {
   $_SESSION['signupErrors'] = $e;

@@ -36,6 +36,6 @@ jobs:
             ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} "rm -r /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/src"
             scp -r ~/src ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }}:/home/${{ secrets.PAOLOTTI_USERNAME }}/public_html
             ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'root'/'${{ secrets.TEC_USER }}'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/src/data/database.php
-            ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'mysql'/'localhost'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/src/data/database.php
+            ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'mysql_server'/'localhost'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/src/data/database.php
             ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'Orchestra'/'${{ secrets.TEC_USER }}'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/src/data/database.php
             ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'admin'/'${{ secrets.TEC_PWD }}'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/src/data/database.php

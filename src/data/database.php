@@ -2,7 +2,7 @@
 
 class  Database {
 
-  private const HOST = 'mysql';
+  private const HOST = 'mysql_server';
   private const USER_NAME  = 'root';
   private const PASSWORD = 'admin';
   private const DATABASE = 'Orchestra';

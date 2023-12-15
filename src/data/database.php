@@ -2,10 +2,10 @@
 
 class  Database {
 
-  private const string HOST = 'mysql';
-  private const string USER_NAME  = 'root';
-  private const string PASSWORD = 'admin';
-  private const string DATABASE = 'Orchestra';
+  private const HOST = 'mysql';
+  private const USER_NAME  = 'root';
+  private const PASSWORD = 'admin';
+  private const DATABASE = 'Orchestra';
   
   private mysqli $conn;
 
@@ -14,21 +14,38 @@ class  Database {
     $this->conn = new mysqli(self::HOST, self::USER_NAME, self::PASSWORD, self::DATABASE);
   }
 
-  // esegue una query generica e ne restiruisce il risultato sotto forma di un array bidimensionale associativo
-  private function execute_query(string $query, ...$params) {
-    try {
-      $res_set = $this->conn->execute_query($query, $params);
-      $ret_set =  $res_set->fetch_all(MYSQLI_ASSOC);
-      $res_set->free();
+  // esegue una query generica e ne restituisce il risultato sotto forma di un array bidimensionale associativo
+    private function execute_query(string $query, ...$params) {
+        try {
+            $stmt = $this->conn->prepare($query);
+
+            if ($stmt === false) {
+                throw new Exception("Errore nella preparazione della query");
+            }
+
+            if (!empty($params)) {
+                $stmt->bind_param(str_repeat('s', count($params)), ...$params);
+            }
+
+            $stmt->execute();
+            $res_set = $stmt->get_result();
+            $ret_set = $res_set->fetch_all(MYSQLI_ASSOC);
+
+            $stmt->close();
+        } catch (mysqli_sql_exception $ex) {
+            // TODO: implementazione pagine di errore personalizzate
+            http_response_code(500);
+            echo $ex->getMessage();
+            exit;
+        } catch (Exception $ex) {
+            // Gestione di altri tipi di eccezioni, se necessario
+            http_response_code(500);
+            echo $ex->getMessage();
+            exit;
+        }
+
+        return $ret_set;
     }
-    catch(mysqli_sql_exception $ex) {
-      // TODO: implementazione pagine di errore personalizzate
-      http_response_code(500);
-      echo  $ex->getMessage();
-      exit;
-    }
-    return $ret_set;
-  }
 
   // restituisce il numero di artisti
   public function artist_count(): int {

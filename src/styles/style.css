@@ -121,6 +121,12 @@ h1 {
     background-color: var(--secondaryColor);
 }
 
+/* --------- CHI SIAMO --------- */
+.ritratto {
+    width: 50px;
+    height: auto;
+}
+
 /* --------- helper --------- */
 .helper {
     position: absolute;

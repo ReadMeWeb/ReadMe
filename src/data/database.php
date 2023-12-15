@@ -2,7 +2,7 @@
 
 class  Database {
 
-  private const HOST = 'mysql';
+  private const HOST = 'mysql_server';
   private const USER_NAME  = 'root';
   private const PASSWORD = 'admin';
   private const DATABASE = 'Orchestra';
@@ -55,8 +55,7 @@ class  Database {
   // restituisce il numero di album
   public function album_count(): int {
     return $this->execute_query('SELECT COUNT(*) as count FROM Album')[0]['count'];
-
-  } 
+  }
 
   // restituisce il numero di canzoni
   public function song_count(): int {

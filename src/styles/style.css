@@ -48,9 +48,9 @@
     font-style: italic;
 }
 
-body{
+body {
     max-width: 1200px;
-    font-family: 'Montserrat',Arial, Helvetica, sans-serif;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
     background-color: var(--backgroundColor);
     color: var(--textColor);
 }
@@ -62,22 +62,19 @@ body{
 /*##############################
 #             Mobile           #
 ##############################*/
-@media screen and (max-width: 768px){
-
+@media screen and (max-width: 768px) {
 }
 
 /*##############################
 #             Tablet           #
 ##############################*/
-@media screen and (max-width: 1024px){
-
+@media screen and (max-width: 1024px) {
 }
 
 /*##############################
 #             Monitor          #
 ##############################*/
-@media screen and (max-width: 1200px){
-
+@media screen and (max-width: 1200px) {
 }
 
 /*##############################
@@ -92,7 +89,7 @@ body{
         --primaryColor: #276254;
         --secondaryColor: #73dec1;
         --accentColor: #18dca8;
-        --logoUrl: url("../assets/images/OrchestraWideBlack.png");
+        --logoUrl: url('../assets/images/OrchestraWideBlack.png');
     }
 }
 @media (prefers-color-scheme: dark) {
@@ -102,7 +99,7 @@ body{
         --primaryColor: #9dd8ca;
         --secondaryColor: #218c70;
         --accentColor: #23e7b2;
-        --logoUrl: url("../assets/images/OrchestraWideWhite.png");
+        --logoUrl: url('../assets/images/OrchestraWideWhite.png');
     }
 }
 

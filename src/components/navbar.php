@@ -1,14 +1,35 @@
 <?php
-function navbar(array $links, string $selectedLink){
+require_once "sessionEstablisher.php";
+function navbar(){
+    try_session();
+
+    // 1. Path pagina .php partendo dalla directory src;
+    // 2. Nome da mostrare per tale pagina;
+    // 3. Stati alla quale deve essere mostrata:
+    //      - UN: Unregistered;
+    //      - US: User;
+    //      - AD: Admin.
+    $links = array(
+        array("index.php","Home",array("UN")),
+        array("accedi.php","Accedi",array("UN")),
+        array("registrati.php","Registrati",array("UN"))
+    );
+    $selectedLink = basename($_SERVER['PHP_SELF']);
     $navLinks = "";
-    foreach ($links as $link){
+    foreach ($links as $linkTriple){
         $classToApply = "";
-        $pageName = str_replace(".html","",$link);
-        $pageName = str_replace(".php","",$pageName);
-        if($selectedLink == $link || $selectedLink == $pageName){
-            $classToApply = "class='selectedNavLink'";
+        $link = $linkTriple[0];
+        $pageName = $linkTriple[1];
+        $allowedStatus = $linkTriple[2];
+        if(!isset($_SESSION["Status"])){
+            $_SESSION["Status"] = "UN";
         }
-        $navLinks .= "<li><a ". $classToApply ." href='". $link ."'>" . $pageName . "</a></li>";
+        if(in_array($_SESSION["Status"],$allowedStatus)){
+            if($selectedLink == $link){
+                $classToApply = " class='selectedNavLink' ";
+            }
+            $navLinks .= "<li><a". $classToApply ."href='". $link ."'>" . $pageName . "</a></li>";
+        }
     }
     return $navLinks;
 }

@@ -1,9 +1,11 @@
 <?php
 require_once 'data/database.php';
+require_once 'components/navbar.php';
 
 // generazione contenuto statico della pagina
 $keywords = implode(', ', array('Orchestra', 'storia della musica classica', 'musica classica', 'player musicale', 'player gratuito'));
 $title = 'Orchestra';
+$menu = navbar();
 $description = 'Orchestra è un player musicale online gratuito che ti permette di ascoltare tutta la musica classica dal 1800 fino ad oggi';
 
 // ottenimento contenuto dinamico della pagina pagina dal database
@@ -42,8 +44,8 @@ $values = array($artist_count, $album_count, $song_count, $songs);
 $content = str_replace($place_holders, $values, $content);
 
 // generazione pagina di risposta
-$place_holders = array('{{title}}', '{{keywords}}', '{{description}}', '{{content}}');
-$values = array($title, $keywords, $description, $content);
+$place_holders = array('{{title}}', '{{keywords}}', '{{description}}', '{{content}}','{{menu}}');
+$values = array($title, $keywords, $description, $content,$menu);
 $template = file_get_contents('components/layout.html');
 $template = str_replace($place_holders, $values, $template);
 

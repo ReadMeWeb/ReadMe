@@ -1,26 +1,107 @@
-/*
-################################
+/*##############################
+#           General            #
+##############################*/
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-Medium.ttf');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-MediumItalic.ttf');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-Bold.ttf');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-BoldItalic.ttf');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-Italic.ttf');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-Light.ttf');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-LightItalic.ttf');
+    font-weight: 300;
+    font-style: italic;
+}
+
+body{
+    max-width: 1200px;
+    font-family: 'Montserrat',Arial, Helvetica, sans-serif;
+    background-color: var(--backgroundColor);
+    color: var(--textColor);
+}
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/*##############################
+#             Mobile           #
+##############################*/
+@media screen and (max-width: 768px){
+
+}
+
+/*##############################
+#             Tablet           #
+##############################*/
+@media screen and (max-width: 1024px){
+
+}
+
+/*##############################
+#             Monitor          #
+##############################*/
+@media screen and (max-width: 1200px){
+
+}
+
+/*##############################
 #           Reusable           #
-################################*/
+##############################*/
 
 /* --------- COLORS --------- */
 @media (prefers-color-scheme: light) {
     :root {
-        --text: #151918;
-        --background: #e0e0e0;
-        --primary: #276254;
-        --secondary: #73dec1;
-        --accent: #18dca8;
+        --textColor: #151918;
+        --backgroundColor: #e0e0e0;
+        --primaryColor: #276254;
+        --secondaryColor: #73dec1;
+        --accentColor: #18dca8;
         --logoUrl: url("../assets/images/OrchestraWideBlack.png");
     }
 }
 @media (prefers-color-scheme: dark) {
     :root {
-        --text: #e6eae9;
-        --background: #1f1f1f;
-        --primary: #9dd8ca;
-        --secondary: #218c70;
-        --accent: #23e7b2;
+        --textColor: #e6eae9;
+        --backgroundColor: #1f1f1f;
+        --primaryColor: #9dd8ca;
+        --secondaryColor: #218c70;
+        --accentColor: #23e7b2;
         --logoUrl: url("../assets/images/OrchestraWideWhite.png");
     }
 }
@@ -40,7 +121,7 @@ nav h1 span {
 }
 
 h1 {
-    background-color: var(--secondary);
+    background-color: var(--secondaryColor);
 }
 
 /* --------- helper --------- */

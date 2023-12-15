@@ -1,6 +1,6 @@
 <?php
 require_once "sessionEstablisher.php";
-function navbar(){
+function navbar(): string{
     try_session();
 
     // 1. Path pagina .php partendo dalla directory src;
@@ -26,9 +26,9 @@ function navbar(){
         }
         if(in_array($_SESSION["Status"],$allowedStatus)){
             if($selectedLink == $link){
-                $classToApply = " class='selectedNavLink' ";
+                $classToApply = "class='selectedNavLink' ";
             }
-            $navLinks .= "<li><a". $classToApply ."href='". $link ."'>" . $pageName . "</a></li>";
+            $navLinks .= "<li><a ". $classToApply ."href='". $link ."'>" . $pageName . "</a></li>";
         }
     }
     return $navLinks;

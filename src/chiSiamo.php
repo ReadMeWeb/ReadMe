@@ -43,8 +43,19 @@ $member_list = array(
         "../assets/images/person_placeholder.jpeg"
     )
 );
-$vision = "<h2>Visioneeeee</h2>";
-$mission = "<h2>Missioneeeee</h2>";
+$vision = "
+    Essere il punto di riferimento globale per gli appassionati di musica classica, offrendo un'esperienza di 
+    streaming innovativa e immersiva che preserva e promuove il patrimonio musicale classico nel mondo digitale. La 
+    nostra piattaforma aspira a essere il luogo dove la bellezza e l'eleganza della musica classica si fondono con 
+    la modernità della tecnologia per ispirare, educare e connettere gli appassionati di tutte le generazioni.
+";
+$mission = "
+    La nostra missione è preservare e valorizzare il ricco patrimonio della musica classica, rendendolo accessibile 
+    a tutti. Vogliamo offrire una vasta raccolta di opere musicali classiche, consentendo agli utenti di esplorare, 
+    scoprire e apprezzare capolavori dei grandi compositori attraverso un'esperienza di streaming impeccabile. Ci 
+    impegniamo a fornire contenuti di qualità, supportare artisti emergenti e creare una comunità inclusiva che 
+    celebri la bellezza e la complessità della musica classica.
+";
 
 /* GENERAZIONE HTML */
 

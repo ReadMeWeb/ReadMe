@@ -1,7 +1,8 @@
 <?php
+require_once "../components/sessionEstablisher.php";
 
 $cleanup_results = [
-  session_start(),
+  try_session(),
   session_unset(),
   session_destroy(),
   // session_write_close(),

@@ -1,5 +1,6 @@
 <?php
 require_once 'components/navbar.php';
+require_once 'components/sessionEstablisher.php';
 
 function gethandlererror($name) {
   if (array_key_exists($name, $_SESSION)) {
@@ -10,8 +11,8 @@ function gethandlererror($name) {
   return false;
 }
 
-if (session_start()) {
-  if (array_key_exists('user', $_SESSION)) {
+if (try_session()) {
+  if (array_key_exists('mail', $_SESSION["user"])) {
     header("Location: /");
   }
 

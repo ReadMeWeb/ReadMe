@@ -1,11 +1,13 @@
 <?php
 require_once('../data/database.php');
+require_once "../components/sessionEstablisher.php";
+
 try {
   set_error_handler(function ($severity, $message, $file, $line) {
     throw new \ErrorException($message, $severity, $severity, $file, $line);
   });
 
-  session_start();
+  try_session();
   [
     "mail" => $mail,
     "password" => $password,

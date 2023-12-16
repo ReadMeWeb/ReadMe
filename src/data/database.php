@@ -30,8 +30,8 @@ class  Database {
             $stmt->execute();
             $res_set = $stmt->get_result();
             $ret_set = match($res_set){
-              true, false => $res_set,
-              default => $res_set->fetch_all(MYSQLI_ASSOC),
+              true, false => $res_set, // Gestisce il caso di inserimento, cancellazione, update (non ci deve essere restituito niente)
+              default => $res_set->fetch_all(MYSQLI_ASSOC), // Gestisce il caso di SELECT (ci deve essere restituito qualcosa)
             };
 
             $stmt->close();
@@ -98,7 +98,7 @@ class  Database {
 
   // chiude la connessione
   public function close(): void {
-    if($this->conn) 
+    if($this->conn)
     {
       $this->conn->close();
     }

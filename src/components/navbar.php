@@ -6,14 +6,14 @@ function navbar(): string{
     // 1. Path pagina .php partendo dalla directory src;
     // 2. Nome da mostrare per tale pagina;
     // 3. Stati alla quale deve essere mostrata:
-    //      - UN: Unregistered;
-    //      - US: User;
-    //      - AD: Admin.
+    //      - UNREGISTERED;
+    //      - USER;
+    //      - ADMIN.
     $links = array(
-        array("index.php","Home",array("UN")),
-        array("chisiamo.php","Chi Siamo",array("UN")),
-        array("accedi.php","Accedi",array("UN")),
-        array("registrati.php","Registrati",array("UN"))
+        array("index.php","Home",array("UNREGISTERED")),
+        array("chisiamo.php","Chi Siamo",array("UNREGISTERED")),
+        array("accedi.php","Accedi",array("UNREGISTERED")),
+        array("registrati.php","Registrati",array("UNREGISTERED"))
     );
     $selectedLink = basename($_SERVER['PHP_SELF']);
     $navLinks = "";
@@ -22,10 +22,10 @@ function navbar(): string{
         $link = $linkTriple[0];
         $pageName = $linkTriple[1];
         $allowedStatus = $linkTriple[2];
-        if(!isset($_SESSION["Status"])){
-            $_SESSION["Status"] = "UN";
+        if(!isset($_SESSION["user"])){
+            $_SESSION["user"]["status"] = "UNREGISTERED";
         }
-        if(in_array($_SESSION["Status"],$allowedStatus)){
+        if(in_array($_SESSION["user"]["status"],$allowedStatus)){
             if($selectedLink == $link){
                 $classToApply = "class='selectedNavLink' ";
             }

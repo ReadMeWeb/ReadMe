@@ -31,7 +31,8 @@ CREATE TABLE Album (
    id INT auto_increment PRIMARY KEY,
    name VARCHAR(255) NOT NULL,
    artist_id INT NOT NULL,
-   CONSTRAINT unique_fields UNIQUE (name, id),
+   file_name VARCHAR(255) NOT NULL,
+   CONSTRAINT unique_fields UNIQUE (name, artist_id),
    FOREIGN KEY (artist_id) REFERENCES Artist(id)
 );
 
@@ -60,8 +61,8 @@ CREATE TABLE Playlist_Music (
 
 -- Inserimento di esempio nella tabella Users
 INSERT INTO Users (mail, password, username, status) VALUES
-    ('admin@example.com', 'admin_password', 'admin_username', 'ADMIN'),
-    ('user1@example.com', 'user1_password', 'user1_username', 'USER'),
+    ('admin@example.com', 'admin', 'admin', 'ADMIN'),
+    ('user1@example.com', 'user', 'user', 'USER'),
     ('user2@example.com', 'user2_password', 'user2_username', 'USER');
 
 -- Inserimento di esempio nella tabella Playlist

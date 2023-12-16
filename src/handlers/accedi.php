@@ -11,12 +11,9 @@ try {
     "password" => $password,
   ] = $_POST;
 
-  $query =  "SELECT mail,status FROM Users WHERE mail = '@MAIL' AND password = '@PASSWORD' LIMIT 1;";
-  $args = [
-    '@MAIL' => [$mail, FILTER_SANITIZE_EMAIL],
-    '@PASSWORD' => [$password, FILTER_SANITIZE_FULL_SPECIAL_CHARS]
-  ];
-  $res = Database::connect_execute_clean($query, $args);
+  $conn = new Database();
+  $res = $conn->user_with_mail_password($mail,$password);
+  $conn->close();
   if (count($res) == 0) {
     throw new Exception("Nessun utente trovato. Le credenziali potrebbero essere errate.");
   }

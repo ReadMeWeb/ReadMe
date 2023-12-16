@@ -29,7 +29,10 @@ class  Database {
 
             $stmt->execute();
             $res_set = $stmt->get_result();
-            $ret_set = $res_set->fetch_all(MYSQLI_ASSOC);
+            $ret_set = match($res_set){
+              true, false => $res_set,
+              default => $res_set->fetch_all(MYSQLI_ASSOC),
+            };
 
             $stmt->close();
         } catch (mysqli_sql_exception $ex) {
@@ -46,6 +49,31 @@ class  Database {
 
         return $ret_set;
     }
+
+  // ritorna l'utente con mail e password date
+  // ritorno: array vuoto                 -> credenziali invalide o non registrate
+  //          array con singolo elemento  -> utente ricercato
+  public function user_with_mail_password(string $mail, string $password): array {
+    $query =  "SELECT username,mail,status FROM Users WHERE mail = ? AND password = ? LIMIT 1;";
+    return $this->execute_query($query,$mail,$password);
+  }
+
+  // ritorna se l'utente è registrato
+  // ritorno: true  -> l'utente è registrato nel database
+  //          false -> l'utente non è registrato nel database
+  public function user_exists(string $mail): bool {
+    $query = "SELECT COUNT(*) AS num FROM Users WHERE mail = ?;";
+    return $this->execute_query($query, $mail)[0]['num'] != "0";
+  }
+
+  // registra l'utente
+  // ritorno: true  -> registrazione con successo
+  //          false -> registrazione fallita
+  public function user_sign_up(string $name, string $mail, string $password): bool {
+    $query =  "INSERT INTO Users(mail, password, username, status) VALUES(?,?,?,'USER');";
+    $this->execute_query($query, $mail, $password, $name);
+    return $this->user_exists($mail);
+  }
 
   // restituisce il numero di artisti
   public function artist_count(): int {

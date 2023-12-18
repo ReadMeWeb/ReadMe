@@ -1,6 +1,8 @@
 <?php
 require_once "./components/navbar.php";
 require_once "./components/member.php";
+require_once "./components/breadcrumbs/breadcrumbsBuilder.php";
+require_once "./components/breadcrumbs/breadcrumbItem.php";
 
 setlocale(LC_ALL, 'it_IT');
 
@@ -44,16 +46,16 @@ $member_list = array(
     )
 );
 $vision = "
-    Essere il punto di riferimento globale per gli appassionati di musica classica, offrendo un'esperienza di 
-    streaming innovativa e immersiva che preserva e promuove il patrimonio musicale classico nel mondo digitale. La 
-    nostra piattaforma aspira a essere il luogo dove la bellezza e l'eleganza della musica classica si fondono con 
+    Essere il punto di riferimento globale per gli appassionati di musica classica, offrendo un'esperienza di
+    streaming innovativa e immersiva che preserva e promuove il patrimonio musicale classico nel mondo digitale. La
+    nostra piattaforma aspira a essere il luogo dove la bellezza e l'eleganza della musica classica si fondono con
     la modernità della tecnologia per ispirare, educare e connettere gli appassionati di tutte le generazioni.
 ";
 $mission = "
-    La nostra missione è preservare e valorizzare il ricco patrimonio della musica classica, rendendolo accessibile 
-    a tutti. Vogliamo offrire una vasta raccolta di opere musicali classiche, consentendo agli utenti di esplorare, 
-    scoprire e apprezzare capolavori dei grandi compositori attraverso un'esperienza di streaming impeccabile. Ci 
-    impegniamo a fornire contenuti di qualità, supportare artisti emergenti e creare una comunità inclusiva che 
+    La nostra missione è preservare e valorizzare il ricco patrimonio della musica classica, rendendolo accessibile
+    a tutti. Vogliamo offrire una vasta raccolta di opere musicali classiche, consentendo agli utenti di esplorare,
+    scoprire e apprezzare capolavori dei grandi compositori attraverso un'esperienza di streaming impeccabile. Ci
+    impegniamo a fornire contenuti di qualità, supportare artisti emergenti e creare una comunità inclusiva che
     celebri la bellezza e la complessità della musica classica.
 ";
 
@@ -71,8 +73,13 @@ $placeholdersContentTemplates = array("{{membri}}", "{{vision}}", "{{mission}}")
 $placeholdersContentValues = array($membri_html, $vision, $mission);
 $content = str_replace($placeholdersContentTemplates, $placeholdersContentValues, $content);
 
+$breadcrumbs = (new BreadcrumbsBuilder())
+    ->addBreadcrumb(new BreadcrumbItem("Home"))
+    ->addBreadcrumb(new BreadcrumbItem("Chi Siamo", true))
+    ->build();
+
 $placeholdersTemplates = array("{{title}}", "{{description}}", "{{keywords}}", "{{menu}}", "{{breadcrumbs}}", "{{content}}");
-$placeholdersValues = array($title, $description, $keywords, navbar(), "{{breadcrumbs}}", $content);
+$placeholdersValues = array($title, $description, $keywords, navbar(), $breadcrumbs->getBreadcrumbsHtml(), $content);
 
 $html = str_replace($placeholdersTemplates, $placeholdersValues, $html);
 

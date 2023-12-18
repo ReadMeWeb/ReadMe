@@ -77,9 +77,9 @@ INSERT INTO Artist (name, biography, file_name) VALUES
     ('Artista2', 'Biografia Artista2', 'artist2_photo.jpg');
 
 -- Inserimento di esempio nella tabella Album
-INSERT INTO Album (name, artist_id) VALUES
-    ('Album1', 1),
-    ('Album2', 2);
+INSERT INTO Album (name, artist_id, file_name) VALUES
+    ('Album1', 1, 'album1_file.mp3'),
+    ('Album2', 2, 'album1_file.mp3');
 
 -- Inserimento di esempio nella tabella Music
 INSERT INTO Music (producer, name, file_name,  added_date, album) VALUES

@@ -40,7 +40,8 @@ CREATE TABLE Album (
 CREATE TABLE Music (
     producer INT NOT NULL,
     name VARCHAR(255) NOT NULL,
-    file_name VARCHAR(255) NOT NULL,
+    audio_file_name VARCHAR(255) NOT NULL,
+    graphic_file_name VARCHAR(255) NOT NULL,
     album INT,
     added_date DATE NOT NULL DEFAULT (CURRENT_TIMESTAMP),
     PRIMARY KEY (producer, name),
@@ -82,10 +83,10 @@ INSERT INTO Album (name, artist_id, file_name) VALUES
     ('Album2', 2, 'album1_file.mp3');
 
 -- Inserimento di esempio nella tabella Music
-INSERT INTO Music (producer, name, file_name,  added_date, album) VALUES
-    (1, 'Canzone1', 'song1.mp3', '2023-01-22', 1),
-    (2, 'Canzone2', 'song2.mp3', '2023-01-21', 2),
-    (2, 'Canzone3', 'song3.mp3', '2023-01-20', null);
+INSERT INTO Music (producer, name, audio_file_name, graphic_file_name,  added_date, album) VALUES
+    (1, 'Canzone1', 'song1.mp3','corrupted_file.png', '2023-01-22', 1),
+    (2, 'Canzone2', 'song2.mp3','corrupted_file.png', '2023-01-21', 2),
+    (2, 'Canzone3', 'song3.mp3','corrupted_file.png', '2023-01-20', null);
 
 -- Inserimento di esempio nella tabella Playlist_Music
 INSERT INTO Playlist_Music (playlist_user, playlist_name, music_producer, music_name) VALUES

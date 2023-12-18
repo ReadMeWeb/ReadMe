@@ -96,6 +96,21 @@ class  Database {
     return $res;
   }
 
+  public function fetch_artist_info(): array {
+      $res = $this->execute_query('SELECT id, name, biography FROM Artist');
+      return $res;
+  }
+
+  public function fetch_songs_info(): array {
+      $res = $this->execute_query('SELECT producer, name, audio_file_name, graphic_file_name FROM Music');
+      return $res;
+  }
+
+  public function fetch_albums_info(): array {
+      $res = $this->execute_query('SELECT id, name, file_name FROM Album');
+      return $res;
+  }
+
   // chiude la connessione
   public function close(): void {
     if($this->conn)

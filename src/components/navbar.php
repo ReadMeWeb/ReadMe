@@ -10,7 +10,6 @@ function navbar(): string{
     //      - USER;
     //      - ADMIN.
     $links = array(
-        array("index.php","Home",array("UNREGISTERED")),
         array("chisiamo.php","Chi Siamo",array("UNREGISTERED")),
         array("accedi.php","Accedi",array("UNREGISTERED")),
         array("registrati.php","Registrati",array("UNREGISTERED"))
@@ -22,14 +21,12 @@ function navbar(): string{
         $link = $linkTriple[0];
         $pageName = $linkTriple[1];
         $allowedStatus = $linkTriple[2];
-        if(!isset($_SESSION["user"])){
-            $_SESSION["user"]["status"] = "UNREGISTERED";
-        }
         if(in_array($_SESSION["user"]["status"],$allowedStatus)){
             if($selectedLink == $link){
-                $classToApply = "class='selectedNavLink' ";
+                $navLinks .= "<li class='selectedNavLink'>" . $pageName . "</li>";
+            }else{
+                $navLinks .= "<li><a href='". $link ."'>" . $pageName . "</a></li>";
             }
-            $navLinks .= "<li><a ". $classToApply ."href='". $link ."'>" . $pageName . "</a></li>";
         }
     }
     return $navLinks;

@@ -25,6 +25,7 @@ try {
   //TODO reindirizzamento a una pagina più appropriata
   header("Location: /");
 } catch (Exception $e) {
+    //TODO reindirizzamento a una pagina più appropriata (o almeno gestione dell'errore)
   $_SESSION['loginErrors'] = $e;
   header("Location: /accedi.php");
 }

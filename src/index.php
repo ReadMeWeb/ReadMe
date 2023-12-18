@@ -1,11 +1,17 @@
 <?php
 require_once 'data/database.php';
 require_once 'components/navbar.php';
+require_once 'components/breadcrumbs/breadcrumbItem.php';
+require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
 
 // generazione contenuto statico della pagina
 $keywords = implode(', ', array('Orchestra', 'storia della musica classica', 'musica classica', 'player musicale', 'player gratuito'));
 $title = 'Orchestra';
 $menu = navbar();
+$breadcrumbs = (new BreadcrumbsBuilder())
+    ->addBreadcrumb(new BreadcrumbItem("Home",isCurrent: true))
+    ->build()
+    ->getBreadcrumbsHtml();
 $description = 'Orchestra è un player musicale online gratuito che ti permette di ascoltare tutta la musica classica dal 1800 fino ad oggi';
 
 // ottenimento contenuto dinamico della pagina pagina dal database
@@ -42,8 +48,8 @@ $values = array($artist_count, $album_count, $song_count, $songs);
 $content = str_replace($place_holders, $values, $content);
 
 // generazione pagina di risposta
-$place_holders = array('{{title}}', '{{keywords}}', '{{description}}', '{{content}}','{{menu}}');
-$values = array($title, $keywords, $description, $content,$menu);
+$place_holders = array('{{title}}', '{{keywords}}', '{{description}}', '{{content}}','{{menu}}','{{breadcrumbs}}');
+$values = array($title, $keywords, $description, $content,$menu,$breadcrumbs);
 $template = file_get_contents('components/layout.html');
 $template = str_replace("<a href='index.php' aria-label='Ritorna alla pagina home'><h1><span>Orchestra</span></h1></a>","<h1><span>Orchestra</span></h1>",$template);
 $template = str_replace($place_holders, $values, $template);

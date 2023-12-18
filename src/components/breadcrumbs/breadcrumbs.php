@@ -13,7 +13,7 @@ class Breadcrumbs
 
     public function getBreadcrumbsHtml(): string
     {
-        $html = "<p>";
+        $html = "<p>Ti trovi in: ";
         for($i = 0; $i < sizeof($this->items); $i++){
             $html .= $this->items[$i]->getBreadcrumbItemString();
             if($i < sizeof($this->items) - 1){

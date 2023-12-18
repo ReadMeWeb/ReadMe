@@ -8,16 +8,22 @@ require_once "data/database.php";
 
 try_session();
 
+$title = "Catalogo";
+$description = "Pagina di catalogo musicale di musica classica di Orchestra";
+$keywords = implode(", ", array("Orchestra", "Catalogo musicale", "Musica", "Album", "Artisti", "Canzoni"));
 
 $layout = file_get_contents("components/layout.html");
-$layout = str_replace("{{navbar}}", navbar(), $layout);
-$layout = str_replace("{{breadcrums}}",
+$layout = str_replace("{{menu}}", navbar(), $layout);
+$layout = str_replace("{{breadcrumbs}}",
     (new BreadcrumbsBuilder())
         ->addBreadcrumb(new BreadcrumbItem("Home"))
         ->addBreadcrumb(new BreadcrumbItem("Catalogo", true))
         ->build()
         ->getBreadcrumbsHtml(),
     $layout);
+$layout = str_replace("{{title}}",$title,$layout);
+$layout = str_replace("{{description}}",$description,$layout);
+$layout = str_replace("{{keywords}}",$keywords,$layout);
 $content = file_get_contents("components/catalogo.html");
 
 // CREAZIONE CONTENT
@@ -42,3 +48,5 @@ if ($_SESSION["user"]["status"] == "UNREGISTERED") {
 } else {
 
 }
+
+echo $layout;

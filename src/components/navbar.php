@@ -10,6 +10,7 @@ function navbar(): string{
     //      - USER;
     //      - ADMIN.
     $links = array(
+        array("catalogo.php","Catalogo",array("UNREGISTERED","USER","ADMIN")),
         array("chisiamo.php","Chi Siamo",array("UNREGISTERED")),
         array("accedi.php","Accedi",array("UNREGISTERED")),
         array("registrati.php","Registrati",array("UNREGISTERED"))
@@ -17,7 +18,6 @@ function navbar(): string{
     $selectedLink = basename($_SERVER['PHP_SELF']);
     $navLinks = "";
     foreach ($links as $linkTriple){
-        $classToApply = "";
         $link = $linkTriple[0];
         $pageName = $linkTriple[1];
         $allowedStatus = $linkTriple[2];

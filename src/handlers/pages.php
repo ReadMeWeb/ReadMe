@@ -5,6 +5,7 @@ class Pages {
         "Home" => "index.php",
         "Chi Siamo" => "chisiamo.php",
         "Accedi" => "accedi.php",
-        "Registrati" => "registrati.php"
+        "Registrati" => "registrati.php",
+        "Catalogo" => "catalogo.php"
     ];
 }

@@ -97,7 +97,7 @@ class  Database {
   }
 
   public function fetch_artist_info(): array {
-      $res = $this->execute_query('SELECT id, name, biography FROM Artist');
+      $res = $this->execute_query('SELECT id, name, biography, file_name FROM Artist');
       return $res;
   }
 

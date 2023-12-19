@@ -2,6 +2,7 @@
 
 require_once "components/navbar.php";
 require_once "components/sessionEstablisher.php";
+require_once "components/artist.php";
 require_once "components/breadcrumbs/breadcrumbItem.php";
 require_once "components/breadcrumbs/breadcrumbsBuilder.php";
 require_once "data/database.php";
@@ -41,12 +42,22 @@ if ($db->status()) {
 $db->close();
 
 if ($_SESSION["user"]["status"] == "UNREGISTERED") {
-    $lista_artisti = "";
+    $lista_artisti = [];
+    foreach ($artists as $artist){
+        $lista_artisti[] = (new artist(
+            $artist["id"],
+            $artist["name"],
+            $artist["biography"],
+            $artist["file_name"]
+        ))->toHtml();
+    }
+    $lista_artisti = implode("\n",$lista_artisti);
     $content = str_replace("{{lista-artisti}}", $lista_artisti, $content);
+    $layout = str_replace("{{content}}",$content,$layout);
 } elseif ($_SESSION["user"]["status"] == "USER") {
-
+    /*TODO: da implementare la vista USER*/
 } else {
-
+    /*TODO: da implementare la vista ADMIN*/
 }
 
 echo $layout;

@@ -112,9 +112,8 @@ nav h1 {
     width: 200px;
     height: 50px;
 }
-nav li {
+nav {
     background-color: var(--secondaryColor);
-    background-size: 200px 50px;
 }
 nav li a {
     color: var(--textColor);

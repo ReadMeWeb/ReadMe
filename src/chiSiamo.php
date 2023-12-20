@@ -65,8 +65,8 @@ $html = file_get_contents("./components/layout.html");
 $content = file_get_contents("./components/chiSiamo.html");
 
 $membri_html = "";
-foreach ($member_list as $member){
-   $membri_html .= $member->generateMemberCard();
+foreach ($member_list as $member) {
+    $membri_html .= $member->generateMemberCard();
 }
 
 $placeholdersContentTemplates = array("{{membri}}", "{{vision}}", "{{mission}}");

@@ -1,6 +1,30 @@
 /*##############################
 #           General            #
 ##############################*/
+/* --------- COLORS --------- */
+@media (prefers-color-scheme: light) {
+    :root {
+        --textColor: #151918;
+        --backgroundColor: #e0e0e0;
+        --primaryColor: #276254;
+        --secondaryColor: #73dec1;
+        --accentColor: #18dca8;
+        --linkBackgroundColor: #419f86;
+        --logoUrl: url('../assets/images/OrchestraWideBlack.png');
+    }
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --textColor: #e6eae9;
+        --backgroundColor: #1f1f1f;
+        --primaryColor: #9dd8ca;
+        --secondaryColor: #218c70;
+        --accentColor: #23e7b2;
+        --linkBackgroundColor: #6e968c;
+        --logoUrl: url('../assets/images/OrchestraWideWhite.png');
+    }
+}
+/* --------- FONTS --------- */
 @font-face {
     font-family: 'Montserrat';
     src: url('../fonts/Montserrat-Medium.ttf');
@@ -49,7 +73,6 @@
 }
 
 body {
-    max-width: 1200px;
     font-family: 'Montserrat', Arial, Helvetica, sans-serif;
     background-color: var(--backgroundColor);
     color: var(--textColor);
@@ -63,54 +86,96 @@ body {
 #             Mobile           #
 ##############################*/
 @media screen and (max-width: 768px) {
+    #menu {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        height: 50px;
+    }
+    nav h1 {
+        background-size: 200px 50px;
+        width: 200px;
+        height: 50px;
+    }
+    #menu ul li{
+        height: 50px;
+        margin-left: 1px;
+        margin-right: 1px;
+    }
+    #menu ul li:last-child{
+        margin-right: 0;
+    }
+    #menu ul li:first-child{
+        margin-left: 0;
+    }
 }
 
 /*##############################
 #             Tablet           #
 ##############################*/
 @media screen and (max-width: 1024px) {
+    nav h1 {
+        background-size: 200px 50px;
+        width: 200px;
+        height: 50px;
+    }
 }
 
 /*##############################
 #             Monitor          #
 ##############################*/
 @media screen and (max-width: 1200px) {
+    nav h1 {
+        background-size: 200px 50px;
+        width: 200px;
+        height: 50px;
+    }
 }
 
 /*##############################
-#           Reusable           #
+#             Bigger           #
 ##############################*/
-
-/* --------- COLORS --------- */
-@media (prefers-color-scheme: light) {
-    :root {
-        --textColor: #151918;
-        --backgroundColor: #e0e0e0;
-        --primaryColor: #276254;
-        --secondaryColor: #73dec1;
-        --accentColor: #18dca8;
-        --logoUrl: url('../assets/images/OrchestraWideBlack.png');
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --textColor: #e6eae9;
-        --backgroundColor: #1f1f1f;
-        --primaryColor: #9dd8ca;
-        --secondaryColor: #218c70;
-        --accentColor: #23e7b2;
-        --logoUrl: url('../assets/images/OrchestraWideWhite.png');
+@media screen and (min-width: 1200px) {
+    nav h1 {
+        background-size: 200px 50px;
+        width: 200px;
+        height: 50px;
     }
 }
 
-/*TODO: Impostare già la struttura con i breakpoint delle media query*/
-/* --------- NAVBAR --------- */
+/*###############################################
+#           Not dimensions properties           #
+###############################################*/
+/* --------- NAVBAR - menu --------- */
+#logoLink a, #logoLink {
+    display: flex;
+    justify-content: center;
+}
+#menu ul {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+#menu ul li{
+    list-style: none;
+    flex-grow: 1;
+    text-align: center;
+    background-color: var(--linkBackgroundColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --------- NAVBAR - breadcrumbs --------- */
+#breadcrumbs {
+    display: flex;
+    justify-content: center;
+}
+
+/* --------- NAVBAR - logolink --------- */
 nav h1 {
     background-image: var(--logoUrl);
     background-color: var(--secondaryColor);
-    background-size: 200px 50px;
-    width: 200px;
-    height: 50px;
 }
 nav {
     background-color: var(--secondaryColor);

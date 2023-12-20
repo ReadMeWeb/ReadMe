@@ -19,12 +19,10 @@ class artist
 
     public function toHtml(): string{
         return "
-            <dt>
-                <a href='artist.php?id=".$this->id."' aria-label='Vai alla pagina personale di ".$this->name."'>".$this->name."</a>
-            </dt>
-            <dd>
+            <li>
                 <img src='assets/artistPhotos/".$this->file_name."' alt='Immagine profilo di ".$this->name."'>
-            </dd>
+                <a href='artist.php?id=".$this->id."' aria-label='Vai alla pagina personale di ".$this->name."'>".$this->name."</a>
+            </li>
         ";
     }
 

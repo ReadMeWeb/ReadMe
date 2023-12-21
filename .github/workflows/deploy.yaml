@@ -39,3 +39,7 @@ jobs:
             ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'mysql_server'/'localhost'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/data/database.php
             ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'Orchestra'/'${{ secrets.TEC_USER }}'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/data/database.php
             ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'admin'/'${{ secrets.TEC_PWD }}'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/data/database.php
+            ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'../styles'/'/marango/styles'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/components/layout.html
+            ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'../javascript'/'/marango/javascript'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/components/layout.html
+            ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'../styles'/'/marango/styles'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/components/layoutLogged.html
+            ssh ${{ secrets.PAOLOTTI_USERNAME }}@${{ secrets.TECWEB_HOST }} sed -i "s/'../javascript'/'/marango/javascript'/g" /home/${{ secrets.PAOLOTTI_USERNAME }}/public_html/components/layoutLogged.html

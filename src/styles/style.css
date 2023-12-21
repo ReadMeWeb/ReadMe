@@ -9,7 +9,9 @@
         --primaryColor: #276254;
         --secondaryColor: #73dec1;
         --accentColor: #18dca8;
-        --linkBackgroundColor: #419f86;
+        --mobileNavLinkBorder: #419f86;
+        --linkColor: #348c8c;
+        --visitedLinkColor: #4b5d58;
         --logoUrl: url('../assets/images/OrchestraWideBlack.png');
     }
 }
@@ -20,7 +22,9 @@
         --primaryColor: #9dd8ca;
         --secondaryColor: #218c70;
         --accentColor: #23e7b2;
-        --linkBackgroundColor: #6e968c;
+        --mobileNavLinkBorder: #6e968c;
+        --linkColor: #00fffb;
+        --visitedLinkColor: #c4edff;
         --logoUrl: url('../assets/images/OrchestraWideWhite.png');
     }
 }
@@ -87,59 +91,68 @@ body {
 ##############################*/
 @media screen and (max-width: 768px) {
     #menu {
-        position: absolute;
+        position: fixed;
         width: 100%;
         bottom: 0;
-        height: 50px;
+        height: 3.2em;
     }
     nav h1 {
-        background-size: 200px 50px;
-        width: 200px;
-        height: 50px;
+        background-size: 8em 2em;
+        width: 8em;
+        height: 2em;
     }
-    #menu ul li{
-        height: 50px;
-        margin-left: 1px;
-        margin-right: 1px;
+    #menu ul li .selectedNavLink{
+        height: 3.2em;
     }
-    #menu ul li:last-child{
-        margin-right: 0;
+    #menu {
+        background-color: var(--backgroundColor);
+        box-shadow: 0 0 0.64em 0 var(--primaryColor);
     }
-    #menu ul li:first-child{
-        margin-left: 0;
+    #menu ul li.selectedNavLink{
+        height: 3.2em;
     }
 }
 
 /*##############################
 #             Tablet           #
 ##############################*/
-@media screen and (max-width: 1024px) {
-    nav h1 {
-        background-size: 200px 50px;
-        width: 200px;
-        height: 50px;
-    }
+@media screen and (min-width: 768px) and (max-width: 1024px) {
 }
 
 /*##############################
 #             Monitor          #
 ##############################*/
-@media screen and (max-width: 1200px) {
-    nav h1 {
-        background-size: 200px 50px;
-        width: 200px;
-        height: 50px;
-    }
+@media screen and (min-width: 1024px) and (max-width: 1200px) {
 }
 
 /*##############################
 #             Bigger           #
 ##############################*/
 @media screen and (min-width: 1200px) {
+}
+
+/*##############################
+#     Across all non mobile    #
+##############################*/
+@media screen and (min-width: 768px){
+    nav#menu ul {
+        background-color: var(--backgroundColor);
+        box-shadow: 0 0 0.64em 0 var(--primaryColor);
+    }
+    nav#menu {
+        overflow: hidden;
+        padding-bottom: 0.64em;
+    }
     nav h1 {
-        background-size: 200px 50px;
-        width: 200px;
-        height: 50px;
+        background-size: 10em 2.5em;
+        width: 10em;
+        height: 2.5em;
+    }
+    #menu ul li.selectedNavLink{
+        height: 3.2em;
+    }
+    nav#menu ul li:hover {
+        box-shadow: 0 0 0.08em 0 inset var(--primaryColor);
     }
 }
 
@@ -160,10 +173,20 @@ body {
     list-style: none;
     flex-grow: 1;
     text-align: center;
-    background-color: var(--linkBackgroundColor);
     display: flex;
     align-items: center;
     justify-content: center;
+}
+nav#menu ul li a{
+    width: 100%;
+    height: 3.2em;
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+}
+nav#menu ul li.selectedNavLink {
+    box-shadow: 0 0 0.16em 0 inset var(--primaryColor);
 }
 
 /* --------- NAVBAR - breadcrumbs --------- */
@@ -175,13 +198,21 @@ body {
 /* --------- NAVBAR - logolink --------- */
 nav h1 {
     background-image: var(--logoUrl);
-    background-color: var(--secondaryColor);
 }
-nav {
-    background-color: var(--secondaryColor);
+nav#breadcrumbs p{
+    padding-bottom: 0.32em;
+    padding-top: 0.32em;
+    padding-left: 0.64em;
+    padding-right: 0.64em;
+    border-radius: 5px;
+    margin-top: 0.32em;
+    box-shadow: 0 0 0.16em 0 var(--primaryColor);
 }
 nav li a {
     color: var(--textColor);
+}
+nav li a:visited {
+   color: var(--textColor);
 }
 nav h1 span {
     display: block;
@@ -194,6 +225,14 @@ nav h1 span {
 .ritratto {
     width: 50px;
     height: auto;
+}
+
+/* ---------- GENERAL ---------- */
+a {
+    color: var(--linkColor);
+}
+a:visited{
+    color: var(--visitedLinkColor);
 }
 
 /* --------- helper --------- */

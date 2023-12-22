@@ -1,8 +1,11 @@
 <?php
 require_once 'components/navbar.php';
 require_once 'components/sessionEstablisher.php';
+require_once 'components/breadcrumbs/breadcrumbItem.php';
+require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
 
-function gethandlererror($name) {
+function gethandlererror($name)
+{
   if (array_key_exists($name, $_SESSION)) {
     $e = $_SESSION[$name];
     unset($_SESSION[$name]);
@@ -30,13 +33,18 @@ if (try_session()) {
   //TODO prevenire gli <a> ricorsivi / ad anello
   //soluzione temporanea
   $menu = navbar();
-  $menu = str_replace("href='accedi.php'","",$menu);
+  // $menu = str_replace("href='accedi.php'", "", $menu);
+  $breadcrumbs = (new BreadcrumbsBuilder())
+    ->addBreadcrumb(new BreadcrumbItem("Home"))
+    ->addBreadcrumb(new BreadcrumbItem("Accedi", isCurrent: true))
+    ->build()
+    ->getBreadcrumbsHtml();
 
   $page = str_replace("{{title}}", "Accedi", $page);
   $page = str_replace("{{description}}", "Pagina di accesso di Orchestra", $page);
   $page = str_replace("{{keywords}}", "Orchestra, musica classica, accesso, log in, sign in", $page);
   $page = str_replace("{{menu}}", $menu, $page);
-  $page = str_replace("{{breadcrumbs}}", "<a href='./'>Home</a> &gt <a>Accedi</a>", $page);
+  $page = str_replace("{{breadcrumbs}}", $breadcrumbs, $page);
 
   $page = str_replace("{{content}}", $content, $page);
   $page = str_replace("{{errori}}", $errori, $page);

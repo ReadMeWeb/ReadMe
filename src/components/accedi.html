@@ -1,14 +1,16 @@
 <main>
   {{errori}}
   <form action="/handlers/accedi.php" method="post">
+    <fieldset>
+      <legend>Accesso</legend>
+      <label for="mail" lang="en">Email</label>
+      <input id="mail" name="mail" required type="email" placeholder="Digita la tua mail" autocomplete="email">
 
-    <label for="mail" lang="en">Email</label>
-    <input id="mail" name="mail" required type="email" placeholder="Digita la tua mail" autocomplete="email">
-
-    <label for="password" lang="en">Password</label>
-    <input id="password" name="password" required type="password" placeholder="Digita la tua password"
-      autocomplete="current-password">
-    <input type="submit" value="Accedi">
+      <label for="password" lang="en">Password</label>
+      <input id="password" name="password" required type="password" placeholder="Digita la tua password"
+        autocomplete="current-password">
+      <input type="submit" value="Accedi">
+    </fieldset>
   </form>
   <a href="/registrati.php">Sei nuovo ? Clicca per registrarti</a>
 </main>

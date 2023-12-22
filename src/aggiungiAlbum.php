@@ -41,7 +41,7 @@ if (try_session()) {
   $content = str_replace("{{artisti}}", $aristi, $content);
 
   $errori = "";
-  if ($e = gethandlererror('loginErrors')) {
+  if ($e = gethandlererror('addAlbumErrors')) {
     $errori = "<h1>Errore</h1>
       <p class='error'>" . (strip_tags($e->getmessage())) . "</p>";
   }

@@ -81,6 +81,19 @@ class  Database {
     return $this->execute_query($query);
   }
 
+  // ritorna se l'album esiste nel database
+  public function album_exists($name, $artist): bool {
+    $query =  "SELECT COUNT(*) AS num FROM Album WHERE name = ? AND artist_id = ?";
+    return $this->execute_query($query, $name, $artist)[0]['num'] != "0";
+  }
+
+  // inserisce l'abum nel database
+  public function album_add($artist, $name): bool {
+    $query =  "INSERT INTO Album(name,artist_id) VALUES(?,?)";
+    $this->execute_query($query, $artist, $name);
+    return $this->album_exists($artist, $name);
+  }
+
   // restituisce il numero di artisti
   public function artist_count(): int {
     return $this->execute_query('SELECT COUNT(*) as count FROM Artist')[0]['count'];

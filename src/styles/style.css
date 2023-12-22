@@ -253,3 +253,6 @@ form {
   flex-direction: column;
   width: min-content;
 }
+select {
+  width: 100%;
+}

@@ -40,9 +40,14 @@ if (try_session()) {
   $conn->close();
   $content = str_replace("{{artisti}}", $aristi, $content);
 
+  // TODO generalizzare il nome degli errori
   $errori = "";
   if ($e = gethandlererror('addAlbumErrors')) {
     $errori = "<h1>Errore</h1>
+      <p class='error'>" . (strip_tags($e->getmessage())) . "</p>";
+  }
+  if ($e = gethandlererror('addAlbumSuccess')) {
+    $errori = "<h1>Successo</h1>
       <p class='error'>" . (strip_tags($e->getmessage())) . "</p>";
   }
 

@@ -8,6 +8,8 @@ try {
   });
 
   try_session();
+
+  // TODO aggiornare quando la copertina verrà usata
   [
     "artista" => $artista,
     "nome" => $nome,
@@ -22,6 +24,7 @@ try {
     throw new Exception("Errore di inserimento nel database");
   }
   $conn->close();
+  $_SESSION['addAlbumSuccess'] = new Exception("Album $nome aggiunto con successo");
   header("Location: /aggiungiAlbum.php");
 } catch (Exception $e) {
   $_SESSION['addAlbumErrors'] = $e;

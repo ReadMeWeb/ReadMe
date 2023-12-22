@@ -243,3 +243,13 @@ a:visited{
     overflow: hidden;
     clip: rect(1px, 1px, 1px, 1px);
 }
+
+/*##############################
+#             Input            #
+##############################*/
+form {
+  backround-color: red;
+  display: flex;
+  flex-direction: column;
+  width: min-content;
+}

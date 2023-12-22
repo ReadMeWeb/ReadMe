@@ -75,6 +75,12 @@ class  Database {
     return $this->user_exists($mail);
   }
 
+  // ritorna gli artisti nelle colonne id,nome
+  public function artisti(): array {
+    $query =  "SELECT id,name FROM Artist;";
+    return $this->execute_query($query);
+  }
+
   // restituisce il numero di artisti
   public function artist_count(): int {
     return $this->execute_query('SELECT COUNT(*) as count FROM Artist')[0]['count'];

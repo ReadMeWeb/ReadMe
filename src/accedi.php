@@ -19,7 +19,6 @@ if (try_session()) {
     header("Location: /");
   }
 
-  //TODO sostituire con il file_get_contents di layout
   $page = file_get_contents("./components/layout.html");
   $content = file_get_contents("./components/accedi.html");
   $errori = "";
@@ -30,10 +29,6 @@ if (try_session()) {
 
   //TODO ripristinare la mail / password all'interno degli input
 
-  //TODO prevenire gli <a> ricorsivi / ad anello
-  //soluzione temporanea
-  $menu = navbar();
-  // $menu = str_replace("href='accedi.php'", "", $menu);
   $breadcrumbs = (new BreadcrumbsBuilder())
     ->addBreadcrumb(new BreadcrumbItem("Home"))
     ->addBreadcrumb(new BreadcrumbItem("Accedi", isCurrent: true))
@@ -43,7 +38,7 @@ if (try_session()) {
   $page = str_replace("{{title}}", "Accedi", $page);
   $page = str_replace("{{description}}", "Pagina di accesso di Orchestra", $page);
   $page = str_replace("{{keywords}}", "Orchestra, musica classica, accesso, log in, sign in", $page);
-  $page = str_replace("{{menu}}", $menu, $page);
+  $page = str_replace("{{menu}}", navbar(), $page);
   $page = str_replace("{{breadcrumbs}}", $breadcrumbs, $page);
 
   $page = str_replace("{{content}}", $content, $page);

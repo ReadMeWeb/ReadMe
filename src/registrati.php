@@ -18,7 +18,6 @@ if (try_session()) {
     header("Location: /");
   }
 
-  //TODO sostituire con il file_get_contents di layout
   $page = file_get_contents("./components/layout.html");
   $content = file_get_contents("./components/registrati.html");
   $errori = "";
@@ -29,11 +28,6 @@ if (try_session()) {
 
   //TODO ripristinare nome utente / mail / password all'interno degli input
 
-  //TODO prevenire gli <a> ricorsivi / ad anello
-  //soluzione temporanea
-  $menu = navbar();
-  // $menu = str_replace("href='registrati.php'","",$menu);
-
   $breadcrumbs = (new BreadcrumbsBuilder())
     ->addBreadcrumb(new BreadcrumbItem("Home"))
     ->addBreadcrumb(new BreadcrumbItem("Registrati", isCurrent: true))
@@ -43,7 +37,7 @@ if (try_session()) {
   $page = str_replace("{{title}}", "Registrati", $page);
   $page = str_replace("{{description}}", "Pagina di registrazione di Orchestra", $page);
   $page = str_replace("{{keywords}}", "Orchestra, musica classica, registrazione, sign up", $page);
-  $page = str_replace("{{menu}}", $menu, $page);
+  $page = str_replace("{{menu}}", navbar(), $page);
   $page = str_replace("{{breadcrumbs}}", $breadcrumbs, $page);
 
   $page = str_replace("{{content}}", $content, $page);

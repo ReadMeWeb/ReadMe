@@ -17,11 +17,8 @@ function gethandlererror($name)
 
 if (try_session()) {
   //TODO pagina accessibile solo da utenti admin
-  if (array_key_exists('mail', $_SESSION["user"])) {
-    header("Location: /");
-  }
 
-  //TODO riutilizzare un layout differente
+  //TODO utilizzare un layout differente (?)
   $page = file_get_contents("./components/layout.html");
   $content = file_get_contents("./components/aggiungiAlbum.html");
 
@@ -40,7 +37,8 @@ if (try_session()) {
   $conn->close();
   $content = str_replace("{{artisti}}", $aristi, $content);
 
-  // TODO generalizzare il nome degli errori
+  //TODO generalizzare il nome degli errori
+  //TODO ripristinare i valori immessi in seguito a un errore
   $errori = "";
   if ($e = gethandlererror('addAlbumErrors')) {
     $errori = "<h1>Errore</h1>
@@ -51,7 +49,6 @@ if (try_session()) {
       <p class='error'>" . (strip_tags($e->getmessage())) . "</p>";
   }
 
-  //TODO ripristinare i valori immessi in seguito a un errore
 
   //TODO aggiornare le breadcrumbs
   $breadcrumbs = (new BreadcrumbsBuilder())

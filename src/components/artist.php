@@ -7,8 +7,6 @@ class artist
     private string $biography;
     private string $file_name;
 
-    static string $template;
-
     public function __construct($id,$name,$biography,$file_name)
     {
         $this->name = $name;

@@ -3,6 +3,8 @@
 require_once "components/navbar.php";
 require_once "components/sessionEstablisher.php";
 require_once "components/artist.php";
+require_once "components/album.php";
+require_once "components/song.php";
 require_once "components/breadcrumbs/breadcrumbItem.php";
 require_once "components/breadcrumbs/breadcrumbsBuilder.php";
 require_once "data/database.php";
@@ -51,8 +53,30 @@ if ($_SESSION["user"]["status"] == "UNREGISTERED") {
             $artist["file_name"]
         ))->toHtml();
     }
+    $lista_album = [];
+    foreach ($albums as $album){
+        $lista_album[] = (new album(
+            $album["id"],
+            $album["name"],
+            $album["file_name"]
+        ))->toHtml();
+    }
+    $lista_songs= [];
+    foreach ($songs as $song){
+        $lista_songs[] = (new song(
+            $song["producer"],
+            $song["producer_name"],
+            $song["name"],
+            $song["audio_file_name"],
+            $song["graphic_file_name"],
+        ))->toHtml();
+    }
     $lista_artisti = implode("\n",$lista_artisti);
+    $lista_album = implode("\n",$lista_album);
+    $lista_songs = implode("\n",$lista_songs);
     $content = str_replace("{{lista-artisti}}", $lista_artisti, $content);
+    $content = str_replace("{{lista-album}}", $lista_album, $content);
+    $content = str_replace("{{lista-canzoni}}", $lista_songs, $content);
     $layout = str_replace("{{content}}",$content,$layout);
 } elseif ($_SESSION["user"]["status"] == "USER") {
     /*TODO: da implementare la vista USER*/

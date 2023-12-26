@@ -94,6 +94,7 @@ body {
 #             Mobile           #
 ##############################*/
 @media screen and (max-width: 768px) {
+    /* -------- nav menu -------*/
     #menu {
         position: fixed;
         width: 100%;
@@ -117,6 +118,11 @@ body {
     }
     #menu ul li.selectedNavLink{
         height: 3.2em;
+    }
+
+    /* -------- page footer -------*/
+    footer#pageFooter {
+        padding-bottom: 4em;
     }
 }
 
@@ -142,6 +148,7 @@ body {
 #     Across all non mobile    #
 ##############################*/
 @media screen and (min-width: 768px){
+    /* -------- nav menu -------*/
     nav#menu ul {
         background-color: var(--backgroundColor);
         -moz-box-shadow: 0 0 0.64em 0 var(--primaryColor);
@@ -181,6 +188,9 @@ body {
     display: flex;
     align-items: center;
     height: 100%;
+}
+nav {
+    z-index: 100;
 }
 #menu ul li{
     list-style: none;

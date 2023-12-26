@@ -18,6 +18,32 @@ class song
     }
 
     public function toHtml(): string{
+        $additional_elements = "";
+        if($_SESSION["user"]["status"] == "ADMIN"){
+            $additional_elements = "
+                <form action='RemoveUpdateSong.php' method='post'>
+                    <fieldset>
+                        <legend>Azioni possibili</legend>
+                        <input type='hidden' name='producer' value='".$this->producer."'>
+                        <input type='hidden' name='name' value='".$this->name."'>
+                        <input type='submit' value='Rimuovi'>
+                        <input type='submit' value='Modifica'>
+                    </fieldset>
+                </form>
+            ";
+        }
+        if($_SESSION["user"]["status"] == "USER"){
+            $additional_elements = "
+                <form action='addToPlaylist.php' method='post'>
+                    <fieldset>
+                        <legend>Azioni possibili</legend>
+                        <input type='hidden' name='producer' value='".$this->producer."'>
+                        <input type='hidden' name='name' value='".$this->name."'>
+                        <input type='submit' value='Aggiungi alla playlist'>
+                    </fieldset>
+                </form>
+            ";
+        }
         return "
             <li>
                 <img src='assets/songPhotos/".$this->graphic_file_name."' alt='Copertina della canzone ".$this->name."'>
@@ -27,6 +53,7 @@ class song
                     <source src='songAudios/".$this->audio_file_name."' type='audio/mpeg'>
                     Attenzione: il tuo browser non supporta i tag audio (la preghiamo di cambiare browser).
                 </audio>
+                ".$additional_elements."
             </li>
         ";
     }

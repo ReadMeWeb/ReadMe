@@ -13,7 +13,8 @@ function navbar(): string{
         array("catalogo.php","Catalogo",array("UNREGISTERED","USER","ADMIN")),
         array("chisiamo.php","Chi Siamo",array("UNREGISTERED")),
         array("accedi.php","Accedi",array("UNREGISTERED")),
-        array("registrati.php","Registrati",array("UNREGISTERED"))
+        array("registrati.php","Registrati",array("UNREGISTERED")),
+        array("aggiungiArtista.php", "Aggiungi Artista", array("ADMIN"))
     );
     $selectedLink = basename($_SERVER['PHP_SELF']);
     $navLinks = "";

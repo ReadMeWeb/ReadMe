@@ -264,6 +264,22 @@ a:visited{
     color: var(--visitedLinkColor);
 }
 
+input, textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+label {
+    display: block;
+}
+
+.input-error {
+    background-color: var(--secondaryColor);
+    border: 1px solid;
+    padding: 1em;
+    margin: 1%;
+}
+
 /* --------- helper --------- */
 .helper {
     position: absolute;
@@ -272,3 +288,5 @@ a:visited{
     overflow: hidden;
     clip: rect(1px, 1px, 1px, 1px);
 }
+
+

@@ -33,10 +33,10 @@ $db->close();
 
 // generazione delle cards delle ultime canzoni uscite
 $song = file_get_contents('components/songCard.html');
-$place_holders = array('{{card_class}}', '{{artist}}', '{{song}}', '{{added_date}}');
+$place_holders = array('{{card_class}}', '{{img}}', '{{artist}}', '{{song}}', '{{added_date}}');
 $songs = '';
 foreach($latest_music as $music) {
-    $values = array('ultime_uscite', $music['artist'], $music['song'], $music['added_date']);
+    $values = array('ultime_uscite',  $music['img'], $music['artist'], $music['song'], $music['added_date']);
     $songs .= str_replace($place_holders, $values, $song);
 }
 

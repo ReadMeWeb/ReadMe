@@ -27,12 +27,15 @@ class  Database {
                 $stmt->bind_param(str_repeat('s', count($params)), ...$params);
             }
 
-            $stmt->execute();
+            $succes = $stmt->execute();
             $res_set = $stmt->get_result();
-            $ret_set = match($res_set){
-              true, false => $res_set, // Gestisce il caso di inserimento, cancellazione, update (non ci deve essere restituito niente)
-              default => $res_set->fetch_all(MYSQLI_ASSOC), // Gestisce il caso di SELECT (ci deve essere restituito qualcosa)
-            };
+            
+            if($res_set !== false) {
+              $ret_set = $res_set->fetch_all(MYSQLI_ASSOC);
+            }
+            else {
+              $ret_set = $succes;
+            }
 
             $stmt->close();
         } catch (mysqli_sql_exception $ex) {
@@ -92,7 +95,7 @@ class  Database {
 
   // restituisce ultime $num uscite
   public function latest_releases(int $num): array {
-    $res = $this->execute_query('SELECT Artist.name as artist, Music.name as song, Music.added_date  FROM Artist join Music on Artist.id=Music.producer ORDER BY added_date DESC LIMIT ?', $num);
+    $res = $this->execute_query('SELECT Artist.name as artist, Music.name as song, Music.added_date, graphic_file_name as img  FROM Artist join Music on Artist.id=Music.producer ORDER BY added_date DESC LIMIT ?', $num);
     return $res;
   }
 
@@ -109,6 +112,10 @@ class  Database {
   public function fetch_albums_info(): array {
       $res = $this->execute_query('SELECT id, name, file_name FROM Album');
       return $res;
+  }
+
+  public function insert_artist(string $nome, string $biography, string $image): bool {
+    return $this->execute_query('INSERT INTO Artist(name, biography, file_name) VALUES(?, ?, ?)', $nome, $biography, $image);
   }
 
   // chiude la connessione

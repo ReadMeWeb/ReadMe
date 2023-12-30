@@ -14,11 +14,6 @@ function sessionUserIsAdmin(): bool
     return $_SESSION["user"]["status"] == "ADMIN";
 }
 
-// TODO remove: just for testing
-session_start();
-// TODO remove: just for testing
-$_SESSION["user"]["status"] = "ADMIN";
-
 try_session();
 
 $title = "Aggiungi Canzone";

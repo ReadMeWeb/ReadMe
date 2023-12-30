@@ -50,10 +50,6 @@ function getSongInsertionSession(array $selectedArtist, string $selectedAlbum, $
     return $content;
 }
 
-// TODO remove: just for testing
-session_start();
-$_SESSION["user"]["status"] = "ADMIN";
-// END TODO
 try_session();
 
 $title = "Informazioni Brano - Aggiungi Canzone - Orchestra";

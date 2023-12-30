@@ -23,11 +23,6 @@ function getArtistSelectionContent(array $artists, string|null $errors): string
     return $content;
 }
 
-// TODO remove: just for testing
-try_session();
-$_SESSION["user"]["status"] = "ADMIN";
-// END TODO
-
 $title = "Selezione Artista - Aggiungi Canzone - Orchestra";
 $description = "Pagina per l'inserimento di una nuova canzone all'interno di Orchestra";
 $keywords = implode(", ", array("Orchestra", "Aggiungi Canzone", "Nuova Canzone", "Canzone", "Inserimento"));

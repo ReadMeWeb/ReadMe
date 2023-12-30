@@ -156,6 +156,20 @@ class  Database
         return $this->execute_query('INSERT INTO Artist(name, biography, file_name) VALUES(?, ?, ?)', $nome, $biography, $image);
     }
 
+    public function insert_song(string $artist_id, string $title, string $audio_file, string $graphic_file, string|null $album_id): bool {
+
+        return $this->execute_query('INSERT INTO Music(producer, name, audio_file_name, graphic_file_name, album, added_date) VALUES(?, ?, ?, ?, ?, now())', $artist_id, $title, $audio_file, $graphic_file, $album_id);
+    }
+
+    public function check_album_belong_to_artist(string $artist_id, string $album_id): bool
+    {
+        $res = $this->execute_query('SELECT * FROM Album WHERE artist_id = ? AND id = ?', $artist_id, $album_id);
+        if (sizeof($res) == 1) {
+            return true;
+        }
+        return false;
+    }
+
   // chiude la connessione
     public function close(): void {
         if ($this->conn) {

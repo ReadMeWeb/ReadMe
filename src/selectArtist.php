@@ -28,13 +28,13 @@ try_session();
 $_SESSION["user"]["status"] = "ADMIN";
 // END TODO
 
-$title = "Aggiungi Canzone";
+$title = "Selezione Artista - Aggiungi Canzone - Orchestra";
 $description = "Pagina per l'inserimento di una nuova canzone all'interno di Orchestra";
 $keywords = implode(", ", array("Orchestra", "Aggiungi Canzone", "Nuova Canzone", "Canzone", "Inserimento"));
 $breadcrumbs = (new BreadcrumbsBuilder())
     ->addBreadcrumb(new BreadcrumbItem("Home"))
     ->addBreadcrumb(new BreadcrumbItem("Catalogo"))
-    ->addBreadcrumb(new BreadcrumbItem("Nuova Canzone", true))
+    ->addBreadcrumb(new BreadcrumbItem("Aggiungi Canzone", true))
     ->build();
 
 if (!sessionUserIsAdmin()) {

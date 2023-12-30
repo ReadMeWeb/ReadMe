@@ -2,16 +2,19 @@
 <h3>Inserimento Dati Canzone</h3>
 {{errors}}
 <h4>Artista Selezionato</h4>
-<p>{{artist}}</p>
-<form action="/handlers/addsong.php" method="post">
+<p>{{artist_name}}</p>
+<form enctype="multipart/form-data" action="/handlers/addsong.php" method="post">
     <label for="title">Titolo</label><br />
     <input
         id="title"
         name="title"
         type="text"
+        value="{{song_title}}"
         placeholder="Digita il titolo della canzone"
         required
     /><br />
+
+    <input id="artist_id" name="artist_id" value="{{artist_id}}" type="text" hidden/>
 
     <label for="album">Album</label><br />
     <select name="album" id="album">

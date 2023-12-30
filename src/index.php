@@ -25,7 +25,7 @@ $album_count = 0;
 if($db->status()) {
     $song_count = $db->song_count();
     $artist_count = $db->artist_count();
-    $latest_music = $db->latest_releases(3);
+    $latest_music = $db->latest_releases(4);
     $album_count = $db->album_count();
 }
 $db->close();

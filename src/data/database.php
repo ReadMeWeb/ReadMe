@@ -1,21 +1,24 @@
 <?php
 
-class  Database {
+class  Database
+{
 
-  private const HOST = 'mysql_server';
-  private const USER_NAME  = 'root';
-  private const PASSWORD = 'admin';
-  private const DATABASE = 'Orchestra';
-  
-  private mysqli $conn;
+    private const HOST = 'mysql_server';
+    private const USER_NAME  = 'root';
+    private const PASSWORD = 'admin';
+    private const DATABASE = 'Orchestra';
 
-  // crea connessione con il database
-  public function __construct() {
-    $this->conn = new mysqli(self::HOST, self::USER_NAME, self::PASSWORD, self::DATABASE);
-  }
+    private mysqli $conn;
 
-  // esegue una query generica e ne restituisce il risultato sotto forma di un array bidimensionale associativo
-    private function execute_query(string $query, ...$params) {
+    // crea connessione con il database
+    public function __construct()
+    {
+        $this->conn = new mysqli(self::HOST, self::USER_NAME, self::PASSWORD, self::DATABASE);
+    }
+
+    // esegue una query generica e ne restituisce il risultato sotto forma di un array bidimensionale associativo
+    private function execute_query(string $query, ...$params)
+    {
         try {
             $stmt = $this->conn->prepare($query);
 
@@ -29,7 +32,7 @@ class  Database {
 
             $succes = $stmt->execute();
             $res_set = $stmt->get_result();
-            
+
             if($res_set !== false) {
               $ret_set = $res_set->fetch_all(MYSQLI_ASSOC);
             }
@@ -96,62 +99,79 @@ class  Database {
     $this->execute_query($query, $artist, $name, $file);
     return $this->album_exists($artist, $name);
   }
+    // restituisce il numero di artisti
+    public function artist_count(): int
+    {
+        return $this->execute_query('SELECT COUNT(*) as count FROM Artist')[0]['count'];
+    }
 
-  // restituisce il numero di artisti
-  public function artist_count(): int {
-    return $this->execute_query('SELECT COUNT(*) as count FROM Artist')[0]['count'];
-  } 
+    // restituisce il numero di album
+    public function album_count(): int
+    {
+        return $this->execute_query('SELECT COUNT(*) as count FROM Album')[0]['count'];
+    }
 
-  // restituisce il numero di album
-  public function album_count(): int {
-    return $this->execute_query('SELECT COUNT(*) as count FROM Album')[0]['count'];
-  }
+    // restituisce il numero di canzoni
+    public function song_count(): int
+    {
+        return $this->execute_query('SELECT COUNT(*) as count FROM Music')[0]['count'];
+    }
 
-  // restituisce il numero di canzoni
-  public function song_count(): int {
-    return $this->execute_query('SELECT COUNT(*) as count FROM Music')[0]['count'];
-  } 
+    // restituisce ultime $num uscite
+    public function latest_releases(int $num): array
+    {
+        return $this->execute_query('SELECT Artist.name as artist, Music.name as song, Music.added_date, graphic_file_name as img  FROM Artist join Music on Artist.id=Music.producer ORDER BY added_date DESC LIMIT ?', $num);
+    }
 
-  // restituisce ultime $num uscite
-  public function latest_releases(int $num): array {
-    $res = $this->execute_query('SELECT Artist.name as artist, Music.name as song, Music.added_date, graphic_file_name as img  FROM Artist join Music on Artist.id=Music.producer ORDER BY added_date DESC LIMIT ?', $num);
-    return $res;
-  }
+    public function fetch_artist_info(): array
+    {
+        return $this->execute_query('SELECT id, name, biography, file_name FROM Artist');
+    }
 
-  public function fetch_artist_info(): array {
-      $res = $this->execute_query('SELECT id, name, biography, file_name FROM Artist');
-      return $res;
-  }
+    public function fetch_artist_info_by_id(int $id): array|null
+    {
+        $res = $this->execute_query('SELECT id, name, biography, file_name FROM Artist WHERE id = ?', $id);
+        if (sizeof($res) == 1) {
+            return $res[0];
+        }
+        return null;
+    }
 
-  public function fetch_songs_info(): array {
-      $res = $this->execute_query('SELECT producer, Music.name as name, audio_file_name, graphic_file_name, A.name as producer_name FROM Music JOIN Orchestra.Artist A on Music.producer = A.id');
-      return $res;
-  }
+    public function fetch_songs_info(): array
+    {
+        return $this->execute_query('SELECT producer, Music.name as name, audio_file_name, graphic_file_name, A.name as producer_name FROM Music JOIN Orchestra.Artist A on Music.producer = A.id');
+    }
 
-  public function fetch_albums_info(): array {
-      $res = $this->execute_query('SELECT id, name, file_name FROM Album');
-      return $res;
-  }
+    public function fetch_albums_info(): array
+    {
+        return $this->execute_query('SELECT id, name, file_name FROM Album');
+    }
 
-  public function insert_artist(string $nome, string $biography, string $image): bool {
-    return $this->execute_query('INSERT INTO Artist(name, biography, file_name) VALUES(?, ?, ?)', $nome, $biography, $image);
-  }
+    public function fetch_albums_info_by_artist_id(string $id): array
+    {
+        return $this->execute_query('SELECT id, name, file_name FROM Album WHERE artist_id = ?', $id);
+    }
+
+    public function insert_artist(string $nome, string $biography, string $image): bool {
+        return $this->execute_query('INSERT INTO Artist(name, biography, file_name) VALUES(?, ?, ?)', $nome, $biography, $image);
+    }
 
   // chiude la connessione
-  public function close(): void {
-    if($this->conn)
-    {
-      $this->conn->close();
+    public function close(): void {
+        if ($this->conn) {
+            $this->conn->close();
+        }
     }
-  }
 
-  // restiruisce lo stato della connessione
-  public function status(): bool{
-    return $this->conn == true && $this->conn->ping();
-  }
+    // restiruisce lo stato della connessione
+    public function status(): bool
+    {
+        return $this->conn->ping();
+    }
 
-  // distruzione oggetto DB in cui viene chiusa la connessione
-  public function __destructor() {
-    $this->close();
-  }
+    // distruzione oggetto DB in cui viene chiusa la connessione
+    public function __destructor(): void
+    {
+        $this->close();
+    }
 }

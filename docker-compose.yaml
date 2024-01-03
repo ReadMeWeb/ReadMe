@@ -28,6 +28,7 @@ services:
       - "8080:80"
     volumes:
       - ./src:/var/www/html
+    command: sh -c "chmod 777 -R  /var/www/html/assets && apache2-foreground"
     depends_on:
       mysql:
         condition: service_healthy

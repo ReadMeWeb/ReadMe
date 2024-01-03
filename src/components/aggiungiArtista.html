@@ -1,0 +1,23 @@
+<main>
+    <h1>Aggiungi un nuovo artista</h1>
+
+    <form action="/aggiungiArtista.php" method="post" enctype="multipart/form-data" id="aggiungi-artista">
+
+        {{errors}}
+
+        <fieldset>
+            <legend>Dati artista</legend>
+
+            <label for="nome-artista">Nome Artista</label>
+            <input id="nome-artista" name="nome_artista" type="text" maxlength="100" placeholder="Nome artista" value="{{artist_name}}" required>
+
+            <label for="biografia">Biografia Artista</label>
+            <textarea id="biografia" name="biografia" required placeholder="Biografia artista" rows="20" cols="50">{{biography}}</textarea>
+
+            <label for="immagine-artista">Immagine Artista</label>
+            <input type="file" id="immagine-artista" name="immagine_artista" accept="image/png, image/jpeg" value="{{artist_image}}" required>
+
+        </fieldset>
+        <input type="submit" value="Aggiungi">
+    </form>
+</main>

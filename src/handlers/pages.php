@@ -6,6 +6,7 @@ class Pages {
         "Chi Siamo" => "chisiamo.php",
         "Accedi" => "accedi.php",
         "Registrati" => "registrati.php",
-        "Catalogo" => "catalogo.php"
+        "Catalogo" => "catalogo.php",
+        "Aggiungi Artista" => "aggiungiArtista.php"
     ];
 }

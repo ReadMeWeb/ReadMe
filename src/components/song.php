@@ -50,7 +50,7 @@ class song
                 <p>".$this->name."</p>
                 <a href='artist.php?id=".$this->producer."' aria-label='Vai alla pagina personale di ".$this->producer_name."'>".$this->producer_name."</a>
                 <audio controls>
-                    <source src='songAudios/".$this->audio_file_name."' type='audio/mpeg'>
+                    <source src='assets/songAudios/".$this->audio_file_name."' type='audio/mpeg'>
                     Attenzione: il tuo browser non supporta i tag audio (la preghiamo di cambiare browser).
                 </audio>
                 ".$additional_elements."

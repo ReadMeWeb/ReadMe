@@ -20,7 +20,7 @@ try {
     throw new Exception("L'album risulta già essere registrato");
   }
 
-  $dir = "../assets/thumbnails";
+  $dir = "../assets/albumPhotos";
   if ($e = file_exists($dir)) {
     if ($d = is_dir($dir) === false) {
       throw new Exception("'$dir' esiste ma non è una directory");

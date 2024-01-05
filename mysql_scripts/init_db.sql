@@ -1,8 +1,14 @@
+DROP TABLE IF EXISTS Playlist_Music;
+DROP TABLE IF EXISTS Music;
+DROP TABLE IF EXISTS Album;
+DROP TABLE IF EXISTS Playlist;
+DROP TABLE IF EXISTS Artist;
+DROP TABLE IF EXISTS Users;
+
 -- Codice SQL per creare la tabella Users
 CREATE TABLE Users (
-    mail VARCHAR(255) PRIMARY KEY NOT NULL,
+    username VARCHAR(255) PRIMARY KEY NOT NULL,
     password VARCHAR(255) NOT NULL,
-    username VARCHAR(255) NOT NULL,
     status ENUM('ADMIN', 'USER') NOT NULL
 );
 
@@ -14,7 +20,7 @@ CREATE TABLE Playlist (
     description VARCHAR(500),
     file_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (user, name),
-    FOREIGN KEY (user) REFERENCES Users(mail)
+    FOREIGN KEY (user) REFERENCES Users(username)
 );
 -- Gestire la clausola lato server per far si che gli admin non possano creare playlist
 
@@ -61,16 +67,16 @@ CREATE TABLE Playlist_Music (
 );
 
 -- Inserimento di esempio nella tabella Users
-INSERT INTO Users (mail, password, username, status) VALUES
-    ('admin@example.com', 'admin', 'admin', 'ADMIN'),
-    ('user1@example.com', 'user', 'user', 'USER'),
-    ('user2@example.com', 'user2_password', 'user2_username', 'USER');
+INSERT INTO Users (password, username, status) VALUES
+    ('admin', 'admin', 'ADMIN'),
+    ('user1', 'user1', 'USER'),
+    ('user2', 'user2', 'USER');
 
 -- Inserimento di esempio nella tabella Playlist
 INSERT INTO Playlist (user, name, description, file_name) VALUES
-    ('user1@example.com', 'Playlist1', 'Descrizione Playlist1', 'playlist1_file.mp3'),
-    ('user1@example.com', 'Playlist2', 'Descrizione Playlist2', 'playlist2_file.mp3'),
-    ('user2@example.com', 'Playlist3', 'Descrizione Playlist3', 'playlist3_file.mp3');
+    ('user1', 'Playlist1', 'Descrizione Playlist1', 'playlist1_file.mp3'),
+    ('user1', 'Playlist2', 'Descrizione Playlist2', 'playlist2_file.mp3'),
+    ('user2', 'Playlist3', 'Descrizione Playlist3', 'playlist3_file.mp3');
 
 -- Inserimento di esempio nella tabella Artist
 INSERT INTO Artist (name, biography, file_name) VALUES
@@ -90,6 +96,6 @@ INSERT INTO Music (producer, name, audio_file_name, graphic_file_name,  added_da
 
 -- Inserimento di esempio nella tabella Playlist_Music
 INSERT INTO Playlist_Music (playlist_user, playlist_name, music_producer, music_name) VALUES
-    ('user1@example.com', 'Playlist1', 1, 'Canzone1'),
-    ('user1@example.com', 'Playlist1', 2, 'Canzone2'),
-    ('user2@example.com', 'Playlist3', 2, 'Canzone3');
+    ('user1', 'Playlist1', 1, 'Canzone1'),
+    ('user1', 'Playlist1', 2, 'Canzone2'),
+    ('user2', 'Playlist3', 2, 'Canzone3');

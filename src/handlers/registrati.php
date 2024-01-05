@@ -10,15 +10,16 @@ try {
   try_session();
   [
     "username" => $username,
-    "mail" => $mail,
     "password" => $password,
   ] = $_POST;
 
+
   $conn = new Database();
-  if($conn->user_exists($mail)){
-    throw new Exception("La mail fornita risulta già registrata.");
+  if($conn->user_exists($username)){
+    throw new Exception("Il Nome utente fornito risulta già registrato.");
   }
-  if ($conn->user_sign_up($username,$mail,$password) !== true) {
+
+  if ($conn->user_sign_up($username,$password) !== true) {
     // Questo caso non dovrebbe mai succedere
     throw new Exception("Errore del database.");
   }
@@ -26,7 +27,7 @@ try {
 
   //NOT TODO reindirizzamento a una pagina più appropriata <- delegato a handlers/accedi.php
   //TODO reindirizzamento a handlers/accedi.php con accesso automatico
-  $_SESSION['user'] = ['username' => $username, 'mail' => $mail, 'status' => "USER"];
+  $_SESSION['user'] = ['username' => $username, 'status' => "USER"];
   header("Location: /");
 } catch (Exception $e) {
   $_SESSION['signupErrors'] = $e;

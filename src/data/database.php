@@ -56,9 +56,9 @@ class  Database {
   // ritorna l'utente con mail e password date
   // ritorno: array vuoto                 -> credenziali invalide o non registrate
   //          array con singolo elemento  -> utente ricercato
-  public function user_with_mail_password(string $mail, string $password): array {
-    $query =  "SELECT username,mail,status FROM Users WHERE mail = ? AND password = ? LIMIT 1;";
-    return $this->execute_query($query,$mail,$password);
+  public function user_with_mail_password(string $nome, string $password): array {
+    $query =  "SELECT username,status FROM Users WHERE username = ? AND password = ? LIMIT 1;";
+    return $this->execute_query($query,$nome,$password);
   }
 
   // ritorna se l'utente è registrato

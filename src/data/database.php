@@ -74,7 +74,7 @@ class  Database {
   //          false -> registrazione fallita
   public function user_sign_up(string $name, string $password): bool {
     $query =  "INSERT INTO Users(username, password, status) VALUES(?,?,'USER');";
-    $this->execute_query($query, $password, $name);
+    $this->execute_query($query, $name, $password);
     return $this->user_exists($name);
   }
 

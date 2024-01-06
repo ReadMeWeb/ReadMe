@@ -19,6 +19,14 @@ function is_user_signed_in(): bool
   return $_SESSION['user']['status'] !== 'UNREGISTERED';
 }
 
+// TODO spostare questa funzione in un include generale
+function extract_from_array_else($key, $array, $otherwise)
+{
+  $result = array_key_exists($key, $array) ? $array[$key] : $otherwise;
+  unset($array[$key]);
+  return $result;
+}
+
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);
 });
@@ -57,8 +65,7 @@ try {
 
   $user = $res[0];
   $_SESSION['user'] = $user;
-  //TODO reindirizzamento a una pagina più appropriata
-  header("Location: /");
+  redirect(extract_from_array_else('redirection', $_SESSION, '/'));
 } catch (Exception $e) {
   $errori = '<h1>Errore</h1>
     <ul class="error">

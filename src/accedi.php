@@ -13,6 +13,12 @@ function redirect($url): void
   exit();
 }
 
+// TODO spostare questa funzione in un include generale
+function is_user_signed_in(): bool
+{
+  return $_SESSION['user']['status'] !== 'UNREGISTERED';
+}
+
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);
 });
@@ -21,8 +27,7 @@ if (!try_session()) {
   throw new ErrorException("try_session ha fallito");
 }
 
-// TODO aggiungere una funzione is_user_signed_in in un include generale
-if ($_SESSION['user']['status'] === 'UNREGISTERED') {
+if (is_user_signed_in()) {
   redirect('/');
 }
 

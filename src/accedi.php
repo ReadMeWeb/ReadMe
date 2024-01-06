@@ -4,15 +4,15 @@ require_once 'components/breadcrumbs/breadcrumbItem.php';
 require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
 require_once 'components/navbar.php';
 require_once 'components/sessionEstablisher.php';
-require_once 'data/database.php' ;
+require_once 'data/database.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  goto GET;
+}
 
 // ========================================================================================================================
 // POST
 // ========================================================================================================================
-
-if(count($_POST) == 0){
-  goto get;
-}
 
 try {
   set_error_handler(function ($severity, $message, $file, $line) {
@@ -26,7 +26,7 @@ try {
   ] = $_POST;
 
   $conn = new Database();
-  $res = $conn->user_with_mail_password($nome,$password);
+  $res = $conn->user_with_mail_password($nome, $password);
   $conn->close();
   if (count($res) == 0) {
     throw new Exception("Nessun utente trovato. Le credenziali potrebbero essere errate.");
@@ -37,20 +37,16 @@ try {
   //TODO reindirizzamento a una pagina più appropriata
   header("Location: /");
 } catch (Exception $e) {
-    //TODO reindirizzamento a una pagina più appropriata (o almeno gestione dell'errore)
+  //TODO reindirizzamento a una pagina più appropriata (o almeno gestione dell'errore)
   $_SESSION['loginErrors'] = $e;
   header("Location: /accedi.php");
 }
 
-if(count($_POST) > 0){
-  exit();
-}
+exit();
 
 // ========================================================================================================================
-// GET
+GET:
 // ========================================================================================================================
-
-get:
 
 function gethandlererror($name)
 {

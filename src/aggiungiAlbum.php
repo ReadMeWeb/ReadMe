@@ -15,8 +15,16 @@ if (!try_session()) {
   throw new ErrorException("try_session ha fallito");
 }
 
-if (count($_POST) == 0) {
-  goto get;
+
+// TODO - accesso con reindirizzamento - dovrebbe bastare aggiungere $_SESSION['redirection'] = <questa pagina>
+// if (!is_user_signed_in()) {
+//   redirect('/accedi.php');
+// }
+
+$errori = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  goto GET;
 }
 
 // ========================================================================================================================
@@ -70,11 +78,8 @@ try {
 exit();
 
 // ========================================================================================================================
-// GET
+GET:
 // ========================================================================================================================
-
-get:
-
 
 function gethandlererror($name)
 {

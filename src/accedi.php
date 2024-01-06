@@ -67,9 +67,10 @@ try {
   $_SESSION['user'] = $user;
   redirect(extract_from_array_else('redirection', $_SESSION, '/'));
 } catch (Exception $e) {
-  $errori = '<h1>Errore</h1>
+  $errori = '
+    <h1>Errore</h1>
     <ul class="error">
-  <li>' . (strip_tags($e->getMessage())) . '</li>
+      <li>' . (strip_tags($e->getMessage())) . '</li>
     </ul>
   ';
 }

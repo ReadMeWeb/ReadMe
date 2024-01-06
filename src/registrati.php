@@ -5,6 +5,7 @@ require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
 require_once 'components/navbar.php';
 require_once 'components/sessionEstablisher.php';
 require_once 'data/database.php';
+require_once 'handlers/utils.php';
 
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);

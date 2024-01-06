@@ -5,27 +5,7 @@ require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
 require_once 'components/navbar.php';
 require_once 'components/sessionEstablisher.php';
 require_once 'data/database.php';
-
-// TODO spostare questa funzione in un include generale
-function redirect($url): void
-{
-  header('Location: ' . $url);
-  exit();
-}
-
-// TODO spostare questa funzione in un include generale
-function is_user_signed_in(): bool
-{
-  return $_SESSION['user']['status'] !== 'UNREGISTERED';
-}
-
-// TODO spostare questa funzione in un include generale
-function extract_from_array_else($key, $array, $otherwise)
-{
-  $result = array_key_exists($key, $array) ? $array[$key] : $otherwise;
-  unset($array[$key]);
-  return $result;
-}
+require_once 'handlers/utils.php';
 
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);

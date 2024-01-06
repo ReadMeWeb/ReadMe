@@ -36,7 +36,6 @@ try {
     "password" => $password,
   ] = $_POST;
 
-
   $conn = new Database();
   if ($conn->user_exists($nome)) {
     throw new Exception("Il Nome utente fornito risulta già registrato.");
@@ -55,10 +54,6 @@ try {
   //var_dump($e);
   $_SESSION['signupErrors'] = $e;
   header("Location: /registrati.php");
-}
-
-if (count($_POST) > 0) {
-  exit();
 }
 
 // ========================================================================================================================

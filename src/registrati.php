@@ -34,17 +34,16 @@ try {
   }
   $conn->close();
 
-  //NOT TODO reindirizzamento a una pagina più appropriata <- delegato a handlers/accedi.php
-  //TODO reindirizzamento a handlers/accedi.php con accesso automatico
-  $_SESSION['user'] = ['username' => $username, 'status' => "USER"];
-  header("Location: /");
+  $_POST = ['name' => $username, 'password' => $password];
+  require_once('accedi.php');
+  exit();
 } catch (Exception $e) {
   //var_dump($e);
   $_SESSION['signupErrors'] = $e;
   header("Location: /registrati.php");
 }
 
-if(count($_POST) > 0){
+if (count($_POST) > 0) {
   exit();
 }
 

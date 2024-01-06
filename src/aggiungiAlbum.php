@@ -71,6 +71,8 @@ try {
   }
   $conn->close();
 
+  $artista = '';
+  $nome = '';
   $risultato = '
     <h1>Successo</h1>
     <ul class="successo">

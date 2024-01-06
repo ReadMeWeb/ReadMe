@@ -58,16 +58,6 @@ exit();
 GET:
 // ========================================================================================================================
 
-function gethandlererror($name)
-{
-  if (array_key_exists($name, $_SESSION)) {
-    $e = $_SESSION[$name];
-    unset($_SESSION[$name]);
-    return $e;
-  }
-  return false;
-}
-
   if (array_key_exists('mail', $_SESSION["user"])) {
     header("Location: /");
   }

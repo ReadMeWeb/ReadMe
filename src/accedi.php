@@ -10,6 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   goto GET;
 }
 
+if(!try_session()){
+  throw new ErrorException("try_session ha fallito");
+}
+
 // ========================================================================================================================
 // POST
 // ========================================================================================================================
@@ -19,7 +23,6 @@ try {
     throw new \ErrorException($message, $severity, $severity, $file, $line);
   });
 
-  try_session();
   [
     "name" => $nome,
     "password" => $password,
@@ -58,7 +61,6 @@ function gethandlererror($name)
   return false;
 }
 
-if (try_session()) {
   if (array_key_exists('mail', $_SESSION["user"])) {
     header("Location: /");
   }
@@ -88,4 +90,3 @@ if (try_session()) {
   $page = str_replace("{{content}}", $content, $page);
   $page = str_replace("{{errori}}", $errori, $page);
   echo $page;
-}

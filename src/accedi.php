@@ -20,6 +20,7 @@ if (!try_session()) {
 }
 
 $errori = '';
+$nome = '';
 
 // ========================================================================================================================
 // POST
@@ -62,10 +63,8 @@ if (array_key_exists('mail', $_SESSION["user"])) {
   header("Location: /");
 }
 
-$page = file_get_contents("./components/layout.html");
 $content = file_get_contents("./components/accedi.html");
-
-//TODO ripristinare la mail / password all'interno degli input
+$content = str_replace('{{nome}}',$nome,$content);
 
 $breadcrumbs = (new BreadcrumbsBuilder())
   ->addBreadcrumb(new BreadcrumbItem("Home"))
@@ -73,6 +72,7 @@ $breadcrumbs = (new BreadcrumbsBuilder())
   ->build()
   ->getBreadcrumbsHtml();
 
+$page = file_get_contents("./components/layout.html");
 $page = str_replace("{{title}}", "Accedi", $page);
 $page = str_replace("{{description}}", "Pagina di accesso di Orchestra", $page);
 $page = str_replace("{{keywords}}", "Orchestra, musica classica, accesso, log in, sign in", $page);

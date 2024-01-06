@@ -51,36 +51,20 @@ try {
   require_once('accedi.php');
   exit();
 } catch (Exception $e) {
-  //var_dump($e);
-  $_SESSION['signupErrors'] = $e;
-  header("Location: /registrati.php");
+  $errori = '
+    <h1>Errore</h1>
+    <ul class="error">
+      <li>' . (strip_tags($e->getMessage())) . '</li>
+    </ul>
+  ';
 }
 
 // ========================================================================================================================
 GET:
 // ========================================================================================================================
 
-function gethandlererror($name)
-{
-  if (array_key_exists($name, $_SESSION)) {
-    $e = $_SESSION[$name];
-    unset($_SESSION[$name]);
-    return $e;
-  }
-  return false;
-}
-
-if (array_key_exists('mail', $_SESSION["user"])) {
-  header("Location: /");
-}
-
 $page = file_get_contents("./components/layout.html");
 $content = file_get_contents("./components/registrati.html");
-$errori = "";
-if ($e = gethandlererror('signupErrors')) {
-  $errori = "<h1>Errore</h1>
-      <p class='error'>" . (strip_tags($e->getmessage())) . "</p>";
-}
 
 //TODO ripristinare nome utente / mail / password all'interno degli input
 

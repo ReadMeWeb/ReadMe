@@ -6,12 +6,24 @@ require_once 'components/navbar.php';
 require_once 'components/sessionEstablisher.php';
 require_once 'data/database.php';
 
+// TODO spostare questa funzione in un include generale
+function redirect($url): void
+{
+  header('Location: ' . $url);
+  exit();
+}
+
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);
 });
 
 if (!try_session()) {
   throw new ErrorException("try_session ha fallito");
+}
+
+// TODO aggiungere una funzione is_user_signed_in in un include generale
+if ($_SESSION['user']['status'] === 'UNREGISTERED') {
+  redirect('/');
 }
 
 $errori = '';
@@ -43,7 +55,6 @@ try {
   //TODO reindirizzamento a una pagina più appropriata
   header("Location: /");
 } catch (Exception $e) {
-  //TODO reindirizzamento a una pagina più appropriata (o almeno gestione dell'errore)
   $errori = '<h1>Errore</h1>
     <ul class="error">
   <li>' . (strip_tags($e->getMessage())) . '</li>
@@ -58,12 +69,8 @@ exit();
 GET:
 // ========================================================================================================================
 
-if (array_key_exists('mail', $_SESSION["user"])) {
-  header("Location: /");
-}
-
 $content = file_get_contents("./components/accedi.html");
-$content = str_replace('{{nome}}',$nome,$content);
+$content = str_replace('{{nome}}', $nome, $content);
 
 $breadcrumbs = (new BreadcrumbsBuilder())
   ->addBreadcrumb(new BreadcrumbItem("Home"))

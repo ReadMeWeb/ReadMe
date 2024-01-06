@@ -1,15 +1,33 @@
 <?php
 
-if (count($_POST) == 0) {
-  goto get;
+require_once 'components/breadcrumbs/breadcrumbItem.php';
+require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
+require_once 'components/navbar.php';
+require_once 'components/sessionEstablisher.php';
+require_once 'data/database.php';
+
+set_error_handler(function ($severity, $message, $file, $line) {
+  throw new \ErrorException($message, $severity, $severity, $file, $line);
+});
+
+if (!try_session()) {
+  throw new ErrorException("try_session ha fallito");
+}
+
+if (is_user_signed_in()) {
+  redirect('/');
+}
+
+$errori = '';
+$nome = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  goto GET;
 }
 
 // ========================================================================================================================
 // POST
 // ========================================================================================================================
-
-require_once 'data/database.php';
-require_once "components/sessionEstablisher.php";
 
 try {
   set_error_handler(function ($severity, $message, $file, $line) {
@@ -48,14 +66,8 @@ if (count($_POST) > 0) {
 }
 
 // ========================================================================================================================
-// GET
+GET:
 // ========================================================================================================================
-get:
-
-require_once 'components/navbar.php';
-require_once 'components/sessionEstablisher.php';
-require_once 'components/breadcrumbs/breadcrumbItem.php';
-require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
 
 function gethandlererror($name)
 {

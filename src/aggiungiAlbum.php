@@ -1,5 +1,12 @@
 <?php
 
+require_once 'components/breadcrumbs/breadcrumbItem.php';
+require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
+require_once 'components/navbar.php';
+require_once 'components/sessionEstablisher.php';
+require_once 'data/database.php';
+require_once 'handlers/utils.php';
+
 if(count($_POST) == 0){
   goto get;
 }
@@ -7,9 +14,6 @@ if(count($_POST) == 0){
 // ========================================================================================================================
 // POST
 // ========================================================================================================================
-
-require_once 'data/database.php';
-require_once 'components/sessionEstablisher.php';
 
 try {
   set_error_handler(function ($severity, $message, $file, $line) {
@@ -69,11 +73,6 @@ exit();
 
 get:
 
-require_once 'data/database.php';
-require_once 'components/navbar.php';
-require_once 'components/sessionEstablisher.php';
-require_once 'components/breadcrumbs/breadcrumbItem.php';
-require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
 
 function gethandlererror($name)
 {

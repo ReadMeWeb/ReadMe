@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   goto GET;
 }
 
-if(!try_session()){
+if (!try_session()) {
   throw new ErrorException("try_session ha fallito");
 }
 
@@ -58,27 +58,27 @@ exit();
 GET:
 // ========================================================================================================================
 
-  if (array_key_exists('mail', $_SESSION["user"])) {
-    header("Location: /");
-  }
+if (array_key_exists('mail', $_SESSION["user"])) {
+  header("Location: /");
+}
 
-  $page = file_get_contents("./components/layout.html");
-  $content = file_get_contents("./components/accedi.html");
+$page = file_get_contents("./components/layout.html");
+$content = file_get_contents("./components/accedi.html");
 
-  //TODO ripristinare la mail / password all'interno degli input
+//TODO ripristinare la mail / password all'interno degli input
 
-  $breadcrumbs = (new BreadcrumbsBuilder())
-    ->addBreadcrumb(new BreadcrumbItem("Home"))
-    ->addBreadcrumb(new BreadcrumbItem("Accedi", isCurrent: true))
-    ->build()
-    ->getBreadcrumbsHtml();
+$breadcrumbs = (new BreadcrumbsBuilder())
+  ->addBreadcrumb(new BreadcrumbItem("Home"))
+  ->addBreadcrumb(new BreadcrumbItem("Accedi", isCurrent: true))
+  ->build()
+  ->getBreadcrumbsHtml();
 
-  $page = str_replace("{{title}}", "Accedi", $page);
-  $page = str_replace("{{description}}", "Pagina di accesso di Orchestra", $page);
-  $page = str_replace("{{keywords}}", "Orchestra, musica classica, accesso, log in, sign in", $page);
-  $page = str_replace("{{menu}}", navbar(), $page);
-  $page = str_replace("{{breadcrumbs}}", $breadcrumbs, $page);
+$page = str_replace("{{title}}", "Accedi", $page);
+$page = str_replace("{{description}}", "Pagina di accesso di Orchestra", $page);
+$page = str_replace("{{keywords}}", "Orchestra, musica classica, accesso, log in, sign in", $page);
+$page = str_replace("{{menu}}", navbar(), $page);
+$page = str_replace("{{breadcrumbs}}", $breadcrumbs, $page);
 
-  $page = str_replace("{{content}}", $content, $page);
-  $page = str_replace("{{errori}}", $errori, $page);
-  echo $page;
+$page = str_replace("{{content}}", $content, $page);
+$page = str_replace("{{errori}}", $errori, $page);
+echo $page;

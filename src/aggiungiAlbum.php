@@ -91,10 +91,6 @@ try {
 GET:
 // ========================================================================================================================
 
-//TODO utilizzare un layout differente (?)
-$page = file_get_contents("./components/layout.html");
-$content = file_get_contents("./components/aggiungiAlbum.html");
-
 $conn = new Database();
 $aristi = implode(
   "\n",
@@ -108,6 +104,9 @@ $aristi = implode(
   )
 );
 $conn->close();
+
+//TODO utilizzare un layout differente (?)
+$content = file_get_contents("./components/aggiungiAlbum.html");
 $content = str_replace("{{artisti}}", $aristi, $content);
 
 //TODO aggiornare le breadcrumbs
@@ -116,6 +115,7 @@ $breadcrumbs = (new BreadcrumbsBuilder())
   ->build()
   ->getBreadcrumbsHtml();
 
+$page = file_get_contents("./components/layout.html");
 $page = str_replace("{{title}}", "Aggiungi Album", $page);
 $page = str_replace("{{description}}", "Pagina admin di Orchestra per aggiungere album", $page);
 $page = str_replace("{{keywords}}", "", $page);

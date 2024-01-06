@@ -34,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 // ========================================================================================================================
 
 try {
-  // TODO aggiornare quando la copertina verrà usata
   [
     "artista" => $artista,
     "nome" => $nome,
@@ -56,6 +55,7 @@ try {
     }
   };
 
+  // Il numero scelto è arbitrario, può essere rimosso
   if ($_FILES["copertina"]["size"] > 500000) {
     throw new Exception("File tropppo grande");
   }
@@ -69,12 +69,21 @@ try {
   }
   $conn->close();
 
-
-  $_SESSION['addAlbumSuccess'] = new Exception("Album $nome aggiunto con successo");
-  header("Location: /aggiungiAlbum.php");
+  $successo = '
+    <h1>Successo</h1>
+    <ul class="successo">
+      <li>Album ' . $nome . ' aggiunto con successo</li>
+    </ul>
+  ';
+  $errori = '';
 } catch (Exception $e) {
-  $_SESSION['addAlbumErrors'] = $e;
-  header("Location: /aggiungiAlbum.php");
+  $successo = '';
+  $errori = '
+    <h1>Errore</h1>
+    <ul class="error">
+      <li>' . (strip_tags($e->getMessage())) . '</li>
+    </ul>
+  ';
 }
 
 exit();

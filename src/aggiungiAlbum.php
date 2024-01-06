@@ -16,12 +16,14 @@ if (!try_session()) {
 }
 
 
+// TODO pagina accessibile solo da utenti admin
 // TODO - accesso con reindirizzamento - dovrebbe bastare aggiungere $_SESSION['redirection'] = <questa pagina>
 // if (!is_user_signed_in()) {
 //   redirect('/accedi.php');
 // }
 
 $errori = '';
+$successo = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   goto GET;
@@ -91,7 +93,6 @@ function gethandlererror($name)
   return false;
 }
 
-//TODO pagina accessibile solo da utenti admin
 
 //TODO utilizzare un layout differente (?)
 $page = file_get_contents("./components/layout.html");

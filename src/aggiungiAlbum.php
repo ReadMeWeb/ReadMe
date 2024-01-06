@@ -15,7 +15,6 @@ if (!try_session()) {
   throw new ErrorException("try_session ha fallito");
 }
 
-
 // TODO pagina accessibile solo da utenti admin
 // TODO - accesso con reindirizzamento - dovrebbe bastare aggiungere $_SESSION['redirection'] = <questa pagina>
 // if (!is_user_signed_in()) {
@@ -88,22 +87,9 @@ try {
   ';
 }
 
-exit();
-
 // ========================================================================================================================
 GET:
 // ========================================================================================================================
-
-function gethandlererror($name)
-{
-  if (array_key_exists($name, $_SESSION)) {
-    $e = $_SESSION[$name];
-    unset($_SESSION[$name]);
-    return $e;
-  }
-  return false;
-}
-
 
 //TODO utilizzare un layout differente (?)
 $page = file_get_contents("./components/layout.html");
@@ -124,19 +110,6 @@ $aristi = implode(
 $conn->close();
 $content = str_replace("{{artisti}}", $aristi, $content);
 
-//TODO generalizzare il nome degli errori
-//TODO ripristinare i valori immessi in seguito a un errore
-$errori = "";
-if ($e = gethandlererror('addAlbumErrors')) {
-  $errori = "<h1>Errore</h1>
-      <p class='error'>" . (strip_tags($e->getmessage())) . "</p>";
-}
-if ($e = gethandlererror('addAlbumSuccess')) {
-  $errori = "<h1>Successo</h1>
-      <p class='error'>" . (strip_tags($e->getmessage())) . "</p>";
-}
-
-
 //TODO aggiornare le breadcrumbs
 $breadcrumbs = (new BreadcrumbsBuilder())
   ->addBreadcrumb(new BreadcrumbItem("Home"))
@@ -151,4 +124,5 @@ $page = str_replace("{{breadcrumbs}}", $breadcrumbs, $page);
 
 $page = str_replace("{{content}}", $content, $page);
 $page = str_replace("{{errori}}", $errori, $page);
+$page = str_replace("{{successo}}", $successo, $page);
 echo $page;

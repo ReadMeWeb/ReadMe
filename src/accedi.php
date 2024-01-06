@@ -19,6 +19,8 @@ if(!try_session()){
   throw new ErrorException("try_session ha fallito");
 }
 
+$errori = '';
+
 // ========================================================================================================================
 // POST
 // ========================================================================================================================
@@ -42,8 +44,12 @@ try {
   header("Location: /");
 } catch (Exception $e) {
   //TODO reindirizzamento a una pagina più appropriata (o almeno gestione dell'errore)
-  $_SESSION['loginErrors'] = $e;
-  header("Location: /accedi.php");
+  $errori = '<h1>Errore</h1>
+    <ul class="error">
+  <li>' . (strip_tags($e->getMessage())) . '</li>
+    </ul>
+  ';
+  goto GET;
 }
 
 exit();
@@ -68,11 +74,6 @@ function gethandlererror($name)
 
   $page = file_get_contents("./components/layout.html");
   $content = file_get_contents("./components/accedi.html");
-  $errori = "";
-  if ($e = gethandlererror('loginErrors')) {
-    $errori = "<h1>Errore</h1>
-      <p class='error'>" . (strip_tags($e->getmessage())) . "</p>";
-  }
 
   //TODO ripristinare la mail / password all'interno degli input
 

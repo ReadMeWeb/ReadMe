@@ -56,6 +56,8 @@ try {
   };
 
   // Il numero scelto è arbitrario, può essere rimosso
+  // se non da rimuovere:
+  // TODO : feed forward - avviso dell'utente che il file può essere grande solo tot 
   if ($_FILES["copertina"]["size"] > 500000) {
     throw new Exception("File tropppo grande");
   }

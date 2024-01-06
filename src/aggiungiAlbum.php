@@ -97,10 +97,10 @@ $conn = new Database();
 $artisti = implode(
   "\n",
   array_map(
-    function ($coll) use($artista) {
+    function ($coll) use ($artista) {
       ["id" => $id, "name" => $nome] = $coll;
       $nome = strip_tags($nome);
-      $selection = ($id == $artista) ? 'selected' : '' ;
+      $selection = ($id == $artista) ? 'selected' : '';
       return "<option $selection value=\"$id\">$nome</option>";
     },
     $conn->artisti()

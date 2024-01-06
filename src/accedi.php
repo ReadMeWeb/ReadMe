@@ -6,6 +6,11 @@ require_once 'components/navbar.php';
 require_once 'components/sessionEstablisher.php';
 require_once 'data/database.php';
 
+set_error_handler(function ($severity, $message, $file, $line) {
+  throw new \ErrorException($message, $severity, $severity, $file, $line);
+});
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   goto GET;
 }
@@ -19,10 +24,6 @@ if(!try_session()){
 // ========================================================================================================================
 
 try {
-  set_error_handler(function ($severity, $message, $file, $line) {
-    throw new \ErrorException($message, $severity, $severity, $file, $line);
-  });
-
   [
     "name" => $nome,
     "password" => $password,

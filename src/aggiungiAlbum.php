@@ -21,8 +21,7 @@ if (!try_session()) {
 //   redirect('/accedi.php');
 // }
 
-$errori = '';
-$successo = '';
+$risultato = '';
 $artista = '';
 $nome = '';
 
@@ -72,16 +71,14 @@ try {
   }
   $conn->close();
 
-  $successo = '
+  $risultato = '
     <h1>Successo</h1>
     <ul class="successo">
-      <li>Album ' . $nome . ' aggiunto con successo</li>
+      <li>Album ' . (strip_tags($nome)) . ' aggiunto con successo</li>
     </ul>
   ';
-  $errori = '';
 } catch (Exception $e) {
-  $successo = '';
-  $errori = '
+  $risultato = '
     <h1>Errore</h1>
     <ul class="error">
       <li>' . (strip_tags($e->getMessage())) . '</li>
@@ -126,6 +123,5 @@ $page = str_replace("{{menu}}", navbar(), $page);
 $page = str_replace("{{breadcrumbs}}", $breadcrumbs, $page);
 
 $page = str_replace("{{content}}", $content, $page);
-$page = str_replace("{{errori}}", $errori, $page);
-$page = str_replace("{{successo}}", $successo, $page);
+$page = str_replace("{{risultato}}", $risultato, $page);
 echo $page;

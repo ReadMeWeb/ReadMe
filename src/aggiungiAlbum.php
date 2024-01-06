@@ -23,6 +23,8 @@ if (!try_session()) {
 
 $errori = '';
 $successo = '';
+$artista = '';
+$nome = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   goto GET;
@@ -92,22 +94,23 @@ GET:
 // ========================================================================================================================
 
 $conn = new Database();
-$aristi = implode(
+$artisti = implode(
   "\n",
   array_map(
-    function ($coll) {
+    function ($coll) use($artista) {
       ["id" => $id, "name" => $nome] = $coll;
       $nome = strip_tags($nome);
-      return "<option value=\"$id\">$nome</option>";
+      $selection = ($id == $artista) ? 'selected' : '' ;
+      return "<option $selection value=\"$id\">$nome</option>";
     },
     $conn->artisti()
   )
 );
 $conn->close();
 
-//TODO utilizzare un layout differente (?)
 $content = file_get_contents("./components/aggiungiAlbum.html");
-$content = str_replace("{{artisti}}", $aristi, $content);
+$content = str_replace("{{artisti}}", $artisti, $content);
+$content = str_replace("{{nome}}", $nome, $content);
 
 //TODO aggiornare le breadcrumbs
 $breadcrumbs = (new BreadcrumbsBuilder())

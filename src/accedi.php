@@ -10,17 +10,16 @@ set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);
 });
 
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  goto GET;
-}
-
 if (!try_session()) {
   throw new ErrorException("try_session ha fallito");
 }
 
 $errori = '';
 $nome = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  goto GET;
+}
 
 // ========================================================================================================================
 // POST

@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 try {
 
   [
-    "username" => $nome,
+    "name" => $nome,
     "password" => $password,
   ] = $_POST;
 
@@ -63,10 +63,8 @@ try {
 GET:
 // ========================================================================================================================
 
-$page = file_get_contents("./components/layout.html");
 $content = file_get_contents("./components/registrati.html");
-
-//TODO ripristinare nome utente / mail / password all'interno degli input
+$content = str_replace('{{nome}}',$nome,$content);
 
 $breadcrumbs = (new BreadcrumbsBuilder())
   ->addBreadcrumb(new BreadcrumbItem("Home"))
@@ -74,6 +72,7 @@ $breadcrumbs = (new BreadcrumbsBuilder())
   ->build()
   ->getBreadcrumbsHtml();
 
+$page = file_get_contents("./components/layout.html");
 $page = str_replace("{{title}}", "Registrati", $page);
 $page = str_replace("{{description}}", "Pagina di registrazione di Orchestra", $page);
 $page = str_replace("{{keywords}}", "Orchestra, musica classica, registrazione, sign up", $page);

@@ -9,12 +9,12 @@ try {
 
   try_session();
   [
-    "mail" => $mail,
+    "name" => $nome,
     "password" => $password,
   ] = $_POST;
 
   $conn = new Database();
-  $res = $conn->user_with_mail_password($mail,$password);
+  $res = $conn->user_with_mail_password($nome,$password);
   $conn->close();
   if (count($res) == 0) {
     throw new Exception("Nessun utente trovato. Le credenziali potrebbero essere errate.");

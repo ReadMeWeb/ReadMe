@@ -1,5 +1,5 @@
 <?php
-require_once "../components/sessionEstablisher.php";
+require_once 'components/sessionEstablisher.php';
 
 $cleanup_results = [
   try_session(),

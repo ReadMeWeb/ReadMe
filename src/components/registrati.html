@@ -1,10 +1,11 @@
 <main>
   {{errori}}
-  <form action="/handlers/registrati.php" method="post">
+  <form action="registrati.php" method="post">
     <fieldset>
       <legend>Registrazione</legend>
-      <label for="username">Nome Utente</label>
-      <input tabindex="1" id="username" name="username" type="text" placeholder="Digita il tuo nome utente">
+      <label for="name">Nome Utente</label>
+      <input tabindex="1" id="name" name="name" type="text" placeholder="Digita il tuo nome utente"
+        value="{{nome}}">
 
       <label for="password" lang="en">Password</label>
       <input tabindex="2" id="password" name="password" required type="password" placeholder="Digita la tua password"

@@ -58,11 +58,8 @@ try {
     }
   };
 
-  // Il numero scelto è arbitrario, può essere rimosso
-  // se non da rimuovere:
-  // TODO : feed forward - avviso dell'utente che il file può essere grande solo tot 
-  if ($_FILES["copertina"]["size"] > 500000) {
-    throw new Exception("File tropppo grande");
+  if ($_FILES["copertina"]["size"] > 524288) {
+    throw new Exception("Copertina tropppo grande");
   }
 
   if (!move_uploaded_file($_FILES["copertina"]["tmp_name"], "$dir/$artista-$nome")) {

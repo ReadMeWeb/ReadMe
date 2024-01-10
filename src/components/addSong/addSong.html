@@ -1,0 +1,44 @@
+<h2>Aggiungi Canzone</h2>
+<h3>Inserimento Dati Canzone</h3>
+{{errors}}
+<h4>Artista Selezionato</h4>
+<p>{{artist_name}}</p>
+<form enctype="multipart/form-data" action="/handlers/addsong.php" method="post">
+    <label for="title">Titolo</label><br />
+    <input
+        id="title"
+        name="title"
+        type="text"
+        value="{{song_title}}"
+        placeholder="Digita il titolo della canzone"
+        required
+    /><br />
+
+    <input id="artist_id" name="artist_id" value="{{artist_id}}" type="text" hidden/>
+
+    <label for="album">Album</label><br />
+    <select name="album" id="album">
+        <option value="NULL">Singolo (Nessun Album)</option>
+        {{albums}}</select
+    ><br />
+
+    <label for="audio_file"><span lang="en">File</span> Audio</label><br />
+    <input
+        id="audio_file"
+        name="audio_file"
+        required
+        type="file"
+        placeholder="File audio della canzone"
+    /><br />
+
+    <label for="graphic_file">Immagine Copertina</label><br />
+    <input
+        id="graphic_file"
+        name="graphic_file"
+        required
+        type="file"
+        placeholder="Immagine di copertina della canzone"
+    /><br />
+    <input type="submit" value="Inserisci Canzone" />
+</form>
+<a href="/selectartist.php">Torna alla selezione dell'artista</a>

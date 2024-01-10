@@ -1,0 +1,10 @@
+<h2>Aggiungi Canzone</h2>
+<h3>Selezione Artista</h3>
+{{errors}}
+<form action="addsong.php" method="post">
+    <label for="artist">Artista</label><br />
+    <select name="artist" id="artist">
+        {{artists}}
+    </select>
+    <input type="submit" value="Prosegui" />
+</form>

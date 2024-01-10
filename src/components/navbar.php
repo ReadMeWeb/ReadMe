@@ -14,7 +14,8 @@ function navbar(): string{
         array("chisiamo.php","Chi Siamo",array("UNREGISTERED")),
         array("accedi.php","Accedi",array("UNREGISTERED")),
         array("registrati.php","Registrati",array("UNREGISTERED")),
-        array("aggiungiArtista.php", "Aggiungi Artista", array("ADMIN"))
+        array("aggiungiArtista.php", "Aggiungi Artista", array("ADMIN")),
+        array("aggiungiAlbum.php", "Aggiungi Album", array("ADMIN"))
     );
     $selectedLink = basename($_SERVER['PHP_SELF']);
     $navLinks = "";

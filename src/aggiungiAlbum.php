@@ -15,11 +15,14 @@ if (!try_session()) {
   throw new ErrorException("try_session ha fallito");
 }
 
-// TODO pagina accessibile solo da utenti admin
-// TODO - accesso con reindirizzamento - dovrebbe bastare aggiungere $_SESSION['redirection'] = <questa pagina>
-// if (!is_user_signed_in()) {
-//   redirect('/accedi.php');
-// }
+if (is_user_signed_in()) {
+  redirect('/');
+}
+
+if (is_not_signed_in()) {
+  $_SESSION['redirection'] = "/aggiungiAlbum.php";
+  redirect('/accedi.php');
+}
 
 $risultato = '';
 $artista = '';
@@ -55,11 +58,8 @@ try {
     }
   };
 
-  // Il numero scelto è arbitrario, può essere rimosso
-  // se non da rimuovere:
-  // TODO : feed forward - avviso dell'utente che il file può essere grande solo tot 
-  if ($_FILES["copertina"]["size"] > 500000) {
-    throw new Exception("File tropppo grande");
+  if ($_FILES["copertina"]["size"] > 524288) {
+    throw new Exception("Copertina tropppo grande");
   }
 
   if (!move_uploaded_file($_FILES["copertina"]["tmp_name"], "$dir/$artista-$nome")) {
@@ -111,9 +111,9 @@ $content = file_get_contents("./components/aggiungiAlbum.html");
 $content = str_replace("{{artisti}}", $artisti, $content);
 $content = str_replace("{{nome}}", $nome, $content);
 
-//TODO aggiornare le breadcrumbs
 $breadcrumbs = (new BreadcrumbsBuilder())
   ->addBreadcrumb(new BreadcrumbItem("Home"))
+  ->addBreadcrumb(new BreadcrumbItem("Aggiungi Album", isCurrent: true))
   ->build()
   ->getBreadcrumbsHtml();
 

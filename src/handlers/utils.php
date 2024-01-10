@@ -6,9 +6,19 @@ function redirect($url): void
   exit();
 }
 
+function is_not_signed_in(): bool
+{
+  return $_SESSION['user']['status'] === 'UNREGISTERED';
+}
+
 function is_user_signed_in(): bool
 {
-  return $_SESSION['user']['status'] !== 'UNREGISTERED';
+  return $_SESSION['user']['status'] === 'USER';
+}
+
+function is_admin_signed_in(): bool
+{
+  return $_SESSION['user']['status'] === 'ADMIN';
 }
 
 function extract_from_array_else($key, $array, $otherwise)

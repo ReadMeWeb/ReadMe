@@ -15,7 +15,7 @@ if (!try_session()) {
   throw new ErrorException("try_session ha fallito");
 }
 
-if (!is_not_signed_in()) {
+if (is_user_signed_in() || is_admin_signed_in()) {
   redirect('/');
 }
 

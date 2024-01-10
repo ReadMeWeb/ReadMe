@@ -111,9 +111,9 @@ $content = file_get_contents("./components/aggiungiAlbum.html");
 $content = str_replace("{{artisti}}", $artisti, $content);
 $content = str_replace("{{nome}}", $nome, $content);
 
-//TODO aggiornare le breadcrumbs
 $breadcrumbs = (new BreadcrumbsBuilder())
   ->addBreadcrumb(new BreadcrumbItem("Home"))
+  ->addBreadcrumb(new BreadcrumbItem("Aggiungi Album", isCurrent: true))
   ->build()
   ->getBreadcrumbsHtml();
 

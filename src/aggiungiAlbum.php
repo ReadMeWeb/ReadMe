@@ -15,11 +15,14 @@ if (!try_session()) {
   throw new ErrorException("try_session ha fallito");
 }
 
-// TODO pagina accessibile solo da utenti admin
-// TODO - accesso con reindirizzamento - dovrebbe bastare aggiungere $_SESSION['redirection'] = <questa pagina>
-// if (!is_user_signed_in()) {
-//   redirect('/accedi.php');
-// }
+if (is_user_signed_in()) {
+  redirect('/');
+}
+
+if (is_not_signed_in()) {
+  $_SESSION['redirection'] = "/aggiungiAlbum.php";
+  redirect('/accedi.php');
+}
 
 $risultato = '';
 $artista = '';

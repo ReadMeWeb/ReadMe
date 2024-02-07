@@ -2,8 +2,6 @@
 
 namespace Pangine;
 
-use mysql_xdevapi\Exception;
-
 class Pangine{
     private array $indexer;
 
@@ -13,10 +11,10 @@ class Pangine{
     public function execute(): void{
         ksort($this->indexer);
         try {
-            foreach ($this->indexer as $key => $renderer){
+            foreach ($this->indexer as $renderer){
                 $renderer();
             }
-        }catch (Exception $e){
+        }catch (PangineValidationError $e){
 
         }
     }
@@ -102,18 +100,75 @@ class Pangine{
     }
 }
 
-class PangineValidationError{
-    
+class PangineValidationError extends \Exception {
+    private array $fieldsWithErrors;
+
+    public function getFieldsWithErrors(): array{
+        return $this->fieldsWithErrors;
+    }
+
+    public function __construct(){
+        $this->fieldsWithErrors = array();
+        parent::__construct(json_encode($this->fieldsWithErrors));
+    }
+
+    public function add_unvalidated_field(string $fieldName, string $unvalidMessage): void{
+        $this->fieldsWithErrors[$fieldName] = $unvalidMessage;
+    }
+    public function found_errors(): bool{
+        return count($this->fieldsWithErrors) > 0;
+    }
+
 }
 
-class PangineAuthError{
-
+class PangineAuthError extends \Exception {
 }
 
 class PangineValidator{
+    private string $method;
+    private array $configs;
+    public function __constrct(string $method,array $configs){
+       $this->configs = $configs;
+       $this->method = $method;
+    }
 
+    public function validate(): void{
+        $error = new PangineValidationError();
+        $method = null;
+        if($this->method == "GET"){
+            $method = $_GET;
+        }else{
+            $method = $_POST;
+        }
+        foreach($this->configs as $field => $config){
+            if(isset($method[$field])){
+                //TODO: inserire codice che prendendo la configurazione, valida il campo, e aggiunge eventuali errori
+            }else{
+                $error->add_unvalidated_field($field,"Questo campo è da riempire.");
+            }
+        }
+        if($error->found_errors()){
+            throw $error;
+        }
+    }
 }
 
 class PangineAuthenticator{
-
+    private function try_session(): bool{
+        if(!isset($_SESSION)){
+            $session_return = session_start();
+            if(!isset($_SESSION["user"])){
+                $_SESSION["user"]["status"] = "UNREGISTERED";
+            }
+            return $session_return;
+        }
+        return true;
+    }
+    public function authenticate(array $allowedStatuses): bool{
+        $session_status = $this->try_session();
+        if (!in_array($_SESSION["user"]["status"],$allowedStatuses)){
+            throw new PangineAuthError("Non hai i permessi per accedere alla pagina richiesta.");
+        }
+        return $session_status;
+    }
 }

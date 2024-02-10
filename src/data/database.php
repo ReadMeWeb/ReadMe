@@ -60,7 +60,7 @@ class  Database
   // ritorno: array vuoto                 -> credenziali invalide o non registrate
   //          array con singolo elemento  -> utente ricercato
   public function user_with_mail_password(string $nome, string $password): array {
-    $query =  "SELECT username,status FROM Users WHERE username = ? AND password = ? LIMIT 1;";
+    $query =  "SELECT username,password,status FROM Users WHERE username = ? AND password = ? LIMIT 1;";
     return $this->execute_query($query,$nome,$password);
   }
 
@@ -80,6 +80,7 @@ class  Database
     $this->execute_query($query, $name, $password);
     return $this->user_exists($name);
   }
+
 
   // ritorna gli artisti nelle colonne id,nome
   public function artisti(): array {
@@ -168,6 +169,11 @@ class  Database
             return true;
         }
         return false;
+    }
+
+    public function update_user_info(string $username, string $password){
+       $res = $this->execute_query('UPDATE Users SET username = ?, password = ? WHERE username = ?',$username,$password,$username);
+       return $res;
     }
 
   // chiude la connessione

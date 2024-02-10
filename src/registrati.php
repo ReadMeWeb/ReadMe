@@ -49,7 +49,7 @@ try {
   $conn->close();
 
   $_POST = ['name' => $nome, 'password' => $password];
-  require_once('accedi.php');
+  require_once('accedi.php'); // TODO: cos'è sta roba?
   exit();
 } catch (Exception $e) {
   $errori = '

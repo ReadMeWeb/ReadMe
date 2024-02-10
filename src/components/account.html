@@ -1,0 +1,21 @@
+<div>
+    <div id="operations">
+        <ul>
+            <li><a href="/Pages/account.php">Informazioni</a></li>
+            <li><a href="/Pages/account.php?update=true">Modifica</a></li>
+            <li><a href="/Pages/exit.php">Esci</a></li>
+        </ul>
+    </div>
+    <div id="content">
+        <form action="/Pages/account.php" method="POST">
+            <fieldset>
+                <legend>Informazioni account</legend>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="{{username-value}}" disabled>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" value="{{password-value}}" disabled>
+                <input type="submit" name="update" value="Modifica">
+            </fieldset>
+        </form>
+    </div>
+</div>

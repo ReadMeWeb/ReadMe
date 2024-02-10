@@ -134,7 +134,6 @@ class PangineValidator{
 
     public function validate(): void{
         $error = new PangineValidationError();
-        $method = null;
         if($this->method == "GET"){
             $method = $_GET;
         }else{

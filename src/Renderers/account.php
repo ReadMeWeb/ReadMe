@@ -76,7 +76,18 @@ $get_edit_account = function () {
 
 $post_edit_account = function (){
     (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
-    $expectedParameters = array("username"=>null,"password"=>null);
+    $expectedParameters = array(
+        "username"=> (new Pangine\PangineValidatorConfig(
+            notEmpty: true,
+            minLength: 6,
+            maxLength: 40
+        )),
+        "password"=>(new Pangine\PangineValidatorConfig(
+            notEmpty: true,
+            minLength: 8,
+            maxLength: 20
+        )),
+    );
     $validator = new Pangine\PangineValidator("POST",$expectedParameters);
     $validator->validate();
     $database = new Database();

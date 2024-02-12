@@ -1,4 +1,5 @@
 <?php
+
 require_once "../components/breadcrumbs/breadcrumbsBuilder.php";
 require_once "../components/breadcrumbs/breadcrumbItem.php";
 require_once "../components/navbar.php";
@@ -6,7 +7,7 @@ require_once "../Pangine/Pangine.php";
 require_once "../data/database.php";
 
 $get_account = function () {
-    (new \Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
+    (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
 
     $layout = file_get_contents("../components/layoutLogged.html");
     $title = "Account";
@@ -38,9 +39,9 @@ $get_account = function () {
     echo $layout;
 };
 
-$edit_account = function () {
+$get_edit_account = function () {
     $database = new Database();
-    (new \Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
+    (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
 
     $layout = file_get_contents("../components/layoutLogged.html");
     $title = "Account";
@@ -70,7 +71,20 @@ $edit_account = function () {
             $_SESSION["user"]["password"]),
         $layout);
     echo $layout;
-    var_dump($_SERVER['REQUEST_URI']);
-    var_dump($database->update_user_info($_SESSION["user"]["username"], $_SESSION["user"]["password"]));
     $database->close();
+};
+
+$post_edit_account = function (){
+    (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
+    $expectedParameters = array("username"=>null,"password"=>null);
+    $validator = new Pangine\PangineValidator("POST",$expectedParameters);
+    $validator->validate();
+    $database = new Database();
+    $result = $database->update_user_info($_SESSION["user"]["username"],$_POST["username"],$_POST["password"]);
+    $database->close();
+    if($result){
+        $_SESSION["user"]["username"] = $_POST["username"];
+        $_SESSION["user"]["password"] = $_POST["password"];
+        header("Location: /Pages/account.php");
+    }
 };

@@ -171,8 +171,8 @@ class  Database
         return false;
     }
 
-    public function update_user_info(string $username, string $password){
-       $res = $this->execute_query('UPDATE Users SET username = ?, password = ? WHERE username = ?',$username,$password,$username);
+    public function update_user_info(string $oldUsername, string $newUsername, string $newPassword){
+       $res = $this->execute_query('UPDATE Users SET username = ?, password = ? WHERE username = ?',$newUsername,$newPassword,$oldUsername);
        return $res;
     }
 

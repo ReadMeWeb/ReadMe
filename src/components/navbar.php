@@ -20,7 +20,7 @@ function navbar(): string
         array("/selectartist.php", "Aggiungi Canzone", array("ADMIN")),
         array("/Pages/account.php", "Account", array("USER","ADMIN")),
     );
-    $selectedLink = basename($_SERVER['PHP_SELF']);
+    $selectedLink = strtok($_SERVER['REQUEST_URI'],'?');
     $navLinks = "";
     foreach ($links as $linkTriple) {
         $link = $linkTriple[0];

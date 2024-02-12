@@ -20,7 +20,7 @@ CREATE TABLE Playlist (
     description VARCHAR(500),
     file_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (user, name),
-    FOREIGN KEY (user) REFERENCES Users(username)
+    FOREIGN KEY (user) REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Gestire la clausola lato server per far si che gli admin non possano creare playlist
 
@@ -39,7 +39,7 @@ CREATE TABLE Album (
    artist_id INT NOT NULL,
    file_name VARCHAR(255) NOT NULL,
    CONSTRAINT unique_fields UNIQUE (name, artist_id),
-   FOREIGN KEY (artist_id) REFERENCES Artist(id)
+   FOREIGN KEY (artist_id) REFERENCES Artist(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Codice SQL per creare la tabella Music
@@ -51,8 +51,8 @@ CREATE TABLE Music (
     album INT,
     added_date DATE NOT NULL DEFAULT (CURRENT_TIMESTAMP),
     PRIMARY KEY (producer, name),
-    FOREIGN KEY (producer) REFERENCES Artist(id),
-    FOREIGN KEY (album) REFERENCES Album(id)
+    FOREIGN KEY (producer) REFERENCES Artist(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (album) REFERENCES Album(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Codice SQL per creare la tabella Playlist_Music
@@ -62,8 +62,8 @@ CREATE TABLE Playlist_Music (
     music_producer INT NOT NULL,
     music_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (playlist_user, playlist_name, music_producer, music_name),
-    FOREIGN KEY (playlist_user, playlist_name) REFERENCES Playlist(user, name),
-    FOREIGN KEY (music_producer, music_name) REFERENCES Music(producer, name)
+    FOREIGN KEY (playlist_user, playlist_name) REFERENCES Playlist(user, name) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (music_producer, music_name) REFERENCES Music(producer, name) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Inserimento di esempio nella tabella Users

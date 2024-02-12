@@ -25,7 +25,7 @@ class Pangine{
                 exit(0);
             }
         };
-        $this->indexer["GET_0"] = $wrapper;
+        $this->indexer["1GET_0"] = $wrapper;
         return $this;
     }
     public function GET_read(callable $renderer): Pangine{
@@ -35,7 +35,7 @@ class Pangine{
                 exit(0);
             }
         };
-        $this->indexer["GET_3"] = $wrapper;
+        $this->indexer["1GET_3"] = $wrapper;
         return $this;
     }
     public function GET_update(callable $renderer): Pangine{
@@ -45,7 +45,7 @@ class Pangine{
                 exit(0);
             }
         };
-        $this->indexer["GET_1"] = $wrapper;
+        $this->indexer["1GET_1"] = $wrapper;
         return $this;
     }
     public function GET_delete(callable $renderer): Pangine{
@@ -55,7 +55,7 @@ class Pangine{
                 exit(0);
             }
         };
-        $this->indexer["GET_2"] = $wrapper;
+        $this->indexer["1GET_2"] = $wrapper;
         return $this;
     }
     public function POST_create(callable $renderer): Pangine{
@@ -65,7 +65,7 @@ class Pangine{
                 exit(0);
             }
         };
-        $this->indexer["POST_0"] = $wrapper;
+        $this->indexer["0POST_0"] = $wrapper;
         return $this;
     }
     public function POST_read(callable $renderer): Pangine{
@@ -75,7 +75,7 @@ class Pangine{
                 exit(0);
             }
         };
-        $this->indexer["POST_3"] = $wrapper;
+        $this->indexer["0POST_3"] = $wrapper;
         return $this;
     }
     public function POST_update(callable $renderer): Pangine{
@@ -85,7 +85,7 @@ class Pangine{
                 exit(0);
             }
         };
-        $this->indexer["POST_1"] = $wrapper;
+        $this->indexer["0POST_1"] = $wrapper;
         return $this;
     }
     public function POST_delete(callable $renderer): Pangine{
@@ -95,7 +95,7 @@ class Pangine{
                 exit(0);
             }
         };
-        $this->indexer["POST_2"] = $wrapper;
+        $this->indexer["0POST_2"] = $wrapper;
         return $this;
     }
 }
@@ -127,7 +127,7 @@ class PangineAuthError extends \Exception {
 class PangineValidator{
     private string $method;
     private array $configs;
-    public function __constrct(string $method,array $configs){
+    public function __construct(string $method,array $configs){
        $this->configs = $configs;
        $this->method = $method;
     }

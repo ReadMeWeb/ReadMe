@@ -200,11 +200,13 @@ class PangineValidatorConfig
     private int $maxLength;
     private int $minVal;
     private int $maxVal;
+    private bool $isImage;
 
-    public function __construct(bool $notEmpty = false, bool $notZero = false, int $minLength = 0, int $maxLength = -1, int $minVal = 0, int $maxVal = -1)
+    public function __construct(bool $notEmpty = false, bool $notZero = false, int $minLength = 0, int $maxLength = -1, int $minVal = 0, int $maxVal = -1, bool $isImage = false)
     {
         $this->notZero = $notZero;
         $this->notEmpty = $notEmpty;
+        $this->isImage = $isImage;
         $this->minLength = $minLength;
         $this->maxLength = $maxLength;
         $this->minVal = $minVal;
@@ -213,6 +215,15 @@ class PangineValidatorConfig
 
     public function validate(string $field): string
     {
+        if($this->isImage){
+            $img_path = trim($_FILES[$field]['tmp_name']);
+            $img_type = exif_imagetype($img_path);
+            if(!$img_type) {
+                return "Il file caricato non è un immagine.";
+            }else if(!in_array($img_type, array(IMAGETYPE_JPEG, IMAGETYPE_PNG))) {
+                return "Il file caricato non è nel formato corretto (supportati .jpeg e .png).";
+            }
+        }
         if (is_numeric($field)) {
             if ($this->notZero && intval($field) == 0) {
                 return "Questo campo non può essere uguale a 0.";

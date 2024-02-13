@@ -14,6 +14,7 @@ class Pages
         "Informazioni Brano" => "/addsong.php",
         "Canzone Aggiunta" => "/successaddsong.php",
         "Account" => "/Pages/account.php",
-        "Account (Modifica)" => "/Pages/account?update=true.php"
+        "Account (Modifica)" => "/Pages/account?update=true.php",
+        "Permessi insufficienti" => "/Pages/unallowed.php"
     ];
 }

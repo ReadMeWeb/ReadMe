@@ -24,7 +24,7 @@ class Pangine
             echo json_encode($e->get_errors());
             exit(0);
         } catch (PangineAuthError $e) {
-            echo "PERMESSI NON SUFFICIENTI";
+            header("Location: /Pages/unallowed.php");
             exit(0);
         }
     }

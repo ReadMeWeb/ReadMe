@@ -1,5 +1,5 @@
 <?php
-
+require_once './Pangine/HTMLBuilder.php';
 require_once 'components/breadcrumbs/breadcrumbItem.php';
 require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
 require_once 'components/navbar.php';
@@ -59,22 +59,18 @@ try {
 GET:
 // ========================================================================================================================
 
-$content = file_get_contents("./components/accedi.html");
-$content = str_replace('{{nome}}', $nome, $content);
-
-$breadcrumbs = (new BreadcrumbsBuilder())
-  ->addBreadcrumb(new BreadcrumbItem("Home"))
-  ->addBreadcrumb(new BreadcrumbItem("Accedi", isCurrent: true))
-  ->build()
-  ->getBreadcrumbsHtml();
-
-$page = file_get_contents("./components/layout.html");
-$page = str_replace("{{title}}", "Accedi", $page);
-$page = str_replace("{{description}}", "Pagina di accesso di Orchestra", $page);
-$page = str_replace("{{keywords}}", "Orchestra, musica classica, accesso, log in, sign in", $page);
-$page = str_replace("{{menu}}", navbar(), $page);
-$page = str_replace("{{breadcrumbs}}", $breadcrumbs, $page);
-
-$page = str_replace("{{content}}", $content, $page);
-$page = str_replace("{{errori}}", $errori, $page);
-echo $page;
+echo (new HTMLBuilder('./components/layout.html'))
+  ->set('title', 'Accedi')
+  ->set('description', 'Pagina di accesso di Orchestra')
+  ->set('keywords', 'Orchestra, musica classica, accesso, log in, sign in')
+  ->set('menu', navbar())
+  ->set('breadcrumbs', (new BreadcrumbsBuilder())
+    ->addBreadcrumb(new BreadcrumbItem("Home"))
+    ->addBreadcrumb(new BreadcrumbItem("Accedi", isCurrent: true))
+    ->build()
+    ->getBreadcrumbsHtml())
+  ->set('content', (new HTMLBuilder('./components/accedi.html'))
+    ->set('nome', $nome)
+    ->set('errori', $errori)
+    ->build())
+  ->build();

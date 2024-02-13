@@ -55,7 +55,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $db->close();
 
         if($res) {
-            header('Location: catalogo.php');
+            header('Location: /Pages/catalogo.php');
             exit;
         }
         else {

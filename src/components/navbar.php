@@ -11,7 +11,7 @@ function navbar(): string
     //      - USER;
     //      - ADMIN.
     $links = array(
-        array("/catalogo.php","Catalogo",array("UNREGISTERED","USER","ADMIN")),
+        array("/Pages/catalogo.php","Catalogo",array("UNREGISTERED","USER","ADMIN")),
         array("/chisiamo.php","Chi Siamo",array("UNREGISTERED")),
         array("/accedi.php","Accedi",array("UNREGISTERED")),
         array("/registrati.php","Registrati",array("UNREGISTERED")),

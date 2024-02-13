@@ -7,7 +7,7 @@ class Pages
         "Chi Siamo" => "/chisiamo.php",
         "Accedi" => "/accedi.php",
         "Registrati" => "/registrati.php",
-        "Catalogo" => "/catalogo.php",
+        "Catalogo" => "/Pages/catalogo.php",
         "Aggiungi Artista" => "/aggiungiArtista.php",
         "Aggiungi Album" => "/aggiungiAlbum.php",
         "Aggiungi Canzone" => "/selectartist.php",

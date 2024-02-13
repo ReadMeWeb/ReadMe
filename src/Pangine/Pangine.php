@@ -1,16 +1,15 @@
 <?php
 
 namespace Pangine;
+
 require_once "../components/sessionEstablisher.php";
 
-class Pangine
-{
-    private array $indexer;
+class Pangine {
+  private array $indexer;
 
-    public function __construct()
-    {
-        $this->indexer = [];
-    }
+  public function __construct() {
+    $this->indexer = [];
+  }
 
     public function execute(): void
     {
@@ -30,102 +29,95 @@ class Pangine
             exit(0);
         }
     }
+  
 
-    public function GET_create(callable $renderer): Pangine
-    {
-        $wrapper = function () use ($renderer): void {
-            if (isset($_GET["create"])) {
-                $renderer();
-                exit(0);
-            }
-        };
-        $this->indexer["1GET_0"] = $wrapper;
-        return $this;
-    }
+  public function GET_create(callable $renderer): Pangine {
+    $wrapper = function () use ($renderer): void {
+      if (isset($_GET["create"])) {
+        $renderer();
+        exit(0);
+      }
+    };
+    $this->indexer["1GET_0"] = $wrapper;
+    return $this;
+  }
 
-    public function GET_read(callable $renderer): Pangine
-    {
-        $wrapper = function () use ($renderer): void {
-            if (isset($_GET)) {
-                $renderer();
-                exit(0);
-            }
-        };
-        $this->indexer["1GET_3"] = $wrapper;
-        return $this;
-    }
+  public function GET_read(callable $renderer): Pangine {
+    $wrapper = function () use ($renderer): void {
+      if (isset($_GET)) {
+        $renderer();
+        exit(0);
+      }
+    };
+    $this->indexer["1GET_3"] = $wrapper;
+    return $this;
+  }
 
-    public function GET_update(callable $renderer): Pangine
-    {
-        $wrapper = function () use ($renderer): void {
-            if (isset($_GET["update"])) {
-                $renderer();
-                exit(0);
-            }
-        };
-        $this->indexer["1GET_1"] = $wrapper;
-        return $this;
-    }
+  public function GET_update(callable $renderer): Pangine {
+    $wrapper = function () use ($renderer): void {
+      if (isset($_GET["update"])) {
+        $renderer();
+        exit(0);
+      }
+    };
+    $this->indexer["1GET_1"] = $wrapper;
+    return $this;
+  }
 
-    public function GET_delete(callable $renderer): Pangine
-    {
-        $wrapper = function () use ($renderer): void {
-            if (isset($_GET["delete"])) {
-                $renderer();
-                exit(0);
-            }
-        };
-        $this->indexer["1GET_2"] = $wrapper;
-        return $this;
-    }
+  public function GET_delete(callable $renderer): Pangine {
+    $wrapper = function () use ($renderer): void {
+      if (isset($_GET["delete"])) {
+        $renderer();
+        exit(0);
+      }
+    };
+    $this->indexer["1GET_2"] = $wrapper;
+    return $this;
+  }
 
-    public function POST_create(callable $renderer): Pangine
-    {
-        $wrapper = function () use ($renderer): void {
-            if (isset($_POST["create"])) {
-                $renderer();
-                exit(0);
-            }
-        };
-        $this->indexer["0POST_0"] = $wrapper;
-        return $this;
-    }
+  public function POST_create(callable $renderer): Pangine {
+    $wrapper = function () use ($renderer): void {
+      if (isset($_POST["create"])) {
+        $renderer();
+        exit(0);
+      }
+    };
+    $this->indexer["0POST_0"] = $wrapper;
+    return $this;
+  }
 
-    public function POST_read(callable $renderer): Pangine
-    {
-        $wrapper = function () use ($renderer): void {
-            if (isset($_POST)) {
-                $renderer();
-                exit(0);
-            }
-        };
-        $this->indexer["0POST_3"] = $wrapper;
-        return $this;
-    }
+  public function POST_read(callable $renderer): Pangine {
+    $wrapper = function () use ($renderer): void {
+      if (isset($_POST)) {
+        $renderer();
+        exit(0);
+      }
+    };
+    $this->indexer["0POST_3"] = $wrapper;
+    return $this;
+  }
 
-    public function POST_update(callable $renderer): Pangine
-    {
-        $wrapper = function () use ($renderer): void {
-            if (isset($_POST["update"])) {
-                $renderer();
-                exit(0);
-            }
-        };
-        $this->indexer["0POST_1"] = $wrapper;
-        return $this;
-    }
+  public function POST_update(callable $renderer): Pangine {
+    $wrapper = function () use ($renderer): void {
+      if (isset($_POST["update"])) {
+        $renderer();
+        exit(0);
+      }
+    };
+    $this->indexer["0POST_1"] = $wrapper;
+    return $this;
+  }
 
-    public function POST_delete(callable $renderer): Pangine
-    {
-        $wrapper = function () use ($renderer): void {
-            if (isset($_POST["delete"])) {
-                $renderer();
-                exit(0);
-            }
-        };
-        $this->indexer["0POST_2"] = $wrapper;
-        return $this;
-    }
+  public function POST_delete(callable $renderer): Pangine {
+    $wrapper = function () use ($renderer): void {
+      if (isset($_POST["delete"])) {
+        $renderer();
+        exit(0);
+      }
+    };
+    $this->indexer["0POST_2"] = $wrapper;
+    return $this;
+  }
 }
 
 class PangineValidationError extends \Exception
@@ -145,10 +137,9 @@ class PangineValidationError extends \Exception
         $this->fieldsWithErrors[$fieldName] = array("value" => $value, "message" => $unvalidMessage);
     }
 
-    public function found_errors(): bool
-    {
-        return count($this->fieldsWithErrors) > 0;
-    }
+  public function found_errors(): bool {
+    return count($this->fieldsWithErrors) > 0;
+  }
 
     public function get_errors(): array
     {
@@ -161,20 +152,17 @@ class PangineValidationError extends \Exception
     }
 }
 
-class PangineAuthError extends \Exception
-{
+class PangineAuthError extends \Exception {
 }
 
-class PangineValidator
-{
-    private string $method;
-    private array $configs;
+class PangineValidator {
+  private string $method;
+  private array $configs;
 
-    public function __construct(string $method, array $configs)
-    {
-        $this->configs = $configs;
-        $this->method = $method;
-    }
+  public function __construct(string $method, array $configs) {
+    $this->configs = $configs;
+    $this->method = $method;
+  }
 
     public function validate(string $callbackPage): void
     {
@@ -201,29 +189,27 @@ class PangineValidator
         } else {
             unset($_SESSION["data"]);
         }
-    }
+  }
 }
 
-class PangineValidatorConfig
-{
-    private bool $notZero;
-    private bool $notEmpty;
-    private int $minLength;
-    private int $maxLength;
-    private int $minVal;
-    private int $maxVal;
-    private bool $isImage;
+class PangineValidatorConfig {
+  private bool $notZero;
+  private bool $notEmpty;
+  private int $minLength;
+  private int $maxLength;
+  private int $minVal;
+  private int $maxVal;
+  private bool $isImage;
 
-    public function __construct(bool $notEmpty = false, bool $notZero = false, int $minLength = 0, int $maxLength = -1, int $minVal = 0, int $maxVal = -1, bool $isImage = false)
-    {
-        $this->notZero = $notZero;
-        $this->notEmpty = $notEmpty;
-        $this->isImage = $isImage;
-        $this->minLength = $minLength;
-        $this->maxLength = $maxLength;
-        $this->minVal = $minVal;
-        $this->maxVal = $maxVal;
-    }
+  public function __construct(bool $notEmpty = false, bool $notZero = false, int $minLength = 0, int $maxLength = -1, int $minVal = 0, int $maxVal = -1, bool $isImage = false) {
+    $this->notZero = $notZero;
+    $this->notEmpty = $notEmpty;
+    $this->isImage = $isImage;
+    $this->minLength = $minLength;
+    $this->maxLength = $maxLength;
+    $this->minVal = $minVal;
+    $this->maxVal = $maxVal;
+  }
 
     public function validate(string $field): string
     {
@@ -258,7 +244,7 @@ class PangineValidatorConfig
             }
         }
         return "";
-    }
+  }
 }
 
 class PangineUnvalidFormManager
@@ -284,26 +270,25 @@ class PangineUnvalidFormManager
 }
 
 
-class PangineAuthenticator
-{
-    private function try_session(): bool
-    {
-        if (!isset($_SESSION)) {
-            $session_return = session_start();
-            if (!isset($_SESSION["user"])) {
-                $_SESSION["user"]["status"] = "UNREGISTERED";
-            }
-            return $session_return;
-        }
-        return true;
+class PangineAuthenticator {
+  private function try_session(): bool {
+    if (!isset($_SESSION)) {
+      $session_return = session_start();
+      if (!isset($_SESSION["user"])) {
+        $_SESSION["user"]["status"] = "UNREGISTERED";
+      }
+      return $session_return;
     }
+    return true;
+  }
 
-    public function authenticate(array $allowedStatuses): bool
-    {
-        $session_status = $this->try_session();
-        if (!in_array($_SESSION["user"]["status"], $allowedStatuses)) {
-            throw new PangineAuthError("Non hai i permessi per accedere alla pagina richiesta.");
-        }
-        return $session_status;
+  public function authenticate(array $allowedStatuses): bool {
+    $session_status = $this->try_session();
+    if (!in_array($_SESSION["user"]["status"], $allowedStatuses)) {
+      throw new PangineAuthError("Non hai i permessi per accedere alla pagina richiesta.");
     }
+    return $session_status;
+  }
 }
+
+require_once 'HTMLBuilder.php';

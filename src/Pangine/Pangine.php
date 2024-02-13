@@ -21,7 +21,8 @@ class Pangine
                 $renderer();
             }
         } catch (PangineValidationError $e) {
-            header("Location: ".$e->getCallbackPage());
+            $_SESSION["err_data"] = $e->get_errors();
+            header("Location: " . $e->getCallbackPage());
             //echo json_encode($e->get_errors());
             exit(0);
         } catch (PangineAuthError $e) {
@@ -139,9 +140,9 @@ class PangineValidationError extends \Exception
         parent::__construct(json_encode($this->fieldsWithErrors));
     }
 
-    public function add_unvalidated_field(string $fieldName, string $unvalidMessage): void
+    public function add_unvalidated_field(string $fieldName, string $unvalidMessage, $value): void
     {
-        $this->fieldsWithErrors[$fieldName] = $unvalidMessage;
+        $this->fieldsWithErrors[$fieldName] = array("value" => $value, "message" => $unvalidMessage);
     }
 
     public function found_errors(): bool
@@ -154,7 +155,8 @@ class PangineValidationError extends \Exception
         return $this->fieldsWithErrors;
     }
 
-    public function getCallbackPage(): string{
+    public function getCallbackPage(): string
+    {
         return $this->callbackPage;
     }
 }
@@ -187,14 +189,17 @@ class PangineValidator
             if (isset($method[$field])) {
                 $validationResponse = $config->validate($method[$field]);
                 if ($validationResponse != "") {
-                    $error->add_unvalidated_field($field, $validationResponse);
+                    $error->add_unvalidated_field($field, $validationResponse, $method[$field]);
                 }
             } else {
-                $error->add_unvalidated_field($field, "Questo campo è da riempire.");
+                $error->add_unvalidated_field($field, "Questo campo è da fornire.", $method[$field]);
             }
+            $_SESSION["data"][$field] = $method[$field];
         }
         if ($error->found_errors()) {
             throw $error;
+        } else {
+            unset($_SESSION["data"]);
         }
     }
 }
@@ -222,12 +227,12 @@ class PangineValidatorConfig
 
     public function validate(string $field): string
     {
-        if($this->isImage){
+        if ($this->isImage) {
             $img_path = trim($_FILES[$field]['tmp_name']);
             $img_type = exif_imagetype($img_path);
-            if(!$img_type) {
+            if (!$img_type) {
                 return "Il file caricato non è un immagine.";
-            }else if(!in_array($img_type, array(IMAGETYPE_JPEG, IMAGETYPE_PNG))) {
+            } else if (!in_array($img_type, array(IMAGETYPE_JPEG, IMAGETYPE_PNG))) {
                 return "Il file caricato non è nel formato corretto (supportati .jpeg e .png).";
             }
         }
@@ -248,13 +253,36 @@ class PangineValidatorConfig
             if ($this->minLength > strlen($field)) {
                 return "Questo campo deve almeno essere di " . $this->minLength . " caratteri.";
             }
-            if ($this->maxLength >= 0 && $this->maxLength< strlen($field)) {
+            if ($this->maxLength >= 0 && $this->maxLength < strlen($field)) {
                 return "Questo campo deve al massimo essere di " . $this->maxLength . " caratteri.";
             }
         }
         return "";
     }
 }
+
+class PangineUnvalidFormManager
+{
+    private string $layout;
+
+    public function __construct(string $layout){
+        try_session();
+        $this->layout = $layout;
+        foreach ($_SESSION["err_data"] as $field => $data){
+            $this->layout = str_replace("{{".$field."-value}}",$data["value"],$this->layout);
+            $this->layout = str_replace("<p>{{".$field."-message}}</p>",$data["message"],$this->layout);
+        }
+        foreach ($_SESSION["data"] as $field => $value){
+            $this->layout = str_replace("{{".$field."-value}}",$value,$this->layout);
+            $this->layout = str_replace("<p>{{".$field."-message}}</p>","",$this->layout);
+        }
+   }
+
+   public function getLayout(){
+        return $this->layout;
+   }
+}
+
 
 class PangineAuthenticator
 {

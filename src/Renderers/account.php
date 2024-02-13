@@ -27,14 +27,18 @@ $get_account = function () {
             "{{breadcrumbs}}",
             "{{content}}",
             "{{username-value}}",
-            "{{password-value}}")
+            "{{password-value}}",
+            "{{username-message}}",
+            "{{password-message}}")
         ,array(
             $title,
             $navbar,
             $breadcrumbs,
             $content,
             $_SESSION["user"]["username"],
-            $_SESSION["user"]["password"]),
+            $_SESSION["user"]["password"],
+            "",
+            ""),
         $layout);
     echo $layout;
 };
@@ -55,20 +59,25 @@ $get_edit_account = function () {
     $content = file_get_contents("../components/account.html");
     $content = str_replace("disabled","",$content);
     $content = str_replace("<a href=\"/Pages/account.php?update=true\">Modifica</a>","Modifica",$content);
+    $layout = str_replace("{{content}}",$content,$layout);
+    $layout = (new \Pangine\PangineUnvalidFormManager($layout))->getLayout();
     $layout = str_replace(
         array("{{title}}",
             "{{menu}}",
             "{{breadcrumbs}}",
-            "{{content}}",
             "{{username-value}}",
-            "{{password-value}}")
+            "{{password-value}}",
+            "{{username-message}}",
+            "{{password-message}}")
         ,array(
             $title,
             $navbar,
             $breadcrumbs,
-            $content,
             $_SESSION["user"]["username"],
-            $_SESSION["user"]["password"]),
+            $_SESSION["user"]["password"],
+            "",
+            ""
+        ),
         $layout);
     echo $layout;
     $database->close();

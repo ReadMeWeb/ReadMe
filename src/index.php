@@ -51,7 +51,7 @@ $content = str_replace($place_holders, $values, $content);
 $place_holders = array('{{title}}', '{{keywords}}', '{{description}}', '{{content}}','{{menu}}','{{breadcrumbs}}');
 $values = array($title, $keywords, $description, $content,$menu,$breadcrumbs);
 $template = file_get_contents('components/layout.html');
-$template = str_replace("<a href='index.php' aria-label='Ritorna alla pagina home'><h1><span>Orchestra</span></h1></a>","<h1><span>Orchestra</span></h1>",$template);
+$template = str_replace("<a href=\"/index.php\" aria-label=\"Ritorna alla pagina home\"><h1><span>Orchestra</span></h1></a>","<h1><span>Orchestra</span></h1>",$template);
 $template = str_replace($place_holders, $values, $template);
 
 echo $template;

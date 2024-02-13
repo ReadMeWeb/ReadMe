@@ -3,7 +3,7 @@
 class Pages
 {
     static array $pages = [
-        "Home" => "/index.php",
+        "Home" => "index.php", //in questa non ci va lo '/' all'inizio
         "Chi Siamo" => "/chisiamo.php",
         "Accedi" => "/accedi.php",
         "Registrati" => "/registrati.php",

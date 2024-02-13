@@ -89,7 +89,7 @@ $post_edit_account = function (){
         )),
     );
     $validator = new Pangine\PangineValidator("POST",$expectedParameters);
-    $validator->validate();
+    $validator->validate("/Pages/account.php?update=true");
     $database = new Database();
     $result = $database->update_user_info($_SESSION["user"]["username"],$_POST["username"],$_POST["password"]);
     $database->close();

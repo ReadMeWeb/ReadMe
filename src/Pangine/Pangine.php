@@ -21,7 +21,8 @@ class Pangine
                 $renderer();
             }
         } catch (PangineValidationError $e) {
-            echo json_encode($e->get_errors());
+            header("Location: ".$e->getCallbackPage());
+            //echo json_encode($e->get_errors());
             exit(0);
         } catch (PangineAuthError $e) {
             header("Location: /Pages/unallowed.php");
@@ -129,10 +130,12 @@ class Pangine
 class PangineValidationError extends \Exception
 {
     private array $fieldsWithErrors;
+    private string $callbackPage;
 
-    public function __construct()
+    public function __construct(string $callbackPage)
     {
         $this->fieldsWithErrors = array();
+        $this->callbackPage = $callbackPage;
         parent::__construct(json_encode($this->fieldsWithErrors));
     }
 
@@ -149,6 +152,10 @@ class PangineValidationError extends \Exception
     public function get_errors(): array
     {
         return $this->fieldsWithErrors;
+    }
+
+    public function getCallbackPage(): string{
+        return $this->callbackPage;
     }
 }
 
@@ -167,10 +174,10 @@ class PangineValidator
         $this->method = $method;
     }
 
-    public function validate(): void
+    public function validate(string $callbackPage): void
     {
         try_session();
-        $error = new PangineValidationError();
+        $error = new PangineValidationError($callbackPage);
         if ($this->method == "GET") {
             $method = $_GET;
         } else {

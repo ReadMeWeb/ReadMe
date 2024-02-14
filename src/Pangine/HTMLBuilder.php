@@ -89,3 +89,17 @@ class HTMLBuilder {
     return $this->content;
   }
 };
+
+// classe di convenienza per sanitizzare i testi dati come input
+class HTMLString {
+  function __construct(private $string) {
+  }
+  function __toString() {
+    return htmlspecialchars($this->string);
+  }
+};
+
+// classi per i magheggi minori di php
+// devono essere vuote, la gestione del magheggio va nel set di htmlbuilder
+class ErrorParagraph extends HTMLString {
+};

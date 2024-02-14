@@ -36,3 +36,13 @@ function navbar(): string
     }
     return $navLinks;
 }
+
+// classe wrapper per dare un tipo alla navbar
+class NavBar {
+  function __construct(private $string = null) {
+    $this->string  = navbar();
+  }
+  function __toString() {
+    return $this->string;
+  }
+};

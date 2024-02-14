@@ -48,7 +48,7 @@ class HTMLBuilder {
 
     // TODO da estendere qual'ora fossero richiesti magheggi
     $this->placeholders[$placeholder][1] = match ($type) {
-      'text' => htmlspecialchars($data),
+      'text' => $data,
       'error-p' => '<p class="error">' . htmlspecialchars($data) . '</p>',
     };
 

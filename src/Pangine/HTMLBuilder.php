@@ -18,6 +18,14 @@ class HTMLBuilderMultiplePlacehoderException extends Exception {
   }
 }
 
+class NavBar {
+  function __construct(private $string) {
+  }
+  function __toString() {
+    return $this->string;
+  }
+}
+
 class HTMLBuilder {
 
   private $content;

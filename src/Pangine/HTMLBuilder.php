@@ -19,6 +19,7 @@ class HTMLBuilderMultiplePlacehoderException extends Exception {
 }
 
 class HTMLBuilder {
+
   private $content;
   private $placeholders;
 
@@ -41,15 +42,18 @@ class HTMLBuilder {
     uasort($this->placeholders, fn ($a, $b) => ($a[0] > $b[0]) ? -1 : 1);
   }
 
-  function set($placeholder, $data, $type = 'text'): HTMLBuilder {
+  const TEXT = 0;
+  const ERROR_P = 1;
+
+  function set($placeholder, $data, $type = HTMLBuilder::TEXT): HTMLBuilder {
     if (!array_key_exists($placeholder, $this->placeholders)) {
       throw new HTMLBuilderMissingPlaceholderException($placeholder);
     }
 
     // TODO da estendere qual'ora fossero richiesti magheggi
     $this->placeholders[$placeholder][1] = match ($type) {
-      'text' => htmlspecialchars($data),
-      'error-p' => '<p class="error">' . htmlspecialchars($data) . '</p>',
+      HTMLBuilder::TEXT => htmlspecialchars($data),
+      HTMLBuilder::ERROR_P => '<p class="error">' . htmlspecialchars($data) . '</p>',
     };
 
     return $this;

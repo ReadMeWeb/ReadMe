@@ -1,9 +1,9 @@
 <h2>Aggiungi Canzone</h2>
 <h3>Selezione Artista</h3>
 {{errors}}
-<form action="addsong.php" method="post">
-    <label for="artist">Artista</label><br />
-    <select name="artist" id="artist">
+<form action="manageSong.php" method="get">
+    <label for="artist_id">Artista</label><br />
+    <select name="artist_id" id="artist_id">
         {{artists}}
     </select>
     <input type="submit" value="Prosegui" />

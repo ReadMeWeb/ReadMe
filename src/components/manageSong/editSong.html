@@ -1,0 +1,31 @@
+<h2>Modifica Canzone</h2>
+<h3>Dati Canzone</h3>
+{{errors}}
+<h4>Nome Artista</h4>
+<p>{{artist_name}}</p>
+<h4>Nome Album</h4>
+<p>{{album_name}}</p>
+<li>
+    <img src='assets/images/{{graphic_file_name}}' alt='Copertina della canzone {{song_title}}'>
+    <audio controls>
+        <source src='assets/Audio/{{audio_file_name}}' type='audio/mpeg'>
+        Attenzione: il tuo browser non supporta i tag audio (la preghiamo di cambiare browser).
+    </audio>
+</li>
+<form enctype="multipart/form-data" action="managesong.php" method="post">
+    <label for="title">Titolo</label><br />
+    <input
+        id="title"
+        name="title"
+        type="text"
+        value="{{song_title}}"
+        placeholder="Digita il titolo della canzone"
+        required
+    /><br />
+
+    <input id="edit" name="edit" value="yes" type="text" hidden/>
+    <input id="song_id" name="song_id" value="{{song_id}}" type="text" hidden/>
+
+    <input type="submit" value="Modifica Canzone" />
+</form>
+<a href="/catalogo.php">Torna al Catalogo</a>

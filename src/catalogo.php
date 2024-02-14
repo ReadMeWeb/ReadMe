@@ -8,6 +8,7 @@ require_once "components/song.php";
 require_once "components/breadcrumbs/breadcrumbItem.php";
 require_once "components/breadcrumbs/breadcrumbsBuilder.php";
 require_once "data/database.php";
+require_once "handlers/errors_utils.php";
 
 function isSequencePresent(string $haystack, string $sequence) {
     $haystackLength = strlen($haystack);
@@ -63,6 +64,7 @@ $layout = str_replace("{{breadcrumbs}}",
         ->getBreadcrumbsHtml(),
     $layout);
 $layout = str_replace("{{title}}",$title,$layout);
+$content = str_replace("{{errors}}",getAndClearErrorStringFromSession("sel_song"),$content);
 
 $db = new Database();
 
@@ -123,6 +125,7 @@ foreach ($albums as $album){
 $lista_songs= [];
 foreach ($songs as $song){
     $lista_songs[] = (new song(
+        $song["id"],
         $song["producer"],
         $song["producer_name"],
         $song["name"],

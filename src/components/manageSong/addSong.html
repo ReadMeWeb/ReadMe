@@ -3,7 +3,7 @@
 {{errors}}
 <h4>Artista Selezionato</h4>
 <p>{{artist_name}}</p>
-<form enctype="multipart/form-data" action="/handlers/addsong.php" method="post">
+<form enctype="multipart/form-data" action="managesong.php" method="post">
     <label for="title">Titolo</label><br />
     <input
         id="title"
@@ -15,6 +15,7 @@
     /><br />
 
     <input id="artist_id" name="artist_id" value="{{artist_id}}" type="text" hidden/>
+    <input id="add" name="add" value="yes" type="text" hidden/>
 
     <label for="album">Album</label><br />
     <select name="album" id="album">
@@ -41,4 +42,4 @@
     /><br />
     <input type="submit" value="Inserisci Canzone" />
 </form>
-<a href="/selectartist.php">Torna alla selezione dell'artista</a>
+<a href="/manageSong.php">Torna alla selezione dell'artista</a>

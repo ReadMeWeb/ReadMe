@@ -10,8 +10,9 @@ class Pages
         "Catalogo" => "catalogo.php",
         "Aggiungi Artista" => "aggiungiArtista.php",
         "Aggiungi Album" => "aggiungiAlbum.php",
-        "Aggiungi Canzone" => "selectartist.php",
-        "Informazioni Brano" => "addsong.php",
-        "Canzone Aggiunta" => "successaddsong.php"
+        "Aggiungi Brano" => "manageSong.php",
+        "Dettagli Brano" => "manageSong.php",
+        "Modifica Brano" => "manageSong.php",
+        "Elimina Brano" => "manageSong.php",
     ];
 }

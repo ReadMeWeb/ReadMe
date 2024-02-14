@@ -139,7 +139,16 @@ class  Database
 
     public function fetch_songs_info(): array
     {
-        return $this->execute_query('SELECT producer, Music.name as name, audio_file_name, graphic_file_name, A.name as producer_name FROM Music JOIN Orchestra.Artist A on Music.producer = A.id');
+        return $this->execute_query('SELECT Music.id, producer, Music.name as name, audio_file_name, graphic_file_name, A.name as producer_name FROM Music JOIN Orchestra.Artist A on Music.producer = A.id');
+    }
+
+    public function fetch_song_info_by_id(int $song_id): array|null
+    {
+        $res = $this->execute_query('SELECT Music.id, Artist.name AS artist_name, Music.name AS song_name, Album.name as album_name, audio_file_name, graphic_file_name FROM Music INNER JOIN Artist ON Music.producer = Artist.id INNER JOIN Album ON Music.album = Album.id WHERE Music.id = ?', $song_id);
+        if (sizeof($res) == 1) {
+            return $res[0];
+        }
+        return null;
     }
 
     public function fetch_albums_info(): array

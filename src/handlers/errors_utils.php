@@ -1,6 +1,6 @@
 <?php
 
-function getAndClearErrorStringFromSession(string $name): string | null
+function getAndClearErrorStringFromSession(string $name): string
 {
     $err = "SERROR_" . $name;
     if (array_key_exists($err, $_SESSION)) {
@@ -8,7 +8,7 @@ function getAndClearErrorStringFromSession(string $name): string | null
         unset($_SESSION[$err]);
         return $err_msg;
     }
-    return null;
+    return "";
 }
 
 function setErrorStringToSession(string $name, string $err_msg): void

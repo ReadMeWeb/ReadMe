@@ -17,7 +17,7 @@ function navbar(): string
         array("registrati.php","Registrati",array("UNREGISTERED")),
         array("aggiungiArtista.php", "Aggiungi Artista", array("ADMIN")),
         array("aggiungiAlbum.php", "Aggiungi Album", array("ADMIN")),
-        array("selectartist.php", "Aggiungi Canzone", array("ADMIN")),
+        array("manageSong.php", "Aggiungi Brano", array("ADMIN")),
     );
     $selectedLink = basename($_SERVER['PHP_SELF']);
     $navLinks = "";

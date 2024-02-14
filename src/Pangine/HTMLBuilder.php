@@ -45,15 +45,21 @@ class HTMLBuilder {
   const UNSAFE = 0;
   const ERROR_P = 1;
 
-  function set($placeholder, $data, $type = HTMLBuilder::UNSAFE): HTMLBuilder {
+  function set($placeholder, $data): HTMLBuilder {
     if (!array_key_exists($placeholder, $this->placeholders)) {
       throw new HTMLBuilderMissingPlaceholderException($placeholder);
     }
 
     // TODO da estendere qual'ora fossero richiesti magheggi
-    $this->placeholders[$placeholder][1] = match ($type) {
-      HTMLBuilder::UNSAFE => $data,
-      HTMLBuilder::ERROR_P => '<p class="error">' . htmlspecialchars($data) . '</p>',
+    $this->placeholders[$placeholder][1] = match (gettype($data)) {
+      'string' => htmlspecialchars($data),
+      'object' => match (get_class($data)) {
+        'NavBar' => (string) $data,
+        'BreadcrumbsBuilder' => $data->build()->getBreadcrumbsHtml(),
+        'HTMLBuilder' => $data->build(),
+        default => $data,
+      },
+      default => $data,
     };
 
     return $this;

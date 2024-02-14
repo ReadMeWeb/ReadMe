@@ -59,15 +59,26 @@ try {
 GET:
 // ========================================================================================================================
 
+// classe wrapper per dare un tipo alla navbar
+class NavBar {
+  function __construct(private $string = null) {
+    $this->string  = navbar();
+  }
+  function __toString() {
+    return $this->string;
+  }
+};
+
+// date in pasto delle stringhe queste vengono sanitizzate, date delle classi apposta vengono chiamati i loro metodi di build
 echo (new HTMLBuilder('./components/layout.html'))
-  ->set('title', 'Accedi')
-  ->set('description', 'Pagina di accesso di Orchestra')
-  ->set('keywords', 'Orchestra, musica classica, accesso, log in, sign in')
-  ->set('menu', new NavBar(navbar()))
+  ->set('title', 'Accedi')                                                    //
+  ->set('description', 'Pagina di accesso di Orchestra')                      //  Questi testi vengono sanitizzati
+  ->set('keywords', 'Orchestra, musica classica, accesso, log in, sign in')   //
+  ->set('menu', new NavBar())  // magheggio navbar
   ->set('breadcrumbs', (new BreadcrumbsBuilder())
     ->addBreadcrumb(new BreadcrumbItem("Home"))
-    ->addBreadcrumb(new BreadcrumbItem("Accedi", isCurrent: true)))
+    ->addBreadcrumb(new BreadcrumbItem("Accedi", isCurrent: true))) // magheggio delle breadcrumbs, viene dato l'oggeto breadcrumbbuilder
   ->set('content', (new HTMLBuilder('./components/accedi.html'))
     ->set('nome', $nome)
-    ->set('errori', $errori))
+    ->set('errori', new ErrorParagraph('ciao'))) // magheggio html, viene dato l'oggetto HTMLBuilder
   ->build();

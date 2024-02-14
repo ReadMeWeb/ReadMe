@@ -28,8 +28,8 @@ $get_account = function () {
             "{{content}}",
             "{{username-value}}",
             "{{password-value}}",
-            "{{username-message}}",
-            "{{password-message}}")
+            "<p>{{username-message}}</p>",
+            "<p>{{password-message}}</p>")
         ,array(
             $title,
             $navbar,
@@ -67,8 +67,8 @@ $get_edit_account = function () {
             "{{breadcrumbs}}",
             "{{username-value}}",
             "{{password-value}}",
-            "{{username-message}}",
-            "{{password-message}}")
+            "<p>{{username-message}}</p>",
+            "<p>{{password-message}}</p>")
         ,array(
             $title,
             $navbar,

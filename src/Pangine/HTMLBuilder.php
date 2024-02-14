@@ -24,7 +24,7 @@ class HTMLBuilder {
 
   function __construct(string $htmlfile) {
     $this->content = file_get_contents($htmlfile);
-    preg_match_all('/{{(.*)}}/', $this->content, $matches, PREG_OFFSET_CAPTURE);
+    preg_match_all('/{{(.*?)}}/', $this->content, $matches, PREG_OFFSET_CAPTURE);
 
     $nomi = array_column($matches[1], 0);
     if (count($nomi) != count(array_unique($nomi))) {

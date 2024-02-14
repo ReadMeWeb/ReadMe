@@ -48,9 +48,6 @@ class HTMLBuilder {
     uasort($this->placeholders, fn ($a, $b) => ($a[0] > $b[0]) ? -1 : 1);
   }
 
-  const UNSAFE = 0;
-  const ERROR_P = 1;
-
   function set($placeholder, $data): HTMLBuilder {
     if (!array_key_exists($placeholder, $this->placeholders)) {
       throw new HTMLBuilderMissingPlaceholderException($placeholder);

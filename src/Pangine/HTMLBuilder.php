@@ -18,11 +18,9 @@ class HTMLBuilderMultiplePlacehoderException extends Exception {
   }
 }
 
-class NavBar {
-  function __construct(private $string) {
-  }
-  function __toString() {
-    return $this->string;
+class HTMLBuilderUnsupportedObjectExcpetion extends Exception {
+  public function __construct($filename, $code = 0, Throwable $previous = null) {
+    parent::__construct("'$filename' contiene duplicati dello stesso marcatore.", $code, $previous);
   }
 }
 
@@ -63,11 +61,11 @@ class HTMLBuilder {
       'string' => htmlspecialchars($data),
       'object' => match (get_class($data)) {
         'NavBar' => (string) $data,
+        'ErrorParagraph' => "<p class='error'>$data</p>",
         'BreadcrumbsBuilder' => $data->build()->getBreadcrumbsHtml(),
         'HTMLBuilder' => $data->build(),
-        default => $data,
+        default => throw new HTMLBuilderUnsupportedObjectExcpetion(),
       },
-      default => $data,
     };
 
     return $this;

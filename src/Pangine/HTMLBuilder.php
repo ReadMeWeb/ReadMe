@@ -19,8 +19,8 @@ class HTMLBuilderMultiplePlacehoderException extends Exception {
 }
 
 class HTMLBuilderUnsupportedObjectExcpetion extends Exception {
-  public function __construct($filename, $code = 0, Throwable $previous = null) {
-    parent::__construct("'$filename' contiene duplicati dello stesso marcatore.", $code, $previous);
+  public function __construct($typename, $code = 0, Throwable $previous = null) {
+    parent::__construct("'$typename' non è al momento supportato da HTMLBuilder.", $code, $previous);
   }
 }
 
@@ -64,8 +64,9 @@ class HTMLBuilder {
         'ErrorParagraph' => "<p class='error'>$data</p>",
         'BreadcrumbsBuilder' => $data->build()->getBreadcrumbsHtml(),
         'HTMLBuilder' => $data->build(),
-        default => throw new HTMLBuilderUnsupportedObjectExcpetion(),
+        default => throw new HTMLBuilderUnsupportedObjectExcpetion(get_class($data)),
       },
+      default => throw new HTMLBuilderUnsupportedObjectExcpetion(gettype($data)),
     };
 
     return $this;

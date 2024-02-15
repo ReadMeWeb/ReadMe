@@ -3,6 +3,7 @@
 namespace Pangine;
 
 require_once "../components/sessionEstablisher.php";
+require_once 'HTMLBuilder.php';
 
 class Pangine
 {
@@ -265,31 +266,31 @@ class PangineValidatorConfig
 
 class PangineUnvalidFormManager
 {
-    private string $layout;
+    private \HTMLBuilder $htmlBuilder;
 
     public function __construct(string $layout)
     {
         try_session();
-        $this->layout = $layout;
+        $this->htmlBuilder = new \HTMLBuilder(layout: $layout);
         if (isset($_SESSION["err_data"])) {
             foreach ($_SESSION["err_data"] as $field => $data) {
-                $this->layout = str_replace("{{" . $field . "-value}}", $data["value"], $this->layout);
-                $this->layout = str_replace("<p>{{" . $field . "-message}}</p>", $data["message"], $this->layout);
+                $this->htmlBuilder->set("{{" . $field . "-value}}",$data["value"],"text")
+                    ->set("{{" . $field . "-message}}",$data["message"],"error-p");
             }
             unset($_SESSION["err_data"]);
         }
         if (isset($_SESSION["data"])) {
             foreach ($_SESSION["data"] as $field => $value) {
-                $this->layout = str_replace("{{" . $field . "-value}}", $value, $this->layout);
-                $this->layout = str_replace("<p>{{" . $field . "-message}}</p>", "", $this->layout);
+                $this->htmlBuilder->set("{{" . $field . "-value}}",$value,"text")
+                    ->set("{{" . $field . "-message}}","","error-p");
             }
             unset($_SESSION["data"]);
         }
     }
 
-    public function getLayout()
+    public function getHTMLBuilder()
     {
-        return $this->layout;
+        return $this->htmlBuilder;
     }
 }
 
@@ -318,4 +319,3 @@ class PangineAuthenticator
     }
 }
 
-require_once 'HTMLBuilder.php';

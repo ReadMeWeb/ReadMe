@@ -60,25 +60,15 @@ $get_edit_account = function () {
     $content = str_replace("disabled","",$content);
     $content = str_replace("<a href=\"/Pages/account.php?update=true\">Modifica</a>","Modifica",$content);
     $layout = str_replace("{{content}}",$content,$layout);
-    $layout = (new \Pangine\PangineUnvalidFormManager($layout))->getLayout();
-    $layout = str_replace(
-        array("{{title}}",
-            "{{menu}}",
-            "{{breadcrumbs}}",
-            "{{username-value}}",
-            "{{password-value}}",
-            "<p>{{username-message}}</p>",
-            "<p>{{password-message}}</p>")
-        ,array(
-            $title,
-            $navbar,
-            $breadcrumbs,
-            $_SESSION["user"]["username"],
-            $_SESSION["user"]["password"],
-            "",
-            ""
-        ),
-        $layout);
+    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager($layout))->getHTMLBuilder();
+    $layout = $htmlBuilder->set("title",$title)
+        ->set("menu",$navbar)
+        ->set("breadcrumbs",$breadcrumbs)
+        ->set("username-value",$_SESSION["user"]["username"])
+        ->set("password-value",$_SESSION["user"]["password"])
+        ->clean("-message")
+        ->clean("-value")
+        ->build();
     echo $layout;
     $database->close();
 };

@@ -26,11 +26,14 @@ class HTMLBuilderMultiplePlacehoderException extends Exception
 
 class HTMLBuilder {
 
-  private $content;
-  private $placeholders;
+  private string $content;
+  private array $placeholders;
+
+  private array $toClean;
 
     function __construct(string $htmlfile = "", string $layout = "")
     {
+        $this->toClean = array();
         if ($htmlfile == "") {
             $this->content = $layout;
         }else if ($layout == ""){
@@ -58,17 +61,7 @@ class HTMLBuilder {
 
     function clean(string $substring): HTMLBuilder
     {
-        foreach ($this->placeholders as $placeholder => $line) {
-            if (str_contains($placeholder, $substring)) {
-                $this->content = substr_replace(
-                    $this->content,
-                    "",
-                    $line[0],
-                    strlen($placeholder) + 4,
-                );
-                unset($this->placeholders[$placeholder]);
-            }
-        }
+        $this->toClean[] = $substring;
 
         return $this;
     }
@@ -81,10 +74,12 @@ class HTMLBuilder {
     }
 
     // TODO da estendere qual'ora fossero richiesti magheggi
-    $this->placeholders[$placeholder][1] = match ($type) {
-      HTMLBuilder::UNSAFE => $data,
-      HTMLBuilder::ERROR_P => '<p class="error">' . htmlspecialchars($data) . '</p>',
-    };
+      if($this->placeholders[$placeholder][1] == null){
+          $this->placeholders[$placeholder][1] = match ($type) {
+              HTMLBuilder::UNSAFE => $data,
+              HTMLBuilder::ERROR_P => '<p class="error">' . $data . '</p>',
+          };
+      }
 
         return $this;
     }
@@ -94,16 +89,31 @@ class HTMLBuilder {
         foreach ($this->placeholders as $placeholder => $line) {
             [$offset, $replace] = $line;
 
-            if ($replace === null) {
-                throw new HTMLBuilderUndefinedPlaceholderException($placeholder,$this->content);
+            if ($replace !== null) {
+                $this->content = substr_replace(
+                    $this->content,
+                    $replace,
+                    $offset,
+                    strlen($placeholder) + 4,
+                );
+                unset($this->placeholders[$placeholder]);
             }
 
-            $this->content = substr_replace(
-                $this->content,
-                $replace,
-                $offset,
-                strlen($placeholder) + 4,
-            );
+        }
+        foreach ($this->placeholders as $placeholder => $line) {
+            foreach ($this->toClean as $substring){
+                if (str_contains($placeholder, $substring)) {
+                    $this->content = str_replace(
+                        "{{".$placeholder."}}",
+                        "",
+                        $this->content,
+                    );
+                    unset($this->placeholders[$placeholder]);
+                }
+            }
+        }
+        foreach ($this->placeholders as $placeholder => $line){
+            throw new HTMLBuilderUndefinedPlaceholderException($placeholder,$this->content);
         }
         return $this->content;
     }

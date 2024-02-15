@@ -274,15 +274,15 @@ class PangineUnvalidFormManager
         $this->htmlBuilder = new \HTMLBuilder(layout: $layout);
         if (isset($_SESSION["err_data"])) {
             foreach ($_SESSION["err_data"] as $field => $data) {
-                $this->htmlBuilder->set("{{" . $field . "-value}}",$data["value"],"text")
-                    ->set("{{" . $field . "-message}}",$data["message"],"error-p");
+                $this->htmlBuilder->set("" . $field . "-value",$data["value"],\HTMLBuilder::UNSAFE)
+                    ->set("" . $field . "-message",$data["message"],\HTMLBuilder::ERROR_P);
             }
             unset($_SESSION["err_data"]);
         }
         if (isset($_SESSION["data"])) {
             foreach ($_SESSION["data"] as $field => $value) {
-                $this->htmlBuilder->set("{{" . $field . "-value}}",$value,"text")
-                    ->set("{{" . $field . "-message}}","","error-p");
+                $this->htmlBuilder->set("" . $field . "-value",$value,\HTMLBuilder::UNSAFE)
+                    ->set("" . $field . "-message","",\HTMLBuilder::UNSAFE);
             }
             unset($_SESSION["data"]);
         }

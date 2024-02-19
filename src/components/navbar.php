@@ -17,7 +17,7 @@ function navbar(): string
         array("/registrati.php","Registrati",array("UNREGISTERED")),
         array("/aggiungiArtista.php", "Aggiungi Artista", array("ADMIN")),
         array("/aggiungiAlbum.php", "Aggiungi Album", array("ADMIN")),
-        array("/selectartist.php", "Aggiungi Canzone", array("ADMIN")),
+        array("/Pages/addSong.php", "Aggiungi Canzone", array("ADMIN")),
         array("/Pages/account.php", "Account", array("USER","ADMIN")),
     );
     $selectedLink = strtok($_SERVER['REQUEST_URI'],'?');

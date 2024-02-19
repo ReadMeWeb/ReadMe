@@ -179,6 +179,9 @@ class PangineValidator
         $this->method = $method;
     }
 
+    /**
+     * @throws PangineValidationError
+     */
     public function validate(string $callbackPage): void
     {
         try_session();
@@ -217,7 +220,12 @@ class PangineValidatorConfig
     private int $maxVal;
     private bool $isImage;
 
-    public function __construct(bool $notEmpty = false, bool $notZero = false, int $minLength = 0, int $maxLength = -1, int $minVal = 0, int $maxVal = -1, bool $isImage = false)
+    private $customFunction;
+
+    public function __construct(bool $notEmpty = false, bool $notZero = false,
+                                int $minLength = 0, int $maxLength = -1, int $minVal = 0,
+                                int $maxVal = -1, bool $isImage = false,
+                                callable $customFunction = null)
     {
         $this->notZero = $notZero;
         $this->notEmpty = $notEmpty;
@@ -226,6 +234,7 @@ class PangineValidatorConfig
         $this->maxLength = $maxLength;
         $this->minVal = $minVal;
         $this->maxVal = $maxVal;
+        $this->customFunction = $customFunction;
     }
 
     public function validate(string $field): string
@@ -259,6 +268,9 @@ class PangineValidatorConfig
             if ($this->maxLength >= 0 && $this->maxLength < strlen($field)) {
                 return "Questo campo deve al massimo essere di " . $this->maxLength . " caratteri.";
             }
+        }
+        if($this->customFunction != null){
+            return call_user_func($this->customFunction);
         }
         return "";
     }

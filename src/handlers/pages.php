@@ -10,9 +10,8 @@ class Pages
         "Catalogo" => "/Pages/catalogo.php",
         "Aggiungi Artista" => "/aggiungiArtista.php",
         "Aggiungi Album" => "/aggiungiAlbum.php",
-        "Aggiungi Canzone" => "/selectartist.php",
-        "Informazioni Brano" => "/addsong.php",
-        "Canzone Aggiunta" => "/successaddsong.php",
+        "Aggiungi Canzone" => "/Pages/addSong.php",
+        "Informazioni Canzone" => "/Pages/addSong.php?create=true",
         "Account" => "/Pages/account.php",
         "Account (Modifica)" => "/Pages/account?update=true.php",
         "Permessi insufficienti" => "/Pages/unallowed.php"

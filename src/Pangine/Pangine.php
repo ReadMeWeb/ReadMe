@@ -189,15 +189,29 @@ class PangineValidator
             $method = $_POST;
         }
         foreach ($this->configs as $field => $config) {
-            if (isset($method[$field])) {
-                $validationResponse = $config->validate($method[$field]);
-                if ($validationResponse != "") {
-                    $error->add_unvalidated_field($field, $validationResponse, $method[$field]);
+            if($config->isImg()) {
+                if(isset($_FILES[$field])) {
+                    $validationResponse = $config->validate($field);
+                    if ($validationResponse != "") {
+                        $error->add_unvalidated_field($field, $validationResponse, $field);
+                    }
                 }
-            } else {
-                $error->add_unvalidated_field($field, "Questo campo è da fornire.", $method[$field]);
+                else {
+                    $error->add_unvalidated_field($field, "Questo campo è da fornire.", $field);
+                }
+                $_SESSION["data"][$field] = $_FILES[$field]['name'];
             }
-            $_SESSION["data"][$field] = $method[$field];
+            else {
+                if (isset($method[$field])) {
+                    $validationResponse = $config->validate($method[$field]);
+                    if ($validationResponse != "") {
+                        $error->add_unvalidated_field($field, $validationResponse, $method[$field]);
+                    }
+                } else {
+                    $error->add_unvalidated_field($field, "Questo campo è da fornire.", $method[$field]);
+                }
+                $_SESSION["data"][$field] = $method[$field];
+            }
         }
         if ($error->found_errors()) {
             throw $error;
@@ -228,15 +242,30 @@ class PangineValidatorConfig
         $this->maxVal = $maxVal;
     }
 
+    public function isImg(): bool {
+        return $this->isImage;
+    }
+
     public function validate(string $field): string
     {
         if ($this->isImage) {
-            $img_path = trim($_FILES[$field]['tmp_name']);
-            $img_type = exif_imagetype($img_path);
-            if (!$img_type) {
-                return "Il file caricato non è un immagine.";
-            } else if (!in_array($img_type, array(IMAGETYPE_JPEG, IMAGETYPE_PNG))) {
-                return "Il file caricato non è nel formato corretto (supportati .jpeg e .png).";
+
+            $img_name = trim($_FILES[$field]['name']);
+            $upload_code = $_FILES[$field]['error'];
+            
+            if ($this->notEmpty || $img_name != '') {
+                if($img_name == '') {
+                    return "Per procedere è necessario caricare un'immagine.";
+                }
+                if ($upload_code != UPLOAD_ERR_OK) {
+                    return "Errore durante il caricamento dell'immagine riprovare più tardi o contattare l'amministratore.";
+                }
+                $img_ext = pathinfo($img_name, PATHINFO_EXTENSION);
+                $valid_ext = ['png', 'jpg', 'jpeg'];
+    
+                if(!$img_ext || !in_array($img_ext, $valid_ext)) {
+                    return "Il file caricato ha un formato non corretto (formati supportati png, jpg e jpeg).";
+                }
             }
         }
         if (is_numeric($field)) {
@@ -280,6 +309,7 @@ class PangineUnvalidFormManager
             unset($_SESSION["err_data"]);
         }
         if (isset($_SESSION["data"])) {
+
             foreach ($_SESSION["data"] as $field => $value) {
                 $this->htmlBuilder->set("" . $field . "-value",$value,\HTMLBuilder::UNSAFE)
                     ->set("" . $field . "-message","",\HTMLBuilder::UNSAFE);

@@ -157,6 +157,14 @@ class  Database
         return $this->execute_query('INSERT INTO Artist(name, biography, file_name) VALUES(?, ?, ?)', $nome, $biography, $image);
     }
 
+    public function update_artist(int $id, string $name, string $biography, string $image): bool {
+        return $this->execute_query('UPDATE Artist SET name=?, biography=?, file_name=? WHERE id=?', $name, $biography, $image, $id );
+    }
+
+    public function delete_artist(string $id): bool{
+        return $this->execute_query("DELETE from Artist WHERE id = ?", $id);
+    }
+
     public function insert_song(string $artist_id, string $title, string $audio_file, string $graphic_file, string|null $album_id): bool {
 
         return $this->execute_query('INSERT INTO Music(producer, name, audio_file_name, graphic_file_name, album, added_date) VALUES(?, ?, ?, ?, ?, now())', $artist_id, $title, $audio_file, $graphic_file, $album_id);

@@ -15,7 +15,7 @@ function navbar(): string
         array("/chisiamo.php","Chi Siamo",array("UNREGISTERED")),
         array("/accedi.php","Accedi",array("UNREGISTERED")),
         array("/registrati.php","Registrati",array("UNREGISTERED")),
-        array("/aggiungiArtista.php", "Aggiungi Artista", array("ADMIN")),
+        array("/Pages/artista.php?create=true", "Aggiungi Artista", array("ADMIN")),
         array("/aggiungiAlbum.php", "Aggiungi Album", array("ADMIN")),
         array("/selectartist.php", "Aggiungi Canzone", array("ADMIN")),
         array("/Pages/account.php", "Account", array("USER","ADMIN")),

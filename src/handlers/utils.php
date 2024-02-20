@@ -28,3 +28,13 @@ function extract_from_array_else($key, $array, $otherwise)
   return $result;
 }
 
+function upload_file(string $dest_dir, string $uploaded_file_path, string $uploaded_file_name): string {
+  if(!is_dir($dest_dir)) {
+    mkdir($dest_dir);
+  }
+  $file_ext = pathinfo($uploaded_file_name, PATHINFO_EXTENSION);
+  $file_final_name =  uniqid() . '.' . $file_ext;
+  rename($uploaded_file_path, $dest_dir . $file_final_name);
+  return $file_final_name;
+}
+

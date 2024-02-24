@@ -13,10 +13,10 @@ function navbar(): string
     $links = array(
         array("/Pages/catalogo.php","Catalogo",array("UNREGISTERED","USER","ADMIN")),
         array("/chisiamo.php","Chi Siamo",array("UNREGISTERED")),
-        array("/accedi.php","Accedi",array("UNREGISTERED")),
-        array("/registrati.php","Registrati",array("UNREGISTERED")),
+        array("/Pages/accedi.php","Accedi",array("UNREGISTERED")),
+        array("/Pages/registrati.php","Registrati",array("UNREGISTERED")),
         array("/Pages/artista.php?create=true", "Aggiungi Artista", array("ADMIN")),
-        array("/aggiungiAlbum.php", "Aggiungi Album", array("ADMIN")),
+        array("/Pages/aggiungiAlbum.php", "Aggiungi Album", array("ADMIN")),
         array("/selectartist.php", "Aggiungi Canzone", array("ADMIN")),
         array("/Pages/account.php", "Account", array("USER","ADMIN")),
     );

@@ -54,7 +54,7 @@ $get_edit_artist = function () {
     $content = file_get_contents('../components/modificaArtista.html');
     $layout = str_replace("{{content}}",$content,$layout);
 
-    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager($layout))->getHTMLBuilder();
+    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout)))->getHTMLBuilder();
 
     $layout = $htmlBuilder->set("title",$title)
         ->set("menu",$menu)
@@ -91,7 +91,7 @@ $get_create_artist = function () {
     $content = file_get_contents('../components/aggiungiArtista.html');
     $layout = str_replace("{{content}}",$content,$layout);
 
-    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager($layout))->getHTMLBuilder();
+    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout)))->getHTMLBuilder();
     $layout = $htmlBuilder->set("title",$title)
         ->set("menu",$menu)
         ->set("breadcrumbs",$breadcrumbs)

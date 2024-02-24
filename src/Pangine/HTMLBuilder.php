@@ -26,14 +26,11 @@ class HTMLBuilderMultiplePlacehoderException extends Exception
 
 class HTMLBuilder {
 
-  private string $content;
-  private array $placeholders;
-
-  private array $toClean;
+  protected string $content;
+  protected array $placeholders;
 
     function __construct(string $htmlfile = "", string $layout = "")
     {
-        $this->toClean = array();
         if ($htmlfile == "") {
             $this->content = $layout;
         }else if ($layout == ""){
@@ -59,12 +56,6 @@ class HTMLBuilder {
     }
 
 
-    function clean(string $substring): HTMLBuilder
-    {
-        $this->toClean[] = $substring;
-
-        return $this;
-    }
   const UNSAFE = 0;
   const ERROR_P = 1;
 
@@ -89,34 +80,34 @@ class HTMLBuilder {
         foreach ($this->placeholders as $placeholder => $line) {
             [$offset, $replace] = $line;
 
-            if ($replace !== null) {
-                $this->content = substr_replace(
-                    $this->content,
-                    $replace,
-                    $offset,
-                    strlen($placeholder) + 4,
-                );
-                unset($this->placeholders[$placeholder]);
+            if ($replace === null) {
+              throw new HTMLBuilderUndefinedPlaceholderException($placeholder,$this->content);
             }
 
+            $this->content = substr_replace(
+                $this->content,
+                $replace,
+                $offset,
+                strlen($placeholder) + 4,
+            );
+            unset($this->placeholders[$placeholder]);
+
         }
-        foreach ($this->placeholders as $placeholder => $line) {
-            foreach ($this->toClean as $substring){
-                if (str_contains($placeholder, $substring)) {
-                    $this->content = str_replace(
-                        "{{".$placeholder."}}",
-                        "",
-                        $this->content,
-                    );
-                    unset($this->placeholders[$placeholder]);
-                }
-            }
-        }
-        foreach ($this->placeholders as $placeholder => $line){
-            throw new HTMLBuilderUndefinedPlaceholderException($placeholder,$this->content);
-        }
+
         return $this->content;
     }
 }
 
 ;
+
+class HTMLBuilderCleaner extends HTMLBuilder {
+    function clean(string $substring): HTMLBuilder
+    {
+        foreach ($this->placeholders as $placeholder => $line) {
+            if (str_contains($placeholder, $substring)) {
+              $this->set($placeholder,'');
+            }
+        }
+        return $this;
+    }
+}

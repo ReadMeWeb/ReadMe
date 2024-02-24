@@ -295,12 +295,11 @@ class PangineValidatorConfig
 
 class PangineUnvalidFormManager
 {
-    private \HTMLBuilder $htmlBuilder;
 
-    public function __construct(string $layout)
+    // Dependency injection
+    public function __construct(private \HTMLBuilder $htmlBuilder)
     {
         try_session();
-        $this->htmlBuilder = new \HTMLBuilder(layout: $layout);
         if (isset($_SESSION["err_data"])) {
             foreach ($_SESSION["err_data"] as $field => $data) {
                 $this->htmlBuilder->set("" . $field . "-value",$data["value"],\HTMLBuilder::UNSAFE)

@@ -296,6 +296,7 @@ class PangineValidatorConfig
 class PangineUnvalidFormManager
 {
 
+    // Dependency injection
     public function __construct(private \HTMLBuilder $htmlBuilder)
     {
         try_session();

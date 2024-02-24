@@ -22,7 +22,7 @@ $get_account = function () {
     $content = str_replace("<a href=\"/Pages/account.php\">Informazioni</a>","Informazioni",$content);
     $layout = str_replace("{{content}}",$content,$layout);
 
-    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager($layout))->getHTMLBuilder();
+    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout)))->getHTMLBuilder();
 
     $layout =  $htmlBuilder->set("title",$title)
     ->set("menu",$navbar)

@@ -53,7 +53,7 @@ $get_edit_account = function () {
     $content = str_replace("disabled","",$content);
     $content = str_replace("<a href=\"/Pages/account.php?update=true\">Modifica</a>","Modifica",$content);
     $layout = str_replace("{{content}}",$content,$layout);
-    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager($layout))->getHTMLBuilder();
+    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout)))->getHTMLBuilder();
     $layout = $htmlBuilder->set("title",$title)
         ->set("menu",$navbar)
         ->set("breadcrumbs",$breadcrumbs)

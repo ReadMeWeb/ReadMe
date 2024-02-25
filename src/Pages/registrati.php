@@ -1,11 +1,11 @@
 <?php
 
-require_once 'components/breadcrumbs/breadcrumbItem.php';
-require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
-require_once 'components/navbar.php';
-require_once 'components/sessionEstablisher.php';
-require_once 'data/database.php';
-require_once 'handlers/utils.php';
+require_once '../components/breadcrumbs/breadcrumbItem.php';
+require_once '../components/breadcrumbs/breadcrumbsBuilder.php';
+require_once '../components/navbar.php';
+require_once '../components/sessionEstablisher.php';
+require_once '../data/database.php';
+require_once '../handlers/utils.php';
 
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);
@@ -52,19 +52,14 @@ try {
   require_once('accedi.php'); // TODO: cos'è sta roba?
   exit();
 } catch (Exception $e) {
-  $errori = '
-    <h1>Errore</h1>
-    <ul class="error">
-      <li>' . (strip_tags($e->getMessage())) . '</li>
-    </ul>
-  ';
+  $errori = $e->getMessage();
 }
 
 // ========================================================================================================================
 GET:
 // ========================================================================================================================
 
-$content = file_get_contents("./components/registrati.html");
+$content = file_get_contents('../components/registrati.html');
 $content = str_replace('{{nome}}',$nome,$content);
 
 $breadcrumbs = (new BreadcrumbsBuilder())
@@ -73,7 +68,7 @@ $breadcrumbs = (new BreadcrumbsBuilder())
   ->build()
   ->getBreadcrumbsHtml();
 
-$page = file_get_contents("./components/layout.html");
+$page = file_get_contents("../components/layout.html");
 $page = str_replace("{{title}}", "Registrati", $page);
 $page = str_replace("{{description}}", "Pagina di registrazione di Orchestra", $page);
 $page = str_replace("{{keywords}}", "Orchestra, musica classica, registrazione, sign up", $page);

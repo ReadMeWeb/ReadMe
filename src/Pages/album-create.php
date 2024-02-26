@@ -26,7 +26,7 @@ if (is_not_signed_in()) {
 }
 
 $risultato = '';
-$tiporisultato = '';
+$tiporisultato = HTMLBuilder::UNSAFE;
 $artista = '';
 $nome = '';
 
@@ -49,7 +49,7 @@ try {
     throw new Exception("L'album risulta già essere registrato");
   }
 
-  $dir = "assets/albumPhotos";
+  $dir = "../assets/albumPhotos";
   if ($e = file_exists($dir)) {
     if ($d = is_dir($dir) === false) {
       throw new Exception("'$dir' esiste ma non è una directory");
@@ -77,7 +77,7 @@ try {
   $nome = '';
 
   $risultato = 'Album ' . $nome . ' è stato creato con successo';
-  $tiporisultato = HTMLBuilder::UNSAFE; // TODO cambiare con un messaggio di successo
+  $tiporisultato = HTMLBuilder::SUCCESS_P; // TODO cambiare con un messaggio di successo
 } catch (Exception $e) {
   $risultato = $e->getMessage();
   $tiporisultato = HTMLBuilder::ERROR_P;
@@ -98,7 +98,6 @@ $artisti = implode("\n", array_map(
   $conn->artisti()
 ));
 $conn->close();
-
 
 echo (new HTMLBuilder('../components/layout.html'))
   ->set('title', 'Aggiungi Album')

@@ -1,11 +1,12 @@
 <?php
 
-require_once '../../components/breadcrumbs/breadcrumbItem.php';
-require_once '../../components/breadcrumbs/breadcrumbsBuilder.php';
-require_once '../../components/navbar.php';
-require_once '../../components/sessionEstablisher.php';
-require_once '../../data/database.php';
-require_once '../../handlers/utils.php';
+require_once '../Pangine/HTMLBuilder.php';
+require_once '../components/breadcrumbs/breadcrumbItem.php';
+require_once '../components/breadcrumbs/breadcrumbsBuilder.php';
+require_once '../components/navbar.php';
+require_once '../components/sessionEstablisher.php';
+require_once '../data/database.php';
+require_once '../handlers/utils.php';
 
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);
@@ -25,6 +26,7 @@ if (is_not_signed_in()) {
 }
 
 $risultato = '';
+$tiporisultato = '';
 $artista = '';
 $nome = '';
 
@@ -73,19 +75,12 @@ try {
 
   $artista = '';
   $nome = '';
-  $risultato = '
-    <h1>Successo</h1>
-    <ul class="successo">
-      <li>Album ' . (strip_tags($nome)) . ' aggiunto con successo</li>
-    </ul>
-  ';
+
+  $risultato = 'Album ' . $nome . ' è stato creato con successo';
+  $tiporisultato = HTMLBuilder::UNSAFE; // TODO cambiare con un messaggio di successo
 } catch (Exception $e) {
-  $risultato = '
-    <h1>Errore</h1>
-    <ul class="error">
-      <li>' . (strip_tags($e->getMessage())) . '</li>
-    </ul>
-  ';
+  $risultato = $e->getMessage();
+  $tiporisultato = HTMLBuilder::ERROR_P;
 }
 
 // ========================================================================================================================
@@ -93,37 +88,32 @@ GET:
 // ========================================================================================================================
 
 $conn = new Database();
-$artisti = implode(
-  "\n",
-  array_map(
-    function ($coll) use ($artista) {
-      ["id" => $id, "name" => $nome] = $coll;
-      $nome = strip_tags($nome);
-      $selection = ($id == $artista) ? 'selected' : '';
-      return "<option $selection value=\"$id\">$nome</option>";
-    },
-    $conn->artisti()
-  )
-);
+$artisti = implode("\n", array_map(
+  function ($coll) use ($artista) {
+    ["id" => $id, "name" => $nome] = $coll;
+    $nome = strip_tags($nome);
+    $selection = ($id == $artista) ? 'selected' : '';
+    return "<option $selection value=\"$id\">$nome</option>";
+  },
+  $conn->artisti()
+));
 $conn->close();
 
-$content = file_get_contents("../../components/aggiungiAlbum.html");
-$content = str_replace("{{artisti}}", $artisti, $content);
-$content = str_replace("{{nome}}", $nome, $content);
 
-$breadcrumbs = (new BreadcrumbsBuilder())
-  ->addBreadcrumb(new BreadcrumbItem("Home"))
-  ->addBreadcrumb(new BreadcrumbItem("Aggiungi Album", isCurrent: true))
-  ->build()
-  ->getBreadcrumbsHtml();
-
-$page = file_get_contents("../../components/layout.html");
-$page = str_replace("{{title}}", "Aggiungi Album", $page);
-$page = str_replace("{{description}}", "Pagina admin di Orchestra per aggiungere album", $page);
-$page = str_replace("{{keywords}}", "", $page);
-$page = str_replace("{{menu}}", navbar(), $page);
-$page = str_replace("{{breadcrumbs}}", $breadcrumbs, $page);
-
-$page = str_replace("{{content}}", $content, $page);
-$page = str_replace("{{risultato}}", $risultato, $page);
-echo $page;
+echo (new HTMLBuilder('../components/layout.html'))
+  ->set('title', 'Aggiungi Album')
+  ->set('description', 'Pagina admin di Orchestra per aggiungere album')
+  ->set('keywords', '')
+  ->set('menu', navbar())
+  ->set('breadcrumbs', (new BreadcrumbsBuilder())
+    ->addBreadcrumb(new BreadcrumbItem("Home"))
+    ->addBreadcrumb(new BreadcrumbItem("Aggiungi Album", isCurrent: true))
+    ->build()
+    ->getBreadcrumbsHtml())
+  ->set('content', (new HTMLBuilder('../components/aggiungiAlbum.html'))
+    ->set('artisti', $artisti)
+    ->set('nomealbum', $nome)
+    ->set('action', 'album-create.php')
+    ->set('risultato', $risultato, $tiporisultato)
+    ->build())
+  ->build();

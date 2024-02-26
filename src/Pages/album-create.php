@@ -1,11 +1,11 @@
 <?php
 
-require_once 'components/breadcrumbs/breadcrumbItem.php';
-require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
-require_once 'components/navbar.php';
-require_once 'components/sessionEstablisher.php';
-require_once 'data/database.php';
-require_once 'handlers/utils.php';
+require_once '../../components/breadcrumbs/breadcrumbItem.php';
+require_once '../../components/breadcrumbs/breadcrumbsBuilder.php';
+require_once '../../components/navbar.php';
+require_once '../../components/sessionEstablisher.php';
+require_once '../../data/database.php';
+require_once '../../handlers/utils.php';
 
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);
@@ -107,7 +107,7 @@ $artisti = implode(
 );
 $conn->close();
 
-$content = file_get_contents("./components/aggiungiAlbum.html");
+$content = file_get_contents("../../components/aggiungiAlbum.html");
 $content = str_replace("{{artisti}}", $artisti, $content);
 $content = str_replace("{{nome}}", $nome, $content);
 
@@ -117,7 +117,7 @@ $breadcrumbs = (new BreadcrumbsBuilder())
   ->build()
   ->getBreadcrumbsHtml();
 
-$page = file_get_contents("./components/layout.html");
+$page = file_get_contents("../../components/layout.html");
 $page = str_replace("{{title}}", "Aggiungi Album", $page);
 $page = str_replace("{{description}}", "Pagina admin di Orchestra per aggiungere album", $page);
 $page = str_replace("{{keywords}}", "", $page);

@@ -58,6 +58,7 @@ class HTMLBuilder {
 
   const UNSAFE = 0;
   const ERROR_P = 1;
+  const SUCCESS_P = 2;
 
   function set($placeholder, $data, $type = HTMLBuilder::UNSAFE): HTMLBuilder {
     if (!array_key_exists($placeholder, $this->placeholders)) {
@@ -68,7 +69,8 @@ class HTMLBuilder {
       if($this->placeholders[$placeholder][1] == null){
           $this->placeholders[$placeholder][1] = match ($type) {
               HTMLBuilder::UNSAFE => $data,
-              HTMLBuilder::ERROR_P => '<p class="error">' . $data . '</p>',
+              HTMLBuilder::ERROR_P => '<p class="error">' . htmlspecialchars($data) . '</p>',
+              HTMLBuilder::SUCCESS_P => '<p class="success">' . htmlspecialchars($data) . '</p>',
           };
       }
 

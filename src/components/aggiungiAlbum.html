@@ -1,6 +1,6 @@
 <main>
   {{risultato}}
-  <form action="aggiungiAlbum.php" method="post" enctype="multipart/form-data">
+  <form action="{{action}}" method="post" enctype="multipart/form-data">
     <fieldset>
       <legend>Creazione album</legend>
       <label for="artista">Artista</label>
@@ -10,7 +10,7 @@
 
       <label for="nomealbum">Nome album</label>
       <input id="nomealbum" tabindex="2" name="nome" required type="text" placeholder="Digita il nome dell'album"
-        value="{{nome}}">
+        value="{{nomealbum}}">
 
       <label for="copertina">Copertina (Max 512KB)</label>
       <input id="copertina" tabindex="3" name="copertina" type="file" accept="image/*">

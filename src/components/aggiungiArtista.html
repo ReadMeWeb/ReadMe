@@ -1,24 +1,23 @@
-<main>
-    <h1>Aggiungi un nuovo artista</h1>
 
-    <form action="/Pages/artista.php" method="post" enctype="multipart/form-data" id="aggiungi-artista">
+<h1>Aggiungi un nuovo artista</h1>
+<p role="alert">Se l'operazione di aggiunta avrà successo verrai reinderizzato alla pagina di catalogo.</p>
+<form action="/Pages/artista.php" method="post" enctype="multipart/form-data" id="aggiungi-artista">
 
-        <fieldset>
-            <legend>Dati artista</legend>
+    <fieldset>
+        <legend>Dati artista</legend>
 
-            <label for="nome">Nome Artista</label>
-            <input id="nome" name="nome" type="text" maxlength="150" minlength="5" placeholder="Nome artista" value="{{nome-value}}" >
-            {{nome-message}}
+        <label for="nome">Nome Artista</label>
+        <input id="nome" name="nome" type="text" maxlength="150" minlength="5" placeholder="Nome artista" value="{{nome-value}}" >
+        {{nome-message}}
 
-            <label for="biografia">Biografia Artista</label>
-            <textarea id="biografia" name="biografia"  minlength="20" placeholder="Biografia artista" rows="20" cols="50">{{biografia-value}}</textarea>
-            {{biografia-message}}
+        <label for="biografia">Biografia Artista</label>
+        <textarea id="biografia" name="biografia"  minlength="20" placeholder="Biografia artista" rows="20" cols="50">{{biografia-value}}</textarea>
+        {{biografia-message}}
 
-            <label for="immagine">Immagine Artista</label>
-            <input type="file" id="immagine" name="immagine" accept="image/png, image/jpeg" value="{{immagine-value}}" required>
-            {{immagine-message}}
+        <label for="immagine">Immagine Artista</label>
+        <input type="file" id="immagine" name="immagine" accept="image/png, image/jpeg" value="{{immagine-value}}" required>
+        {{immagine-message}}
 
-        </fieldset>
-        <input type="submit" name="create" value="Aggiungi">
-    </form>
-</main>
+    </fieldset>
+    <input type="submit" name="create" value="Aggiungi">
+</form>

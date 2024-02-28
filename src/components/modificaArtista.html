@@ -6,7 +6,7 @@
         <legend>Dati artista</legend>
 
         <label for="nome">Nome Artista</label>
-        <input id="nome" name="nome" type="text" minlength="5" maxlength="150" placeholder="Nome artista" value="{{nome-value}}">
+        <input id="nome" name="nome" type="text" maxlength="150" placeholder="Nome artista" value="{{nome-value}}">
         {{nome-message}}
 
         <label for="biografia">Biografia Artista</label>
@@ -19,6 +19,7 @@
         {{immagine-message}}
         
         <input type="hidden" name="id" value="{{id-value}}">
+        {{id-value}}
         
     </fieldset>
     <input type="submit" name="update" value="Modifica">

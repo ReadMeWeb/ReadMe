@@ -20,7 +20,17 @@ class Pangine
         ksort($this->indexer);
         try {
             foreach ($this->indexer as $key => $renderer) {
-                if ((isset($_GET) && str_contains($key,"GET")) || (isset($_POST) && str_contains($key,"POST"))){
+
+//if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+//-  goto GET;
+//-}
+
+                if (($_SERVER['REQUEST_METHOD'] === 'GET' && str_contains($key,"GET")) || ($_SERVER['REQUEST_METHOD'] === 'POST' && str_contains($key,"POST"))){
+//                    echo json_encode(isset($_GET))  . "\n" ;
+//                    echo json_encode(str_contains($key,"GET"))  . "\n"  ;
+//                    echo json_encode(isset($_POST))  . "\n"  ;
+//                    echo json_encode(str_contains($key,"POST"))  . "\n"  ;
+
                     $renderer();
                 }
             }

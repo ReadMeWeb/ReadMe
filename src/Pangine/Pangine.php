@@ -19,8 +19,10 @@ class Pangine
         try_session();
         ksort($this->indexer);
         try {
-            foreach ($this->indexer as $renderer) {
-                $renderer();
+            foreach ($this->indexer as $key => $renderer) {
+                if ((isset($_GET) && str_contains($key,"GET")) || (isset($_POST) && str_contains($key,"POST"))){
+                    $renderer();
+                }
             }
         } catch (PangineValidationError $e) {
             $_SESSION["err_data"] = $e->get_errors();

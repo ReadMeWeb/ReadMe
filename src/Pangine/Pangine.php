@@ -20,18 +20,11 @@ class Pangine
         ksort($this->indexer);
         try {
             foreach ($this->indexer as $key => $renderer) {
-
-//if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-//-  goto GET;
-//-}
-
                 if (($_SERVER['REQUEST_METHOD'] === 'GET' && str_contains($key,"GET")) || ($_SERVER['REQUEST_METHOD'] === 'POST' && str_contains($key,"POST"))){
-//                    echo json_encode(isset($_GET))  . "\n" ;
-//                    echo json_encode(str_contains($key,"GET"))  . "\n"  ;
-//                    echo json_encode(isset($_POST))  . "\n"  ;
-//                    echo json_encode(str_contains($key,"POST"))  . "\n"  ;
-
                     $renderer();
+                    if(isset($_SESSION["data"])){
+                        unset($_SESSION["data"]);
+                    }
                 }
             }
         } catch (PangineValidationError $e) {
@@ -227,8 +220,6 @@ class PangineValidator
         }
         if ($error->found_errors()) {
             throw $error;
-        } else {
-            unset($_SESSION["data"]);
         }
     }
 }

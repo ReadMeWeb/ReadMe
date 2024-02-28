@@ -268,7 +268,7 @@ class PangineValidatorConfig
                 }
             }
         }
-        if (is_numeric($field)) {
+        else if (is_numeric($field)) {
             if ($this->notZero && intval($field) == 0) {
                 return "Questo campo non può essere uguale a 0.";
             }

@@ -12,10 +12,10 @@ const BASE_DIR_IMAGES = '../assets/artistPhotos/';
 
 $get_artist= function () {
     echo 'GET artist';
+    session_unset();
 };
 
 $get_edit_artist = function () {
-
     (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
     $expectedParameters = array(
         "id"=> (new Pangine\PangineValidatorConfig(
@@ -26,6 +26,7 @@ $get_edit_artist = function () {
     $validator = new Pangine\PangineValidator("GET",$expectedParameters);
     $validator->validate("/Pages/catalogo.php");
     $artist_id = $_GET['id'];
+   
 
     $keywords = implode(', ', array('Orchestra', 'modifica artista'));
     $title = 'Modifica artista';
@@ -36,7 +37,6 @@ $get_edit_artist = function () {
         ->build()
         ->getBreadcrumbsHtml();
     $description = 'Modifica artista dal catalogo di Orchestra';
-    $errors = "";
 
     $db = new Database(); 
     $artist = $db->fetch_artist_info_by_id($artist_id);
@@ -104,6 +104,7 @@ $get_create_artist = function () {
 };
 
 $post_edit_artist = function () {
+
     (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
     $expectedParameters = array(
         "id"=> (new Pangine\PangineValidatorConfig(

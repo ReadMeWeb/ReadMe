@@ -11,9 +11,6 @@ require_once '../components/sessionEstablisher.php';
 require_once '../data/database.php';
 require_once '../handlers/utils.php';
 
-const assert = new AssertionFacade();
-assert->is_noone_signed_in();
-
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);
 });
@@ -34,8 +31,8 @@ const logerr = 'logerr';
 
     try {
       [
-        "name" => $nome,
-        "password" => $password,
+        'nome' => $nome,
+        'password' => $password,
       ] = $_POST;
 
       $conn = new Database();
@@ -49,11 +46,8 @@ const logerr = 'logerr';
       redirect(extract_from_array_else('redirection', $_SESSION, '/'));
     } catch (Exception $e) {
       $_SESSION[logerr] = ['nome' => $nome, 'val' => $e->getMessage(), 'typ' => HTMLBuilder::ERROR_P];
-      //ritorno alla pagina di accesso in caso di errore
-      //in commentato perché se no va in redirect loop
-      //redirect('accedi.php');
+      redirect('accedi.php');
     }
-    echo '<p>è entrato in post, nonostante la chiamata sia get</p>';
   })
   ->GET_read(function () {
 
@@ -73,8 +67,10 @@ const logerr = 'logerr';
         ->getBreadcrumbsHtml())
       ->set('content', (new HTMLBuilder('../components/accedi.html'))
         ->set('nome', $_SESSION[logerr]['nome'])
-        ->set('errori', $_SESSION[logerr]['err'], $_SESSION[logerr]['typ'])
+        ->set('errori', $_SESSION[logerr]['val'], $_SESSION[logerr]['typ'])
         ->build())
       ->build();
+
+    unset($_SESSION[logerr]);
   })
   ->execute();

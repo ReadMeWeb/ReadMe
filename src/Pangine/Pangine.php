@@ -22,15 +22,11 @@ class Pangine
             foreach ($this->indexer as $key => $renderer) {
                 if (($_SERVER['REQUEST_METHOD'] === 'GET' && str_contains($key,"GET")) || ($_SERVER['REQUEST_METHOD'] === 'POST' && str_contains($key,"POST"))){
                     $renderer();
-                    if(isset($_SESSION["data"])){
-                        unset($_SESSION["data"]);
-                    }
                 }
             }
         } catch (PangineValidationError $e) {
             $_SESSION["err_data"] = $e->get_errors();
             header("Location: " . $e->getCallbackPage());
-            //echo json_encode($e->get_errors());
             exit(0);
         } catch (PangineAuthError $e) {
             header("Location: /Pages/unallowed.php");

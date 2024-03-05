@@ -14,6 +14,7 @@ class Pages
         "Informazioni Canzone" => "/Pages/addSong.php?create=true",
         "Account" => "/Pages/account.php",
         "Account (Modifica)" => "/Pages/account?update=true.php",
-        "Permessi insufficienti" => "/Pages/unallowed.php"
+        "Permessi insufficienti" => "/Pages/unallowed.php",
+        "Modifica Canzone" => "/Pages/addSong.php?update=true",
     ];
 }

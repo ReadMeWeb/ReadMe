@@ -10,7 +10,12 @@ function getArtistSelectionContent(array $artists): string
 {
     $artists_list = "";
     foreach ($artists as $artist) {
-        $artists_list .= "<option value=\"" . $artist["id"] . "\">" . $artist["name"] . "</option>";
+        $artists_list .=
+            "<option value=\"" .
+            $artist["id"] .
+            "\">" .
+            $artist["name"] .
+            "</option>";
     }
     return $artists_list;
 }
@@ -19,13 +24,18 @@ function getAlbumsSelectionContent(array $albums): string
 {
     $albums_list = "";
     foreach ($albums as $album) {
-        $albums_list .= "<option value=\"" . $album["id"] . "\">" . $album["name"] . "</option>";
+        $albums_list .=
+            "<option value=\"" .
+            $album["id"] .
+            "\">" .
+            $album["name"] .
+            "</option>";
     }
     return $albums_list;
 }
 
 $get_select_artist = function () {
-    (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
+    (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
     $layout = file_get_contents("../components/layoutLogged.html");
     $title = "Aggiungi Canzone - Selezione Artista";
@@ -46,24 +56,15 @@ $get_select_artist = function () {
     $layout = str_replace("{{content}}", $content, $layout);
 
     $layout = str_replace(
-        array(
-            "{{title}}",
-            "{{menu}}",
-            "{{breadcrumbs}}",
-            "{{artists}}"
-        ),
-        array(
-            $title,
-            $navbar,
-            $breadcrumbs,
-            $artists
-        ),
-        $layout);
+        ["{{title}}", "{{menu}}", "{{breadcrumbs}}", "{{artists}}"],
+        [$title, $navbar, $breadcrumbs, $artists],
+        $layout
+    );
     echo $layout;
 };
 
 $get_create_song = function () {
-    (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
+    (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
     $layout = file_get_contents("../components/layoutLogged.html");
     $title = "Aggiungi Canzone - Informazioni Canzone";
@@ -87,7 +88,9 @@ $get_create_song = function () {
 
     $layout = str_replace("{{content}}", $content, $layout);
 
-    $html_builder = (new Pangine\PangineUnvalidFormManager($layout))->getHTMLBuilder();
+    $html_builder = (new Pangine\PangineUnvalidFormManager(
+        $layout
+    ))->getHTMLBuilder();
     $html = $html_builder
         ->set("title", $title)
         ->set("menu", $navbar)
@@ -101,8 +104,8 @@ $get_create_song = function () {
     echo $html;
 };
 
-$post_add_song = function () {
-    (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
+$post_create_song = function () {
+    (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
     $artist_id = $_POST["artist_id"];
     $album_id = $_POST["album"];
@@ -111,19 +114,25 @@ $post_add_song = function () {
     $tmp_graphic = $_FILES["graphic_file"];
 
     // set up audio file
-    $uploadDirA = dirname(__FILE__) . "/../assets/Audio/";
+    $uploadDirA = dirname(__FILE__) . "/../assets/songAudios/";
     $fileNameA = str_replace(" ", "-", $song_title) . "_" . $artist_id . ".mp3";
     $uploadFileA = $uploadDirA . $fileNameA;
 
     // set up graphic file
-    $uploadDirG = dirname(__FILE__) . "/../assets/images/";
+    $uploadDirG = dirname(__FILE__) . "/../assets/songPhotos/";
     $fileNameG = str_replace(" ", "-", $song_title) . "_" . $artist_id . ".png";
     $uploadFileG = $uploadDirG . $fileNameG;
 
     // custom validation functions
-    $check_album_belongs_to_artist = function () use ($artist_id, $album_id): string {
+    $check_album_belongs_to_artist = function () use (
+        $artist_id,
+        $album_id
+    ): string {
         $db = new Database();
-        if ($album_id == "NULL" || $db->check_album_belong_to_artist($artist_id, $album_id)) {
+        if (
+            $album_id == "NULL" ||
+            $db->check_album_belong_to_artist($artist_id, $album_id)
+        ) {
             $db->close();
             return "";
         } else {
@@ -132,58 +141,188 @@ $post_add_song = function () {
         }
     };
 
-    $try_update_graphic = function () use ($uploadFileG, $tmp_graphic): string {
-        $result_graphic = move_uploaded_file($tmp_graphic['tmp_name'], $uploadFileG);
-        if ($result_graphic) {
-            return "";
-        } else {
-            return "Non è stato possibile caricare il file grafico richiesto a causa di un errore lato server.";
-        }
-    };
-
-    $try_update_audio = function () use ($uploadFileA, $tmp_audio): string {
-        $result_audio = move_uploaded_file($tmp_audio['tmp_name'], $uploadFileA);
-        if ($result_audio) {
-            return "";
-        } else {
-            return "Non è stato possibile caricare il file audio richiesto a causa di un errore lato server.";
-        }
-    };
-
-    $expectedParameters = array(
-        "title" => (new Pangine\PangineValidatorConfig(
+    $expectedParameters = [
+        "title" => new Pangine\PangineValidatorConfig(
             notEmpty: true,
             minLength: 4,
             maxLength: 40
-        )),
-        "artist_id" => (new Pangine\PangineValidatorConfig(
-            notEmpty: true,
-        )),
-        "album" => (new Pangine\PangineValidatorConfig(
+        ),
+        "artist_id" => new Pangine\PangineValidatorConfig(notEmpty: true),
+        "album" => new Pangine\PangineValidatorConfig(
             notEmpty: true,
             customFunction: $check_album_belongs_to_artist
-        )),
-        //TODO: fix this fields validation as they are in $_FILES and not in $_GET or $_POST
-        /*"audio_file"=>(new Pangine\PangineValidatorConfig(
-            notEmpty: true,
-            customFunction: $try_update_audio
-        )),
-        "graphic_file"=>(new Pangine\PangineValidatorConfig(
-            notEmpty: true,
-            isImage: true,
-            customFunction: $try_update_graphic
-        )),*/
-    );
+        ),
+    ];
 
     $validator = new Pangine\PangineValidator("POST", $expectedParameters);
-    $validator->validate("/Pages/addSong.php?create=true&artist_id=".$artist_id);
-    //TODO if validation goes wrong, delete files if they exists
+    $validator->validate(
+        "/Pages/addSong.php?create=true&artist_id=" . $artist_id
+    );
+
+    /* Try update file */
+    $result_graphic = move_uploaded_file(
+        $tmp_graphic["tmp_name"],
+        $uploadFileG
+    );
+    if ($result_graphic) {
+        $result_audio = move_uploaded_file(
+            $tmp_audio["tmp_name"],
+            $uploadFileA
+        );
+        if (!$result_audio) {
+            unlink($uploadFileG);
+            header("Location: /Pages/catalogo.php");
+        }
+    } else {
+        header("Location: /Pages/catalogo.php");
+    }
 
     $db = new Database();
-    $result = $db->insert_song($artist_id, $song_title, $fileNameA, $fileNameG, $album_id == "NULL" ? null : $album_id);
+    $result = $db->insert_song(
+        $artist_id,
+        $song_title,
+        $fileNameA,
+        $fileNameG,
+        $album_id == "NULL" ? null : $album_id
+    );
     $db->close();
 
     if ($result) {
         header("Location: /Pages/catalogo.php");
+    } else {
+        unlink($uploadFileA);
+        unlink($uploadFileG);
     }
 };
+
+$get_update_song = function () {
+    (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
+
+    $layout = file_get_contents("../components/layoutLogged.html");
+    $title = "Modifica Canzone";
+    $navbar = navbar();
+    $breadcrumbs = (new BreadcrumbsBuilder())
+        ->addBreadcrumb(new BreadcrumbItem("Home"))
+        ->addBreadcrumb(new BreadcrumbItem("Modifica Canzone", isCurrent: true))
+        ->build()
+        ->getBreadcrumbsHtml();
+    $content = file_get_contents("../components/addSong/editSong.html");
+
+    $artist_id = $_GET["producer"];
+    $song_title_old = $_GET["name"];
+
+    $db = new Database();
+    $artist_fetch_array = $db->fetch_artist_info_by_id($artist_id);
+    $all_artists_except_selected = $db->fetch_all_artists_except_the_following(
+        $artist_id
+    );
+    $song_fetch_array = $db->fetch_song_info_by_title_and_artist_id(
+        $song_title_old,
+        $artist_id
+    );
+    $db->close();
+
+    $artist_options = getArtistSelectionContent($all_artists_except_selected);
+    $current_artist_option =
+        "<option selected value=\"" .
+        $artist_fetch_array["id"] .
+        "\">" .
+        $artist_fetch_array["name"] .
+        "</option>";
+
+    $layout = str_replace("{{content}}", $content, $layout);
+
+    $html_builder = (new Pangine\PangineUnvalidFormManager(
+        $layout
+    ))->getHTMLBuilder();
+    $html = $html_builder
+        ->set("title", $title)
+        ->set("menu", $navbar)
+        ->set("breadcrumbs", $breadcrumbs)
+        ->set("current-artist", $current_artist_option)
+        ->set("artists", $artist_options)
+        ->set("song-id-value", $song_fetch_array["id"])
+        ->set("title-value", $song_fetch_array["name"])
+        ->set("title-value2", $song_fetch_array["name"])
+        ->set("current_audio_file", $song_fetch_array["audio_file_name"])
+        ->set("current_graphic_file", $song_fetch_array["graphic_file_name"])
+        ->clean("-message")
+        ->clean("-value")
+        ->build();
+    echo $html;
+};
+
+$post_update_song = function () {
+    (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
+
+    $song_id = $_POST["song_id"];
+    $artist_id = $_POST["artist_id"];
+    $song_title = $_POST["title"];
+    $tmp_audio = $_FILES["audio_file"];
+    $tmp_graphic = $_FILES["graphic_file"];
+
+    // set up audio file
+    $uploadDirA = dirname(__FILE__) . "/../assets/songAudios/";
+    $fileNameA = str_replace(" ", "-", $song_title) . "_" . $artist_id . ".mp3";
+    $uploadFileA = $uploadDirA . $fileNameA;
+
+    // set up graphic file
+    $uploadDirG = dirname(__FILE__) . "/../assets/songPhotos/";
+    $fileNameG = str_replace(" ", "-", $song_title) . "_" . $artist_id . ".png";
+    $uploadFileG = $uploadDirG . $fileNameG;
+
+    $expectedParameters = [
+        "title" => new Pangine\PangineValidatorConfig(
+            notEmpty: true,
+            minLength: 4,
+            maxLength: 40
+        ),
+        "artist_id" => new Pangine\PangineValidatorConfig(notEmpty: true),
+        "song_id" => new Pangine\PangineValidatorConfig(notEmpty: true),
+    ];
+
+    $validator = new Pangine\PangineValidator("POST", $expectedParameters);
+    $validator->validate(
+        "/Pages/addSong.php?producer=".$artist_id."&name=".$song_title."&update=Modifica"
+    );
+
+    $db = new Database();
+    $song_old = $db->fetch_song_info_by_id($song_id);
+    $db->close();
+
+    /* Try update file */
+    if($tmp_graphic != null){
+        unlink($song_old["graphic_file_name"]);
+        $result_graphic = move_uploaded_file(
+            $tmp_graphic["tmp_name"],
+            $uploadFileG
+        );
+    }
+    if($tmp_audio != null) {
+        unlink($song_old["audio_file_name"]);
+        $result_audio = move_uploaded_file(
+            $tmp_audio["tmp_name"],
+            $uploadFileA
+        );
+    }
+
+    if(($tmp_graphic == null || $result_graphic) && ($tmp_audio == null || $result_audio)){
+        $db = new Database();
+        $result = $db->update_song(
+            $song_id,
+            $artist_id,
+            $song_title,
+            $tmp_graphic == null ? $song_old["graphic_file_name"] : $fileNameG,
+            $tmp_audio == null ? $song_old["audio_file_name"] : $fileNameA,
+            $artist_id == $song_old["producer"] ? $song_old["album"] : null,
+        );
+        $db->close();
+
+        if ($result) {
+            header("Location: /Pages/catalogo.php");
+        }else{
+            //TODO error 500
+        }
+    }
+};
+

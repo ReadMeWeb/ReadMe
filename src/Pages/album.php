@@ -139,6 +139,18 @@ function artistihtmlioptions($artista) {
   })
   ->GET_read(function () {
     [
+      'Risultato' => $risultato,
+      'TipoRisultato' => $tiporisultato,
+      'Artista' => $artista,
+      'Nome' => $nome,
+    ] = extract_from_array_else(session_err, $_SESSION, [
+      'Risultato' => '',
+      'TipoRisultato' => HTMLBuilder::UNSAFE,
+      'Artista' => '',
+      'Nome' => '',
+    ]);
+
+    [
       'nome' => $nome,
       'artista' => $artista
     ] = dbcall(fn ($conn) => $conn->album($_GET['id'])[0]);
@@ -155,7 +167,7 @@ function artistihtmlioptions($artista) {
         ->set('nomealbum', $nome)
         ->set('method', 'get')
         ->set('action', 'album.php')
-        ->set('risultato', '')
+        ->set('risultato', $risultato, $tiporisultato)
         ->set('nascondidelete', 'hidden')
         ->set('nomecomando', 'update')
         ->set('valorecomando', 'true')

@@ -47,3 +47,13 @@ function dbcall($function) {
     };
   }
 }
+
+function arraybreadcrumb($array) {
+  $arrayitems = array_map(fn ($item) => new BreadcrumbItem($item), $array);
+  $arrayitems[$last = array_key_last($array)] = new BreadcrumbItem($array[$last], isCurrent: true);
+  $builder = new BreadcrumbsBuilder();
+  foreach ($arrayitems as $i) {
+    $builder->addBreadcrumb($i);
+  }
+  return $builder->build()->getBreadcrumbsHtml();
+}

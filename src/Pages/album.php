@@ -191,11 +191,11 @@ function artistihtmlioptions($artista) {
     ] = dbcall(fn ($conn) => $conn->album($_GET['id'])[0]);
 
     echo (new HTMLBuilder(layout))
-      ->set('title', 'Aggiungi Album')
-      ->set('description', 'Pagina admin di Orchestra per aggiungere album')
+      ->set('title', 'Modifica Album')
+      ->set('description', 'Pagina admin di Orchestra per modificare album esistenti')
       ->set('keywords', '')
       ->set('menu', navbar())
-      ->set('breadcrumbs', arraybreadcrumb(["Home", "Aggiungi Album"]))
+      ->set('breadcrumbs', arraybreadcrumb(["Home", "Modifica Album"]))
       ->set('content', (new HTMLBuilder(content))
         ->set('legenda', 'Creazione album')
         ->set('artisti', artistihtmlioptions($artista))

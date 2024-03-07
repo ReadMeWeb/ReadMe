@@ -174,7 +174,12 @@ function artistihtmlioptions($artista) {
         ->set('risultato', '')
         ->set('nascondidelete', 'hidden')
         ->set('nomecomando', '')
+        ->set('valoreid',$_GET['id'])
         ->set('valorecomando', 'Modifica')
+        ->set('disabilitaid','')
+        ->set('disabilitaartista','disabled')
+        ->set('disabilitanomealbum','disabled')
+        ->set('disabilitacopertina','disabled')
         ->build())
       ->build();
   })

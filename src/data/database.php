@@ -100,6 +100,11 @@ class  Database
     $this->execute_query($query, $artist, $name, $file);
     return $this->album_exists($artist, $name);
   }
+
+  public function albums(){
+    return $this->execute_query('SELECT id AS id, name AS nome FROM Album;');
+  }
+
     // restituisce il numero di artisti
     public function artist_count(): int
     {

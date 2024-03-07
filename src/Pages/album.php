@@ -120,15 +120,7 @@ function artistihtmlioptions($artista) {
       ->set('breadcrumbs', arraybreadcrumb(['Home', 'Albums']))
       ->set('content', (new HTMLBuilder(content))
         ->set('legenda', 'Creazione album')
-        ->set('artisti', implode("\n", array_map(
-          function ($coll) use ($artista) {
-            ["id" => $id, "name" => $nome] = $coll;
-            $nome = strip_tags($nome);
-            $selection = ($id == $artista) ? 'selected' : '';
-            return "<option $selection value=\"$id\">$nome</option>";
-          },
-          dbcall(fn ($conn) => $conn->artisti())
-        )))
+        ->set('artisti', artistihtmlioptions($artista))
         ->set('nomealbum', $nome)
         ->set('action', 'album.php?create=true')
         ->set('risultato', $risultato, $tiporisultato)

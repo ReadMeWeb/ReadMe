@@ -166,7 +166,7 @@ function artistihtmlioptions($artista) {
         ->set('legenda', 'Creazione album')
         ->set('artisti', artistihtmlioptions($artista))
         ->set('nomealbum', $nome)
-        ->set('action', 'album.php?id=' . ($_GET['id']) . 'update=true')
+        ->set('action', 'album.php?id=' . ($_GET['id']) . '&update=true')
         ->set('risultato', '')
         ->set('nascondidelete', 'hidden')
         ->set('nomecomando', '')
@@ -174,4 +174,28 @@ function artistihtmlioptions($artista) {
         ->build())
       ->build();
   })
+->GET_update(function (){
+    [
+      'nome' => $nome,
+      'artista' => $artista
+    ] = dbcall(fn ($conn) => $conn->album($_GET['id'])[0]);
+
+    echo (new HTMLBuilder('../components/layout.html'))
+      ->set('title', 'Aggiungi Album')
+      ->set('description', 'Pagina admin di Orchestra per aggiungere album')
+      ->set('keywords', '')
+      ->set('menu', navbar())
+      ->set('breadcrumbs', arraybreadcrumb(["Home", "Aggiungi Album"]))
+      ->set('content', (new HTMLBuilder('../components/aggiungiAlbum.html'))
+        ->set('legenda', 'Creazione album')
+        ->set('artisti', artistihtmlioptions($artista))
+        ->set('nomealbum', $nome)
+        ->set('action', 'album.php?id=' . ($_GET['id']) . 'update=true')
+        ->set('risultato', '')
+        ->set('nascondidelete', '')
+        ->set('nomecomando', '')
+        ->set('valorecomando', 'Salva')
+        ->build())
+      ->build();
+})
   ->execute();

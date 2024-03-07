@@ -27,6 +27,8 @@ if (is_not_signed_in()) {
 }
 
 const session_err = 'ALBUM_CREATE_ERR';
+const layout = '../components/layout.html';
+const content = '../components/album.html';
 
 function arraybreadcrumb($array) {
   $arrayitems = array_map(fn ($item) => new BreadcrumbItem($item), $array);
@@ -120,7 +122,7 @@ function artistihtmlioptions($artista) {
       'Nome' => '',
     ]);
 
-    echo (new HTMLBuilder('../components/layout.html'))
+    echo (new HTMLBuilder(layout))
       ->set('title', 'Aggiungi Album')
       ->set('description', 'Pagina admin di Orchestra per aggiungere album')
       ->set('keywords', '')
@@ -130,7 +132,7 @@ function artistihtmlioptions($artista) {
         ->addBreadcrumb(new BreadcrumbItem("Aggiungi Album", isCurrent: true))
         ->build()
         ->getBreadcrumbsHtml())
-      ->set('content', (new HTMLBuilder('../components/aggiungiAlbum.html'))
+      ->set('content', (new HTMLBuilder(content))
         ->set('legenda', 'Creazione album')
         ->set('artisti', implode("\n", array_map(
           function ($coll) use ($artista) {
@@ -157,13 +159,13 @@ function artistihtmlioptions($artista) {
       'artista' => $artista
     ] = dbcall(fn ($conn) => $conn->album($_GET['id'])[0]);
 
-    echo (new HTMLBuilder('../components/layout.html'))
+    echo (new HTMLBuilder(layout))
       ->set('title', 'Aggiungi Album')
       ->set('description', 'Pagina admin di Orchestra per aggiungere album')
       ->set('keywords', '')
       ->set('menu', navbar())
       ->set('breadcrumbs', arraybreadcrumb(["Home", "Aggiungi Album"]))
-      ->set('content', (new HTMLBuilder('../components/aggiungiAlbum.html'))
+      ->set('content', (new HTMLBuilder(content))
         ->set('legenda', 'Creazione album')
         ->set('artisti', artistihtmlioptions($artista))
         ->set('nomealbum', $nome)
@@ -182,13 +184,13 @@ function artistihtmlioptions($artista) {
       'artista' => $artista
     ] = dbcall(fn ($conn) => $conn->album($_GET['id'])[0]);
 
-    echo (new HTMLBuilder('../components/layout.html'))
+    echo (new HTMLBuilder(layout))
       ->set('title', 'Aggiungi Album')
       ->set('description', 'Pagina admin di Orchestra per aggiungere album')
       ->set('keywords', '')
       ->set('menu', navbar())
       ->set('breadcrumbs', arraybreadcrumb(["Home", "Aggiungi Album"]))
-      ->set('content', (new HTMLBuilder('../components/aggiungiAlbum.html'))
+      ->set('content', (new HTMLBuilder(content))
         ->set('legenda', 'Creazione album')
         ->set('artisti', artistihtmlioptions($artista))
         ->set('nomealbum', $nome)

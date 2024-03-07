@@ -105,6 +105,10 @@ class  Database
     return $this->execute_query('SELECT id AS id, name AS nome FROM Album;');
   }
 
+  public function album($id){
+    return $this->execute_query('SELECT name AS nome, artist_id as artista FROM Album WHERE id = ?;',$id);
+  }
+
     // restituisce il numero di artisti
     public function artist_count(): int
     {

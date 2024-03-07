@@ -10,7 +10,7 @@ class Pages
         "Catalogo" => "/Pages/catalogo.php",
         "Aggiungi Artista" => "/Pages/artista.php?create=true",
         "Modifica Artista" => "/Pages/artista.php?update=true",
-        "Aggiungi Album" => "/aggiungiAlbum.php",
+        "Albums" => "/Pages/albums.php",
         "Aggiungi Canzone" => "/selectartist.php",
         "Informazioni Brano" => "/addsong.php",
         "Canzone Aggiunta" => "/successaddsong.php",

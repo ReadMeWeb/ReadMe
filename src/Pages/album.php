@@ -138,7 +138,23 @@ function artistihtmlioptions($artista) {
       ->build();
   })
   ->POST_update(function () {
-    // TODO
+    $artista = '';
+    $nome = '';
+    $id = '';
+    try {
+      [
+        "artista" => $artista,
+        "nome" => $nome,
+      ] = $_POST;
+    } catch (Exception $e) {
+      $_SESSION[session_err] = [
+        'Risultato' => $e->getMessage(),
+        'TipoRisultato' => HTMLBuilder::ERROR_P,
+        'Artista' => $artista,
+        'Nome' => $nome,
+      ];
+    }
+    redirect('./album.php?read=true&id=' . $id);
   })
   ->POST_delete(function () {
     // TODO

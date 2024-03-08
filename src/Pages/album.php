@@ -31,10 +31,15 @@ if (is_not_signed_in()) {
   redirect('accedi.php');
 }
 
-const session_err = 'ALBUM_CREATE_ERR';
-const layout = '../components/layout.html';
-const content = '../components/album.html';
-const dir = "../assets/albumPhotos";
+if (file_exists(dir)) {
+  if (is_dir(dir) === false) {
+    throw new Exception(sprintf("'%s' esiste ma non è una directory", dir));
+  }
+} else {
+  if (mkdir(dir, 0777, true) === false) {
+    throw new Exception(sprintf("Directory '%s' mancante e non può essere creata : %s", dir, dir));
+  }
+};
 
 function artistihtmlioptions($artista) {
   return implode("\n", array_map(

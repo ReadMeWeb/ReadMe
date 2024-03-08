@@ -221,7 +221,6 @@ function artistihtmlioptions($artista) {
     [
       'nome' => $nome,
       'artista' => $artista,
-      'copertina' => $copertina,
     ] = dbcall(fn ($conn) => $conn->album($_GET['id'])[0]);
 
     echo (new HTMLBuilder(layout))

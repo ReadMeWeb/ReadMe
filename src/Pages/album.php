@@ -143,16 +143,25 @@ function artistihtmlioptions($artista) {
       ->build();
   })
   ->POST_update(function () {
-    var_dump($_POST);
-    die();
     $artista = '';
     $nome = '';
     $id = '';
     try {
       [
-        "artista" => $artista,
-        "nome" => $nome,
+        'artista' => $artista,
+        'nome' => $nome,
+        'id' => $id,
       ] = $_POST;
+
+      dbcall(function (Database $conn) use ($id, $nome, $artista) {
+        $conn->album_update($id, $nome, $artista);
+      });
+
+      if ($_FILES['copertina']['name'] !== '') {
+        assertcopertinamaxsize();
+        savecopertina($id);
+      }
+
     } catch (Exception $e) {
       $_SESSION[session_err] = [
         'Risultato' => $e->getMessage(),

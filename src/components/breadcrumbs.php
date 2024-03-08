@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . "/../../handlers/url_utils.php";
-require_once __DIR__ . "/../../handlers/pages.php";
+require_once __DIR__ . "/../handlers/url_utils.php";
+require_once __DIR__ . "/../handlers/pages.php";
 
 class Breadcrumbs {
   private array $items;

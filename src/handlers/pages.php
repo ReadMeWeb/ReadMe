@@ -10,6 +10,8 @@ const pages = [
         "Modifica Artista" => "/Pages/artista.php?update=true",
         "Albums" => "/Pages/albums.php",
         "Crea album" => "/Pages/album.php?create=true",
+        "Ispeziona album" => "",
+        "Modifica album" => "",
         "Aggiungi Canzone" => "/selectartist.php",
         "Informazioni Brano" => "/addsong.php",
         "Canzone Aggiunta" => "/successaddsong.php",

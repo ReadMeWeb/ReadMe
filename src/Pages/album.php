@@ -7,7 +7,7 @@ require_once '../components/breadcrumbs.php';
 require_once '../components/navbar.php';
 require_once '../components/sessionEstablisher.php';
 require_once '../include/database.php';
-require_once '../handlers/utils.php';
+require_once '../include/utils.php';
 
 const session_err = 'ALBUM_CREATE_ERR';
 const layout = '../components/layout.html';

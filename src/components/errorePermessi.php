@@ -1,7 +1,7 @@
 <?php
 
 set_include_path($_SERVER["DOCUMENT_ROOT"]);
-require_once __DIR__ . "/../handlers/pages.php";
+require_once __DIR__ . "/../include/pages.php";
 
 function getErrorePermessi(): string
 {

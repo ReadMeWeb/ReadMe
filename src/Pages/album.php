@@ -6,7 +6,7 @@ require_once '../Pangine/HTMLBuilder.php';
 require_once '../components/breadcrumbs.php';
 require_once '../components/navbar.php';
 require_once '../components/sessionEstablisher.php';
-require_once '../data/database.php';
+require_once '../include/database.php';
 require_once '../handlers/utils.php';
 
 const session_err = 'ALBUM_CREATE_ERR';

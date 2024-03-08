@@ -7,7 +7,7 @@ require_once '../components/artist.php';
 require_once '../components/album.php';
 require_once '../components/song.php';
 require_once '../components/breadcrumbs.php';
-require_once '../data/database.php';
+require_once '../include/database.php';
 
 function isSequencePresent(string $haystack, string $sequence) {
     $haystackLength = strlen($haystack);

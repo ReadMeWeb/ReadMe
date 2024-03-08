@@ -7,7 +7,11 @@ require_once 'components/breadcrumbs.php';
 require_once 'components/navbar.php';
 require_once 'data/database.php';
 require_once 'handlers/errors_utils.php';
-require_once 'handlers/session_utils.php';
+
+function sessionUserIsAdmin(): bool
+{
+    return $_SESSION["user"]["status"] == "ADMIN";
+}
 
 function getArtistSelectionContent(array $artists, string|null $errors): string
 {

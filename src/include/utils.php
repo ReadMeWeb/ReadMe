@@ -1,6 +1,6 @@
 <?php
 
-require_once '../data/database.php';
+require_once 'database.php';
 
 function redirect($url): void {
   header('Location: ' . $url);

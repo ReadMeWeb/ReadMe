@@ -19,7 +19,7 @@ function is_admin_signed_in(): bool {
   return $_SESSION['user']['status'] === 'ADMIN';
 }
 
-function extract_from_array_else($key, $array, $otherwise) {
+function extract_from_array_else($key, &$array, $otherwise) {
   $result = array_key_exists($key, $array) ? $array[$key] : $otherwise;
   unset($array[$key]);
   return $result;

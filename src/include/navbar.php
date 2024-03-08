@@ -1,5 +1,5 @@
 <?php
-require_once "sessionEstablisher.php";
+require_once 'sessionEstablisher.php'
 function navbar(): string
 {
     try_session();

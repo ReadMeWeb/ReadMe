@@ -1,9 +1,9 @@
 <?php
 
-require_once "../components/breadcrumbs.php";
-require_once "../components/navbar.php";
-require_once "../Pangine/Pangine.php";
-require_once "../data/database.php";
+require_once '../components/breadcrumbs.php'
+require_once '../components/navbar.php'
+require_once '../Pangine/Pangine.php'
+require_once '../data/database.php'
 
 $get_account = function () {
     (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));

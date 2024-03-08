@@ -1,5 +1,5 @@
 <?php
-require_once "../Pangine/Pangine.php";
+require_once '../Pangine/Pangine.php'
 include "../Renderers/unallowed.php";
 /**
  * @var callable $get_unallowed per la pagina da visualizzare se non si hanno i permessi giusti

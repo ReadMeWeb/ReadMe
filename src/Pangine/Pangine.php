@@ -2,7 +2,7 @@
 
 namespace Pangine;
 
-require_once "../components/sessionEstablisher.php";
+require_once '../components/sessionEstablisher.php'
 require_once 'HTMLBuilder.php';
 
 class Pangine

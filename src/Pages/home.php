@@ -1,7 +1,7 @@
 <?php
 use Pangine\Pangine;
 
-require_once "../Pangine/Pangine.php";
+require_once '../Pangine/Pangine.php'
 include "../Renderers/home.php";
 
 /**

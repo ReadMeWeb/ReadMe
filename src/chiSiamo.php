@@ -1,7 +1,7 @@
 <?php
-require_once "./components/navbar.php";
-require_once "./components/member.php";
-require_once "./components/breadcrumbs.php";
+require_once './components/navbar.php'
+require_once './components/member.php'
+require_once './components/breadcrumbs.php'
 
 setlocale(LC_ALL, 'it_IT');
 

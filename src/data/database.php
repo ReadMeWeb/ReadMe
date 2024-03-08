@@ -106,7 +106,7 @@ class  Database
   }
 
   public function album($id){
-    return $this->execute_query('SELECT name AS nome, artist_id as artista, file_name as copertina FROM Album WHERE id = ?;',$id);
+    return $this->execute_query('SELECT name AS nome, artist_id as artista, FROM Album WHERE id = ?;',$id);
   }
 
   public function album_update($id, $nome, $artista){

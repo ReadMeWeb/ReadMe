@@ -53,6 +53,7 @@ function artistihtmlioptions($artista) {
   ));
 }
 
+
 (new Pangine\Pangine())
   ->POST_create(function () {
 
@@ -73,12 +74,12 @@ function artistihtmlioptions($artista) {
           throw new Exception('Copertina tropppo grande');
         }
 
-        if (!move_uploaded_file($_FILES['copertina']['tmp_name'], dir . "/$artista-$nome")) {
-          throw new Exception('Errore nel salvataggio della copertina');
-        }
-
         if (!$conn->album_add($nome, $artista, "$artista-$nome")) {
           throw new Exception('Errore di inserimento nel database');
+        }
+
+        if (!move_uploaded_file($_FILES['copertina']['tmp_name'], dir . "/$artista-$nome")) {
+          throw new Exception('Errore nel salvataggio della copertina');
         }
       });
 

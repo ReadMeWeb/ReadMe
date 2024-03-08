@@ -12,14 +12,14 @@ require_once '../handlers/utils.php';
 const session_err = 'ALBUM_CREATE_ERR';
 const layout = '../components/layout.html';
 const content = '../components/album.html';
-const dir = "../assets/albumPhotos";
+const dir = '../assets/albumPhotos';
 
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);
 });
 
 if (!try_session()) {
-  throw new ErrorException("try_session ha fallito");
+  throw new ErrorException('try_session ha fallito');
 }
 
 if (is_user_signed_in()) {
@@ -27,7 +27,7 @@ if (is_user_signed_in()) {
 }
 
 if (is_not_signed_in()) {
-  $_SESSION['redirection'] = "album-create.php";
+  $_SESSION['redirection'] = 'album-create.php';
   redirect('accedi.php');
 }
 
@@ -44,7 +44,7 @@ if (file_exists(dir)) {
 function artistihtmlioptions($artista) {
   return implode("\n", array_map(
     function ($coll) use ($artista) {
-      ["id" => $id, "name" => $nome] = $coll;
+      ['id' => $id, 'name' => $nome] = $coll;
       $nome = strip_tags($nome);
       $selection = ($id == $artista) ? 'selected' : '';
       return "<option $selection value=\"$id\">$nome</option>";
@@ -60,25 +60,25 @@ function artistihtmlioptions($artista) {
     $nome = '';
     try {
       [
-        "artista" => $artista,
-        "nome" => $nome,
+        'artista' => $artista,
+        'nome' => $nome,
       ] = $_POST;
 
       dbcall(function ($conn) use ($nome, $artista) {
         if ($conn->album_exists($nome, $artista)) {
-          throw new Exception("L'album risulta già essere registrato");
+          throw new Exception('L\'album risulta già essere registrato');
         }
 
-        if ($_FILES["copertina"]["size"] > 524288) {
-          throw new Exception("Copertina tropppo grande");
+        if ($_FILES['copertina']['size'] > 524288) {
+          throw new Exception('Copertina tropppo grande');
         }
 
-        if (!move_uploaded_file($_FILES["copertina"]["tmp_name"], dir . "/$artista-$nome")) {
-          throw new Exception("Errore nel salvataggio della copertina");
+        if (!move_uploaded_file($_FILES['copertina']['tmp_name'], dir . "/$artista-$nome")) {
+          throw new Exception('Errore nel salvataggio della copertina');
         }
 
         if (!$conn->album_add($nome, $artista, "$artista-$nome")) {
-          throw new Exception("Errore di inserimento nel database");
+          throw new Exception('Errore di inserimento nel database');
         }
       });
 

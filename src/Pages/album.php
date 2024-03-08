@@ -77,6 +77,7 @@ function artistihtmlioptions($artista) {
       ] = $_POST;
 
       dbcall(function ($conn) use ($nome, $artista) {
+        // TODO riverificare l'ordine delle operazioni
         if ($conn->album_exists($nome, $artista)) {
           throw new Exception('L\'album risulta già essere registrato');
         }
@@ -152,6 +153,7 @@ function artistihtmlioptions($artista) {
         'id' => $id,
       ] = $_POST;
 
+      // TODO verificare l'ordine delle operazioni
       dbcall(function (Database $conn) use ($id, $nome, $artista) {
         $conn->album_update($id, $nome, $artista);
       });
@@ -160,7 +162,6 @@ function artistihtmlioptions($artista) {
         assertcopertinamaxsize();
         savecopertina($id);
       }
-
     } catch (Exception $e) {
       $_SESSION[session_err] = [
         'Risultato' => $e->getMessage(),

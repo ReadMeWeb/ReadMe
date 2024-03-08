@@ -137,6 +137,12 @@ function artistihtmlioptions($artista) {
         ->build())
       ->build();
   })
+  ->POST_update(function () {
+    // TODO
+  })
+  ->POST_delete(function () {
+    // TODO
+  })
   ->GET_read(function () {
     [
       'Risultato' => $risultato,

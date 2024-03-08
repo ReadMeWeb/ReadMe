@@ -109,6 +109,10 @@ class  Database
     return $this->execute_query('SELECT name AS nome, artist_id as artista, file_name as copertina FROM Album WHERE id = ?;',$id);
   }
 
+  public function album_update($id, $nome, $artista){
+    return $this->execute_query('SET name = ?, artist_id = ? WHERE id = ?;', $nome, $artista, $id);
+  }
+
     // restituisce il numero di artisti
     public function artist_count(): int
     {

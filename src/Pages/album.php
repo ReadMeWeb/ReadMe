@@ -41,6 +41,18 @@ if (file_exists(dir)) {
   }
 };
 
+function assertcopertinamaxsize() {
+  if ($_FILES['copertina']['size'] > 524288) {
+    throw new Exception('Copertina tropppo grande');
+  }
+}
+
+function savecopertina($id) {
+  if (!move_uploaded_file($_FILES['copertina']['tmp_name'], dir . '/' . $id)) {
+    throw new Exception('Errore nel salvataggio della copertina');
+  }
+}
+
 function artistihtmlioptions($artista) {
   return implode("\n", array_map(
     function ($coll) use ($artista) {
@@ -52,7 +64,6 @@ function artistihtmlioptions($artista) {
     dbcall(fn ($conn) => $conn->artisti())
   ));
 }
-
 
 (new Pangine\Pangine())
   ->POST_create(function () {
@@ -69,20 +80,12 @@ function artistihtmlioptions($artista) {
         if ($conn->album_exists($nome, $artista)) {
           throw new Exception('L\'album risulta già essere registrato');
         }
-
-        if ($_FILES['copertina']['size'] > 524288) {
-          throw new Exception('Copertina tropppo grande');
-        }
-
-        if (!$conn->album_add($nome, $artista, "$artista-$nome")) {
+        assertcopertinamaxsize();
+        if (($id = $conn->album_add($nome, $artista)) === false) {
           throw new Exception('Errore di inserimento nel database');
         }
-
-        if (!move_uploaded_file($_FILES['copertina']['tmp_name'], dir . "/$artista-$nome")) {
-          throw new Exception('Errore nel salvataggio della copertina');
-        }
+        savecopertina($id);
       });
-
 
       $_SESSION[session_err] = [
         'Risultato' => 'Album ' . $nome . ' è stato creato con successo',

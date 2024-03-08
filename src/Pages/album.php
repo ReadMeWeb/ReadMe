@@ -121,7 +121,8 @@ function artistihtmlioptions($artista) {
       ->set('content', (new HTMLBuilder(content))
         ->set('legenda', 'Creazione album')
         ->set('artisti', artistihtmlioptions($artista))
-        ->set('nomealbum', $nome)
+        ->set('valorenomealbum', $nome)
+        ->set('valorecopertina', '')
         ->set('action', 'album.php?create=true')
         ->set('risultato', $risultato, $tiporisultato)
         ->set('method', 'post')
@@ -138,6 +139,8 @@ function artistihtmlioptions($artista) {
       ->build();
   })
   ->POST_update(function () {
+    var_dump($_POST);
+    die();
     $artista = '';
     $nome = '';
     $id = '';
@@ -174,7 +177,8 @@ function artistihtmlioptions($artista) {
 
     [
       'nome' => $nome,
-      'artista' => $artista
+      'artista' => $artista,
+      'copertina' => $copertina,
     ] = dbcall(fn ($conn) => $conn->album($_GET['id'])[0]);
 
     echo (new HTMLBuilder(layout))
@@ -186,7 +190,8 @@ function artistihtmlioptions($artista) {
       ->set('content', (new HTMLBuilder(content))
         ->set('legenda', 'Creazione album')
         ->set('artisti', artistihtmlioptions($artista))
-        ->set('nomealbum', $nome)
+        ->set('valorenomealbum', $nome)
+        ->set('valorecopertina', $copertina)
         ->set('method', 'get')
         ->set('action', 'album.php')
         ->set('risultato', $risultato, $tiporisultato)
@@ -205,7 +210,8 @@ function artistihtmlioptions($artista) {
   ->GET_update(function () {
     [
       'nome' => $nome,
-      'artista' => $artista
+      'artista' => $artista,
+      'copertina' => $copertina,
     ] = dbcall(fn ($conn) => $conn->album($_GET['id'])[0]);
 
     echo (new HTMLBuilder(layout))
@@ -217,7 +223,8 @@ function artistihtmlioptions($artista) {
       ->set('content', (new HTMLBuilder(content))
         ->set('legenda', 'Creazione album')
         ->set('artisti', artistihtmlioptions($artista))
-        ->set('nomealbum', $nome)
+        ->set('valorenomealbum', $nome)
+        ->set('valorecopertina', $copertina)
         ->set('method', 'post')
         ->set('action', 'album.php')
         ->set('risultato', '')

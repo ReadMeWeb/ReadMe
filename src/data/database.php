@@ -95,10 +95,10 @@ class  Database
   }
 
   // inserisce l'abum nel database
-  public function album_add($artist, $name, $file): bool {
-    $query =  "INSERT INTO Album(name,artist_id,file_name) VALUES(?,?,?)";
-    $this->execute_query($query, $artist, $name, $file);
-    return $this->album_exists($artist, $name);
+  public function album_add($artist, $name): bool {
+    $query =  "INSERT INTO Album(name,artist_id) VALUES(?,?)";
+    $this->execute_query($query, $artist, $name);
+    return $this->execute_query('SELECT id FROM Album WHERE name = ? AND artist_id = ?;', $artist, $name)[0]['id'];
   }
 
   public function albums(){

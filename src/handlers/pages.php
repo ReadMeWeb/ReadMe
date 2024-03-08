@@ -1,9 +1,7 @@
 <?php
 
-class Pages
-{
-    static array $pages = [
-        "Home" => "index.php", //in questa non ci va lo '/' all'inizio
+const pages = [
+        "Home" => "/index.php",
         "Chi Siamo" => "/chisiamo.php",
         "Accedi" => "/accedi.php",
         "Registrati" => "/registrati.php",
@@ -11,6 +9,7 @@ class Pages
         "Aggiungi Artista" => "/Pages/artista.php?create=true",
         "Modifica Artista" => "/Pages/artista.php?update=true",
         "Albums" => "/Pages/albums.php",
+        "Crea album" => "/Pages/album.php?create=true",
         "Aggiungi Canzone" => "/selectartist.php",
         "Informazioni Brano" => "/addsong.php",
         "Canzone Aggiunta" => "/successaddsong.php",
@@ -18,4 +17,3 @@ class Pages
         "Account (Modifica)" => "/Pages/account?update=true.php",
         "Permessi insufficienti" => "/Pages/unallowed.php"
     ];
-}

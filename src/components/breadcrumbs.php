@@ -45,7 +45,7 @@ class BreadcrumbItem {
 
   public function __construct($name, $isCurrent = false) {
     $this->name = $name;
-    $this->link = Pages::$pages[$name];
+    $this->link = pages[$name];
     $this->isCurrent = $isCurrent;
   }
 

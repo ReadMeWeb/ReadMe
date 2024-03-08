@@ -54,32 +54,32 @@ function artistihtmlioptions($artista) {
         "nome" => $nome,
       ] = $_POST;
 
-      dbcall(function ($conn) use($nome, $artista) {
-      if ($conn->album_exists($nome, $artista)) {
-        throw new Exception("L'album risulta già essere registrato");
-      }
-
-      if (file_exists(dir)) {
-        if (is_dir(dir) === false) {
-          throw new Exception(sprintf("'%s' esiste ma non è una directory",dir));
+      dbcall(function ($conn) use ($nome, $artista) {
+        if ($conn->album_exists($nome, $artista)) {
+          throw new Exception("L'album risulta già essere registrato");
         }
-      } else {
-        if (mkdir(dir, 0777, true) === false) {
-          throw new Exception(sprintf("Directory '%s' mancante e non può essere creata : %s",dir,dir));
+
+        if (file_exists(dir)) {
+          if (is_dir(dir) === false) {
+            throw new Exception(sprintf("'%s' esiste ma non è una directory", dir));
+          }
+        } else {
+          if (mkdir(dir, 0777, true) === false) {
+            throw new Exception(sprintf("Directory '%s' mancante e non può essere creata : %s", dir, dir));
+          }
+        };
+
+        if ($_FILES["copertina"]["size"] > 524288) {
+          throw new Exception("Copertina tropppo grande");
         }
-      };
 
-      if ($_FILES["copertina"]["size"] > 524288) {
-        throw new Exception("Copertina tropppo grande");
-      }
+        if (!move_uploaded_file($_FILES["copertina"]["tmp_name"], dir . "/$artista-$nome")) {
+          throw new Exception("Errore nel salvataggio della copertina");
+        }
 
-      if (!move_uploaded_file($_FILES["copertina"]["tmp_name"], dir . "/$artista-$nome")) {
-        throw new Exception("Errore nel salvataggio della copertina");
-      }
-
-      if (!$conn->album_add($nome, $artista, "$artista-$nome")) {
-        throw new Exception("Errore di inserimento nel database");
-      }
+        if (!$conn->album_add($nome, $artista, "$artista-$nome")) {
+          throw new Exception("Errore di inserimento nel database");
+        }
       });
 
 

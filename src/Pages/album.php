@@ -29,6 +29,7 @@ if (is_not_signed_in()) {
 const session_err = 'ALBUM_CREATE_ERR';
 const layout = '../components/layout.html';
 const content = '../components/album.html';
+const dir = "../assets/albumPhotos";
 
 function artistihtmlioptions($artista) {
   return implode("\n", array_map(
@@ -58,14 +59,13 @@ function artistihtmlioptions($artista) {
         throw new Exception("L'album risulta già essere registrato");
       }
 
-      $dir = "../assets/albumPhotos";
-      if ($e = file_exists($dir)) {
-        if ($d = is_dir($dir) === false) {
-          throw new Exception("'$dir' esiste ma non è una directory");
+      if (file_exists(dir)) {
+        if (is_dir(dir) === false) {
+          throw new Exception(sprintf("'%s' esiste ma non è una directory",dir));
         }
       } else {
-        if ($m = mkdir($dir, 0777, true) === false) {
-          throw new Exception("Directory '$dir' mancante e non può essere creata : $dir");
+        if (mkdir(dir, 0777, true) === false) {
+          throw new Exception(sprintf("Directory '%s' mancante e non può essere creata : %s",dir,dir));
         }
       };
 
@@ -73,7 +73,7 @@ function artistihtmlioptions($artista) {
         throw new Exception("Copertina tropppo grande");
       }
 
-      if (!move_uploaded_file($_FILES["copertina"]["tmp_name"], "$dir/$artista-$nome")) {
+      if (!move_uploaded_file($_FILES["copertina"]["tmp_name"], dir . "/$artista-$nome")) {
         throw new Exception("Errore nel salvataggio della copertina");
       }
 

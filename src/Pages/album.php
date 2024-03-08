@@ -9,6 +9,11 @@ require_once '../components/sessionEstablisher.php';
 require_once '../data/database.php';
 require_once '../handlers/utils.php';
 
+const session_err = 'ALBUM_CREATE_ERR';
+const layout = '../components/layout.html';
+const content = '../components/album.html';
+const dir = "../assets/albumPhotos";
+
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);
 });
@@ -58,16 +63,6 @@ function artistihtmlioptions($artista) {
         if ($conn->album_exists($nome, $artista)) {
           throw new Exception("L'album risulta già essere registrato");
         }
-
-        if (file_exists(dir)) {
-          if (is_dir(dir) === false) {
-            throw new Exception(sprintf("'%s' esiste ma non è una directory", dir));
-          }
-        } else {
-          if (mkdir(dir, 0777, true) === false) {
-            throw new Exception(sprintf("Directory '%s' mancante e non può essere creata : %s", dir, dir));
-          }
-        };
 
         if ($_FILES["copertina"]["size"] > 524288) {
           throw new Exception("Copertina tropppo grande");

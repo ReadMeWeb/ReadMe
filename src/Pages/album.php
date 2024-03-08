@@ -54,7 +54,7 @@ function artistihtmlioptions($artista) {
         "nome" => $nome,
       ] = $_POST;
 
-      $conn = new Database();
+      dbcall(function ($conn) use($nome, $artista) {
       if ($conn->album_exists($nome, $artista)) {
         throw new Exception("L'album risulta già essere registrato");
       }
@@ -80,7 +80,7 @@ function artistihtmlioptions($artista) {
       if (!$conn->album_add($nome, $artista, "$artista-$nome")) {
         throw new Exception("Errore di inserimento nel database");
       }
-      $conn->close();
+      });
 
 
       $_SESSION[session_err] = [

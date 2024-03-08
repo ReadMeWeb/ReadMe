@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../handlers/url_utils.php";
 require_once __DIR__ . "/../handlers/pages.php";
 
 class Breadcrumbs {
@@ -46,7 +45,7 @@ class BreadcrumbItem {
 
   public function __construct($name, $isCurrent = false) {
     $this->name = $name;
-    $this->link = UrlUtils::getUrl(Pages::$pages[$name]);
+    $this->link = Pages::$pages[$name];
     $this->isCurrent = $isCurrent;
   }
 

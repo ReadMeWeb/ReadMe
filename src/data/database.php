@@ -110,7 +110,7 @@ class  Database
   }
 
   public function album_update($id, $nome, $artista){
-    return $this->execute_query('SET name = ?, artist_id = ? WHERE id = ?;', $nome, $artista, $id);
+    return $this->execute_query('UPDATE Album SET name = ?, artist_id = ? WHERE id = ?;', $nome, $artista, $id);
   }
 
     // restituisce il numero di artisti

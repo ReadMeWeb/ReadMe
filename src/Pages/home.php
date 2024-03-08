@@ -1,6 +1,7 @@
 <?php
 use Pangine\Pangine;
 
+set_include_path($_SERVER["DOCUMENT_ROOT"]);
 require_once '../Pangine/Pangine.php'
 include "../Renderers/home.php";
 

@@ -1,4 +1,5 @@
 <?php
+set_include_path($_SERVER["DOCUMENT_ROOT"]);
 require_once 'sessionEstablisher.php'
 function navbar(): string
 {

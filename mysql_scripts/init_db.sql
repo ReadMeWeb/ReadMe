@@ -37,7 +37,6 @@ CREATE TABLE Album (
    id INT auto_increment PRIMARY KEY,
    name VARCHAR(255) NOT NULL,
    artist_id INT NOT NULL,
-   file_name VARCHAR(255) NOT NULL,
    CONSTRAINT unique_fields UNIQUE (name, artist_id),
    FOREIGN KEY (artist_id) REFERENCES Artist(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -84,9 +83,9 @@ INSERT INTO Artist (name, biography, file_name) VALUES
     ('Artista2', 'Biografia Artista2', 'artist2_photo.jpg');
 
 -- Inserimento di esempio nella tabella Album
-INSERT INTO Album (name, artist_id, file_name) VALUES
-    ('Album1', 1, 'album1_file.mp3'),
-    ('Album2', 2, 'album1_file.mp3');
+INSERT INTO Album (name, artist_id) VALUES
+    ('Album1', 1),
+    ('Album2', 2);
 
 -- Inserimento di esempio nella tabella Music
 INSERT INTO Music (producer, name, audio_file_name, graphic_file_name,  added_date, album) VALUES

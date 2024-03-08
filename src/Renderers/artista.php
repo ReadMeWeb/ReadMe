@@ -1,8 +1,7 @@
 <?php
 
 require_once '../components/navbar.php';
-require_once '../components/breadcrumbs/breadcrumbItem.php';
-require_once '../components/breadcrumbs/breadcrumbsBuilder.php';
+require_once '../components/breadcrumbs.php';
 require_once '../components/sessionEstablisher.php';
 require_once '../components/validator.php';
 require_once '../handlers/utils.php';

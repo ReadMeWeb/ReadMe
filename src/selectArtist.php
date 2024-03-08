@@ -2,8 +2,7 @@
 
 require_once "components/sessionEstablisher.php";
 require_once "components/errorePermessi.php";
-require_once "components/breadcrumbs/breadcrumbsBuilder.php";
-require_once "components/breadcrumbs/breadcrumbItem.php";
+require_once "components/breadcrumbs.php";
 require_once "components/navbar.php";
 require_once "data/database.php";
 require_once "handlers/errors_utils.php";

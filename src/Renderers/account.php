@@ -1,7 +1,6 @@
 <?php
 
-require_once "../components/breadcrumbs/breadcrumbsBuilder.php";
-require_once "../components/breadcrumbs/breadcrumbItem.php";
+require_once "../components/breadcrumbs.php";
 require_once "../components/navbar.php";
 require_once "../Pangine/Pangine.php";
 require_once "../data/database.php";

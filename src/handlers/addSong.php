@@ -1,13 +1,13 @@
 <?php
 
 set_include_path($_SERVER["DOCUMENT_ROOT"]);
-require_once '../components/sessionEstablisher.php'
-require_once '../components/errorePermessi.php'
-require_once '../components/breadcrumbs.php'
-require_once '../components/navbar.php'
-require_once '../data/database.php'
-require_once 'errors_utils.php'
-require_once 'url_utils.php'
+require_once '../components/sessionEstablisher.php';
+require_once '../components/errorePermessi.php';
+require_once '../components/breadcrumbs.php';
+require_once '../components/navbar.php';
+require_once '../data/database.php';
+require_once 'errors_utils.php';
+require_once 'url_utils.php';
 
 function sessionUserIsAdmin(): bool
 {

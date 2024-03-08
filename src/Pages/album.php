@@ -2,7 +2,7 @@
 
 set_include_path($_SERVER["DOCUMENT_ROOT"]);
 require_once '../Pangine/Pangine.php';
-require_once '../Pangine/HTMLBuilder.php';
+require_once '../include/HTMLBuilder.php';
 require_once '../components/breadcrumbs.php';
 require_once '../components/navbar.php';
 require_once '../components/sessionEstablisher.php';

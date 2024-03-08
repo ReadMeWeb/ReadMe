@@ -5,8 +5,7 @@ require_once "../components/sessionEstablisher.php";
 require_once "../components/artist.php";
 require_once "../components/album.php";
 require_once "../components/song.php";
-require_once "../components/breadcrumbs/breadcrumbItem.php";
-require_once "../components/breadcrumbs/breadcrumbsBuilder.php";
+require_once "../components/breadcrumbs.php";
 require_once "../data/database.php";
 
 function isSequencePresent(string $haystack, string $sequence) {

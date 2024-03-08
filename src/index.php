@@ -1,8 +1,7 @@
 <?php
 require_once 'data/database.php';
 require_once 'components/navbar.php';
-require_once 'components/breadcrumbs/breadcrumbItem.php';
-require_once 'components/breadcrumbs/breadcrumbsBuilder.php';
+require_once 'components/breadcrumbs.php';
 
 // generazione contenuto statico della pagina
 $keywords = implode(', ', array('Orchestra', 'storia della musica classica', 'musica classica', 'player musicale', 'player gratuito'));

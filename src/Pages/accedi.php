@@ -26,7 +26,7 @@ if (is_user_signed_in() || is_admin_signed_in()) {
 const logerr = 'logerr';
 
 (new Pangine())
-  ->POST_read(function () {
+  ->POST_read($accedi = function () {
     $nome = '';
 
     try {
@@ -49,11 +49,69 @@ const logerr = 'logerr';
       redirect('accedi.php');
     }
   })
-  ->GET_read(function () {
+  ->POST_create(function () {
+    try {
 
-    if (!array_key_exists(logerr, $_SESSION)) {
-      $_SESSION[logerr] = ['nome' => '', 'val' => '', 'typ' => HTMLBuilder::UNSAFE];
+      [
+        "name" => $nome,
+        "password" => $password,
+      ] = $_POST;
+
+      $conn = new Database();
+      if ($conn->user_exists($nome)) {
+        throw new Exception("Il nome utente fornito risulta già registrato.");
+      }
+
+      if ($conn->user_sign_up($nome, $password) !== true) {
+        // Questo caso non dovrebbe mai succedere
+        throw new Exception("Errore del database.");
+      }
+      $conn->close();
+
+      $_POST = ['name' => $nome, 'password' => $password];
+      require_once('accedi.php'); // TODO: cos'è sta roba?
+      exit();
+    } catch (Exception $e) {
+      $errori = $e->getMessage();
     }
+  })
+  ->GET_create(function () {
+    [
+      'nome' => $nome,
+      'risultato' => $risultato,
+      'tiporisultato' => $tiporisultato,
+    ] = extract_from_array_else(logerr, $_SESSION, [
+      'nome' => '',
+      'risultato' => '',
+      'tiporisultato' => HTMLBuilder::UNSAFE,
+    ]);
+
+    echo (new HTMLBuilder('../components/layout.html'))
+      ->set('title', 'Registrati')
+      ->set('description', 'Pagina di registrazione di Orchestra')
+      ->set('keywords', 'Orchestra, musica classica, registrazione, sign up')
+      ->set('menu', navbar())
+      ->set('breadcrumbs', (new BreadcrumbsBuilder())
+        ->addBreadcrumb(new BreadcrumbItem("Home"))
+        ->addBreadcrumb(new BreadcrumbItem("Registrati", isCurrent: true))
+        ->build()
+        ->getBreadcrumbsHtml())
+      ->set('content', (new HTMLBuilder('../components/registrati.html'))
+        ->set('nome', $nome)
+        ->set('errori', $risultato, $tiporisultato)
+        ->build())
+      ->build();
+  })
+  ->GET_read(function () {
+    [
+      'nome' => $nome,
+      'risultato' => $risultato,
+      'tiporisultato' => $tiporisultato,
+    ] = extract_from_array_else(logerr, $_SESSION, [
+      'nome' => '',
+      'risultato' => '',
+      'tiporisultato' => HTMLBuilder::UNSAFE,
+    ]);
 
     echo (new HTMLBuilder('../components/layout.html'))
       ->set('title', 'Accedi')
@@ -66,11 +124,9 @@ const logerr = 'logerr';
         ->build()
         ->getBreadcrumbsHtml())
       ->set('content', (new HTMLBuilder('../components/accedi.html'))
-        ->set('nome', $_SESSION[logerr]['nome'])
-        ->set('errori', $_SESSION[logerr]['val'], $_SESSION[logerr]['typ'])
+        ->set('nome', $nome)
+        ->set('errori', $risultato, $tiporisultato)
         ->build())
       ->build();
-
-    unset($_SESSION[logerr]);
   })
   ->execute();

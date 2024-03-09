@@ -4,7 +4,7 @@ namespace Pangine;
 
 set_include_path($_SERVER["DOCUMENT_ROOT"]);
 require_once 'include/sessionEstablisher.php';
-require_once 'HTMLBuilder.php';
+require_once 'include/HTMLBuilder.php';
 
 class Pangine
 {

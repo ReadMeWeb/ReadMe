@@ -57,18 +57,18 @@ const logerr = 'logerr';
         "password" => $password,
       ] = $_POST;
 
-      dbcall(function ($conn) use($nome, $password) {
-      if ($conn->user_exists($nome)) {
-        throw new Exception("Il nome utente fornito risulta già registrato.");
-      }
+      dbcall(function ($conn) use ($nome, $password) {
+        if ($conn->user_exists($nome)) {
+          throw new Exception("Il nome utente fornito risulta già registrato.");
+        }
 
-      if ($conn->user_sign_up($nome, $password) !== true) {
-        // Questo caso non dovrebbe mai succedere
-        throw new Exception("Errore del database.");
-      }
+        if ($conn->user_sign_up($nome, $password) !== true) {
+          throw new Exception("Errore del database.");
+        }
       });
 
       $_POST = ['name' => $nome, 'password' => $password];
+      redirect(pages['Accedi']);
       require_once('accedi.php'); // TODO: cos'è sta roba?
       exit();
     } catch (Exception $e) {

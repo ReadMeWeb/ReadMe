@@ -27,7 +27,7 @@ if (is_user_signed_in()) {
 }
 
 if (is_not_signed_in()) {
-  $_SESSION['redirection'] = 'album-create.php';
+  $_SESSION['redirection'] = 'album.php?create=true';
   redirect('accedi.php');
 }
 

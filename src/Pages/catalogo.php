@@ -1,7 +1,7 @@
 <?php
 use Pangine\Pangine;
 
-set_include_path($_SERVER["DOCUMENT_ROOT"]);
+set_include_path($_SERVER['DOCUMENT_ROOT']);
 require_once 'Pangine/Pangine.php';
 require_once 'Renderers/catalogo.php';
 

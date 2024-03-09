@@ -1,6 +1,6 @@
 <?php
 
-set_include_path($_SERVER["DOCUMENT_ROOT"]);
+set_include_path($_SERVER['DOCUMENT_ROOT']);
 require_once 'include/HTMLBuilder.php';
 require_once 'components/breadcrumbs.php';
 require_once 'components/navbar.php';

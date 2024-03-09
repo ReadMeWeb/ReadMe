@@ -1,7 +1,9 @@
 <?php
 
-set_include_path($_SERVER["DOCUMENT_ROOT"]);
-require_once 'database.php';
+
+set_include_path($_SERVER['DOCUMENT_ROOT']);
+require_once 'include/database.php';
+require_once 'components/breadcrumbs.php';
 
 function redirect($url): void {
   header('Location: ' . $url);

@@ -35,17 +35,19 @@ const logerr = 'logerr';
         'password' => $password,
       ] = $_POST;
 
-      $conn = new Database();
-      $res = $conn->user_with_mail_password($nome, $password);
-      $conn->close();
-      if (count($res) == 0) {
-        throw new Exception("Nessun utente trovato. Le credenziali potrebbero essere errate.");
-      }
+      $_SESSION['user'] = dbcall(
+        fn ($conn) => count($res = $conn->user_with_mail_password($nome, $password)) > 0
+          ? $res[0]
+          : throw new Exception("Nessun utente trovato. Le credenziali potrebbero essere errate.")
+      );
 
-      $_SESSION['user'] = $res[0];
       redirect(extract_from_array_else('redirection', $_SESSION, '/'));
     } catch (Exception $e) {
-      $_SESSION[logerr] = ['nome' => $nome, 'val' => $e->getMessage(), 'typ' => HTMLBuilder::ERROR_P];
+      $_SESSION[logerr] = [
+        'nome' => $nome,
+        'risultato' => $e->getMessage(),
+        'tiporisultato' => HTMLBuilder::ERROR_P
+      ];
       redirect('accedi.php');
     }
   })

@@ -102,6 +102,8 @@ const logerr = 'logerr';
       ->set('content', (new HTMLBuilder('../components/registrati.html'))
         ->set('nome', $nome)
         ->set('errori', $risultato, $tiporisultato)
+        ->set('urlsigninup', pages['Accedi'])
+        ->set('innerhtmlsigninup', 'Hai già un profilo ? Clicca qui per accedere')
         ->build())
       ->build();
   })
@@ -129,6 +131,8 @@ const logerr = 'logerr';
       ->set('content', (new HTMLBuilder('../components/accedi.html'))
         ->set('nome', $nome)
         ->set('errori', $risultato, $tiporisultato)
+        ->set('urlsigninup', pages['Registrati'])
+        ->set('innerhtmlsigninup', 'Sei nuovo ? Clicca qui per registrarti')
         ->build())
       ->build();
   })

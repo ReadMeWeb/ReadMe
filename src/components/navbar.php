@@ -1,6 +1,6 @@
 <?php
 set_include_path($_SERVER["DOCUMENT_ROOT"]);
-require_once 'sessionEstablisher.php';
+require_once 'include/sessionEstablisher.php';
 function navbar(): string
 {
     try_session();

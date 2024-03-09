@@ -2,7 +2,7 @@
 
 set_include_path($_SERVER["DOCUMENT_ROOT"]);
 require_once 'components/navbar.php';
-require_once 'components/sessionEstablisher.php';
+require_once 'include/sessionEstablisher.php';
 require_once 'components/artist.php';
 require_once 'components/album.php';
 require_once 'components/song.php';

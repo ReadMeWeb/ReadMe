@@ -1,7 +1,7 @@
 <?php
 
 set_include_path($_SERVER["DOCUMENT_ROOT"]);
-require_once 'components/sessionEstablisher.php';
+require_once 'include/sessionEstablisher.php';
 require_once 'components/errorePermessi.php';
 require_once 'components/breadcrumbs.php';
 require_once 'components/navbar.php';

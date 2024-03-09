@@ -2,13 +2,14 @@
 
 use Pangine\Pangine;
 
-require_once '../Pangine/Pangine.php';
-require_once '../Pangine/HTMLBuilder.php';
-require_once '../components/breadcrumbs.php';
-require_once '../components/navbar.php';
-require_once '../components/sessionEstablisher.php';
-require_once '../data/database.php';
-require_once '../handlers/utils.php';
+set_include_path($_SERVER["DOCUMENT_ROOT"]);
+require_once 'Pangine/Pangine.php';
+require_once 'include/HTMLBuilder.php';
+require_once 'components/breadcrumbs.php';
+require_once 'components/navbar.php';
+require_once 'include/sessionEstablisher.php';
+require_once 'include/database.php';
+require_once 'include/utils.php';
 
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);
@@ -23,7 +24,7 @@ if (is_user_signed_in()) {
 }
 
 if (is_not_signed_in()) {
-  $_SESSION['redirection'] = "album-create.php";
+  $_SESSION['redirection'] = "albums.php";
   redirect('accedi.php');
 }
 

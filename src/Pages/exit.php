@@ -1,5 +1,6 @@
 <?php
-require_once "../components/sessionEstablisher.php";
+set_include_path($_SERVER["DOCUMENT_ROOT"]);
+require_once 'include/sessionEstablisher.php';
 try_session();
 $status = $_SESSION['user']['status'];
 if($status = "USER" || $status == "ADMIN"){

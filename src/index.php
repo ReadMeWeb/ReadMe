@@ -1,5 +1,6 @@
 <?php
-require_once 'data/database.php';
+set_include_path($_SERVER["DOCUMENT_ROOT"]);
+require_once 'include/database.php';
 require_once 'components/navbar.php';
 require_once 'components/breadcrumbs.php';
 

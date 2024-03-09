@@ -1,6 +1,7 @@
 <?php
 
-require_once '../data/database.php';
+set_include_path($_SERVER["DOCUMENT_ROOT"]);
+require_once 'database.php';
 
 function redirect($url): void {
   header('Location: ' . $url);

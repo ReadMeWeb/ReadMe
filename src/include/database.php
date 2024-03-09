@@ -4,7 +4,7 @@ class  Database
 {
 
     private const HOST = 'mysql_server';
-    private const USER_NAME  = 'root';
+    private const USERNAME  = 'root';
     private const PASSWORD = 'admin';
     private const DATABASE = 'Orchestra';
 
@@ -13,7 +13,7 @@ class  Database
     // crea connessione con il database
     public function __construct()
     {
-        $this->conn = new mysqli(self::HOST, self::USER_NAME, self::PASSWORD, self::DATABASE);
+        $this->conn = new mysqli(self::HOST, self::USERNAME, self::PASSWORD, self::DATABASE);
     }
 
     // esegue una query generica e ne restituisce il risultato sotto forma di un array bidimensionale associativo

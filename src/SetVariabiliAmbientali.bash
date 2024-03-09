@@ -15,7 +15,7 @@ function setpagepath(){
 
 function setmysqllogin(){
         sed -i "s/private const HOST = '.*';/private const HOST = 'localhost';/" include/database.php
-        sed -i "s/private const USER_NAME = '.*';/private const USER_NAME = '$1';/" include/database.php
+        sed -i "s/private const USERNAME = '.*';/private const USERNAME = '$1';/" include/database.php
         sed -i "s/private const PASSWORD = '.*';/private const PASSWORD = '$2';/" include/database.php
         sed -i "s/private const DATABASE = '.*';/private const DATABASE = '$1';/" include/database.php
 }

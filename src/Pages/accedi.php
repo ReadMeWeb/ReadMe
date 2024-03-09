@@ -51,7 +51,7 @@ const logerr = 'logerr';
       redirect('accedi.php?read=true');
     }
   })
-  ->POST_create(function () {
+  ->POST_create(function () use ($accedi) {
     try {
       [
         'nome' => $nome,
@@ -68,10 +68,7 @@ const logerr = 'logerr';
         }
       });
 
-      $_POST = ['name' => $nome, 'password' => $password];
-      redirect(pages['Accedi']);
-      require_once('accedi.php'); // TODO: cos'è sta roba?
-      exit();
+      $accedi();
     } catch (Exception $e) {
       $_SESSION[logerr] = [
         'nome' => $nome,

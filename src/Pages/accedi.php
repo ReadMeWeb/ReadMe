@@ -53,10 +53,9 @@ const logerr = 'logerr';
   })
   ->POST_create(function () {
     try {
-
       [
-        "name" => $nome,
-        "password" => $password,
+        'nome' => $nome,
+        'password' => $password,
       ] = $_POST;
 
       dbcall(function ($conn) use ($nome, $password) {
@@ -74,7 +73,12 @@ const logerr = 'logerr';
       require_once('accedi.php'); // TODO: cos'è sta roba?
       exit();
     } catch (Exception $e) {
-      $errori = $e->getMessage();
+      $_SESSION[logerr] = [
+        'nome' => $nome,
+        'risultato' => $e->getMessage(),
+        'tiporisultato' => HTMLBuilder::ERROR_P
+      ];
+      redirect('accedi.php?create=true');
     }
   })
   ->GET_create(function () {

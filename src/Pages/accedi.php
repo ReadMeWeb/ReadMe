@@ -48,7 +48,7 @@ const logerr = 'logerr';
         'risultato' => $e->getMessage(),
         'tiporisultato' => HTMLBuilder::ERROR_P
       ];
-      redirect('accedi.php');
+      redirect('accedi.php?read=true');
     }
   })
   ->POST_create(function () {

@@ -57,7 +57,7 @@ const logerr = 'logerr';
         "password" => $password,
       ] = $_POST;
 
-      $conn = new Database();
+      dbcall(function ($conn) use($nome, $password) {
       if ($conn->user_exists($nome)) {
         throw new Exception("Il nome utente fornito risulta già registrato.");
       }
@@ -66,7 +66,7 @@ const logerr = 'logerr';
         // Questo caso non dovrebbe mai succedere
         throw new Exception("Errore del database.");
       }
-      $conn->close();
+      });
 
       $_POST = ['name' => $nome, 'password' => $password];
       require_once('accedi.php'); // TODO: cos'è sta roba?

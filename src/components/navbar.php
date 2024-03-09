@@ -1,6 +1,7 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
 require_once 'include/sessionEstablisher.php';
+require_once 'include/pages.php';
 function navbar(): string
 {
     try_session();
@@ -11,15 +12,18 @@ function navbar(): string
     //      - UNREGISTERED;
     //      - USER;
     //      - ADMIN.
+    function associa_pagina_permessi($nome, $permessi) {
+      return array(pages[$nome], $nome, $permessi);
+    }
     $links = array(
-        array("/Pages/catalogo.php","Catalogo",array("UNREGISTERED","USER","ADMIN")),
-        array("/chisiamo.php","Chi Siamo",array("UNREGISTERED")),
-        array("/Pages/accedi.php","Accedi",array("UNREGISTERED")),
-        array("/Pages/registrati.php","Registrati",array("UNREGISTERED")),
-        array("/Pages/artista.php?create=true", "Aggiungi Artista", array("ADMIN")),
-        array("/Pages/albums.php", "Albums", array("ADMIN")),
-        array("/selectartist.php", "Aggiungi Canzone", array("ADMIN")),
-        array("/Pages/account.php", "Account", array("USER","ADMIN")),
+        associa_pagina_permessi("Catalogo",array("UNREGISTERED","USER","ADMIN")),
+        associa_pagina_permessi("Chi Siamo",array("UNREGISTERED")),
+        associa_pagina_permessi("Accedi",array("UNREGISTERED")),
+        associa_pagina_permessi("Registrati",array("UNREGISTERED")),
+        associa_pagina_permessi("Aggiungi Artista", array("ADMIN")),
+        associa_pagina_permessi("Albums", array("ADMIN")),
+        associa_pagina_permessi("Aggiungi Canzone", array("ADMIN")),
+        associa_pagina_permessi("Account", array("USER","ADMIN")),
     );
     $selectedLink = strtok($_SERVER['REQUEST_URI'],'?');
     $navLinks = "";

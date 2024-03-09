@@ -6,12 +6,7 @@ require_once 'components/errorePermessi.php';
 require_once 'components/breadcrumbs.php';
 require_once 'components/navbar.php';
 require_once 'include/database.php';
-require_once 'include/errors_utils.php';
-
-function sessionUserIsAdmin(): bool
-{
-    return $_SESSION["user"]["status"] == "ADMIN";
-}
+require_once 'include/utils.php';
 
 function getArtistSelectionContent(array $artists, string|null $errors): string
 {
@@ -36,7 +31,7 @@ $breadcrumbs = (new BreadcrumbsBuilder())
     ->addBreadcrumb(new BreadcrumbItem("Aggiungi Canzone", true))
     ->build();
 
-if (!sessionUserIsAdmin()) {
+if (!is_admin_signed_in()) {
     echo getPermissionDeniedPage($title, $description, $keywords, $breadcrumbs);
     return;
 }
@@ -45,7 +40,7 @@ $db = new Database();
 $artists = $db->fetch_artist_info();
 $db->close();
 
-$content = getArtistSelectionContent($artists, getAndClearErrorStringFromSession("sel_artist"));
+$content = getArtistSelectionContent($artists, extract_from_array_else("SERROR_" . "sel_artist", $_SESSION, null));
 
 $layout = file_get_contents("components/layoutLogged.html");
 $placeholdersTemplates = array("{{title}}", "{{menu}}", "{{breadcrumbs}}", "{{content}}");

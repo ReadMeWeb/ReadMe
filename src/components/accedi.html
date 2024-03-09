@@ -3,10 +3,12 @@
   <form action="accedi.php" method="post">
     <fieldset>
       <legend>{{legenda}}</legend>
+      <!-- TODO mettere aria-describe-by con i requisiti di soddisfazione delle credenziali per la registrazione -->
       <label for="nome">Nome Utente</label>
       <input id="nome" tabindex="1" name="nome" type="text" required placeholder="Digita qui il tuo nome utente"
         value="{{nome}}" autocomplete="{{nome-autocomplete}}" >
 
+      <!-- TODO mettere aria-describe-by con i requisiti di soddisfazione delle credenziali per la registrazione -->
       <label for="password" lang="en">Password</label>
       <input id="password" tabindex="2" name="password" required type="password" placeholder="Digita la tua password"
         autocomplete="{{autocomplete-password}}">

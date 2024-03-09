@@ -1,16 +1,16 @@
 <main>
   {{errori}}
-  <form action="registrati.php" method="post">
+  <form action="accedi.php" method="post">
     <fieldset>
       <legend>Registrazione</legend>
       <label for="name">Nome Utente</label>
-      <input tabindex="1" id="name" name="name" type="text" placeholder="Digita il tuo nome utente"
+      <input tabindex="1" id="name" name="nome" type="text" placeholder="Digita il tuo nome utente"
         value="{{nome}}">
 
       <label for="password" lang="en">Password</label>
       <input tabindex="2" id="password" name="password" required type="password" placeholder="Digita la tua password"
         autocomplete="new-password">
-      <input tabindex="3" type="submit" value="Registrati">
+      <button tabindex="3" type="submit" name="create" value="true">Registrati</button>
     </fieldset>
   </form>
   <a tabindex="4" href="/accedi.php">Hai già un profilo ? Clicca per accedere</a>

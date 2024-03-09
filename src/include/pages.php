@@ -5,8 +5,8 @@ const path = '/';
 const pages = [
     'Home' => path . 'index.php',
     'Chi Siamo' => path . 'chisiamo.php',
-    'Accedi' => path . 'Pages/accedi.php',
-    'Registrati' => path . 'Pages/registrati.php',
+    'Accedi' => path . 'Pages/accedi.php?read=true',
+    'Registrati' => path . 'Pages/accedi.php?create=true',
     'Catalogo' => path . 'Pages/catalogo.php',
     'Aggiungi Artista' => path . 'Pages/artista.php?create=true',
     'Modifica Artista' => path . 'Pages/artista.php?update=true',

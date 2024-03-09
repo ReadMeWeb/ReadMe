@@ -6,8 +6,7 @@ require_once 'components/errorePermessi.php';
 require_once 'components/breadcrumbs.php';
 require_once 'components/navbar.php';
 require_once 'include/database.php';
-require_once 'errors_utils.php';
-require_once 'url_utils.php';
+require_once 'include/errors_utils.php';
 
 function sessionUserIsAdmin(): bool
 {

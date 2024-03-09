@@ -1,7 +1,7 @@
 <?php
 
 set_include_path($_SERVER["DOCUMENT_ROOT"]);
-require_once 'pages.php';
+require_once 'include/pages.php';
 
 class Breadcrumbs {
   private array $items;

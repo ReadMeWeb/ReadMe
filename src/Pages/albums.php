@@ -41,6 +41,7 @@ if (is_not_signed_in()) {
         ->build()
         ->getBreadcrumbsHtml())
       ->set('content', (new HTMLBuilder('../components/albums.html'))
+        ->set('page-album-create', pages['Crea album'])
         ->set('albums', implode(
           "\n",
           array_map(function ($album) {

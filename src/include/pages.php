@@ -18,6 +18,7 @@ const pages = [
     'Informazioni Brano' => path . 'addsong.php',
     'Canzone Aggiunta' => path . 'successaddsong.php',
     'Account' => path . 'Pages/account.php',
-    'Account (Modifica)' => path . 'Pages/account?update=true.php',
+    'Account (Modifica)' => path . 'Pages/account.php?update=true',
+    'Esci' => path . 'Pages/exit.php',
     'Permessi insufficienti' => path . 'Pages/unallowed.php'
   ];

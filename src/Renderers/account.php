@@ -29,6 +29,9 @@ $get_account = function () {
     ->set("breadcrumbs",$breadcrumbs)
     ->set("username-value",$_SESSION["user"]["username"])
     ->set("password-value",$_SESSION["user"]["password"])
+    ->set('pages-account',pages['Account'])
+    ->set('pages-account-update',pages['Account (Modifica)'])
+    ->set('pages-exit',pages['Esci'])
     ->clean("-message")
     ->clean("-value")
     ->build();
@@ -59,6 +62,9 @@ $get_edit_account = function () {
         ->set("breadcrumbs",$breadcrumbs)
         ->set("username-value",$_SESSION["user"]["username"])
         ->set("password-value",$_SESSION["user"]["password"])
+        ->set('pages-account',pages['Account'])
+        ->set('pages-account-update',pages['Account (Modifica)'])
+        ->set('pages-exit',pages['Esci'])
         ->clean("-message")
         ->clean("-value")
         ->build();

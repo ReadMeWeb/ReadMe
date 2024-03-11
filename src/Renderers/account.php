@@ -32,6 +32,7 @@ $get_account = function () {
     ->set('pages-account',pages['Account'])
     ->set('pages-account-update',pages['Account (Modifica)'])
     ->set('pages-exit',pages['Esci'])
+    ->set('pages-form',pages['Account'])
     ->clean("-message")
     ->clean("-value")
     ->build();
@@ -65,6 +66,7 @@ $get_edit_account = function () {
         ->set('pages-account',pages['Account'])
         ->set('pages-account-update',pages['Account (Modifica)'])
         ->set('pages-exit',pages['Esci'])
+        ->set('pages-form',pages['Account'])
         ->clean("-message")
         ->clean("-value")
         ->build();

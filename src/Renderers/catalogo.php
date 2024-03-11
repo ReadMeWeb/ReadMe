@@ -149,6 +149,7 @@ $get_catalogo = function () {
     }else{
         $content = str_replace("{{lista-canzoni}}", $lista_songs, $content);
     }
+    $content = str_replace("{{page-form}}", pages['Catalogo'], $content);
     $layout = str_replace("{{content}}",$content,$layout);
 
     echo $layout;

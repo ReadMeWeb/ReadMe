@@ -158,7 +158,7 @@ class  Database
 
     public function fetch_albums_info(): array
     {
-        return $this->execute_query('SELECT id, name, file_name FROM Album');
+        return $this->execute_query('SELECT id, name FROM Album');
     }
 
     public function fetch_albums_info_by_artist_id(string $id): array

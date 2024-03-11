@@ -118,7 +118,7 @@ $get_catalogo = function () {
         $lista_album[] = (new album(
             $album["id"],
             $album["name"],
-            $album["file_name"]
+            $album["id"]
         ))->toHtml();
     }
     $lista_songs= [];

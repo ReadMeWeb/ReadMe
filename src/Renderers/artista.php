@@ -65,6 +65,7 @@ $get_edit_artist = function () {
         ->set("keywords", $keywords)
         ->set("src", BASE_DIR_IMAGES . $artist_image)
         ->set("nome-value", $artist_name)
+        ->set("page-form", pages['Modifica Artista'])
         ->set("biografia-value", $biography)
         ->set("id-value", $artist_id)
         ->clean("-message")

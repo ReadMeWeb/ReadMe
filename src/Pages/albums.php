@@ -41,10 +41,11 @@ if (is_not_signed_in()) {
         ->build()
         ->getBreadcrumbsHtml())
       ->set('content', (new HTMLBuilder('../components/albums.html'))
+        ->set('page-album-create', pages['Crea album'])
         ->set('albums', implode(
           "\n",
           array_map(function ($album) {
-            [ 'id' => $id, 'nome' => $nome] = $album;
+            ['id' => $id, 'nome' => $nome] = $album;
             return "<a href='./album.php?id=$id&read=true'>$nome</a>";
           }, dbcall(fn ($db) => $db->albums()))
         ))

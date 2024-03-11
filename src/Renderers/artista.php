@@ -98,6 +98,7 @@ $get_create_artist = function () {
         ->set("breadcrumbs",$breadcrumbs)
         ->set("description", $description)
         ->set("keywords", $keywords)
+        ->set("page-form", pages['Aggiungi Artista'])
         ->clean("-message")
         ->clean("-value")
         ->build();

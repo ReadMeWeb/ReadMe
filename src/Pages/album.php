@@ -12,7 +12,7 @@ require_once 'include/utils.php';
 const session_err = 'ALBUM_CREATE_ERR';
 const layout = '../components/layout.html';
 const content = '../components/album.html';
-const dir = '../assets/albumPhotos';
+const dir = '../assets/albumPhotos/';
 
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);

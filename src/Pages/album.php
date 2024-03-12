@@ -1,5 +1,7 @@
 <?php
 
+use Pangine\PangineAuthenticator;
+
 set_include_path($_SERVER['DOCUMENT_ROOT']);
 require_once 'Pangine/Pangine.php';
 require_once 'include/HTMLBuilder.php';
@@ -22,21 +24,12 @@ if (!try_session()) {
   throw new ErrorException('try_session ha fallito');
 }
 
-if (is_user_signed_in()) {
-  redirect('/');
-}
-
-if (is_not_signed_in()) {
-  $_SESSION['redirection'] = 'album.php?create=true';
-  redirect('accedi.php');
-}
-
 if (file_exists(dir)) {
-  if (is_dir(dir) === false) {
+  if (!is_dir(dir)) {
     throw new Exception(sprintf("'%s' esiste ma non è una directory", dir));
   }
 } else {
-  if (mkdir(dir, 0777, true) === false) {
+  if (!mkdir(dir, 0777, true)) {
     throw new Exception(sprintf("Directory '%s' mancante e non può essere creata : %s", dir, dir));
   }
 };
@@ -64,6 +57,8 @@ function artistihtmlioptions($artista) {
     dbcall(fn ($conn) => $conn->artisti())
   ));
 }
+
+(new PangineAuthenticator())->authenticate(['ADMIN']);
 
 (new Pangine\Pangine())
   ->POST_create(function () {

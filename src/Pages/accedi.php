@@ -1,6 +1,9 @@
 <?php
 
 use Pangine\Pangine;
+use Pangine\PangineAuthenticator;
+use Pangine\PangineValidator;
+use Pangine\PangineValidatorConfig;
 
 set_include_path($_SERVER['DOCUMENT_ROOT']);
 require_once 'Pangine/Pangine.php';
@@ -20,9 +23,7 @@ if (!try_session()) {
   throw new ErrorException("try_session ha fallito");
 }
 
-if (is_user_signed_in() || is_admin_signed_in()) {
-  redirect(pages['Home']);
-}
+(new PangineAuthenticator())->authenticate(['UNREGISTERED']);
 
 const logerr = 'logerr';
 
@@ -58,6 +59,19 @@ const logerr = 'logerr';
         'nome' => $nome,
         'password' => $password,
       ] = $_POST;
+
+      (new PangineValidator($_SERVER['REQUEST_METHOD'], [
+        'nome' => (new PangineValidatorConfig(
+          notEmpty: true,
+          minLength: 8,
+          maxLength: 20
+        )),
+        'password' => (new PangineValidatorConfig(
+          notEmpty: true,
+          minLength: 8,
+          maxLength: 20
+        )),
+      ]))->validate(pages['Registrati']);
 
       dbcall(function ($conn) use ($nome, $password) {
         if ($conn->user_exists($nome)) {

@@ -25,7 +25,7 @@ $get_edit_artist = function () {
         ))
     );
     $validator = new Pangine\PangineValidator("GET",$expectedParameters);
-    $validator->validate("/Pages/catalogo.php");
+    $validator->validate(pages['Catalogo']);
     $artist_id = $_GET['id'];
    
 
@@ -126,7 +126,7 @@ $post_edit_artist = function () {
         ))
     );
     $validator = new Pangine\PangineValidator("POST",$expectedParameters);
-    $validator->validate("/Pages/artista.php?update=true&id={$_POST['id']}");
+    $validator->validate(pages['Modifica Artista']."&id={$_POST['id']}");
 
     [$artist_name, $biography, $id] = array_values($_POST);
 
@@ -166,7 +166,7 @@ $post_add_artist = function () {
         ))
     );
     $validator = new Pangine\PangineValidator("POST",$expectedParameters);
-    $validator->validate("/Pages/artista.php?create=true");
+    $validator->validate(pages['Aggiungi Artista']);
 
     $tmp_name = $_FILES['immagine']['tmp_name'];
     $name = $_FILES['immagine']['name'];
@@ -191,7 +191,7 @@ $get_delete_artist = function() {
         ))
     );
     $validator = new Pangine\PangineValidator("GET", $expectedParameters);
-    $validator->validate("/Pages/catalogo.php");
+    $validator->validate(pages['Catalogo']);
     $id = $_GET['id'];
 
     $db = new Database();

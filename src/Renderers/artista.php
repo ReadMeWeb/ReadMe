@@ -6,9 +6,10 @@ require_once 'components/breadcrumbs.php';
 require_once 'include/sessionEstablisher.php';
 require_once 'components/validator.php';
 require_once 'include/utils.php';
+require_once 'include/pages.php';
 require_once 'include/database.php';
 
-const BASE_DIR_IMAGES = '../assets/artistPhotos/';
+const BASE_DIR_IMAGES = assets['artistPhotos'];
 
 $get_artist= function () {
     echo 'GET artist';
@@ -145,7 +146,7 @@ $post_edit_artist = function () {
 
     $db->update_artist($id, $artist_name, $biography, $img);
     $db->close();
-    header("Location: /Pages/catalogo.php");
+    redirect(pages['Catalogo']);
 
 };
 
@@ -178,7 +179,7 @@ $post_add_artist = function () {
     $db->insert_artist($artist_name, $biograph, $img);
     $db->close();
 
-    header("Location: /Pages/catalogo.php");
+    redirect(pages['Catalogo']);
 
 
 };
@@ -203,5 +204,5 @@ $get_delete_artist = function() {
     if(file_exists(BASE_DIR_IMAGES . $img))
         unlink(BASE_DIR_IMAGES . $img);
 
-    header("Location: /Pages/catalogo.php");
+    redirect(pages['Catalogo']);
 };

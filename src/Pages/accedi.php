@@ -63,7 +63,7 @@ const logerr = 'logerr';
       (new PangineValidator($_SERVER['REQUEST_METHOD'], [
         'nome' => (new PangineValidatorConfig(
           notEmpty: true,
-          minLength: 8,
+          minLength: 6,
           maxLength: 20
         )),
         'password' => (new PangineValidatorConfig(

@@ -6,9 +6,10 @@ require_once 'components/breadcrumbs.php';
 require_once 'include/sessionEstablisher.php';
 require_once 'components/validator.php';
 require_once 'include/utils.php';
+require_once 'include/pages.php';
 require_once 'include/database.php';
 
-const BASE_DIR_IMAGES = '../assets/artistPhotos/';
+const BASE_DIR_IMAGES = assets['artistPhotos'];
 
 $get_artist= function () {
     echo 'GET artist';

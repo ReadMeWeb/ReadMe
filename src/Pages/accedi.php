@@ -10,6 +10,7 @@ require_once 'components/navbar.php';
 require_once 'include/sessionEstablisher.php';
 require_once 'include/database.php';
 require_once 'include/utils.php';
+require_once 'include/pages.php';
 
 set_error_handler(function ($severity, $message, $file, $line) {
   throw new \ErrorException($message, $severity, $severity, $file, $line);
@@ -20,7 +21,7 @@ if (!try_session()) {
 }
 
 if (is_user_signed_in() || is_admin_signed_in()) {
-  redirect('/');
+  redirect(pages['Home']);
 }
 
 const logerr = 'logerr';
@@ -41,14 +42,14 @@ const logerr = 'logerr';
           : throw new Exception("Nessun utente trovato. Le credenziali potrebbero essere errate.")
       );
 
-      redirect(extract_from_array_else('redirection', $_SESSION, '/'));
+      redirect(extract_from_array_else('redirection', $_SESSION, pages['Home']));
     } catch (Exception $e) {
       $_SESSION[logerr] = [
         'nome' => $nome,
         'risultato' => $e->getMessage(),
         'tiporisultato' => HTMLBuilder::ERROR_P
       ];
-      redirect('accedi.php?read=true');
+      redirect(pages['Accedi']);
     }
   })
   ->POST_create(function () use ($accedi) {
@@ -75,7 +76,7 @@ const logerr = 'logerr';
         'risultato' => $e->getMessage(),
         'tiporisultato' => HTMLBuilder::ERROR_P
       ];
-      redirect('accedi.php?create=true');
+      redirect(pages['Registrati']);
     }
   })
   ->GET_create(function () {

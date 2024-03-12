@@ -21,7 +21,7 @@ $get_account = function () {
         ->getBreadcrumbsHtml();
     $content = file_get_contents("../components/account.html");
     $content = str_replace("<input type=\"submit\" name=\"update\" value=\"Modifica\">","",$content);
-    $content = str_replace("<a href=\"/Pages/account.php\">Informazioni</a>","Informazioni",$content);
+    $content = str_replace("<a href=\"{{pages-account}}\">Informazioni</a>","Informazioni",$content);
     $layout = str_replace("{{content}}",$content,$layout);
 
     $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout)))->getHTMLBuilder();
@@ -31,7 +31,6 @@ $get_account = function () {
     ->set("breadcrumbs",$breadcrumbs)
     ->set("username-value",$_SESSION["user"]["username"])
     ->set("password-value",$_SESSION["user"]["password"])
-    ->set('pages-account',pages['Account'])
     ->set('pages-account-update',pages['Account (Modifica)'])
     ->set('pages-exit',pages['Esci'])
     ->set('pages-form',pages['Account'])
@@ -57,7 +56,7 @@ $get_edit_account = function () {
         ->getBreadcrumbsHtml();
     $content = file_get_contents("../components/account.html");
     $content = str_replace("disabled","",$content);
-    $content = str_replace("<a href=\"/Pages/account.php?update=true\">Modifica</a>","Modifica",$content);
+    $content = str_replace("<a href=\"{{pages-account-update}}\">Modifica</a>","Modifica",$content);
     $layout = str_replace("{{content}}",$content,$layout);
     $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout)))->getHTMLBuilder();
     $layout = $htmlBuilder->set("title",$title)
@@ -66,7 +65,6 @@ $get_edit_account = function () {
         ->set("username-value",$_SESSION["user"]["username"])
         ->set("password-value",$_SESSION["user"]["password"])
         ->set('pages-account',pages['Account'])
-        ->set('pages-account-update',pages['Account (Modifica)'])
         ->set('pages-exit',pages['Esci'])
         ->set('pages-form',pages['Account'])
         ->clean("-message")

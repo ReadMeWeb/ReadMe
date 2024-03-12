@@ -35,8 +35,6 @@ $get_account = function () {
 };
 
 $get_edit_account = function () {
-    $database = new Database();
-
     (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
 
     $content = (new HTMLBuilderCleaner('../components/layoutLogged.html'))
@@ -59,8 +57,6 @@ $get_edit_account = function () {
     $content = str_replace("disabled","",$content);
     $content = str_replace("<a href=\"{{pages-account-update}}\">Modifica</a>","Modifica",$content);
     echo $content;
-
-    $database->close();
 };
 
 $post_edit_account = function (){

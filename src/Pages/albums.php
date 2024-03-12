@@ -20,12 +20,12 @@ if (!try_session()) {
 }
 
 if (is_user_signed_in()) {
-  redirect('/');
+  redirect(pages['Permessi Insufficienti']);
 }
 
 if (is_not_signed_in()) {
-  $_SESSION['redirection'] = "albums.php";
-  redirect('accedi.php');
+  $_SESSION['redirection'] = pages['Albums'];
+  redirect(pages['Accedi']);
 }
 
 (new Pangine())

@@ -5,6 +5,8 @@ require_once 'components/breadcrumbs.php';
 require_once 'components/navbar.php';
 require_once 'Pangine/Pangine.php';
 require_once 'include/database.php';
+require_once 'include/utils.php';
+require_once 'include/pages.php';
 
 $get_account = function () {
     (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
@@ -96,6 +98,6 @@ $post_edit_account = function (){
     if($result){
         $_SESSION["user"]["username"] = $_POST["username"];
         $_SESSION["user"]["password"] = $_POST["password"];
-        header("Location: /Pages/account.php");
+        redirect(pages['Account']);
     }
 };

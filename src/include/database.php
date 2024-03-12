@@ -95,7 +95,7 @@ class  Database
   }
 
   // inserisce l'abum nel database
-  public function album_add($artist, $name): bool {
+  public function album_add($artist, $name): int {
     $query =  "INSERT INTO Album(name,artist_id) VALUES(?,?)";
     $this->execute_query($query, $artist, $name);
     return $this->execute_query('SELECT id FROM Album WHERE name = ? AND artist_id = ?;', $artist, $name)[0]['id'];

@@ -153,7 +153,7 @@ class  Database
 
     public function fetch_songs_info(): array
     {
-        return $this->execute_query('SELECT producer, Music.name as name, audio_file_name, graphic_file_name, A.name as producer_name FROM Music JOIN Orchestra.Artist A on Music.producer = A.id');
+        return $this->execute_query('SELECT producer, Music.name as name, audio_file_name, graphic_file_name, A.name as producer_name FROM Music JOIN Artist A on Music.producer = A.id');
     }
 
     public function fetch_albums_info(): array

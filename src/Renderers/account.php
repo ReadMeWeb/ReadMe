@@ -5,6 +5,8 @@ require_once 'components/breadcrumbs.php';
 require_once 'components/navbar.php';
 require_once 'Pangine/Pangine.php';
 require_once 'include/database.php';
+require_once 'include/utils.php';
+require_once 'include/pages.php';
 
 $get_account = function () {
     (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
@@ -19,7 +21,7 @@ $get_account = function () {
         ->getBreadcrumbsHtml();
     $content = file_get_contents("../components/account.html");
     $content = str_replace("<input type=\"submit\" name=\"update\" value=\"Modifica\">","",$content);
-    $content = str_replace("<a href=\"/Pages/account.php\">Informazioni</a>","Informazioni",$content);
+    $content = str_replace("<a href=\"{{pages-account}}\">Informazioni</a>","Informazioni",$content);
     $layout = str_replace("{{content}}",$content,$layout);
 
     $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout)))->getHTMLBuilder();
@@ -29,6 +31,9 @@ $get_account = function () {
     ->set("breadcrumbs",$breadcrumbs)
     ->set("username-value",$_SESSION["user"]["username"])
     ->set("password-value",$_SESSION["user"]["password"])
+    ->set('pages-account-update',pages['Account (Modifica)'])
+    ->set('pages-exit',pages['Esci'])
+    ->set('pages-form',pages['Account'])
     ->clean("-message")
     ->clean("-value")
     ->build();
@@ -51,7 +56,7 @@ $get_edit_account = function () {
         ->getBreadcrumbsHtml();
     $content = file_get_contents("../components/account.html");
     $content = str_replace("disabled","",$content);
-    $content = str_replace("<a href=\"/Pages/account.php?update=true\">Modifica</a>","Modifica",$content);
+    $content = str_replace("<a href=\"{{pages-account-update}}\">Modifica</a>","Modifica",$content);
     $layout = str_replace("{{content}}",$content,$layout);
     $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout)))->getHTMLBuilder();
     $layout = $htmlBuilder->set("title",$title)
@@ -59,6 +64,9 @@ $get_edit_account = function () {
         ->set("breadcrumbs",$breadcrumbs)
         ->set("username-value",$_SESSION["user"]["username"])
         ->set("password-value",$_SESSION["user"]["password"])
+        ->set('pages-account',pages['Account'])
+        ->set('pages-exit',pages['Esci'])
+        ->set('pages-form',pages['Account'])
         ->clean("-message")
         ->clean("-value")
         ->build();
@@ -81,13 +89,13 @@ $post_edit_account = function (){
         )),
     );
     $validator = new Pangine\PangineValidator("POST",$expectedParameters);
-    $validator->validate("/Pages/account.php?update=true");
+    $validator->validate(pages['Account (Modifica)']);
     $database = new Database();
     $result = $database->update_user_info($_SESSION["user"]["username"],$_POST["username"],$_POST["password"]);
     $database->close();
     if($result){
         $_SESSION["user"]["username"] = $_POST["username"];
         $_SESSION["user"]["password"] = $_POST["password"];
-        header("Location: /Pages/account.php");
+        redirect(pages['Account']);
     }
 };

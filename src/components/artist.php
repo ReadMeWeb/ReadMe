@@ -1,5 +1,8 @@
 <?php
 
+set_include_path($_SERVER['DOCUMENT_ROOT']);
+require_once 'include/pages.php';
+
 class artist
 {
     private string $id;
@@ -20,7 +23,7 @@ class artist
         $additional_elements = "";
         if($_SESSION["user"]["status"] == "ADMIN"){
             $additional_elements = "
-            <form action='/Pages/artista.php' method='get'>
+            <form action='".pages['Artista']."' method='get'>
                 <fieldset>
                     <legend>Azioni possibili</legend>
                     <input type='hidden' name='id' value='".$this->id."'>
@@ -32,8 +35,8 @@ class artist
         }
         return "
             <li>
-                <img src='../assets/artistPhotos/".$this->file_name."' alt='Immagine profilo di ".$this->name."'>
-                <a href='/Pages/artista.php?id=".$this->id."' aria-label='Vai alla pagina personale di ".$this->name."'>".$this->name."</a>
+                <img src='".assets['artistPhotos'].$this->file_name."' alt='Immagine profilo di ".$this->name."'>
+                <a href='".pages['Artista']."?id=".$this->id."' aria-label='Vai alla pagina personale di ".$this->name."'>".$this->name."</a>
                 ".$additional_elements."
             </li>
         ";

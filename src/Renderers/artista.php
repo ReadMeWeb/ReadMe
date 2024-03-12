@@ -6,6 +6,7 @@ require_once 'components/breadcrumbs.php';
 require_once 'include/sessionEstablisher.php';
 require_once 'components/validator.php';
 require_once 'include/utils.php';
+require_once 'include/pages.php';
 require_once 'include/database.php';
 
 const BASE_DIR_IMAGES = '../assets/artistPhotos/';
@@ -24,7 +25,7 @@ $get_edit_artist = function () {
         ))
     );
     $validator = new Pangine\PangineValidator("GET",$expectedParameters);
-    $validator->validate("/Pages/catalogo.php");
+    $validator->validate(pages['Catalogo']);
     $artist_id = $_GET['id'];
    
 
@@ -65,6 +66,7 @@ $get_edit_artist = function () {
         ->set("keywords", $keywords)
         ->set("src", BASE_DIR_IMAGES . $artist_image)
         ->set("nome-value", $artist_name)
+        ->set("page-form", pages['Modifica Artista'])
         ->set("biografia-value", $biography)
         ->set("id-value", $artist_id)
         ->clean("-message")
@@ -97,6 +99,7 @@ $get_create_artist = function () {
         ->set("breadcrumbs",$breadcrumbs)
         ->set("description", $description)
         ->set("keywords", $keywords)
+        ->set("page-form", pages['Aggiungi Artista'])
         ->clean("-message")
         ->clean("-value")
         ->build();
@@ -125,7 +128,7 @@ $post_edit_artist = function () {
         ))
     );
     $validator = new Pangine\PangineValidator("POST",$expectedParameters);
-    $validator->validate("/Pages/artista.php?update=true&id={$_POST['id']}");
+    $validator->validate(pages['Modifica Artista']."&id={$_POST['id']}");
 
     [$artist_name, $biography, $id] = array_values($_POST);
 
@@ -143,7 +146,7 @@ $post_edit_artist = function () {
 
     $db->update_artist($id, $artist_name, $biography, $img);
     $db->close();
-    header("Location: /Pages/catalogo.php");
+    redirect(pages['Catalogo']);
 
 };
 
@@ -165,7 +168,7 @@ $post_add_artist = function () {
         ))
     );
     $validator = new Pangine\PangineValidator("POST",$expectedParameters);
-    $validator->validate("/Pages/artista.php?create=true");
+    $validator->validate(pages['Aggiungi Artista']);
 
     $tmp_name = $_FILES['immagine']['tmp_name'];
     $name = $_FILES['immagine']['name'];
@@ -176,7 +179,7 @@ $post_add_artist = function () {
     $db->insert_artist($artist_name, $biograph, $img);
     $db->close();
 
-    header("Location: /Pages/catalogo.php");
+    redirect(pages['Catalogo']);
 
 
 };
@@ -190,7 +193,7 @@ $get_delete_artist = function() {
         ))
     );
     $validator = new Pangine\PangineValidator("GET", $expectedParameters);
-    $validator->validate("/Pages/catalogo.php");
+    $validator->validate(pages['Catalogo']);
     $id = $_GET['id'];
 
     $db = new Database();
@@ -201,5 +204,5 @@ $get_delete_artist = function() {
     if(file_exists(BASE_DIR_IMAGES . $img))
         unlink(BASE_DIR_IMAGES . $img);
 
-    header("Location: /Pages/catalogo.php");
+    redirect(pages['Catalogo']);
 };

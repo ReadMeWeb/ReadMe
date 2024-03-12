@@ -1,7 +1,7 @@
 
 <h1>Modifica artista</h1>
 <p role="alert">Se l'operazione di modifica avrà successo verrai reinderizzato alla pagina di catalogo.</p>
-<form action="../Pages/artista.php" method="post" enctype="multipart/form-data" id="aggiungi-artista">
+<form action="{{page-form}}" method="post" enctype="multipart/form-data" id="aggiungi-artista">
     <fieldset>
         <legend>Dati artista</legend>
 
@@ -19,7 +19,7 @@
         {{immagine-message}}
         
         <input type="hidden" name="id" value="{{id-value}}">
-        {{id-value}}
+        {{id-message}}
         
     </fieldset>
     <input type="submit" name="update" value="Modifica">

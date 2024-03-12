@@ -5,6 +5,8 @@ namespace Pangine;
 set_include_path($_SERVER['DOCUMENT_ROOT']);
 require_once 'include/sessionEstablisher.php';
 require_once 'include/HTMLBuilder.php';
+require_once 'include/utils.php';
+require_once 'include/pages.php';
 
 class Pangine
 {
@@ -27,11 +29,9 @@ class Pangine
             }
         } catch (PangineValidationError $e) {
             $_SESSION["err_data"] = $e->get_errors();
-            header("Location: " . $e->getCallbackPage());
-            exit(0);
+            redirect($e->getCallbackPage());
         } catch (PangineAuthError $e) {
-            header("Location: /Pages/unallowed.php");
-            exit(0);
+            redirect(pages['Permessi insufficienti']);
         }
     }
 

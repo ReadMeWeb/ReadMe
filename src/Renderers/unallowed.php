@@ -2,6 +2,7 @@
 set_include_path($_SERVER['DOCUMENT_ROOT']);
 require_once 'components/navbar.php';
 require_once 'components/breadcrumbs.php';
+require_once 'include/pages.php';
 
 $get_unallowed = function (){
     $layout = file_get_contents("../components/layout.html");
@@ -31,5 +32,6 @@ $get_unallowed = function (){
         $breadcrumbs,
         $content),
         $layout);
+    $layout = str_replace('{{pages-catalogo}}', pages['Catalogo'], $layout);
     echo $layout;
 };

@@ -1,5 +1,8 @@
 <?php
 
+set_include_path($_SERVER['DOCUMENT_ROOT']);
+require_once 'include/pages.php';
+
 class song
 {
     private string $producer;
@@ -21,7 +24,7 @@ class song
         $additional_elements = "";
         if($_SESSION["user"]["status"] == "ADMIN"){
             $additional_elements = "
-                <form action='RemoveUpdateSong.php' method='post'>
+                <form action='".pages['RemoveUpdateSong']."' method='post'>
                     <fieldset>
                         <legend>Azioni possibili</legend>
                         <input type='hidden' name='producer' value='".$this->producer."'>
@@ -34,7 +37,7 @@ class song
         }
         if($_SESSION["user"]["status"] == "USER"){
             $additional_elements = "
-                <form action='addToPlaylist.php' method='post'>
+                <form action='".pages['AddToPlaylist']."' method='post'>
                     <fieldset>
                         <legend>Azioni possibili</legend>
                         <input type='hidden' name='producer' value='".$this->producer."'>
@@ -46,11 +49,11 @@ class song
         }
         return "
             <li>
-                <img src='../assets/songPhotos/".$this->graphic_file_name."' alt='Copertina della canzone ".$this->name."'>
+                <img src='".assets['songPhotos'].$this->graphic_file_name."' alt='Copertina della canzone ".$this->name."'>
                 <p>".$this->name."</p>
-                <a href='/Pages/artista.php?id=".$this->producer."' aria-label='Vai alla pagina personale di ".$this->producer_name."'>".$this->producer_name."</a>
+                <a href='".pages['Artista']."?id=".$this->producer."' aria-label='Vai alla pagina personale di ".$this->producer_name."'>".$this->producer_name."</a>
                 <audio controls>
-                    <source src='../assets/songAudios/".$this->audio_file_name."' type='audio/mpeg'>
+                    <source src='".assets['songAudios'].$this->audio_file_name."' type='audio/mpeg'>
                     Attenzione: il tuo browser non supporta i tag audio (la preghiamo di cambiare browser).
                 </audio>
                 ".$additional_elements."

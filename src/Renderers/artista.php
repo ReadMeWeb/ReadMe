@@ -24,7 +24,6 @@ $get_edit_artist = function () {
             minVal: 0)
       ]))->validate(pages['Catalogo']);
 
-    $artist_id = $_GET['id'];
 
     $layout = (new HTMLBuilder('../components/layout.html'))
     ->set('keywords','Orchestra, modifica artista')
@@ -33,9 +32,9 @@ $get_edit_artist = function () {
     ->set('breadcrumbs',arraybreadcrumb(['Home','Modifica Artista']))
     ->set('description','Modifica artista dal catalogo di Orchestra');
 
-    $db = new Database(); 
-    $artist = $db->fetch_artist_info_by_id($artist_id);
-    $db->close();
+    $artist_id = $_GET['id'];
+
+    $artist = dbcall(fn ($db) => $db->fetch_artist_info_by_id($artist_id));
 
     if(empty($artist)) {
         echo "Id invalido!";

@@ -29,7 +29,7 @@ $get_catalogo = function () {
 
 // CREAZIONE CONTENT
 
-    $content = file_get_contents("../components/catalogo.html");
+    $content = new HTMLBuilder("../components/catalogo.html");
     $db = new Database();
 
     $artists = [];
@@ -65,9 +65,9 @@ $get_catalogo = function () {
         $artists = $artists_tmp;
         $albums = $albums_tmp;
         $songs = $songs_tmp;
-        $content = str_replace("{{searched}}", $_GET["searched"], $content);
+        $content->set("searched", $_GET["searched"]);
     }
-    $content = str_replace("{{searched}}", "", $content);
+    $content->set("searched", "");
 
     $lista_artists = [];
     foreach ($artists as $artist){
@@ -100,23 +100,23 @@ $get_catalogo = function () {
     $lista_album = implode("\n",$lista_album);
     $lista_songs = implode("\n",$lista_songs);
     if(count($artists) == 0){
-        $content = str_replace("{{lista-artisti}}", "<p>Nessun artista trovato.</p>", $content);
+        $content->set('lista-artisti', "<p>Nessun artista trovato.</p>");
     }else{
-        $content = str_replace("{{lista-artisti}}", $lista_artists, $content);
+        $content->set('lista-artisti', $lista_artists);
     }
     if(count($albums) == 0){
-        $content = str_replace("{{lista-album}}", "<p>Nessun album trovato.</p>", $content);
+        $content->set('lista-album', "<p>Nessun album trovato.</p>");
     }else{
-        $content = str_replace("{{lista-album}}", $lista_album, $content);
+        $content->set('lista-album', $lista_album);
     }
     if(count($songs) == 0){
-        $content = str_replace("{{lista-canzoni}}", "<p>Nessuna canzone trovata.</p>", $content);
+        $content->set('lista-canzoni', "<p>Nessuna canzone trovata.</p>");
     }else{
-        $content = str_replace("{{lista-canzoni}}", $lista_songs, $content);
+        $content->set('lista-canzoni', $lista_songs);
     }
-    $content = str_replace("{{page-form}}", pages['Catalogo'], $content);
+    $content->set('page-form', pages['Catalogo']);
 
-    $layout->set('content',$content);
+    $layout->set('content',$content->build());
 
     echo $layout->build();
 

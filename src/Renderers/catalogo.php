@@ -73,6 +73,9 @@ $get_catalogo = function () {
             $song["graphic_file_name"],
         ))->toHtml();
     }
+
+    $implode_else = fn ($list, $else) => count($list) > 0 ? implode("\n", $list) : $else ;
+
     $lista_artists = implode("\n",$lista_artists);
     $lista_album = implode("\n",$lista_album);
     $lista_songs = implode("\n",$lista_songs);

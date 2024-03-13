@@ -19,9 +19,6 @@ $get_catalogo = function () {
     try_session();
 
     $layout = "";
-    $content = file_get_contents("../components/catalogo.html");
-
-// CREAZIONE CONTENT
 
     if ($_SESSION["user"]["status"] == "UNREGISTERED") {
         $layout = file_get_contents("../components/layout.html");
@@ -35,6 +32,9 @@ $get_catalogo = function () {
     $layout = str_replace("{{menu}}", navbar(), $layout);
     $layout = str_replace("{{breadcrumbs}}",arraybreadcrumb(['Home','Catalogo']),$layout);
 
+// CREAZIONE CONTENT
+
+    $content = file_get_contents("../components/catalogo.html");
     $db = new Database();
 
     $artists = [];

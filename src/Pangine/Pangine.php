@@ -172,7 +172,7 @@ class PangineValidator {
     foreach ($this->configs as $field => $config) {
       if ($config->isImg()) {
         if (isset($_FILES[$field])) {
-          $validationResponse = $config->validate($field);
+          $validationResponse = $config->validate($field, $_FILES);
           if ($validationResponse != "") {
             $error->add_unvalidated_field($field, $validationResponse, $field);
           }
@@ -182,7 +182,7 @@ class PangineValidator {
         $_SESSION["data"][$field] = $_FILES[$field]['name'];
       } else {
         if (isset($method[$field])) {
-          $validationResponse = $config->validate($method[$field]);
+          $validationResponse = $config->validate($method[$field], $method);
           if ($validationResponse != "") {
             $error->add_unvalidated_field($field, $validationResponse, $method[$field]);
           }
@@ -221,7 +221,10 @@ class PangineValidatorConfig {
     return $this->isImage;
   }
 
-  public function validate(string $field): string {
+  public function validate(string $field, array $method): string {
+    if (!isset($method[$field])) {
+      return "Questo campo è da fornire.";
+    }
     if ($this->isImage) {
 
       $img_name = trim($_FILES[$field]['name']);

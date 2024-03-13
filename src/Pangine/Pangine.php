@@ -25,93 +25,46 @@ class Pangine {
     }
   }
 
-
-  public function GET_create(callable $renderer): Pangine {
-    $wrapper = function () use ($renderer): void {
-      if (isset($_GET["create"])) {
+  private function wrap($index, $array, $crud, $renderer) {
+    $this->indexer[$index] = function () use ($array, $crud, $renderer) {
+      if (isset($array[$crud])) {
         $renderer();
         exit(0);
       }
     };
-    $this->indexer["1GET_0"] = $wrapper;
     return $this;
+  }
+
+  public function GET_create(callable $renderer): Pangine {
+    return $this->wrap('1GET_0', $_GET, 'create', $renderer);
   }
 
   public function GET_read(callable $renderer): Pangine {
-    $wrapper = function () use ($renderer): void {
-      if (isset($_GET)) {
-        $renderer();
-        exit(0);
-      }
-    };
-    $this->indexer["1GET_3"] = $wrapper;
-    return $this;
+    return $this->wrap('1GET_3', $_GET, 'read', $renderer);
   }
 
   public function GET_update(callable $renderer): Pangine {
-    $wrapper = function () use ($renderer): void {
-      if (isset($_GET["update"])) {
-        $renderer();
-        exit(0);
-      }
-    };
-    $this->indexer["1GET_1"] = $wrapper;
-    return $this;
+    return $this->wrap('1GET_1', $_GET, 'update', $renderer);
   }
 
   public function GET_delete(callable $renderer): Pangine {
-    $wrapper = function () use ($renderer): void {
-      if (isset($_GET["delete"])) {
-        $renderer();
-        exit(0);
-      }
-    };
-    $this->indexer["1GET_2"] = $wrapper;
-    return $this;
+    return $this->wrap('1GET_2', $_GET, 'delete', $renderer);
   }
 
   public function POST_create(callable $renderer): Pangine {
-    $wrapper = function () use ($renderer): void {
-      if (isset($_POST["create"])) {
-        $renderer();
-        exit(0);
-      }
-    };
-    $this->indexer["0POST_0"] = $wrapper;
-    return $this;
+    return $this->wrap('0POST_0', $_POST, 'create', $renderer);
   }
 
   public function POST_read(callable $renderer): Pangine {
-    $wrapper = function () use ($renderer): void {
-      if (isset($_POST)) {
-        $renderer();
-        exit(0);
-      }
-    };
-    $this->indexer["0POST_3"] = $wrapper;
-    return $this;
+    return $this->wrap('0POST_3', $_POST, 'read', $renderer);
   }
 
   public function POST_update(callable $renderer): Pangine {
-    $wrapper = function () use ($renderer): void {
-      if (isset($_POST["update"])) {
-        $renderer();
-        exit(0);
-      }
-    };
-    $this->indexer["0POST_1"] = $wrapper;
-    return $this;
+    return $this->wrap('0POST_1', $_POST, 'update', $renderer);
   }
 
   public function POST_delete(callable $renderer): Pangine {
-    $wrapper = function () use ($renderer): void {
-      if (isset($_POST["delete"])) {
-        $renderer();
-        exit(0);
-      }
-    };
-    $this->indexer["0POST_2"] = $wrapper;
-    return $this;
+    return $this->wrap('0POST_2', $_POST, 'delete', $renderer);
   }
 }
 

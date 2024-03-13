@@ -31,9 +31,9 @@ $get_catalogo = function () {
         $layout = file_get_contents("../components/layoutLogged.html");
     }
 
+    $layout = str_replace("{{title}}", 'Catalogo',$layout);
     $layout = str_replace("{{menu}}", navbar(), $layout);
     $layout = str_replace("{{breadcrumbs}}",arraybreadcrumb(['Home','Catalogo']),$layout);
-    $layout = str_replace("{{title}}", 'Catalogo',$layout);
 
     $db = new Database();
 

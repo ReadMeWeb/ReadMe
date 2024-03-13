@@ -26,12 +26,12 @@ $get_edit_artist = function () {
 
     $artist_id = $_GET['id'];
 
-    $layout = file_get_contents('../components/layout.html');
-    $keywords = 'Orchestra, modifica artista';
-    $title = 'Modifica artista';
-    $menu = navbar();
-    $breadcrumbs = arraybreadcrumb(['Home','Modifica Artista']);
-    $description = 'Modifica artista dal catalogo di Orchestra';
+    $layout = (new HTMLBuilder('../components/layout.html'))
+    ->set('keywords','Orchestra, modifica artista')
+    ->set('title','Modifica artista')
+    ->set('menu',navbar())
+    ->set('breadcrumbs',arraybreadcrumb(['Home','Modifica Artista']))
+    ->set('description','Modifica artista dal catalogo di Orchestra');
 
     $db = new Database(); 
     $artist = $db->fetch_artist_info_by_id($artist_id);
@@ -45,18 +45,12 @@ $get_edit_artist = function () {
     [$_, $artist_name, $biography, $artist_image] = array_values($artist);
     $alt_image = "Immagine artista $artist_name";
     
-    $content = file_get_contents('../components/modificaArtista.html');
-    $layout = str_replace("{{content}}",$content,$layout);
+    $layout->set("content",file_get_contents('../components/modificaArtista.html'));
 
-    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout)))->getHTMLBuilder();
+    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout->build())))->getHTMLBuilder();
 
-    $layout = $htmlBuilder->set("title",$title)
-        ->set("menu",$menu)
-        ->set("breadcrumbs",$breadcrumbs)
-        ->set("description", $description)
-        ->set("keywords", $keywords)
-        ->set("alt", $keywords)
-        ->set("keywords", $keywords)
+    $layout = $htmlBuilder
+        ->set('alt','Modifica artista dal catalogo di Orchestra')
         ->set("src", BASE_DIR_IMAGES . $artist_image)
         ->set("nome-value", $artist_name)
         ->set("page-form", pages['Modifica Artista'])

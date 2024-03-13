@@ -119,30 +119,6 @@ class Pangine {
   }
 }
 
-class PangineValidationError extends \Exception {
-  private array $fieldsWithErrors;
-  private string $callbackPage;
-
-  public function __construct(string $callbackPage) {
-    $this->fieldsWithErrors = array();
-    $this->callbackPage = $callbackPage;
-    parent::__construct(json_encode($this->fieldsWithErrors));
-  }
-
-  public function add_unvalidated_field(string $fieldName, string $unvalidMessage, $value): void {
-    $this->fieldsWithErrors[$fieldName] = array("value" => $value, "message" => $unvalidMessage);
-  }
-
-  public function found_errors(): bool {
-    return count($this->fieldsWithErrors) > 0;
-  }
-
-  public function get_errors(): array {
-    return $this->fieldsWithErrors;
-  }
-
-}
-
 class PangineAuthError extends \Exception {
 }
 
@@ -157,7 +133,7 @@ class PangineValidator {
 
   public function validate(string $callbackPage): void {
     try_session();
-    $error = new PangineValidationError($callbackPage);
+    $fieldsWithErrors =  [];
     if ($this->method == "GET") {
       $method = $_GET;
     } else {
@@ -167,19 +143,19 @@ class PangineValidator {
       if ($config->isImg()) {
         $validationResponse = $config->validate($field, $_FILES);
         if ($validationResponse != "") {
-          $error->add_unvalidated_field($field, $validationResponse, $field);
+          $fieldsWithErrors[$field] = array("value" => $field, "message" => $validationResponse);
         }
         $_SESSION["data"][$field] = $_FILES[$field]['name'];
       } else {
         $validationResponse = $config->validate($method[$field], $method);
         if ($validationResponse != "") {
-          $error->add_unvalidated_field($field, $validationResponse, $method[$field]);
+          $fieldsWithErrors[$field] = array("value" => $value, "message" => $unvalidMessage);
         }
         $_SESSION["data"][$field] = $method[$field];
       }
     }
-    if ($error->found_errors()) {
-      $_SESSION["err_data"] = $e->get_errors();
+    if (count($fieldsWithErrors) > 0) {
+      $_SESSION["err_data"] = $fieldsWithErrors;
       redirect($callbackPage);
     }
   }

@@ -19,7 +19,7 @@ class Pangine {
     try_session();
     ksort($this->indexer);
     foreach ($this->indexer as $key => $renderer) {
-      if (($_SERVER['REQUEST_METHOD'] === 'GET' && str_contains($key, "GET")) || ($_SERVER['REQUEST_METHOD'] === 'POST' && str_contains($key, "POST"))) {
+      if (str_contains($key, $_SERVER['REQUEST_METHOD'])) {
         $renderer();
       }
     }

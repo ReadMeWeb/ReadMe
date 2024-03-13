@@ -18,15 +18,11 @@ function isSequencePresent(string $haystack, string $sequence) {
 $get_catalogo = function () {
     try_session();
 
-    $layout = "";
-
-    if (is_admin_signed_in() || is_user_signed_in()) {
-        $layout = new HTMLBuilder("../components/layoutLogged.html");
-    } else {
-        $layout = (new HTMLBuilder("../components/layout.html"))
+    $layout = (is_admin_signed_in() || is_user_signed_in())
+        ? (new HTMLBuilder("../components/layoutLogged.html"))
+        : ((new HTMLBuilder("../components/layout.html"))
         ->set('description', 'Pagina di catalogo musicale di musica classica di Orchestra')
-        ->set('keywords', 'Orchestra, Catalogo musicale, Musica, Album, Artisti, Canzoni');
-    }
+        ->set('keywords', 'Orchestra, Catalogo musicale, Musica, Album, Artisti, Canzoni'));
 
     $layout
     ->set('title', 'Catalogo')

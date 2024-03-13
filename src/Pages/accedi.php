@@ -125,7 +125,7 @@ const logerr = 'logerr';
       ->set('keywords', 'Orchestra, musica classica, registrazione, sign up')
       ->set('menu', navbar())
       ->set('breadcrumbs', arraybreadcrumb(['Home', 'Registrati']))
-      ->set('content', (new PangineUnvalidFormManager((new HTMLBuilder('../components/accedi.html'))
+      ->set('content', (new HTMLBuilder('../components/accedi.html'))
         ->set('password-value', '')
         ->set('password-message', '')
         ->set('nome-value', '')
@@ -137,8 +137,7 @@ const logerr = 'logerr';
         ->set('crud-name', 'create')
         ->set('crud-innerhtml', 'Registrati')
         ->set('urlsigninup', pages['Accedi'])
-        ->set('innerhtmlsigninup', 'Hai già un profilo ? Clicca qui per accedere')))
-        ->getHTMLBuilder()
+        ->set('innerhtmlsigninup', 'Hai già un profilo ? Clicca qui per accedere')
         ->build())
       ->build();
   })

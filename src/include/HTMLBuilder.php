@@ -67,10 +67,12 @@ class HTMLBuilder {
     }
     if (count($this->invalidplaceholders) > 0) {
       $errormessage .= 'Il file non contiene i seguenti marcatori:' . " <br> \n"
-        . implode('', array_map(fn ($line) => "- $line    <br> \n", $this->invalidplaceholders));
+        . implode('', array_map(fn ($line) => "- $line    <br> \n", $this->invalidplaceholders)) . "\n<br>\n\n";
     }
     if ($errormessage !== '') {
-      die( "ERRORE HTMLBUILDER  '".$this->htmlfile."' <br><br>\n\n" . $errormessage );
+      die( "ERRORE HTMLBUILDER  '".$this->htmlfile."' <br><br>\n\n"
+        . $errormessage
+        . str_replace("\n","   <br> \n",(new Exception())->getTraceAsString()));
     }
 
     foreach ($this->placeholders as $placeholder => $line) {

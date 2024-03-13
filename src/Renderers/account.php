@@ -11,67 +11,52 @@ require_once 'include/pages.php';
 $get_account = function () {
     (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
 
-    $layout = file_get_contents("../components/layoutLogged.html");
-    $title = "Account";
-    $navbar = navbar();
-    $breadcrumbs = (new BreadcrumbsBuilder())
-        ->addBreadcrumb(new BreadcrumbItem("Home"))
-        ->addBreadcrumb(new BreadcrumbItem("Account", true))
-        ->build()
-        ->getBreadcrumbsHtml();
-    $content = file_get_contents("../components/account.html");
-    $content = str_replace("<input type=\"submit\" name=\"update\" value=\"Modifica\">","",$content);
-    $content = str_replace("<a href=\"{{pages-account}}\">Informazioni</a>","Informazioni",$content);
-    $layout = str_replace("{{content}}",$content,$layout);
-
-    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout)))->getHTMLBuilder();
-
-    $layout =  $htmlBuilder->set("title",$title)
-    ->set("menu",$navbar)
-    ->set("breadcrumbs",$breadcrumbs)
-    ->set("username-value",$_SESSION["user"]["username"])
-    ->set("password-value",$_SESSION["user"]["password"])
+    $content = (new HTMLBuilder("../components/layoutLogged.html"))
+    ->set('title','Account')
+    ->set('menu',navbar())
+    ->set('breadcrumbs',arraybreadcrumb(['Home', 'Account']))
+    ->set('content',(new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner("../components/account.html"))
+    ->set('username-value',$_SESSION["user"]["username"])
+    ->set('password-value',$_SESSION["user"]["password"])
     ->set('pages-account-update',pages['Account (Modifica)'])
+    ->set('pages-account','{{pages-account}}')
     ->set('pages-exit',pages['Esci'])
     ->set('pages-form',pages['Account'])
-    ->clean("-message")
-    ->clean("-value")
+    ->clean('-message')
+    ->clean('-value')))
+    ->getHTMLBuilder()
+    ->build())
     ->build();
 
-    echo $layout;
+    $content = str_replace("<input type=\"submit\" name=\"update\" value=\"Modifica\">","",$content);
+    $content = str_replace("<a href=\"{{pages-account}}\">Informazioni</a>","Informazioni",$content);
+
+    echo $content;
 };
 
 $get_edit_account = function () {
-    $database = new Database();
     (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
 
-    $layout = file_get_contents("../components/layoutLogged.html");
-    $title = "Account";
-    $navbar = navbar();
-    $breadcrumbs = (new BreadcrumbsBuilder())
-        ->addBreadcrumb(new BreadcrumbItem("Home"))
-        ->addBreadcrumb(new BreadcrumbItem("Account"))
-        ->addBreadcrumb(new BreadcrumbItem("Account (Modifica)", true))
-        ->build()
-        ->getBreadcrumbsHtml();
-    $content = file_get_contents("../components/account.html");
-    $content = str_replace("disabled","",$content);
-    $content = str_replace("<a href=\"{{pages-account-update}}\">Modifica</a>","Modifica",$content);
-    $layout = str_replace("{{content}}",$content,$layout);
-    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout)))->getHTMLBuilder();
-    $layout = $htmlBuilder->set("title",$title)
-        ->set("menu",$navbar)
-        ->set("breadcrumbs",$breadcrumbs)
-        ->set("username-value",$_SESSION["user"]["username"])
-        ->set("password-value",$_SESSION["user"]["password"])
+    $content = (new HTMLBuilderCleaner('../components/layoutLogged.html'))
+        ->set('title','Account')
+        ->set('menu',navbar())
+        ->set('breadcrumbs',arraybreadcrumb(['Home', 'Account', 'Account (Modifica)']))
+        ->set('content',(new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/account.html'))
+        ->set('username-value',$_SESSION["user"]["username"])
+        ->set('password-value',$_SESSION["user"]["password"])
         ->set('pages-account',pages['Account'])
+        ->set('pages-account-update','{{pages-account-update}}')
         ->set('pages-exit',pages['Esci'])
         ->set('pages-form',pages['Account'])
-        ->clean("-message")
-        ->clean("-value")
+        ->clean('-message')
+        ->clean('-value')))
+        ->getHTMLBuilder()
+        ->build())
         ->build();
-    echo $layout;
-    $database->close();
+
+    $content = str_replace("disabled","",$content);
+    $content = str_replace("<a href=\"{{pages-account-update}}\">Modifica</a>","Modifica",$content);
+    echo $content;
 };
 
 $post_edit_account = function (){

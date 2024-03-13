@@ -4,17 +4,15 @@ set_include_path($_SERVER['DOCUMENT_ROOT']);
 require_once 'include/database.php';
 require_once 'components/navbar.php';
 require_once 'components/breadcrumbs.php';
+require_once 'include/utils.php';
 
 $get_home = function() {
 
     $title = 'Orchestra';
-    $keywords = implode(', ', array('Orchestra', 'storia della musica classica', 'musica classica', 'player musicale', 'player gratuito'));
+    $keywords = 'Orchestra, storia della musica classica, musica classica, player musicale, player gratuito';
     $description = 'Orchestra è un player musicale online gratuito che ti permette di ascoltare tutta la musica classica dal 1800 fino ad oggi';
     $menu = navbar();
-    $breadcrumbs = (new BreadcrumbsBuilder())
-        ->addBreadcrumb(new BreadcrumbItem("Home", isCurrent: true))
-        ->build()
-        ->getBreadcrumbsHtml();
+    $breadcrumbs = arraybreadcrumb(['Home']);
 
     $db = new Database();
 

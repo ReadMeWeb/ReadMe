@@ -24,14 +24,6 @@ $get_edit_artist = function () {
             minVal: 0)
       ]))->validate(pages['Catalogo']);
 
-
-    $layout = (new HTMLBuilder('../components/layout.html'))
-    ->set('keywords','Orchestra, modifica artista')
-    ->set('title','Modifica artista')
-    ->set('menu',navbar())
-    ->set('breadcrumbs',arraybreadcrumb(['Home','Modifica Artista']))
-    ->set('description','Modifica artista dal catalogo di Orchestra');
-
     $artist_id = $_GET['id'];
 
     $artist = dbcall(fn ($db) => $db->fetch_artist_info_by_id($artist_id));
@@ -43,6 +35,13 @@ $get_edit_artist = function () {
 
     [$_, $artist_name, $biography, $artist_image] = array_values($artist);
     
+    $layout = (new HTMLBuilder('../components/layout.html'))
+    ->set('keywords','Orchestra, modifica artista')
+    ->set('title','Modifica artista')
+    ->set('menu',navbar())
+    ->set('breadcrumbs',arraybreadcrumb(['Home','Modifica Artista']))
+    ->set('description','Modifica artista dal catalogo di Orchestra');
+
     $layout->set("content",((new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/modificaArtista.html'))
         ->set('alt',"Immagine artista $artist_name")
         ->set("src", BASE_DIR_IMAGES . $artist_image)

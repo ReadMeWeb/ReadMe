@@ -266,6 +266,7 @@ class PangineValidatorConfig {
   }
 }
 
+
 class PangineUnvalidFormManager {
 
   // Dependency injection
@@ -295,19 +296,8 @@ class PangineUnvalidFormManager {
 
 
 class PangineAuthenticator {
-  private function try_session(): bool {
-    if (!isset($_SESSION)) {
-      $session_return = session_start();
-      if (!isset($_SESSION["user"])) {
-        $_SESSION["user"]["status"] = "UNREGISTERED";
-      }
-      return $session_return;
-    }
-    return true;
-  }
-
   public function authenticate(array $allowedStatuses): bool {
-    $session_status = $this->try_session();
+    $session_status = try_session();
     if (!in_array($_SESSION["user"]["status"], $allowedStatuses)) {
       throw new PangineAuthError("Non hai i permessi per accedere alla pagina richiesta.");
     }

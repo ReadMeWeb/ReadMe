@@ -124,6 +124,7 @@ $get_catalogo = function () {
     $lista_songs= [];
     foreach ($songs as $song){
         $lista_songs[] = (new song(
+            $song["id"],
             $song["producer"],
             $song["producer_name"],
             $song["name"],

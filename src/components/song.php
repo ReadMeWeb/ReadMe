@@ -2,14 +2,16 @@
 
 class song
 {
+    private string $id;
     private string $producer;
     private string $producer_name;
     private string $name;
     private string $audio_file_name;
     private string $graphic_file_name;
 
-    public function __construct($producer, $producer_name, $name, $audio_file_name, $graphic_file_name)
+    public function __construct($id, $producer, $producer_name, $name, $audio_file_name, $graphic_file_name)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->producer = $producer;
         $this->producer_name = $producer_name;
@@ -25,16 +27,16 @@ class song
                 <form action='/Pages/addSong.php' method='get'>
                     <fieldset>
                         <legend>Azione di Modifica</legend>
+                        <input type='hidden' name='id' value='" . $this->id . "'>
                         <input type='hidden' name='producer' value='" . $this->producer . "'>
-                        <input type='hidden' name='name' value='" . $this->name . "'>
                         <input type='submit' name='update' value='Modifica'>
                     </fieldset>
                 </form>
                 <form action='/Pages/addSong.php' method='get'>
                     <fieldset>
                         <legend>Azione di Rimozione</legend>
+                        <input type='hidden' name='id' value='" . $this->id . "'>
                         <input type='hidden' name='producer' value='" . $this->producer . "'>
-                        <input type='hidden' name='name' value='" . $this->name . "'>
                         <input type='submit' name='delete' value='Rimuovi'>
                     </fieldset>
                 </form>

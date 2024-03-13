@@ -6,6 +6,10 @@ require_once "../components/navbar.php";
 require_once "../Pangine/Pangine.php";
 require_once "../data/database.php";
 
+function escape_string($input): string
+{
+    return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+}
 function getArtistSelectionContent(array $artists): string
 {
     $artists_list = "";
@@ -208,17 +212,16 @@ $get_update_song = function () {
         ->getBreadcrumbsHtml();
     $content = file_get_contents("../components/addSong/editSong.html");
 
+    $song_id = $_GET["id"];
     $artist_id = $_GET["producer"];
-    $song_title_old = $_GET["name"];
 
     $db = new Database();
     $artist_fetch_array = $db->fetch_artist_info_by_id($artist_id);
     $all_artists_except_selected = $db->fetch_all_artists_except_the_following(
         $artist_id
     );
-    $song_fetch_array = $db->fetch_song_info_by_title_and_artist_id(
-        $song_title_old,
-        $artist_id
+    $song_fetch_array = $db->fetch_song_info_by_id(
+        $song_id
     );
     $db->close();
 
@@ -241,7 +244,7 @@ $get_update_song = function () {
         ->set("breadcrumbs", $breadcrumbs)
         ->set("current-artist", $current_artist_option)
         ->set("artists", $artist_options)
-        ->set("song-id-value", $song_fetch_array["id"])
+        ->set("song_id-value", $song_fetch_array["id"])
         ->set("title-value", $song_fetch_array["name"])
         ->set("title-value2", $song_fetch_array["name"])
         ->set("current_audio_file", $song_fetch_array["audio_file_name"])
@@ -291,14 +294,14 @@ $post_update_song = function () {
     $db->close();
 
     /* Try update file */
-    if($tmp_graphic != null){
+    if($tmp_graphic["size"] != 0){
         unlink($song_old["graphic_file_name"]);
         $result_graphic = move_uploaded_file(
             $tmp_graphic["tmp_name"],
             $uploadFileG
         );
     }
-    if($tmp_audio != null) {
+    if($tmp_graphic["size"] != 0) {
         unlink($song_old["audio_file_name"]);
         $result_audio = move_uploaded_file(
             $tmp_audio["tmp_name"],
@@ -306,15 +309,15 @@ $post_update_song = function () {
         );
     }
 
-    if(($tmp_graphic == null || $result_graphic) && ($tmp_audio == null || $result_audio)){
+    if(($tmp_graphic["size"] == 0 || $result_graphic) && ($tmp_audio["size"] == 0 || $result_audio)){
         $db = new Database();
         $result = $db->update_song(
             $song_id,
             $artist_id,
             $song_title,
-            $tmp_graphic == null ? $song_old["graphic_file_name"] : $fileNameG,
-            $tmp_audio == null ? $song_old["audio_file_name"] : $fileNameA,
-            $artist_id == $song_old["producer"] ? $song_old["album"] : null,
+            $tmp_audio["size"] == 0 ? $song_old["audio_file_name"] : $fileNameA,
+            $tmp_graphic["size"] == 0 ? $song_old["graphic_file_name"] : $fileNameG,
+            $artist_id == $song_old["producer"] ? $song_old["album"] : NULL,
         );
         $db->close();
 
@@ -322,6 +325,7 @@ $post_update_song = function () {
             header("Location: /Pages/catalogo.php");
         }else{
             //TODO error 500
+            echo "Fuck!";
         }
     }
 };

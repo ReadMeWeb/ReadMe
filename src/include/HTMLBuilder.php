@@ -43,7 +43,7 @@ class HTMLBuilder {
 
   function set($placeholder, $data, $type = HTMLBuilder::UNSAFE): HTMLBuilder {
     if (!array_key_exists($placeholder, $this->placeholders)) {
-      throw new HTMLBuilderMissingPlaceholderException($placeholder, $this->content);
+      die('Il file \''.$this->htmlfile.'\' non contiene nessun marcatore \''.$placeholder.'\'');
     }
 
     // TODO da estendere qual'ora fossero richiesti magheggi

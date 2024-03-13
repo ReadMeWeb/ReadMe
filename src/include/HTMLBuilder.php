@@ -23,7 +23,7 @@ class HTMLBuilder {
   protected string $content;
   protected array $placeholders;
 
-  function __construct(string $htmlfile) {
+  function __construct(private string $htmlfile) {
     $this->content = file_get_contents($htmlfile);
     preg_match_all('/{{(.*?)}}/', $this->content, $matches, PREG_OFFSET_CAPTURE);
 
@@ -65,20 +65,22 @@ class HTMLBuilder {
   }
 
   function build(): string {
+    $unsetted = array_filter($this->placeholders, fn ($line) => $line[1] === null);
+    if(count($unsetted) > 0){
+      die(
+        'Non sono stati settati i sequenti marcatori per il file ' . $this->htmlfile . ':'
+        . "\n" . implode("\n", array_map(fn ($line) => '{{'.$line[1].'}}', $unsetted))
+      );
+    }
+
     foreach ($this->placeholders as $placeholder => $line) {
       [$offset, $replace] = $line;
-
-      if ($replace === null) {
-        throw new HTMLBuilderUndefinedPlaceholderException($placeholder, $this->content);
-      }
-
       $this->content = substr_replace(
         $this->content,
         $replace,
         $offset,
         strlen($placeholder) + 4,
       );
-      unset($this->placeholders[$placeholder]);
     }
 
     return $this->content;

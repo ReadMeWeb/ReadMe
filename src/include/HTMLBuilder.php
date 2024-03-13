@@ -17,12 +17,12 @@ class HTMLBuilder {
     preg_match_all('/{{(.*?)}}/', $this->content, $matches, PREG_OFFSET_CAPTURE);
 
     $nomi = array_column($matches[1], 0);
-    if (count($nomi) != count($duplicati = array_unique($nomi))) {
-      die( "ERRORE HTMLBUILDER  '".$this->htmlfile."' <br><br>\n\n"
+    $contavalori = array_filter(array_count_values($nomi), fn ($n) => $n > 1);
+    if (count($contavalori) > 0) {
+      die("ERRORE HTMLBUILDER  '" . $this->htmlfile . "' <br><br>\n\n"
         . 'Sono stati trovati duplicati dei seguenti marcatori :' . "   <br> \n"
-        . implode('', array_map(fn ($line) => " - $line    <br> \n", $duplicati))
-        . str_replace("\n","   <br> \n",(new Exception())->getTraceAsString())
-      );
+        . implode('', array_map(fn ($line) => " - $line    <br> \n", array_keys($contavalori))) . "\n<br>\n\n"
+        . str_replace("\n", "   <br> \n", (new Exception())->getTraceAsString()));
     }
 
     $this->placeholders = array_map(

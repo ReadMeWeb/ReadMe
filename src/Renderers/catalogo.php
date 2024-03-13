@@ -20,12 +20,12 @@ $get_catalogo = function () {
 
     $layout = "";
 
-    if ($_SESSION["user"]["status"] == "UNREGISTERED") {
+    if (is_admin_signed_in() || is_user_signed_in()) {
+        $layout = new HTMLBuilder("../components/layoutLogged.html");
+    } else {
         $layout = (new HTMLBuilder("../components/layout.html"))
         ->set('description', 'Pagina di catalogo musicale di musica classica di Orchestra')
         ->set('keywords', 'Orchestra, Catalogo musicale, Musica, Album, Artisti, Canzoni');
-    } else {
-        $layout = new HTMLBuilder("../components/layoutLogged.html");
     }
 
     $layout

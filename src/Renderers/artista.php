@@ -26,7 +26,7 @@ $get_edit_artist = function () {
 
     $artist_id = $_GET['id'];
 
-    $keywords = implode(', ', array('Orchestra', 'modifica artista'));
+    $keywords = 'Orchestra, modifica artista';
     $title = 'Modifica artista';
     $menu = navbar();
     $breadcrumbs = (new BreadcrumbsBuilder())

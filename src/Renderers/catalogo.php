@@ -18,9 +18,9 @@ function isSequencePresent(string $haystack, string $sequence) {
 $get_catalogo = function () {
     try_session();
 
-    $title = "Catalogo";
-    $description = "Pagina di catalogo musicale di musica classica di Orchestra";
-    $keywords = "Orchestra, Catalogo musicale, Musica, Album, Artisti, Canzoni";
+    $title = 'Catalogo';
+    $description = 'Pagina di catalogo musicale di musica classica di Orchestra';
+    $keywords = 'Orchestra, Catalogo musicale, Musica, Album, Artisti, Canzoni';
 
     $layout = "";
     $content = file_get_contents("../components/catalogo.html");

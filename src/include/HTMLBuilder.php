@@ -23,14 +23,8 @@ class HTMLBuilder {
   protected string $content;
   protected array $placeholders;
 
-  function __construct(string $htmlfile = "", string $layout = "") {
-    if ($htmlfile == "") {
-      $this->content = $layout;
-    } else if ($layout == "") {
-      $this->content = file_get_contents($htmlfile);
-    } else {
-      throw new Exception("Non è stato fornito un metodo per raggiungere un layout da manipolare.");
-    }
+  function __construct(string $htmlfile) {
+    $this->content = file_get_contents($htmlfile);
     preg_match_all('/{{(.*?)}}/', $this->content, $matches, PREG_OFFSET_CAPTURE);
 
     $nomi = array_column($matches[1], 0);

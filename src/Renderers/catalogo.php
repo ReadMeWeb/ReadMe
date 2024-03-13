@@ -32,10 +32,6 @@ $get_catalogo = function () {
 
     $content = new HTMLBuilder("../components/catalogo.html");
 
-    $artists = [];
-    $albums = [];
-    $songs = [];
-
     [ $artists , $albums, $songs ] = dbcall(fn ($db) => [ 
       $db->fetch_artist_info(),
       $db->fetch_albums_info(),

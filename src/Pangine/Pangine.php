@@ -24,9 +24,6 @@ class Pangine {
           $renderer();
         }
       }
-    } catch (PangineValidationError $e) {
-      $_SESSION["err_data"] = $e->get_errors();
-      redirect($e->getCallbackPage());
     } catch (PangineAuthError $e) {
       redirect(pages['Permessi insufficienti']);
     }
@@ -144,9 +141,6 @@ class PangineValidationError extends \Exception {
     return $this->fieldsWithErrors;
   }
 
-  public function getCallbackPage(): string {
-    return $this->callbackPage;
-  }
 }
 
 class PangineAuthError extends \Exception {
@@ -185,7 +179,8 @@ class PangineValidator {
       }
     }
     if ($error->found_errors()) {
-      throw $error;
+      $_SESSION["err_data"] = $e->get_errors();
+      redirect($callbackPage);
     }
   }
 }

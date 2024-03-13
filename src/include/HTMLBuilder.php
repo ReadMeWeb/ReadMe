@@ -1,11 +1,5 @@
 <?php
 
-class HTMLBuilderMultiplePlacehoderException extends Exception {
-  public function __construct($filename, $code = 0, Throwable $previous = null) {
-    parent::__construct("'$filename' contiene duplicati dello stesso marcatore.", $code, $previous);
-  }
-}
-
 class HTMLBuilder {
 
   protected string $content;

@@ -6,12 +6,6 @@ class HTMLBuilderMissingPlaceholderException extends Exception {
   }
 }
 
-class HTMLBuilderUndefinedPlaceholderException extends Exception {
-  public function __construct($placeholder, $content, $code = 0, Throwable $previous = null) {
-    parent::__construct("'$placeholder' non è stato assegnato un valore valido. Content: " . $content, $code, $previous);
-  }
-}
-
 class HTMLBuilderMultiplePlacehoderException extends Exception {
   public function __construct($filename, $code = 0, Throwable $previous = null) {
     parent::__construct("'$filename' contiene duplicati dello stesso marcatore.", $code, $previous);

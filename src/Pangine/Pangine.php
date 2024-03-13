@@ -18,14 +18,10 @@ class Pangine {
   public function execute(): void {
     try_session();
     ksort($this->indexer);
-    try {
-      foreach ($this->indexer as $key => $renderer) {
-        if (($_SERVER['REQUEST_METHOD'] === 'GET' && str_contains($key, "GET")) || ($_SERVER['REQUEST_METHOD'] === 'POST' && str_contains($key, "POST"))) {
-          $renderer();
-        }
+    foreach ($this->indexer as $key => $renderer) {
+      if (($_SERVER['REQUEST_METHOD'] === 'GET' && str_contains($key, "GET")) || ($_SERVER['REQUEST_METHOD'] === 'POST' && str_contains($key, "POST"))) {
+        $renderer();
       }
-    } catch (PangineAuthError $e) {
-      redirect(pages['Permessi insufficienti']);
     }
   }
 
@@ -119,9 +115,6 @@ class Pangine {
   }
 }
 
-class PangineAuthError extends \Exception {
-}
-
 class PangineValidator {
   private string $method;
   private array $configs;
@@ -173,7 +166,6 @@ class PangineValidator {
 
     return $htmlBuilder;
   }
-
 }
 
 class PangineValidatorConfig {
@@ -252,7 +244,7 @@ class PangineAuthenticator {
   public function authenticate(array $allowedStatuses): bool {
     $session_status = try_session();
     if (!in_array($_SESSION["user"]["status"], $allowedStatuses)) {
-      throw new PangineAuthError("Non hai i permessi per accedere alla pagina richiesta.");
+      redirect(pages['Permessi insufficienti']);
     }
     return $session_status;
   }

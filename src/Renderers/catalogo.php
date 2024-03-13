@@ -10,7 +10,7 @@ require_once 'components/breadcrumbs.php';
 require_once 'include/database.php';
 
 function isSequencePresent(string $haystack, string $sequence) {
-    $regex = implode('.*?', array_map(fn ($c) => '['.preg_quote($c).']',str_split($sequence)));
+    $regex = implode('.*?', array_map(fn ($c) => preg_quote($c), str_split($sequence)));
     $regex = '/'.$regex.'/i';
     return preg_match($regex, $haystack) === 1;
 }

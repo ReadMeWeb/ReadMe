@@ -31,18 +31,16 @@ $get_catalogo = function () {
 // CREAZIONE CONTENT
 
     $content = new HTMLBuilder("../components/catalogo.html");
-    $db = new Database();
 
     $artists = [];
     $albums = [];
     $songs = [];
 
-    if ($db->status()) {
-        $artists = $db->fetch_artist_info();
-        $albums = $db->fetch_albums_info();
-        $songs = $db->fetch_songs_info();
-    }
-    $db->close();
+    [ $artists , $albums, $songs ] = dbcall(fn ($db) => [ 
+      $db->fetch_artist_info(),
+      $db->fetch_albums_info(),
+      $db->fetch_songs_info(),
+    ]);
 
     if($query = extract_from_array_else("searched", $_GET, false)){
         $artists = array_filter($artists, fn ($a) => isSequencePresent($a['name'], $query));

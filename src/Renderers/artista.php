@@ -29,11 +29,7 @@ $get_edit_artist = function () {
     $keywords = 'Orchestra, modifica artista';
     $title = 'Modifica artista';
     $menu = navbar();
-    $breadcrumbs = (new BreadcrumbsBuilder())
-        ->addBreadcrumb(new BreadcrumbItem('Home'))
-        ->addBreadcrumb(new BreadcrumbItem('Modifica Artista', isCurrent: true))
-        ->build()
-        ->getBreadcrumbsHtml();
+    $breadcrumbs = arraybreadcrumb('Home','Modifica Artista');
     $description = 'Modifica artista dal catalogo di Orchestra';
 
     $db = new Database(); 

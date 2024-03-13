@@ -47,13 +47,11 @@ class HTMLBuilder {
     }
 
     // TODO da estendere qual'ora fossero richiesti magheggi
-    if ($this->placeholders[$placeholder][1] == null) {
-      $this->placeholders[$placeholder][1] = match ($type) {
-        HTMLBuilder::UNSAFE => $data,
-        HTMLBuilder::ERROR_P => '<p class="error">' . htmlspecialchars($data) . '</p>',
-        HTMLBuilder::SUCCESS_P => '<p class="success">' . htmlspecialchars($data) . '</p>',
-      };
-    }
+    $this->placeholders[$placeholder][1] = match ($type) {
+      HTMLBuilder::UNSAFE => $data,
+      HTMLBuilder::ERROR_P => '<p class="error">' . htmlspecialchars($data) . '</p>',
+      HTMLBuilder::SUCCESS_P => '<p class="success">' . htmlspecialchars($data) . '</p>',
+    };
 
     return $this;
   }

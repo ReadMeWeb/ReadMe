@@ -76,13 +76,11 @@ $get_catalogo = function () {
 
     $implode_else = fn ($list, $else) => count($list) > 0 ? implode("\n", $list) : $else ;
 
-    $content->set('lista-artisti',  $implode_else($lista_artists, "<p>Nessun artista trovato.</p>"));
-    $content->set('lista-album',    $implode_else($lista_album, "<p>Nessun album trovato.</p>"));
-    $content->set('lista-canzoni',  $implode_else($lista_songs, "<p>Nessuna canzone trovata.</p>"));
-
-    $content->set('page-form', pages['Catalogo']);
-
     echo $layout->set('content',$content
+      ->set('lista-artisti',  $implode_else($lista_artists, "<p>Nessun artista trovato.</p>"))
+      ->set('lista-album',    $implode_else($lista_album, "<p>Nessun album trovato.</p>"))
+      ->set('lista-canzoni',  $implode_else($lista_songs, "<p>Nessuna canzone trovata.</p>"))
+      ->set('page-form', pages['Catalogo'])
     ->build())
     ->build();
 

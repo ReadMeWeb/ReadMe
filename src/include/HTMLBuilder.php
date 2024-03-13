@@ -60,7 +60,7 @@ class HTMLBuilder {
     $errormessage = '';
     $unsetted = array_filter($this->placeholders, fn ($line) => $line[1] === null);
     if (count($unsetted) > 0) {
-       $errormessage .= ('Non sono stati settati i sequenti marcatori ' . ": <br> \n"
+      $errormessage .= ('Non sono stati settati i sequenti marcatori ' . ": <br> \n"
         . implode('', array_map(fn ($line) => "- $line   <br> \n", array_keys($unsetted)))) . "\n<br>\n\n";
     }
     if (count($this->invalidplaceholders) > 0) {
@@ -68,10 +68,9 @@ class HTMLBuilder {
         . implode('', array_map(fn ($line) => "- $line    <br> \n", $this->invalidplaceholders)) . "\n<br>\n\n";
     }
     if ($errormessage !== '') {
-      die( "ERRORE HTMLBUILDER  '".$this->htmlfile."' <br><br>\n\n"
+      die("ERRORE HTMLBUILDER  '" . $this->htmlfile . "' <br><br>\n\n"
         . $errormessage
-        . str_replace("\n","   <br> \n",(new Exception())->getTraceAsString())
-      );
+        . str_replace("\n", "   <br> \n", (new Exception())->getTraceAsString()));
     }
 
     foreach ($this->placeholders as $placeholder => $line) {

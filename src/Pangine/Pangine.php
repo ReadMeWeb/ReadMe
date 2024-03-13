@@ -23,6 +23,7 @@ class Pangine {
         $renderer();
       }
     }
+    redirect('?read=true');
   }
 
   private function wrap($index, $array, $crud, $renderer) {

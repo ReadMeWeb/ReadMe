@@ -26,10 +26,11 @@ $get_edit_artist = function () {
 
     $artist_id = $_GET['id'];
 
+    $layout = file_get_contents('../components/layout.html');
     $keywords = 'Orchestra, modifica artista';
     $title = 'Modifica artista';
     $menu = navbar();
-    $breadcrumbs = arraybreadcrumb('Home','Modifica Artista');
+    $breadcrumbs = arraybreadcrumb(['Home','Modifica Artista']);
     $description = 'Modifica artista dal catalogo di Orchestra';
 
     $db = new Database(); 
@@ -44,7 +45,6 @@ $get_edit_artist = function () {
     [$_, $artist_name, $biography, $artist_image] = array_values($artist);
     $alt_image = "Immagine artista $artist_name";
     
-    $layout = file_get_contents('../components/layout.html');
     $content = file_get_contents('../components/modificaArtista.html');
     $layout = str_replace("{{content}}",$content,$layout);
 

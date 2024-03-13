@@ -45,12 +45,9 @@ $get_catalogo = function () {
 
     if(isset($_GET["searched"])){
         $query = $_GET["searched"];
-        $artists_tmp = array_filter($artists, fn ($a) => isSequencePresent($a['name'], $query));
-        $albums_tmp = array_filter($albums, fn ($a) => isSequencePresent($a['name'], $query));
-        $songs_tmp = array_filter($songs, fn ($a) => isSequencePresent($a['name'], $query));
-        $artists = $artists_tmp;
-        $albums = $albums_tmp;
-        $songs = $songs_tmp;
+        $artists = array_filter($artists, fn ($a) => isSequencePresent($a['name'], $query));
+        $albums = array_filter($albums, fn ($a) => isSequencePresent($a['name'], $query));
+        $songs = array_filter($songs, fn ($a) => isSequencePresent($a['name'], $query));
         $content->set("searched", $_GET["searched"]);
     }
     $content->set("searched", "");

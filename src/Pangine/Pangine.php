@@ -159,6 +159,21 @@ class PangineValidator {
       redirect($callbackPage);
     }
   }
+
+  public function setformdata(\HTMLBuilder $htmlBuilder) {
+    try_session();
+    foreach (extract_from_array_else("err_data", $_SESSION, []) as $field => $data) {
+      $htmlBuilder->set("" . $field . "-value", $data["value"], \HTMLBuilder::UNSAFE)
+        ->set("" . $field . "-message", $data["message"], \HTMLBuilder::ERROR_P);
+    }
+    foreach (extract_from_array_else("data", $_SESSION, []) as $field => $value) {
+      $htmlBuilder->set("" . $field . "-value", $value, \HTMLBuilder::UNSAFE)
+        ->set("" . $field . "-message", "", \HTMLBuilder::UNSAFE);
+    }
+
+    return $htmlBuilder;
+  }
+
 }
 
 class PangineValidatorConfig {
@@ -229,27 +244,6 @@ class PangineValidatorConfig {
       }
     }
     return "";
-  }
-}
-
-
-class PangineUnvalidFormManager {
-
-  // Dependency injection
-  public function __construct(private \HTMLBuilder $htmlBuilder) {
-    try_session();
-    foreach (extract_from_array_else("err_data", $_SESSION, []) as $field => $data) {
-      $this->htmlBuilder->set("" . $field . "-value", $data["value"], \HTMLBuilder::UNSAFE)
-        ->set("" . $field . "-message", $data["message"], \HTMLBuilder::ERROR_P);
-    }
-    foreach (extract_from_array_else("data", $_SESSION, []) as $field => $value) {
-      $this->htmlBuilder->set("" . $field . "-value", $value, \HTMLBuilder::UNSAFE)
-        ->set("" . $field . "-message", "", \HTMLBuilder::UNSAFE);
-    }
-  }
-
-  public function getHTMLBuilder() {
-    return $this->htmlBuilder;
   }
 }
 

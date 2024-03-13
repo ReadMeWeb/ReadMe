@@ -10,29 +10,9 @@ require_once 'components/breadcrumbs.php';
 require_once 'include/database.php';
 
 function isSequencePresent(string $haystack, string $sequence) {
-    $haystackLength = strlen($haystack);
-    $sequenceLength = strlen($sequence);
-
-    // Initialize variables to track positions in both strings
-    $haystackPos = 0;
-    $sequencePos = 0;
-
-    $haystack = strtolower($haystack);
-    $sequence = strtolower($sequence);
-
-    // Iterate through both strings
-    while ($haystackPos < $haystackLength && $sequencePos < $sequenceLength) {
-        // If characters match, move to the next character in the sequence
-        if ($haystack[$haystackPos] === $sequence[$sequencePos]) {
-            $sequencePos++;
-        }
-
-        // Move to the next character in the haystack
-        $haystackPos++;
-    }
-
-    // If all characters in the sequence were found in order, return true
-    return $sequencePos === $sequenceLength;
+    $regex = implode('.*?', array_map(fn ($c) => '['.preg_quote($c).']',str_split($sequence)));
+    $regex = '/'.$regex.'/i';
+    return preg_match($regex, $haystack) === 1;
 }
 
 $get_catalogo = function () {

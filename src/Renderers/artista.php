@@ -17,16 +17,14 @@ $get_artist= function () {
 
 $get_edit_artist = function () {
     (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
-    $expectedParameters = array(
-        "id"=> (new Pangine\PangineValidatorConfig(
+
+    (new Pangine\PangineValidator("GET",
+      [ "id" => new Pangine\PangineValidatorConfig(
             notEmpty: true,
-            minVal: 0
-        ))
-    );
-    $validator = new Pangine\PangineValidator("GET",$expectedParameters);
-    $validator->validate(pages['Catalogo']);
+            minVal: 0)
+      ]))->validate(pages['Catalogo']);
+
     $artist_id = $_GET['id'];
-   
 
     $keywords = implode(', ', array('Orchestra', 'modifica artista'));
     $title = 'Modifica artista';

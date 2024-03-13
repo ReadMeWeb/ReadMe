@@ -43,24 +43,20 @@ $get_edit_artist = function () {
     }
 
     [$_, $artist_name, $biography, $artist_image] = array_values($artist);
-    $alt_image = "Immagine artista $artist_name";
     
-    $layout->set("content",file_get_contents('../components/modificaArtista.html'));
-
-    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout->build())))->getHTMLBuilder();
-
-    $layout = $htmlBuilder
-        ->set('alt','Modifica artista dal catalogo di Orchestra')
+    $layout->set("content",((new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/modificaArtista.html'))
+        ->set('alt',"Immagine artista $artist_name")
         ->set("src", BASE_DIR_IMAGES . $artist_image)
         ->set("nome-value", $artist_name)
         ->set("page-form", pages['Modifica Artista'])
         ->set("biografia-value", $biography)
         ->set("id-value", $artist_id)
         ->clean("-message")
-        ->clean("-value")
-        ->build();
+      ->clean("-value")))
+      ->getHTMLBuilder()
+      ->build()));
 
-    echo $layout;
+    echo $layout->build();
 
 };
 

@@ -88,35 +88,35 @@ const logerr = 'logerr';
       ->build();
   })
   ->POST_create(function () use ($accedi) {
-      (new PangineValidator($_SERVER['REQUEST_METHOD'], [
-        'nome' => (new PangineValidatorConfig(
-          notEmpty: true,
-          minLength: 6,
-          maxLength: 20
-        )),
-        'password' => (new PangineValidatorConfig(
-          notEmpty: true,
-          minLength: 8,
-          maxLength: 20
-        )),
-      ]))->validate(pages['Registrati']);
+    (new PangineValidator($_SERVER['REQUEST_METHOD'], [
+      'nome' => (new PangineValidatorConfig(
+        notEmpty: true,
+        minLength: 6,
+        maxLength: 20
+      )),
+      'password' => (new PangineValidatorConfig(
+        notEmpty: true,
+        minLength: 8,
+        maxLength: 20
+      )),
+    ]))->validate(pages['Registrati']);
 
-      [
-        'nome' => $nome,
-        'password' => $password,
-      ] = $_POST;
+    [
+      'nome' => $nome,
+      'password' => $password,
+    ] = $_POST;
 
-      dbcall(function ($conn) use ($nome, $password) {
-        if ($conn->user_exists($nome)) {
-          throw new Exception("Il nome utente fornito risulta già registrato.");
-        }
+    dbcall(function ($conn) use ($nome, $password) {
+      if ($conn->user_exists($nome)) {
+        throw new Exception("Il nome utente fornito risulta già registrato.");
+      }
 
-        if ($conn->user_sign_up($nome, $password) !== true) {
-          throw new Exception("Errore del database.");
-        }
-      });
+      if ($conn->user_sign_up($nome, $password) !== true) {
+        throw new Exception("Errore del database.");
+      }
+    });
 
-      $accedi();
+    $accedi();
   })
   ->GET_create(function () {
     echo (new HTMLBuilder('../components/layout.html'))

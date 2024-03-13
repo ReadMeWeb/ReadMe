@@ -44,14 +44,15 @@ $get_catalogo = function () {
     $db->close();
 
     if(isset($_GET["searched"])){
-        $artists_tmp = [];
+        $query = $_GET["searched"];
+        $artists_tmp = array_filter($artists, fn ($a) => isSequencePresent($a['name'], $query));
         $albums_tmp = [];
         $songs_tmp = [];
-        foreach ($artists as $artist){
-            if(isSequencePresent($artist["name"],$_GET["searched"])){
-                $artists_tmp[] = $artist;
-            }
-        }
+        // foreach ($artists as $artist){
+        //     if(isSequencePresent($artist["name"],$_GET["searched"])){
+        //         $artists_tmp[] = $artist;
+        //     }
+        // }
         foreach ($albums as $album){
             if(isSequencePresent($album["name"],$_GET["searched"])){
                 $albums_tmp[] = $album;

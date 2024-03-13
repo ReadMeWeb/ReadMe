@@ -35,14 +35,13 @@ $get_edit_artist = function () {
 
     [$_, $artist_name, $biography, $artist_image] = array_values($artist);
     
-    $layout = (new HTMLBuilder('../components/layout.html'))
+    echo (new HTMLBuilder('../components/layout.html'))
     ->set('keywords','Orchestra, modifica artista')
     ->set('title','Modifica artista')
     ->set('menu',navbar())
     ->set('breadcrumbs',arraybreadcrumb(['Home','Modifica Artista']))
-    ->set('description','Modifica artista dal catalogo di Orchestra');
-
-    $layout->set("content",((new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/modificaArtista.html'))
+    ->set('description','Modifica artista dal catalogo di Orchestra')
+    ->set("content",((new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/modificaArtista.html'))
         ->set('alt',"Immagine artista $artist_name")
         ->set("src", BASE_DIR_IMAGES . $artist_image)
         ->set("nome-value", $artist_name)
@@ -52,10 +51,8 @@ $get_edit_artist = function () {
         ->clean("-message")
       ->clean("-value")))
       ->getHTMLBuilder()
-      ->build()));
-
-    echo $layout->build();
-
+    ->build()))
+    ->build();
 };
 
 $get_create_artist = function () {

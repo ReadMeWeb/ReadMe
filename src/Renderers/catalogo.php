@@ -20,7 +20,7 @@ $get_catalogo = function () {
 
     $title = "Catalogo";
     $description = "Pagina di catalogo musicale di musica classica di Orchestra";
-    $keywords = implode(", ", array("Orchestra", "Catalogo musicale", "Musica", "Album", "Artisti", "Canzoni"));
+    $keywords = "Orchestra, Catalogo musicale, Musica, Album, Artisti, Canzoni";
 
     $layout = "";
     $content = file_get_contents("../components/catalogo.html");

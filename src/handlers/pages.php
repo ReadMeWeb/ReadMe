@@ -16,5 +16,6 @@ class Pages
         "Account (Modifica)" => "/Pages/account?update=true.php",
         "Permessi insufficienti" => "/Pages/unallowed.php",
         "Modifica Canzone" => "/Pages/addSong.php?update=true",
+        "Rimuovi Canzone" => "/Pages/addSong.php?delete=true",
     ];
 }

@@ -20,7 +20,6 @@ $app->GET_read($get_select_artist)
     ->POST_create($post_create_song)
     ->GET_update($get_update_song)
     ->POST_update($post_update_song)
-    ->execute();
- /*   ->GET_delete($get_delete_song)
+    ->GET_delete($get_delete_song)
     ->POST_delete($post_delete_song)
-    ->execute();*/
+    ->execute();

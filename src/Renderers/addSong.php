@@ -8,7 +8,7 @@ require_once "../data/database.php";
 
 function escape_string($input): string
 {
-    return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars($input, ENT_QUOTES, "UTF-8");
 }
 function getArtistSelectionContent(array $artists): string
 {
@@ -220,9 +220,7 @@ $get_update_song = function () {
     $all_artists_except_selected = $db->fetch_all_artists_except_the_following(
         $artist_id
     );
-    $song_fetch_array = $db->fetch_song_info_by_id(
-        $song_id
-    );
+    $song_fetch_array = $db->fetch_song_info_by_id($song_id);
     $db->close();
 
     $artist_options = getArtistSelectionContent($all_artists_except_selected);
@@ -286,7 +284,11 @@ $post_update_song = function () {
 
     $validator = new Pangine\PangineValidator("POST", $expectedParameters);
     $validator->validate(
-        "/Pages/addSong.php?producer=".$artist_id."&name=".$song_title."&update=Modifica"
+        "/Pages/addSong.php?producer=" .
+            $artist_id .
+            "&name=" .
+            $song_title .
+            "&update=Modifica"
     );
 
     $db = new Database();
@@ -294,14 +296,14 @@ $post_update_song = function () {
     $db->close();
 
     /* Try update file */
-    if($tmp_graphic["size"] != 0){
+    if ($tmp_graphic["size"] != 0) {
         unlink($song_old["graphic_file_name"]);
         $result_graphic = move_uploaded_file(
             $tmp_graphic["tmp_name"],
             $uploadFileG
         );
     }
-    if($tmp_graphic["size"] != 0) {
+    if ($tmp_graphic["size"] != 0) {
         unlink($song_old["audio_file_name"]);
         $result_audio = move_uploaded_file(
             $tmp_audio["tmp_name"],
@@ -309,24 +311,105 @@ $post_update_song = function () {
         );
     }
 
-    if(($tmp_graphic["size"] == 0 || $result_graphic) && ($tmp_audio["size"] == 0 || $result_audio)){
+    if (
+        ($tmp_graphic["size"] == 0 || $result_graphic) &&
+        ($tmp_audio["size"] == 0 || $result_audio)
+    ) {
         $db = new Database();
         $result = $db->update_song(
             $song_id,
             $artist_id,
             $song_title,
             $tmp_audio["size"] == 0 ? $song_old["audio_file_name"] : $fileNameA,
-            $tmp_graphic["size"] == 0 ? $song_old["graphic_file_name"] : $fileNameG,
-            $artist_id == $song_old["producer"] ? $song_old["album"] : NULL,
+            $tmp_graphic["size"] == 0
+                ? $song_old["graphic_file_name"]
+                : $fileNameG,
+            $artist_id == $song_old["producer"] ? $song_old["album"] : null
         );
         $db->close();
 
         if ($result) {
             header("Location: /Pages/catalogo.php");
-        }else{
+        } else {
             //TODO error 500
-            echo "Fuck!";
         }
     }
 };
 
+$get_delete_song = function () {
+    (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
+
+    $layout = file_get_contents("../components/layoutLogged.html");
+    $title = "Rimuovi Canzone";
+    $navbar = navbar();
+    $breadcrumbs = (new BreadcrumbsBuilder())
+        ->addBreadcrumb(new BreadcrumbItem("Home"))
+        ->addBreadcrumb(new BreadcrumbItem("Rimuovi Canzone", true))
+        ->build()
+        ->getBreadcrumbsHtml();
+    $content = file_get_contents("../components/addSong/removeSong.html");
+
+    $song_id = $_GET["id"];
+
+    $db = new Database();
+    $song = $db->fetch_song_info_by_id($song_id);
+    $db->close();
+
+    $layout = str_replace("{{content}}", $content, $layout);
+
+    $html_builder = (new Pangine\PangineUnvalidFormManager(
+        $layout
+    ))->getHTMLBuilder();
+    $html = $html_builder
+        ->set("title", $title)
+        ->set("menu", $navbar)
+        ->set("breadcrumbs", $breadcrumbs)
+        ->set("song-title", $song["name"])
+        ->set("song-id", $song_id)
+        ->build();
+    echo $html;
+};
+
+$post_delete_song = function () {
+    (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
+
+    $song_id = $_POST["id"];
+
+    $expectedParameters = [
+        "id" => new Pangine\PangineValidatorConfig(notEmpty: true),
+    ];
+
+    $validator = new Pangine\PangineValidator("POST", $expectedParameters);
+    $validator->validate("/Pages/addSong.php?id=" . $song_id . "&delete=true");
+
+    $db = new Database();
+    $song = $db->fetch_song_info_by_id($song_id);
+
+    if ($song == null) {
+        //TODO error 404
+    } else {
+        $result = $db->delete_song($song_id);
+        $db->close();
+
+        if ($result) {
+            $audio_dir =
+                dirname(__FILE__) .
+                "/../assets/songAudios/" .
+                $song["audio_file_name"];
+            $graphic_dir =
+                dirname(__FILE__) .
+                "/../assets/songPhotos/" .
+                $song["graphic_file_name"];
+            if (file_exists($audio_dir)) {
+                unlink($audio_dir);
+            }
+            if (file_exists($graphic_dir)) {
+                unlink($graphic_dir);
+            }
+
+            header("Location: /Pages/catalogo.php");
+        } else {
+            //TODO error 500
+        }
+    }
+};

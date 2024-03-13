@@ -146,7 +146,7 @@ class Database
         );
         $stripped_res = [];
         foreach ($res as $song) {
-            $song["name"] = stripslashes($song["name"]);
+            $song["song"] = stripslashes($song["song"]);
             array_push($stripped_res, $song);
         }
         return $stripped_res;
@@ -297,6 +297,12 @@ class Database
             $newPassword,
             $oldUsername
         );
+        return $res;
+    }
+
+    public function delete_song(string $song_id)
+    {
+        $res = $this->execute_query("DELETE FROM Music WHERE id = ?", $song_id);
         return $res;
     }
 

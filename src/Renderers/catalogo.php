@@ -82,8 +82,8 @@ $get_catalogo = function () {
 
     $content->set('page-form', pages['Catalogo']);
 
-    $layout->set('content',$content->build());
-
-    echo $layout->build();
+    echo $layout->set('content',$content
+    ->build())
+    ->build();
 
 };

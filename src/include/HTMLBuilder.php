@@ -16,6 +16,7 @@ class HTMLBuilder {
 
   protected string $content;
   protected array $placeholders;
+  private array $invalidplaceholders = [];
 
   function __construct(private string $htmlfile) {
     $this->content = file_get_contents($htmlfile);
@@ -43,7 +44,8 @@ class HTMLBuilder {
 
   function set($placeholder, $data, $type = HTMLBuilder::UNSAFE): HTMLBuilder {
     if (!array_key_exists($placeholder, $this->placeholders)) {
-      die('Il file \''.$this->htmlfile.'\' non contiene nessun marcatore \''.$placeholder.'\'');
+      $this->invalidplaceholders[] = $placeholder;
+      return $this;
     }
 
     // TODO da estendere qual'ora fossero richiesti magheggi
@@ -57,10 +59,18 @@ class HTMLBuilder {
   }
 
   function build(): string {
+    $errormessage = '';
     $unsetted = array_filter($this->placeholders, fn ($line) => $line[1] === null);
     if (count($unsetted) > 0) {
-      die('Non sono stati settati i sequenti marcatori per il file ' . $this->htmlfile . ": <br> \n"
-        . implode('', array_map(fn ($line) => "- $line   <br> \n", array_keys($unsetted))));
+       $errormessage .= ('Non sono stati settati i sequenti marcatori ' . ": <br> \n"
+        . implode('', array_map(fn ($line) => "- $line   <br> \n", array_keys($unsetted)))) . "\n<br>\n\n";
+    }
+    if (count($this->invalidplaceholders) > 0) {
+      $errormessage .= 'Il file non contiene i seguenti marcatori:' . " <br> \n"
+        . implode('', array_map(fn ($line) => "- $line    <br> \n", $this->invalidplaceholders));
+    }
+    if ($errormessage !== '') {
+      die( "ERRORE HTMLBUILDER  '".$this->htmlfile."' <br><br>\n\n" . $errormessage );
     }
 
     foreach ($this->placeholders as $placeholder => $line) {

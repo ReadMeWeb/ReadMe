@@ -8,12 +8,6 @@ require_once 'include/utils.php';
 
 $get_home = function() {
 
-    $title = 'Orchestra';
-    $keywords = 'Orchestra, storia della musica classica, musica classica, player musicale, player gratuito';
-    $description = 'Orchestra è un player musicale online gratuito che ti permette di ascoltare tutta la musica classica dal 1800 fino ad oggi';
-    $menu = navbar();
-    $breadcrumbs = arraybreadcrumb(['Home']);
-
     $db = new Database();
 
     $song_count = 0;
@@ -29,24 +23,26 @@ $get_home = function() {
     }
     $db->close();
 
-    $song = file_get_contents('../components/songCard.html');
-    $place_holders = array('{{card_class}}', '{{img}}', '{{artist}}', '{{song}}', '{{added_date}}');
-    $songs = '';
+    echo (new HTMLBuilder('../components/layout.html'))
+    ->set('title','Orchestra')
+    ->set('keywords', 'Orchestra, storia della musica classica, musica classica, player musicale, player gratuito')
+    ->set('description', 'Orchestra è un player musicale online gratuito che ti permette di ascoltare tutta la musica classica dal 1800 fino ad oggi')
+    ->set('menu',navbar())
+    ->set('breadcrumbs',arraybreadcrumb(['Home']))
+    ->set('content', (new HTMLBuilder('../components/index.html'))
+      ->set('artist_count', $artist_count)
+      ->set('album_count', $album_count)
+      ->set('song_count', $song_count)
+      ->set('songs', implode('', array_map(function ($music) {
+          return (new HTMLBuilder('../components/songCard.html'))
+          ->set('card_class','ultime_uscite')
+          ->set('img',$music['img'])
+          ->set('artist',$music['artist'])
+          ->set('song',$music['song'])
+          ->set('added_date',$music['added_date'])
+          ->build();
+      },$latest_music)))
+      ->build())
+    ->build();
 
-    foreach($latest_music as $music) {
-        $values = array('ultime_uscite',  $music['img'], $music['artist'], $music['song'], $music['added_date']);
-        $songs .= str_replace($place_holders, $values, $song);
-    }
-
-    $content = file_get_contents('../components/index.html');
-    $place_holders = array('{{artist_count}}', '{{album_count}}', '{{song_count}}', '{{songs}}');
-    $values = array($artist_count, $album_count, $song_count, $songs);
-    $content = str_replace($place_holders, $values, $content);
-
-    $place_holders = array('{{title}}', '{{keywords}}', '{{description}}', '{{content}}','{{menu}}','{{breadcrumbs}}');
-    $values = array($title, $keywords, $description, $content,$menu,$breadcrumbs);
-    $template = file_get_contents('../components/layout.html');
-    $template = str_replace($place_holders, $values, $template);
-
-    echo $template;
 };

@@ -66,11 +66,9 @@ class HTMLBuilder {
 
   function build(): string {
     $unsetted = array_filter($this->placeholders, fn ($line) => $line[1] === null);
-    if(count($unsetted) > 0){
-      die(
-        'Non sono stati settati i sequenti marcatori per il file ' . $this->htmlfile . ':'
-        . "\n" . implode("\n", array_map(fn ($line) => '{{'.$line[1].'}}', $unsetted))
-      );
+    if (count($unsetted) > 0) {
+      die('Non sono stati settati i sequenti marcatori per il file ' . $this->htmlfile . ": <br> \n"
+        . implode('', array_map(fn ($line) => "- $line   <br> \n", array_keys($unsetted))));
     }
 
     foreach ($this->placeholders as $placeholder => $line) {

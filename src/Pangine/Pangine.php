@@ -272,20 +272,13 @@ class PangineUnvalidFormManager {
   // Dependency injection
   public function __construct(private \HTMLBuilder $htmlBuilder) {
     try_session();
-    if (isset($_SESSION["err_data"])) {
-      foreach ($_SESSION["err_data"] as $field => $data) {
-        $this->htmlBuilder->set("" . $field . "-value", $data["value"], \HTMLBuilder::UNSAFE)
-          ->set("" . $field . "-message", $data["message"], \HTMLBuilder::ERROR_P);
-      }
-      unset($_SESSION["err_data"]);
+    foreach (extract_from_array_else("err_data", $_SESSION, []) as $field => $data) {
+      $this->htmlBuilder->set("" . $field . "-value", $data["value"], \HTMLBuilder::UNSAFE)
+        ->set("" . $field . "-message", $data["message"], \HTMLBuilder::ERROR_P);
     }
-    if (isset($_SESSION["data"])) {
-
-      foreach ($_SESSION["data"] as $field => $value) {
-        $this->htmlBuilder->set("" . $field . "-value", $value, \HTMLBuilder::UNSAFE)
-          ->set("" . $field . "-message", "", \HTMLBuilder::UNSAFE);
-      }
-      unset($_SESSION["data"]);
+    foreach (extract_from_array_else("data", $_SESSION, []) as $field => $value) {
+      $this->htmlBuilder->set("" . $field . "-value", $value, \HTMLBuilder::UNSAFE)
+        ->set("" . $field . "-message", "", \HTMLBuilder::UNSAFE);
     }
   }
 

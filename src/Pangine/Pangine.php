@@ -171,16 +171,16 @@ class PangineValidator {
     }
     foreach ($this->configs as $field => $config) {
       if ($config->isImg()) {
-          $validationResponse = $config->validate($field, $_FILES);
-          if ($validationResponse != "") {
-            $error->add_unvalidated_field($field, $validationResponse, $field);
-          }
+        $validationResponse = $config->validate($field, $_FILES);
+        if ($validationResponse != "") {
+          $error->add_unvalidated_field($field, $validationResponse, $field);
+        }
         $_SESSION["data"][$field] = $_FILES[$field]['name'];
       } else {
-          $validationResponse = $config->validate($method[$field], $method);
-          if ($validationResponse != "") {
-            $error->add_unvalidated_field($field, $validationResponse, $method[$field]);
-          }
+        $validationResponse = $config->validate($method[$field], $method);
+        if ($validationResponse != "") {
+          $error->add_unvalidated_field($field, $validationResponse, $method[$field]);
+        }
         $_SESSION["data"][$field] = $method[$field];
       }
     }

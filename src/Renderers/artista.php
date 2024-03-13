@@ -58,30 +58,19 @@ $get_edit_artist = function () {
 $get_create_artist = function () {
     (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
 
-    $keywords = implode(', ', array('Orchestra', 'modifica artista'));
-    $title = 'Aggiungi artista';
-    $menu = navbar();
-    $breadcrumbs = (new BreadcrumbsBuilder())
-        ->addBreadcrumb(new BreadcrumbItem('Home'))
-        ->addBreadcrumb(new BreadcrumbItem('Aggiungi Artista', isCurrent: true))
-        ->build()
-        ->getBreadcrumbsHtml();
-    $description = 'Aggiungi un artista dal catalogo di Orchestra';
-    $layout = file_get_contents('../components/layout.html');
-    $content = file_get_contents('../components/aggiungiArtista.html');
-    $layout = str_replace("{{content}}",$content,$layout);
-
-    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager(new HTMLBuilderCleaner(layout: $layout)))->getHTMLBuilder();
-    $layout = $htmlBuilder->set("title",$title)
-        ->set("menu",$menu)
-        ->set("breadcrumbs",$breadcrumbs)
-        ->set("description", $description)
-        ->set("keywords", $keywords)
-        ->set("page-form", pages['Aggiungi Artista'])
-        ->clean("-message")
-        ->clean("-value")
-        ->build();
-    echo $layout;
+    echo (new HTMLBuilder('../components/layout.html'))
+    ->set('title','Aggiungi artista')
+    ->set('keywords', 'Orchestra, modifica artista')
+    ->set('menu', navbar())
+    ->set('breadcrumbs', arraybreadcrumb(['Home', 'Aggiungi Artista']))
+    ->set('description', 'Aggiungi un artista dal catalogo di Orchestra')
+    ->set('content',(new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/aggiungiArtista.html'))
+      ->set("page-form", pages['Aggiungi Artista'])
+      ->clean('-value')
+      ->clean('-message')))
+      ->getHTMLBuilder()
+      ->build())
+    ->build();
 };
 
 $post_edit_artist = function () {

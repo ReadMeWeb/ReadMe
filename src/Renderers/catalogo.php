@@ -36,13 +36,7 @@ $get_catalogo = function () {
     }
 
     $layout = str_replace("{{menu}}", navbar(), $layout);
-    $layout = str_replace("{{breadcrumbs}}",
-        (new BreadcrumbsBuilder())
-            ->addBreadcrumb(new BreadcrumbItem("Home"))
-            ->addBreadcrumb(new BreadcrumbItem("Catalogo", true))
-            ->build()
-            ->getBreadcrumbsHtml(),
-        $layout);
+    $layout = str_replace("{{breadcrumbs}}",arraybreadcrumb(['Home','Catalogo']),$layout);
     $layout = str_replace("{{title}}",$title,$layout);
 
     $db = new Database();

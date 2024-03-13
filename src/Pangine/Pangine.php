@@ -149,7 +149,7 @@ class PangineValidator {
       } else {
         $validationResponse = $config->validate($method[$field], $method);
         if ($validationResponse != "") {
-          $fieldsWithErrors[$field] = array("value" => $value, "message" => $unvalidMessage);
+          $fieldsWithErrors[$field] = array("value" => $method[$field], "message" => $validationResponse);
         }
         $_SESSION["data"][$field] = $method[$field];
       }

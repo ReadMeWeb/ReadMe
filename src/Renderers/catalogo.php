@@ -21,16 +21,17 @@ $get_catalogo = function () {
     $layout = "";
 
     if ($_SESSION["user"]["status"] == "UNREGISTERED") {
-        $layout = file_get_contents("../components/layout.html");
-        $layout = str_replace("{{description}}", 'Pagina di catalogo musicale di musica classica di Orchestra',$layout);
-        $layout = str_replace("{{keywords}}", 'Orchestra, Catalogo musicale, Musica, Album, Artisti, Canzoni',$layout);
+        $layout = (new HTMLBuilder("../components/layout.html"))
+        ->set('description', 'Pagina di catalogo musicale di musica classica di Orchestra')
+        ->set('keywords', 'Orchestra, Catalogo musicale, Musica, Album, Artisti, Canzoni');
     } else {
-        $layout = file_get_contents("../components/layoutLogged.html");
+        $layout = new HTMLBuilder("../components/layoutLogged.html");
     }
 
-    $layout = str_replace("{{title}}", 'Catalogo',$layout);
-    $layout = str_replace("{{menu}}", navbar(), $layout);
-    $layout = str_replace("{{breadcrumbs}}",arraybreadcrumb(['Home','Catalogo']),$layout);
+    $layout
+    ->set('title', 'Catalogo')
+    ->set('menu', navbar())
+    ->set('breadcrumbs',arraybreadcrumb(['Home','Catalogo']));
 
 // CREAZIONE CONTENT
 
@@ -120,8 +121,9 @@ $get_catalogo = function () {
         $content = str_replace("{{lista-canzoni}}", $lista_songs, $content);
     }
     $content = str_replace("{{page-form}}", pages['Catalogo'], $content);
-    $layout = str_replace("{{content}}",$content,$layout);
 
-    echo $layout;
+    $layout->set('content',$content);
+
+    echo $layout->build();
 
 };

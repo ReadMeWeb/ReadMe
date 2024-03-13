@@ -2,7 +2,6 @@
 
 use Pangine\Pangine;
 use Pangine\PangineAuthenticator;
-use Pangine\PangineUnvalidFormManager;
 use Pangine\PangineValidator;
 use Pangine\PangineValidatorConfig;
 

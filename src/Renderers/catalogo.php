@@ -8,6 +8,7 @@ require_once 'components/album.php';
 require_once 'components/song.php';
 require_once 'components/breadcrumbs.php';
 require_once 'include/database.php';
+require_once 'include/utils.php';
 
 function isSequencePresent(string $haystack, string $sequence) {
     $regex = implode('.*?', array_map(fn ($c) => preg_quote($c), str_split($sequence)));

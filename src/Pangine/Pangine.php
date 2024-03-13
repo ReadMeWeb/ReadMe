@@ -169,22 +169,16 @@ class PangineValidator {
 }
 
 class PangineValidatorConfig {
-  private bool $notZero;
-  private bool $notEmpty;
-  private int $minLength;
-  private int $maxLength;
-  private int $minVal;
-  private int $maxVal;
-  private bool $isImage;
 
-  public function __construct(bool $notEmpty = false, bool $notZero = false, int $minLength = 0, int $maxLength = -1, int $minVal = 0, int $maxVal = -1, bool $isImage = false) {
-    $this->notZero = $notZero;
-    $this->notEmpty = $notEmpty;
-    $this->isImage = $isImage;
-    $this->minLength = $minLength;
-    $this->maxLength = $maxLength;
-    $this->minVal = $minVal;
-    $this->maxVal = $maxVal;
+  public function __construct(
+    private bool $notEmpty = false,
+    private bool $notZero = false,
+    private int $minLength = 0,
+    private int $maxLength = -1,
+    private int $minVal = 0,
+    private int $maxVal = -1,
+    private bool $isImage = false
+  ) {
   }
 
   public function isImg(): bool {

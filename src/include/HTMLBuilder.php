@@ -17,8 +17,12 @@ class HTMLBuilder {
     preg_match_all('/{{(.*?)}}/', $this->content, $matches, PREG_OFFSET_CAPTURE);
 
     $nomi = array_column($matches[1], 0);
-    if (count($nomi) != count(array_unique($nomi))) {
-      throw new HTMLBuilderMultiplePlacehoderException($htmlfile);
+    if (count($nomi) != count($duplicati = array_unique($nomi))) {
+      die( "ERRORE HTMLBUILDER  '".$this->htmlfile."' <br><br>\n\n"
+        . 'Sono stati trovati duplicati dei seguenti marcatori :' . "   <br> \n"
+        . implode('', array_map(fn ($line) => " - $line    <br> \n", $duplicati))
+        . str_replace("\n","   <br> \n",(new Exception())->getTraceAsString())
+      );
     }
 
     $this->placeholders = array_map(
@@ -66,7 +70,8 @@ class HTMLBuilder {
     if ($errormessage !== '') {
       die( "ERRORE HTMLBUILDER  '".$this->htmlfile."' <br><br>\n\n"
         . $errormessage
-        . str_replace("\n","   <br> \n",(new Exception())->getTraceAsString()));
+        . str_replace("\n","   <br> \n",(new Exception())->getTraceAsString())
+      );
     }
 
     foreach ($this->placeholders as $placeholder => $line) {

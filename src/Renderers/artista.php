@@ -13,7 +13,6 @@ const BASE_DIR_IMAGES = '../assets/artistPhotos/';
 
 $get_artist= function () {
     echo 'GET artist';
-    session_unset();
 };
 
 $get_edit_artist = function () {

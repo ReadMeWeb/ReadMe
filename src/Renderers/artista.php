@@ -23,49 +23,6 @@ $get_artist = function () {
 // UPDATE ARTIST
 // ==================================================================================================
 
-$get_edit_artist = function () {
-  (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
-
-  (new Pangine\PangineValidator(
-    "GET",
-    [
-      "id" => new Pangine\PangineValidatorConfig(
-        notEmpty: true,
-        minVal: 0
-      )
-    ]
-  ))->validate(pages['Catalogo']);
-
-  $artist_id = $_GET['id'];
-
-  $artist = dbcall(fn ($db) => $db->fetch_artist_info_by_id($artist_id));
-
-  if (empty($artist)) {
-    echo "Id invalido!";
-    exit;
-  }
-
-  [$_, $artist_name, $biography, $artist_image] = array_values($artist);
-
-  echo (new HTMLBuilder('../components/layout.html'))
-    ->set('keywords', 'Orchestra, modifica artista')
-    ->set('title', 'Modifica artista')
-    ->set('menu', navbar())
-    ->set('breadcrumbs', arraybreadcrumb(['Home', 'Modifica Artista']))
-    ->set('description', 'Modifica artista dal catalogo di Orchestra')
-    ->set("content", ((new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/modificaArtista.html'))
-      ->set('alt', "Immagine artista $artist_name")
-      ->set("src", BASE_DIR_IMAGES . $artist_image)
-      ->set("nome-value", $artist_name)
-      ->set("page-form", pages['Modifica Artista'])
-      ->set("biografia-value", $biography)
-      ->set("id-value", $artist_id)
-      ->clean("-message")
-      ->clean("-value")))
-      ->getHTMLBuilder()
-      ->build()))
-    ->build();
-};
 
 $post_edit_artist = function () {
 
@@ -108,6 +65,50 @@ $post_edit_artist = function () {
   $db->update_artist($id, $artist_name, $biography, $img);
   $db->close();
   redirect(pages['Catalogo']);
+};
+
+$get_edit_artist = function () {
+  (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
+
+  (new Pangine\PangineValidator(
+    "GET",
+    [
+      "id" => new Pangine\PangineValidatorConfig(
+        notEmpty: true,
+        minVal: 0
+      )
+    ]
+  ))->validate(pages['Catalogo']);
+
+  $artist_id = $_GET['id'];
+
+  $artist = dbcall(fn ($db) => $db->fetch_artist_info_by_id($artist_id));
+
+  if (empty($artist)) {
+    echo "Id invalido!";
+    exit;
+  }
+
+  [$_, $artist_name, $biography, $artist_image] = array_values($artist);
+
+  echo (new HTMLBuilder('../components/layout.html'))
+    ->set('keywords', 'Orchestra, modifica artista')
+    ->set('title', 'Modifica artista')
+    ->set('menu', navbar())
+    ->set('breadcrumbs', arraybreadcrumb(['Home', 'Modifica Artista']))
+    ->set('description', 'Modifica artista dal catalogo di Orchestra')
+    ->set("content", ((new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/modificaArtista.html'))
+      ->set('alt', "Immagine artista $artist_name")
+      ->set("src", BASE_DIR_IMAGES . $artist_image)
+      ->set("nome-value", $artist_name)
+      ->set("page-form", pages['Modifica Artista'])
+      ->set("biografia-value", $biography)
+      ->set("id-value", $artist_id)
+      ->clean("-message")
+      ->clean("-value")))
+      ->getHTMLBuilder()
+      ->build()))
+    ->build();
 };
 
 // ==================================================================================================

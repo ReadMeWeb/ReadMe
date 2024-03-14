@@ -23,26 +23,26 @@ $get_artist = function () {
 // UPDATE ARTIST
 // ==================================================================================================
 
-  $validator_edit = new Pangine\PangineValidator(array(
-    "id" => (new Pangine\PangineValidatorConfig(
-      notEmpty: true,
-      minVal: 0
-    )),
-    "nome" => (new Pangine\PangineValidatorConfig(
-      notEmpty: true,
-      minLength: 5,
-      maxLength: 150
-    )),
-    "biografia" => (new Pangine\PangineValidatorConfig(
-      notEmpty: true,
-      minLength: 20
-    )),
-    "immagine" => (new Pangine\PangineValidatorConfig(
-      isImage: true
-    ))
-  ));
+$validator_edit = new Pangine\PangineValidator(array(
+  "id" => (new Pangine\PangineValidatorConfig(
+    notEmpty: true,
+    minVal: 0
+  )),
+  "nome" => (new Pangine\PangineValidatorConfig(
+    notEmpty: true,
+    minLength: 5,
+    maxLength: 150
+  )),
+  "biografia" => (new Pangine\PangineValidatorConfig(
+    notEmpty: true,
+    minLength: 20
+  )),
+  "immagine" => (new Pangine\PangineValidatorConfig(
+    isImage: true
+  ))
+));
 
-$post_edit_artist = function () use($validator_edit) {
+$post_edit_artist = function () use ($validator_edit) {
 
   (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
   $validator_edit->validate(pages['Modifica Artista'] . '&id=' . $_POST['id'], $_POST);
@@ -146,7 +146,7 @@ $post_add_artist = function () use ($validator_create) {
   redirect(pages['Catalogo']);
 };
 
-$get_create_artist = function () use($validator_create) {
+$get_create_artist = function () use ($validator_create) {
   (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
 
   echo (new HTMLBuilder('../components/layout.html'))

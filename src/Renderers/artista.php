@@ -114,7 +114,7 @@ $post_edit_artist = function () {
 // CREATE ARTIST
 // ==================================================================================================
 
-$$validator_create = new Pangine\PangineValidator(array(
+$validator_create = new Pangine\PangineValidator(array(
   "nome" => (new Pangine\PangineValidatorConfig(
     notEmpty: true,
     minLength: 5,

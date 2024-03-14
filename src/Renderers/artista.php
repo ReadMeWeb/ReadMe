@@ -23,11 +23,7 @@ $get_artist = function () {
 // UPDATE ARTIST
 // ==================================================================================================
 
-
-$post_edit_artist = function () {
-
-  (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
-  $expectedParameters = array(
+  $validator_edit = new Pangine\PangineValidator(array(
     "id" => (new Pangine\PangineValidatorConfig(
       notEmpty: true,
       minVal: 0
@@ -44,9 +40,12 @@ $post_edit_artist = function () {
     "immagine" => (new Pangine\PangineValidatorConfig(
       isImage: true
     ))
-  );
-  $validator = new Pangine\PangineValidator("POST", $expectedParameters);
-  $validator->validate(pages['Modifica Artista'] . "&id={$_POST['id']}");
+  ));
+
+$post_edit_artist = function () use($validator_edit) {
+
+  (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
+  $validator_edit->validate(pages['Modifica Artista'] . '&id=' . $_POST['id'], $_POST);
 
   [$artist_name, $biography, $id] = array_values($_POST);
 

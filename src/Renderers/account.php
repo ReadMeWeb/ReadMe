@@ -9,7 +9,6 @@ require_once 'include/utils.php';
 require_once 'include/pages.php';
 
 $validator = new Pangine\PangineValidator(
-  "POST",
   array(
     "username" => (new Pangine\PangineValidatorConfig(
       notEmpty: true,
@@ -24,14 +23,14 @@ $validator = new Pangine\PangineValidator(
   )
 );
 
-$get_account = function () {
+$get_account = function () use ($validator) {
   (new Pangine\PangineAuthenticator())->authenticate(array("USER", "ADMIN"));
 
   $content = (new HTMLBuilder("../components/layoutLogged.html"))
     ->set('title', 'Account')
     ->set('menu', navbar())
     ->set('breadcrumbs', arraybreadcrumb(['Home', 'Account']))
-    ->set('content', (new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner("../components/account.html"))
+    ->set('content', ($validator->setformdata((new HTMLBuilderCleaner("../components/account.html"))
       ->set('username-value', $_SESSION["user"]["username"])
       ->set('password-value', $_SESSION["user"]["password"])
       ->set('pages-account-update', pages['Account (Modifica)'])
@@ -39,24 +38,25 @@ $get_account = function () {
       ->set('pages-exit', pages['Esci'])
       ->set('pages-form', pages['Account'])
       ->clean('-message')))
-      ->getHTMLBuilder()
       ->build())
     ->build();
 
+
+  // TODO soluzione sloppy - potrebbe essere corretta
   $content = str_replace("<input type=\"submit\" name=\"update\" value=\"Modifica\">", "", $content);
   $content = str_replace("<a href=\"{{pages-account}}\">Informazioni</a>", "Informazioni", $content);
 
   echo $content;
 };
 
-$get_edit_account = function () {
+$get_edit_account = function () use ($validator) {
   (new Pangine\PangineAuthenticator())->authenticate(array("USER", "ADMIN"));
 
   $content = (new HTMLBuilderCleaner('../components/layoutLogged.html'))
     ->set('title', 'Account')
     ->set('menu', navbar())
     ->set('breadcrumbs', arraybreadcrumb(['Home', 'Account', 'Account (Modifica)']))
-    ->set('content', (new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/account.html'))
+    ->set('content', ($validator->setformdata((new HTMLBuilderCleaner('../components/account.html'))
       ->set('username-value', $_SESSION["user"]["username"])
       ->set('password-value', $_SESSION["user"]["password"])
       ->set('pages-account', pages['Account'])
@@ -64,18 +64,18 @@ $get_edit_account = function () {
       ->set('pages-exit', pages['Esci'])
       ->set('pages-form', pages['Account'])
       ->clean('-message')))
-      ->getHTMLBuilder()
       ->build())
     ->build();
 
+  // TODO soluzione sloppy - potrebbe essere corretta
   $content = str_replace("disabled", "", $content);
   $content = str_replace("<a href=\"{{pages-account-update}}\">Modifica</a>", "Modifica", $content);
   echo $content;
 };
 
-$post_edit_account = function () {
+$post_edit_account = function () use ($validator) {
   (new Pangine\PangineAuthenticator())->authenticate(array("USER", "ADMIN"));
-  $validator->validate(pages['Account (Modifica)']);
+  $validator->validate(pages['Account (Modifica)'], $_POST);
   $database = new Database();
   $result = $database->update_user_info($_SESSION["user"]["username"], $_POST["username"], $_POST["password"]);
   $database->close();

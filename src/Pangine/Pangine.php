@@ -70,12 +70,8 @@ class Pangine {
 }
 
 class PangineValidator {
-  private string $method;
-  private array $configs;
 
-  public function __construct(string $method, array $configs) {
-    $this->configs = $configs;
-    $this->method = $method;
+  public function __construct(private array $configs) {
   }
 
   public function validate(string $callbackPage, array $method): void {

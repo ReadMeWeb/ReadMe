@@ -103,8 +103,8 @@ class PangineValidator {
     }
     foreach (extract_from_array_else("data", $_SESSION, []) as $field => $value) {
       $htmlBuilder
-        ->set("" . $field . "-value", $value, \HTMLBuilder::UNSAFE)
-        ->set("" . $field . "-message", "", \HTMLBuilder::UNSAFE);
+        ->set("" . $field . "-value", $value, \HTMLBuilder::UNSAFE);
+        //->set("" . $field . "-message", "", \HTMLBuilder::UNSAFE);
     }
 
     return $htmlBuilder;

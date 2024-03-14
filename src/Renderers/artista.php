@@ -94,12 +94,12 @@ $get_edit_artist = function () use ($validator_edit) {
     ->set("content", (($validator_edit->setformdata((new HTMLBuilderCleaner('../components/modificaArtista.html'))
       ->set('alt', "Immagine artista $artist_name")
       ->set("src", BASE_DIR_IMAGES . $artist_image)
-      ->set("nome-value", $artist_name)
       ->set("page-form", pages['Modifica Artista'])
       ->set("biografia-value", $biography)
+      ->set("nome-value", $artist_name)
       ->set("id-value", $artist_id)
-      ->clean("-message")
-      ->clean("-value")))
+      ->set("immagine-value", '')
+      ->clean("-message")))
       ->build()))
     ->build();
 };

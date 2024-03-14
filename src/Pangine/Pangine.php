@@ -17,19 +17,22 @@ class Pangine {
 
   public function execute(): void {
     try_session();
-    ksort($this->indexer);
-    foreach ($this->indexer as $key => $renderer) {
-      if (str_contains($key, $_SERVER['REQUEST_METHOD'])) {
-        $renderer();
-      }
+    try {
+        ksort($this->indexer);
+        foreach ($this->indexer as $key => $renderer) {
+            if (str_contains($key, $_SERVER['REQUEST_METHOD'])) {
+                $renderer();
+            }
+        }
+        $this->indexer['1GET_3']();
+    }catch (PangineError500 $e){
+        redirect('/500.php');
     }
-    // TODO soluzione sloppy per get_read di default caso nessuna crud sia specificata
-    redirect('?read=true');
   }
 
   private function wrap($index, $array, $crud, $renderer) {
     $this->indexer[$index] = function () use ($array, $crud, $renderer) {
-      if (isset($array[$crud])) {
+      if ($crud == 'read' || isset($array[$crud])) {
         $renderer();
         exit(0);
       }
@@ -204,4 +207,15 @@ class PangineAuthenticator {
     }
     return $session_status;
   }
+}
+
+class PangineError500 extends \Exception {
+    public function __construct($link = "", $message = ""){
+        try_session();
+        if($link != "" && $message != "") {
+            $_SESSION['error500data']['link'] = $link;
+            $_SESSION['error500data']['message'] = $message;
+        }
+        parent::__construct();
+    }
 }

@@ -56,7 +56,7 @@ $linkmeglio = [
   '<link rel="stylesheet" href="./styles/style.css" media="screen" />',
   '<link rel="stylesheet" href="./styles/print.css" media="print" />',
   '<link rel="shortcut icon" type="images/png" href="./assets/images/favicon.ico" />',
-  '<h1><span>Orchestra</span>'
+  '<h1><span>Orchestra</span></h1>'
 ];
 
 $template = str_replace($link, $linkmeglio, $template);

@@ -114,7 +114,7 @@ $post_edit_artist = function () {
 // CREATE ARTIST
 // ==================================================================================================
 
-$validator = new Pangine\PangineValidator(array(
+$$validator_create = new Pangine\PangineValidator(array(
   "nome" => (new Pangine\PangineValidatorConfig(
     notEmpty: true,
     minLength: 5,
@@ -130,9 +130,9 @@ $validator = new Pangine\PangineValidator(array(
   ))
 ));
 
-$post_add_artist = function () use ($validator) {
+$post_add_artist = function () use ($validator_create) {
   (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
-  $validator->validate(pages['Aggiungi Artista'], $_POST);
+  $validator_create->validate(pages['Aggiungi Artista'], $_POST);
 
   $tmp_name = $_FILES['immagine']['tmp_name'];
   $name = $_FILES['immagine']['name'];
@@ -146,7 +146,7 @@ $post_add_artist = function () use ($validator) {
   redirect(pages['Catalogo']);
 };
 
-$get_create_artist = function () {
+$get_create_artist = function () use($validator_create) {
   (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
 
   echo (new HTMLBuilder('../components/layout.html'))
@@ -155,11 +155,10 @@ $get_create_artist = function () {
     ->set('menu', navbar())
     ->set('breadcrumbs', arraybreadcrumb(['Home', 'Aggiungi Artista']))
     ->set('description', 'Aggiungi un artista dal catalogo di Orchestra')
-    ->set('content', (new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/aggiungiArtista.html'))
+    ->set('content', ($validator_create->setformdata((new HTMLBuilderCleaner('../components/aggiungiArtista.html'))
       ->set("page-form", pages['Aggiungi Artista'])
       ->clean('-value')
       ->clean('-message')))
-      ->getHTMLBuilder()
       ->build())
     ->build();
 };

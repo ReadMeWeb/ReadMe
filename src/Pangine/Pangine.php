@@ -76,19 +76,20 @@ class PangineValidator {
 
   public function validate(string $callbackPage, array $method): void {
     try_session();
+    $keys = array_keys($this->configs);
     $_SESSION['err_data'] = array_filter(
-      array_map(
+      array_combine($keys, array_map(
         fn ($field, $config) => $config->validate($field, $method),
-        array_keys($this->configs),
+        $keys,
         $this->configs
-      ),
+      )),
       fn ($err) => $err['message'] !== ''
     );
-    $_SESSION['data'] = array_map(
+    $_SESSION['data'] = array_combine($keys, array_map(
       fn ($field, $config) => $config->isImg() ? $_FILES[$field]['name'] : $method[$field],
-      array_keys($this->configs),
+      $keys,
       $this->configs
-    );
+    ));
     if (count($_SESSION["err_data"]) > 0) {
       redirect($callbackPage);
     }
@@ -104,7 +105,7 @@ class PangineValidator {
     foreach (extract_from_array_else("data", $_SESSION, []) as $field => $value) {
       $htmlBuilder
         ->set("" . $field . "-value", $value, \HTMLBuilder::UNSAFE);
-        //->set("" . $field . "-message", "", \HTMLBuilder::UNSAFE);
+      //->set("" . $field . "-message", "", \HTMLBuilder::UNSAFE);
     }
 
     return $htmlBuilder;

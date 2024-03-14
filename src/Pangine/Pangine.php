@@ -78,14 +78,9 @@ class PangineValidator {
     $this->method = $method;
   }
 
-  public function validate(string $callbackPage): void {
+  public function validate(string $callbackPage, array $method): void {
     try_session();
     $fieldsWithErrors =  [];
-    if ($this->method == "GET") {
-      $method = $_GET;
-    } else {
-      $method = $_POST;
-    }
     foreach ($this->configs as $field => $config) {
       if ($config->isImg()) {
         $validationResponse = $config->validate($field, $_FILES);

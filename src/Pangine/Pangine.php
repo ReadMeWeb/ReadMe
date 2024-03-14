@@ -135,10 +135,7 @@ class PangineValidatorConfig {
       : array('value' => $method[$field], 'message' => $this->getmessage($method[$field], $method));
   }
 
-  private function getmessage(string $field, array $method): string {
-    if (!isset($method[$field])) {
-      return "Questo campo è da fornire.";
-    }
+  private function getmessage(string $field): string {
     if ($this->isImage) {
       return $this->imgfield($field);
     } else if (is_numeric($field)) {

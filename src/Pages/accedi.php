@@ -2,7 +2,6 @@
 
 use Pangine\Pangine;
 use Pangine\PangineAuthenticator;
-use Pangine\PangineUnvalidFormManager;
 use Pangine\PangineValidator;
 use Pangine\PangineValidatorConfig;
 
@@ -25,6 +24,19 @@ if (!try_session()) {
 }
 
 (new PangineAuthenticator())->authenticate(['UNREGISTERED']);
+
+    $validator = (new PangineValidator([
+      'nome' => (new PangineValidatorConfig(
+        notEmpty: true,
+        minLength: 6,
+        maxLength: 20
+      )),
+      'password' => (new PangineValidatorConfig(
+        notEmpty: true,
+        minLength: 8,
+        maxLength: 20
+      )),
+  ]));
 
 const logerr = 'logerr';
 
@@ -87,45 +99,34 @@ const logerr = 'logerr';
         ->build())
       ->build();
   })
-  ->POST_create(function () use ($accedi) {
-      (new PangineValidator($_SERVER['REQUEST_METHOD'], [
-        'nome' => (new PangineValidatorConfig(
-          notEmpty: true,
-          minLength: 6,
-          maxLength: 20
-        )),
-        'password' => (new PangineValidatorConfig(
-          notEmpty: true,
-          minLength: 8,
-          maxLength: 20
-        )),
-      ]))->validate(pages['Registrati']);
+  ->POST_create(function () use ($accedi, $validator) {
+    $validator->validate(pages['Registrati'], $_POST);
 
-      [
-        'nome' => $nome,
-        'password' => $password,
-      ] = $_POST;
+    [
+      'nome' => $nome,
+      'password' => $password,
+    ] = $_POST;
 
-      dbcall(function ($conn) use ($nome, $password) {
-        if ($conn->user_exists($nome)) {
-          throw new Exception("Il nome utente fornito risulta già registrato.");
-        }
+    dbcall(function ($conn) use ($nome, $password) {
+      if ($conn->user_exists($nome)) {
+        throw new Exception("Il nome utente fornito risulta già registrato.");
+      }
 
-        if ($conn->user_sign_up($nome, $password) !== true) {
-          throw new Exception("Errore del database.");
-        }
-      });
+      if ($conn->user_sign_up($nome, $password) !== true) {
+        throw new Exception("Errore del database.");
+      }
+    });
 
-      $accedi();
+    $accedi();
   })
-  ->GET_create(function () {
+  ->GET_create(function () use ($validator) {
     echo (new HTMLBuilder('../components/layout.html'))
       ->set('title', 'Registrati')
       ->set('description', 'Pagina di registrazione di Orchestra')
       ->set('keywords', 'Orchestra, musica classica, registrazione, sign up')
       ->set('menu', navbar())
       ->set('breadcrumbs', arraybreadcrumb(['Home', 'Registrati']))
-      ->set('content', (new PangineUnvalidFormManager((new HTMLBuilder('../components/accedi.html'))
+      ->set('content', $validator->setformdata((new HTMLBuilder('../components/accedi.html'))
         ->set('password-value', '')
         ->set('password-message', '')
         ->set('nome-value', '')
@@ -137,8 +138,7 @@ const logerr = 'logerr';
         ->set('crud-name', 'create')
         ->set('crud-innerhtml', 'Registrati')
         ->set('urlsigninup', pages['Accedi'])
-        ->set('innerhtmlsigninup', 'Hai già un profilo ? Clicca qui per accedere')))
-        ->getHTMLBuilder()
+        ->set('innerhtmlsigninup', 'Hai già un profilo ? Clicca qui per accedere'))
         ->build())
       ->build();
   })

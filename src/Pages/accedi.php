@@ -25,6 +25,19 @@ if (!try_session()) {
 
 (new PangineAuthenticator())->authenticate(['UNREGISTERED']);
 
+    $validator = (new PangineValidator([
+      'nome' => (new PangineValidatorConfig(
+        notEmpty: true,
+        minLength: 6,
+        maxLength: 20
+      )),
+      'password' => (new PangineValidatorConfig(
+        notEmpty: true,
+        minLength: 8,
+        maxLength: 20
+      )),
+  ]));
+
 const logerr = 'logerr';
 
 (new Pangine())
@@ -86,19 +99,8 @@ const logerr = 'logerr';
         ->build())
       ->build();
   })
-  ->POST_create(function () use ($accedi) {
-    (new PangineValidator($_SERVER['REQUEST_METHOD'], [
-      'nome' => (new PangineValidatorConfig(
-        notEmpty: true,
-        minLength: 6,
-        maxLength: 20
-      )),
-      'password' => (new PangineValidatorConfig(
-        notEmpty: true,
-        minLength: 8,
-        maxLength: 20
-      )),
-    ]))->validate(pages['Registrati']);
+  ->POST_create(function () use ($accedi, $validator) {
+    $validator->validate(pages['Registrati'], $_POST);
 
     [
       'nome' => $nome,
@@ -117,14 +119,14 @@ const logerr = 'logerr';
 
     $accedi();
   })
-  ->GET_create(function () {
+  ->GET_create(function () use ($validator) {
     echo (new HTMLBuilder('../components/layout.html'))
       ->set('title', 'Registrati')
       ->set('description', 'Pagina di registrazione di Orchestra')
       ->set('keywords', 'Orchestra, musica classica, registrazione, sign up')
       ->set('menu', navbar())
       ->set('breadcrumbs', arraybreadcrumb(['Home', 'Registrati']))
-      ->set('content', (new HTMLBuilder('../components/accedi.html'))
+      ->set('content', $validator->setformdata((new HTMLBuilder('../components/accedi.html'))
         ->set('password-value', '')
         ->set('password-message', '')
         ->set('nome-value', '')
@@ -136,7 +138,7 @@ const logerr = 'logerr';
         ->set('crud-name', 'create')
         ->set('crud-innerhtml', 'Registrati')
         ->set('urlsigninup', pages['Accedi'])
-        ->set('innerhtmlsigninup', 'Hai già un profilo ? Clicca qui per accedere')
+        ->set('innerhtmlsigninup', 'Hai già un profilo ? Clicca qui per accedere'))
         ->build())
       ->build();
   })

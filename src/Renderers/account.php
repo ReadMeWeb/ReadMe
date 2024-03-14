@@ -8,6 +8,20 @@ require_once 'include/database.php';
 require_once 'include/utils.php';
 require_once 'include/pages.php';
 
+    $validator = new Pangine\PangineValidator("POST", array(
+        "username"=> (new Pangine\PangineValidatorConfig(
+            notEmpty: true,
+            minLength: 6,
+            maxLength: 40
+        )),
+        "password"=>(new Pangine\PangineValidatorConfig(
+            notEmpty: true,
+            minLength: 8,
+            maxLength: 20
+        )),
+    );
+);
+
 $get_account = function () {
     (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
 
@@ -59,19 +73,6 @@ $get_edit_account = function () {
 
 $post_edit_account = function (){
     (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
-    $expectedParameters = array(
-        "username"=> (new Pangine\PangineValidatorConfig(
-            notEmpty: true,
-            minLength: 6,
-            maxLength: 40
-        )),
-        "password"=>(new Pangine\PangineValidatorConfig(
-            notEmpty: true,
-            minLength: 8,
-            maxLength: 20
-        )),
-    );
-    $validator = new Pangine\PangineValidator("POST",$expectedParameters);
     $validator->validate(pages['Account (Modifica)']);
     $database = new Database();
     $result = $database->update_user_info($_SESSION["user"]["username"],$_POST["username"],$_POST["password"]);

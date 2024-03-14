@@ -117,9 +117,7 @@ $post_edit_artist = function () {
 
 };
 
-$post_add_artist = function () {
-    (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
-    $expectedParameters = array(
+    $validator = new Pangine\PangineValidator(array(
         "nome" => (new Pangine\PangineValidatorConfig(
             notEmpty: true,
             minLength: 5,
@@ -133,9 +131,11 @@ $post_add_artist = function () {
             notEmpty: true,
             isImage: true
         ))
-    );
-    $validator = new Pangine\PangineValidator("POST",$expectedParameters);
-    $validator->validate(pages['Aggiungi Artista']);
+    ));
+
+$post_add_artist = function () use ($validator) {
+    (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
+    $validator->validate(pages['Aggiungi Artista'],$_POST);
 
     $tmp_name = $_FILES['immagine']['tmp_name'];
     $name = $_FILES['immagine']['name'];

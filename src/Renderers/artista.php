@@ -11,9 +11,17 @@ require_once 'include/database.php';
 
 const BASE_DIR_IMAGES = '../assets/artistPhotos/';
 
+// ==================================================================================================
+// READ ARTIST
+// ==================================================================================================
+
 $get_artist= function () {
     echo 'GET artist';
 };
+
+// ==================================================================================================
+// UPDATE ARTIST
+// ==================================================================================================
 
 $get_edit_artist = function () {
     (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
@@ -52,24 +60,6 @@ $get_edit_artist = function () {
       ->clean("-value")))
       ->getHTMLBuilder()
     ->build()))
-    ->build();
-};
-
-$get_create_artist = function () {
-    (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
-
-    echo (new HTMLBuilder('../components/layout.html'))
-    ->set('title','Aggiungi artista')
-    ->set('keywords', 'Orchestra, modifica artista')
-    ->set('menu', navbar())
-    ->set('breadcrumbs', arraybreadcrumb(['Home', 'Aggiungi Artista']))
-    ->set('description', 'Aggiungi un artista dal catalogo di Orchestra')
-    ->set('content',(new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/aggiungiArtista.html'))
-      ->set("page-form", pages['Aggiungi Artista'])
-      ->clean('-value')
-      ->clean('-message')))
-      ->getHTMLBuilder()
-      ->build())
     ->build();
 };
 
@@ -117,6 +107,10 @@ $post_edit_artist = function () {
 
 };
 
+// ==================================================================================================
+// CREATE ARTIST
+// ==================================================================================================
+
     $validator = new Pangine\PangineValidator(array(
         "nome" => (new Pangine\PangineValidatorConfig(
             notEmpty: true,
@@ -150,6 +144,28 @@ $post_add_artist = function () use ($validator) {
 
 
 };
+
+$get_create_artist = function () {
+    (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
+
+    echo (new HTMLBuilder('../components/layout.html'))
+    ->set('title','Aggiungi artista')
+    ->set('keywords', 'Orchestra, modifica artista')
+    ->set('menu', navbar())
+    ->set('breadcrumbs', arraybreadcrumb(['Home', 'Aggiungi Artista']))
+    ->set('description', 'Aggiungi un artista dal catalogo di Orchestra')
+    ->set('content',(new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/aggiungiArtista.html'))
+      ->set("page-form", pages['Aggiungi Artista'])
+      ->clean('-value')
+      ->clean('-message')))
+      ->getHTMLBuilder()
+      ->build())
+    ->build();
+};
+
+// ==================================================================================================
+// DELETE ARTIST
+// ==================================================================================================
 
 $get_delete_artist = function() {
     (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));

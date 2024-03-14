@@ -13,9 +13,9 @@ require_once "./components/navbar.php";
             'link',
             '<a href="' . $_SESSION['error500data']['link'] . '">' . $_SESSION['error500data']['message'] . '</a>'
         );
+        unset($_SESSION['error500data']);
     } else {
         $htmlBuilder->set('link', '<a href="/index.php">Ritorna alla home</a>');
     }
-    unset($_SESSION['error500data']);
     echo $htmlBuilder->build();
 })->execute();

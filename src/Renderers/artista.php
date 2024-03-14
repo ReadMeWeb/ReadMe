@@ -70,15 +70,12 @@ $post_edit_artist = function () use ($validator_edit) {
 $get_edit_artist = function () use ($validator_edit) {
   (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
 
-  (new Pangine\PangineValidator(
-    "GET",
-    [
-      "id" => new Pangine\PangineValidatorConfig(
-        notEmpty: true,
-        minVal: 0
-      )
-    ]
-  ))->validate(pages['Catalogo']);
+  (new Pangine\PangineValidator([
+    "id" => new Pangine\PangineValidatorConfig(
+      notEmpty: true,
+      minVal: 0
+    )
+  ]))->validate(pages['Catalogo'], $_GET);
 
   $artist_id = $_GET['id'];
 

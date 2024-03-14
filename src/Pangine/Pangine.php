@@ -139,46 +139,60 @@ class PangineValidatorConfig {
       return "Questo campo è da fornire.";
     }
     if ($this->isImage) {
-
-      $img_name = trim($_FILES[$field]['name']);
-      $upload_code = $_FILES[$field]['error'];
-
-      if ($this->notEmpty || $img_name != '') {
-        if ($img_name == '') {
-          return "Per procedere è necessario caricare un'immagine.";
-        }
-        if ($upload_code != UPLOAD_ERR_OK) {
-          return "Errore durante il caricamento dell'immagine riprovare più tardi o contattare l'amministratore.";
-        }
-        $img_ext = pathinfo($img_name, PATHINFO_EXTENSION);
-        $valid_ext = ['png', 'jpg', 'jpeg'];
-
-        if (!$img_ext || !in_array($img_ext, $valid_ext)) {
-          return "Il file caricato ha un formato non corretto (formati supportati png, jpg e jpeg).";
-        }
-      }
+      return $this->imgfield($field);
     } else if (is_numeric($field)) {
-      if ($this->notZero && intval($field) == 0) {
-        return "Questo campo non può essere uguale a 0.";
-      }
-      if ($this->minVal > intval($field)) {
-        return "Questo campo deve avere un valore minimo di " . $this->minVal . ".";
-      }
-      if ($this->maxVal >= 0 && $this->maxVal < intval($field)) {
-        return "Questo campo deve avere un valore massimo di " . $this->maxVal . ".";
-      }
+      return $this->numericfield($field);
     } else {
-      if ($this->notEmpty && $field == "") {
-        return "Questo campo non può essere vuoto.";
-      }
-      if ($this->minLength > strlen($field)) {
-        return "Questo campo deve almeno essere di " . $this->minLength . " caratteri.";
-      }
-      if ($this->maxLength >= 0 && $this->maxLength < strlen($field)) {
-        return "Questo campo deve al massimo essere di " . $this->maxLength . " caratteri.";
-      }
+      return $this->textfield($field);
     }
     return "";
+  }
+
+  private function imgfield(string $field): string {
+    $img_name = trim($_FILES[$field]['name']);
+    $upload_code = $_FILES[$field]['error'];
+
+    if ($this->notEmpty || $img_name != '') {
+      if ($img_name == '') {
+        return "Per procedere è necessario caricare un'immagine.";
+      }
+      if ($upload_code != UPLOAD_ERR_OK) {
+        return "Errore durante il caricamento dell'immagine riprovare più tardi o contattare l'amministratore.";
+      }
+      $img_ext = pathinfo($img_name, PATHINFO_EXTENSION);
+      $valid_ext = ['png', 'jpg', 'jpeg'];
+
+      if (!$img_ext || !in_array($img_ext, $valid_ext)) {
+        return "Il file caricato ha un formato non corretto (formati supportati png, jpg e jpeg).";
+      }
+    }
+    return '';
+  }
+
+  private function numericfield(string $field): string {
+    if ($this->notZero && intval($field) == 0) {
+      return "Questo campo non può essere uguale a 0.";
+    }
+    if ($this->minVal > intval($field)) {
+      return "Questo campo deve avere un valore minimo di " . $this->minVal . ".";
+    }
+    if ($this->maxVal >= 0 && $this->maxVal < intval($field)) {
+      return "Questo campo deve avere un valore massimo di " . $this->maxVal . ".";
+    }
+    return '';
+  }
+
+  private function textfield(string $field): string {
+    if ($this->notEmpty && $field == "") {
+      return "Questo campo non può essere vuoto.";
+    }
+    if ($this->minLength > strlen($field)) {
+      return "Questo campo deve almeno essere di " . $this->minLength . " caratteri.";
+    }
+    if ($this->maxLength >= 0 && $this->maxLength < strlen($field)) {
+      return "Questo campo deve al massimo essere di " . $this->maxLength . " caratteri.";
+    }
+    return '';
   }
 }
 

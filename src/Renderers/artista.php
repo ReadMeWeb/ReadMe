@@ -45,6 +45,7 @@ $validator_edit = new Pangine\PangineValidator(array(
 $post_edit_artist = function () use ($validator_edit) {
 
   (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
+
   $validator_edit->validate(pages['Modifica Artista'] . '&id=' . $_POST['id'], $_POST);
 
   [$artist_name, $biography, $id] = array_values($_POST);
@@ -66,7 +67,7 @@ $post_edit_artist = function () use ($validator_edit) {
   redirect(pages['Catalogo']);
 };
 
-$get_edit_artist = function () {
+$get_edit_artist = function () use ($validator_edit) {
   (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
 
   (new Pangine\PangineValidator(
@@ -96,7 +97,7 @@ $get_edit_artist = function () {
     ->set('menu', navbar())
     ->set('breadcrumbs', arraybreadcrumb(['Home', 'Modifica Artista']))
     ->set('description', 'Modifica artista dal catalogo di Orchestra')
-    ->set("content", ((new \Pangine\PangineUnvalidFormManager((new HTMLBuilderCleaner('../components/modificaArtista.html'))
+    ->set("content", (($validator_edit->setformdata((new HTMLBuilderCleaner('../components/modificaArtista.html'))
       ->set('alt', "Immagine artista $artist_name")
       ->set("src", BASE_DIR_IMAGES . $artist_image)
       ->set("nome-value", $artist_name)
@@ -105,7 +106,6 @@ $get_edit_artist = function () {
       ->set("id-value", $artist_id)
       ->clean("-message")
       ->clean("-value")))
-      ->getHTMLBuilder()
       ->build()))
     ->build();
 };

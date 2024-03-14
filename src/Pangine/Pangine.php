@@ -23,6 +23,7 @@ class Pangine {
         $renderer();
       }
     }
+    // TODO soluzione sloppy per get_read di default caso nessuna crud sia specificata
     redirect('?read=true');
   }
 

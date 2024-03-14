@@ -163,14 +163,11 @@ $get_create_artist = function () use ($validator_create) {
 
 $get_delete_artist = function () {
   (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
-  $expectedParameters = array(
-    "id" => (new Pangine\PangineValidatorConfig(
-      notEmpty: true,
-      minVal: 0
-    ))
-  );
-  $validator = new Pangine\PangineValidator("GET", $expectedParameters);
-  $validator->validate(pages['Catalogo']);
+
+  if (!array_key_exists('id', $_GET)) {
+    redirect(pages['Catalogo']);
+  }
+
   $id = $_GET['id'];
 
   $db = new Database();

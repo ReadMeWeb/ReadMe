@@ -76,12 +76,13 @@ class PangineValidator {
 
   public function validate(string $callbackPage, array $method): void {
     try_session();
-    $_SESSION['err_data'] = array_map(
-      fn ($field, $config) => $config->isImg()
-        ? array('value' => $field, 'message' => $config->validate($field, $_FILES))
-        : array('value' => $method[$field], 'message' => $config->validate($method[$field], $method)),
-      array_keys($this->configs),
-      $this->configs
+    $_SESSION['err_data'] = array_filter(
+      array_map(
+        fn ($field, $config) => $config->validate($field, $method),
+        array_keys($this->configs),
+        $this->configs
+      ),
+      fn ($err) => $err['message'] !== ''
     );
     $_SESSION['data'] = array_map(
       fn ($field, $config) => $config->isImg() ? $_FILES[$field]['name'] : $method[$field],
@@ -127,7 +128,13 @@ class PangineValidatorConfig {
     return $this->isImage;
   }
 
-  public function validate(string $field, array $method): string {
+  public function validate(string $field, array $method): array {
+    return $this->isImg()
+      ? array('value' => $field, 'message' => $this->getmessage($field, $_FILES))
+      : array('value' => $method[$field], 'message' => $this->getmessage($method[$field], $method));
+  }
+
+  private function getmessage(string $field, array $method): string {
     if (!isset($method[$field])) {
       return "Questo campo è da fornire.";
     }

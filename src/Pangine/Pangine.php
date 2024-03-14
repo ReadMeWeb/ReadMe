@@ -76,24 +76,19 @@ class PangineValidator {
 
   public function validate(string $callbackPage, array $method): void {
     try_session();
-    $fieldsWithErrors =  [];
-    foreach ($this->configs as $field => $config) {
-      if ($config->isImg()) {
-        $validationResponse = $config->validate($field, $_FILES);
-        if ($validationResponse != "") {
-          $fieldsWithErrors[$field] = array("value" => $field, "message" => $validationResponse);
-        }
-        $_SESSION["data"][$field] = $_FILES[$field]['name'];
-      } else {
-        $validationResponse = $config->validate($method[$field], $method);
-        if ($validationResponse != "") {
-          $fieldsWithErrors[$field] = array("value" => $method[$field], "message" => $validationResponse);
-        }
-        $_SESSION["data"][$field] = $method[$field];
-      }
-    }
-    if (count($fieldsWithErrors) > 0) {
-      $_SESSION["err_data"] = $fieldsWithErrors;
+    $_SESSION['err_data'] = array_map(
+      fn ($field, $config) => $config->isImg()
+        ? array('value' => $field, 'message' => $config->validate($field, $_FILES))
+        : array('value' => $method[$field], 'message' => $config->validate($method[$field], $method)),
+      array_keys($this->configs),
+      $this->configs
+    );
+    $_SESSION['data'] = array_map(
+      fn ($field, $config) => $config->isImg() ? $_FILES[$field]['name'] : $method[$field],
+      array_keys($this->configs),
+      $this->configs
+    );
+    if (count($_SESSION["err_data"]) > 0) {
       redirect($callbackPage);
     }
   }

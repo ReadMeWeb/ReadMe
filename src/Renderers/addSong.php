@@ -13,16 +13,10 @@ function escape_string($input): string {
   return htmlspecialchars($input, ENT_QUOTES, "UTF-8");
 }
 function getArtistSelectionContent(array $artists): string {
-  $artists_list = "";
-  foreach ($artists as $artist) {
-    $artists_list .=
-      "<option value=\"" .
-      $artist["id"] .
-      "\">" .
-      $artist["name"] .
-      "</option>";
-  }
-  return $artists_list;
+  return implode('', array_map(
+    fn ($artist) => "<option value=\"" . $artist["id"] . "\">" . $artist["name"] . "</option>",
+    $artists
+  ));
 }
 
 function getAlbumsSelectionContent(array $albums): string {
@@ -148,7 +142,7 @@ $get_create_song = function () {
   $layout = file_get_contents("../components/layoutLogged.html");
   $title = "Aggiungi Canzone - Informazioni Canzone";
   $navbar = navbar();
-  $breadcrumbs = arraybreadcrumb(['Home','Aggiungi Canzone','Informazioni Canzone']);
+  $breadcrumbs = arraybreadcrumb(['Home', 'Aggiungi Canzone', 'Informazioni Canzone']);
   $content = file_get_contents("../components/addSong/addSong.html");
 
   $artist_id = $_GET["artist_id"];

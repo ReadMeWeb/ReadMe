@@ -26,6 +26,7 @@ class Pangine {
         }
         $this->indexer['1GET_3']();
     }catch (PangineError500 $e){
+        // TODO cambiare con pages['500']
         redirect('/500.php');
     }
   }

@@ -17,7 +17,9 @@ const pages = [
     'Modifica album' => path . 'Pages/album.php?update=true',
 
     'Aggiungi Canzone' => path . 'selectartist.php',
-    'Informazioni Brano' => path . 'addsong.php',
+    'Modifica Canzone' => path . '',
+    'Rimuovi Canzone' => path . '',
+    'Informazioni Canzone' => path . 'addsong.php',
     'Canzone Aggiunta' => path . 'successaddsong.php',
     'Account' => path . 'Pages/account.php',
     'Account (Modifica)' => path . 'Pages/account.php?update=true',

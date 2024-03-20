@@ -1,10 +1,13 @@
 <?php
 
-require_once "../components/breadcrumbs/breadcrumbsBuilder.php";
-require_once "../components/breadcrumbs/breadcrumbItem.php";
-require_once "../components/navbar.php";
-require_once "../Pangine/Pangine.php";
-require_once "../data/database.php";
+set_include_path($_SERVER['DOCUMENT_ROOT']);
+require_once 'components/breadcrumbs.php';
+require_once 'components/navbar.php';
+require_once 'Pangine/Pangine.php';
+require_once 'include/database.php';
+require_once 'include/HTMLBuilder.php';
+require_once 'include/utils.php';
+require_once 'include/pages.php';
 
 function escape_string($input): string {
   return htmlspecialchars($input, ENT_QUOTES, "UTF-8");

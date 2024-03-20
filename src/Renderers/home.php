@@ -33,7 +33,7 @@ $get_home = function() {
       ->set('artist_count', $artist_count)
       ->set('album_count', $album_count)
       ->set('song_count', $song_count)
-      ->set('songs', implode('', array_map(function ($music) {
+      ->set('songs',  empty($latest_music) ? 'Non è ancora uscito nessun brano.' : implode('',array_map(function ($music) {
           return (new HTMLBuilder('../components/songCard.html'))
           ->set('card_class','ultime_uscite')
           ->set('img',$music['img'])

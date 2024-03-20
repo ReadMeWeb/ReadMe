@@ -253,40 +253,6 @@ $get_update_song = function () use ($validator_update) {
 };
 
 
-$get_delete_song = function () {
-  (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
-
-  $layout = file_get_contents("../components/layoutLogged.html");
-  $title = "Rimuovi Canzone";
-  $navbar = navbar();
-  $breadcrumbs = (new BreadcrumbsBuilder())
-    ->addBreadcrumb(new BreadcrumbItem("Home"))
-    ->addBreadcrumb(new BreadcrumbItem("Rimuovi Canzone", true))
-    ->build()
-    ->getBreadcrumbsHtml();
-  $content = file_get_contents("../components/addSong/removeSong.html");
-
-  $song_id = $_GET["id"];
-
-  $db = new Database();
-  $song = $db->fetch_song_info_by_id($song_id);
-  $db->close();
-
-  $layout = str_replace("{{content}}", $content, $layout);
-
-  $html_builder = (new Pangine\PangineUnvalidFormManager(
-    $layout
-  ))->getHTMLBuilder();
-  $html = $html_builder
-    ->set("title", $title)
-    ->set("menu", $navbar)
-    ->set("breadcrumbs", $breadcrumbs)
-    ->set("song-title", $song["name"])
-    ->set("song-id", $song_id)
-    ->build();
-  echo $html;
-};
-
 $post_delete_song = function () {
   (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
@@ -330,4 +296,38 @@ $post_delete_song = function () {
       //TODO error 500
     }
   }
+};
+
+$get_delete_song = function () {
+  (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
+
+  $layout = file_get_contents("../components/layoutLogged.html");
+  $title = "Rimuovi Canzone";
+  $navbar = navbar();
+  $breadcrumbs = (new BreadcrumbsBuilder())
+    ->addBreadcrumb(new BreadcrumbItem("Home"))
+    ->addBreadcrumb(new BreadcrumbItem("Rimuovi Canzone", true))
+    ->build()
+    ->getBreadcrumbsHtml();
+  $content = file_get_contents("../components/addSong/removeSong.html");
+
+  $song_id = $_GET["id"];
+
+  $db = new Database();
+  $song = $db->fetch_song_info_by_id($song_id);
+  $db->close();
+
+  $layout = str_replace("{{content}}", $content, $layout);
+
+  $html_builder = (new Pangine\PangineUnvalidFormManager(
+    $layout
+  ))->getHTMLBuilder();
+  $html = $html_builder
+    ->set("title", $title)
+    ->set("menu", $navbar)
+    ->set("breadcrumbs", $breadcrumbs)
+    ->set("song-title", $song["name"])
+    ->set("song-id", $song_id)
+    ->build();
+  echo $html;
 };

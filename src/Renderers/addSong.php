@@ -75,6 +75,7 @@ $post_create_song = function () use ($validator_create) {
   $fileNameG = str_replace(" ", "-", $song_title) . "_" . $artist_id . ".png";
   $uploadFileG = $uploadDirG . $fileNameG;
 
+  // TODO usare pages
   $validator_create->validate(
     "/Pages/addSong.php?create=true&artist_id=" . $artist_id,
     $_POST
@@ -166,6 +167,7 @@ $post_update_song = function () use ($validator_update) {
   $fileNameG = str_replace(" ", "-", $song_title) . "_" . $artist_id . ".png";
   $uploadFileG = $uploadDirG . $fileNameG;
 
+  // TODO usare pages
   $validator_update->validate(
     "/Pages/addSong.php?update=true&id=" . $song_id,
     $_POST
@@ -175,6 +177,7 @@ $post_update_song = function () use ($validator_update) {
   $song_old = $db->fetch_song_info_by_id($song_id);
   $db->close();
 
+  // TODO aggiornare per utilizzare l'id
   /* Try update file */
   if ($tmp_graphic["size"] != 0) {
     unlink($song_old["graphic_file_name"]);
@@ -294,6 +297,7 @@ $post_delete_song = function () {
   ];
 
   $validator = new Pangine\PangineValidator("POST", $expectedParameters);
+  // TODO usare pages
   $validator->validate("/Pages/addSong.php?id=" . $song_id . "&delete=true");
 
   $db = new Database();

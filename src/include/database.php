@@ -90,13 +90,6 @@ class Database {
 
   // ritorna se l'album esiste nel database
   public function album_exists($name, $artist): bool {
-    $query =
-      "SELECT COUNT(*) AS num FROM Album WHERE name = ? AND artist_id = ?";
-    return $this->execute_query($query, $name, $artist)[0]["num"] != "0";
-  }
-
-  // ritorna se l'album esiste nel database
-  public function album_exists($name, $artist): bool {
     $query =  "SELECT COUNT(*) AS num FROM Album WHERE name = ? AND artist_id = ?";
     return $this->execute_query($query, $name, $artist)[0]['num'] != "0";
   }

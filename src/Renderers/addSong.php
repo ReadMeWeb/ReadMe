@@ -165,13 +165,10 @@ $post_update_song = function () {
     "song_id" => new Pangine\PangineValidatorConfig(notEmpty: true),
   ];
 
-  $validator = new Pangine\PangineValidator("POST", $expectedParameters);
+  $validator = new Pangine\PangineValidator($expectedParameters);
   $validator->validate(
-    "/Pages/addSong.php?producer=" .
-      $artist_id .
-      "&name=" .
-      $song_title .
-      "&update=Modifica"
+    "/Pages/addSong.php?producer=" . $artist_id . "&name=" . $song_title . "&update=Modifica",
+    $_POST
   );
 
   $db = new Database();

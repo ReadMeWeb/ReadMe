@@ -51,9 +51,7 @@ $get_select_artist = function () {
     ->getBreadcrumbsHtml();
   $content = file_get_contents("../components/addSong/selectArtist.html");
 
-  $db = new Database();
-  $artists_list = $db->fetch_artist_info();
-  $db->close();
+  $artists_list = dbcall(fn ($db) => $db->fetch_artist_info());
 
   $artists = getArtistSelectionContent($artists_list);
 

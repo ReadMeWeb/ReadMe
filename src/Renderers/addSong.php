@@ -40,7 +40,23 @@ $get_select_artist = function () {
     ->build();
 };
 
-$post_create_song = function () {
+$validator_create = new Pangine\PangineValidator([
+  "title" => new Pangine\PangineValidatorConfig(
+    notEmpty: true,
+    minLength: 4,
+    maxLength: 40
+  ),
+  "artist_id" => new Pangine\PangineValidatorConfig(notEmpty: true),
+  "album" => new Pangine\PangineValidatorConfig(
+    notEmpty: true,
+    //customFunction: function () use ($artist_id, $album_id): string {
+    //  return dbcall(fn ($db) => ($album_id == "NULL" || $db->check_album_belong_to_artist($artist_id, $album_id))
+    //    ? "" : "L'album richiesto non appartiene all'artista selezionato.");
+    //}
+  ),
+]);
+
+$post_create_song = function () use ($validator_create) {
   (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
   $artist_id = $_POST["artist_id"];
@@ -59,24 +75,7 @@ $post_create_song = function () {
   $fileNameG = str_replace(" ", "-", $song_title) . "_" . $artist_id . ".png";
   $uploadFileG = $uploadDirG . $fileNameG;
 
-  $expectedParameters = [
-    "title" => new Pangine\PangineValidatorConfig(
-      notEmpty: true,
-      minLength: 4,
-      maxLength: 40
-    ),
-    "artist_id" => new Pangine\PangineValidatorConfig(notEmpty: true),
-    "album" => new Pangine\PangineValidatorConfig(
-      notEmpty: true,
-      customFunction: function () use ($artist_id, $album_id): string {
-        return dbcall(fn ($db) => ($album_id == "NULL" || $db->check_album_belong_to_artist($artist_id, $album_id))
-          ? "" : "L'album richiesto non appartiene all'artista selezionato.");
-      }
-    ),
-  ];
-
-  $validator = new Pangine\PangineValidator($expectedParameters);
-  $validator->validate(
+  $validator_create->validate(
     "/Pages/addSong.php?create=true&artist_id=" . $artist_id,
     $_POST
   );

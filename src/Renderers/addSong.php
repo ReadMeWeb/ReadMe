@@ -51,42 +51,6 @@ $get_select_artist = function () {
     ->build();
 };
 
-$get_create_song = function () {
-  (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
-
-  $layout = file_get_contents("../components/layoutLogged.html");
-  $title = "Aggiungi Canzone - Informazioni Canzone";
-  $navbar = navbar();
-  $breadcrumbs = arraybreadcrumb(['Home','Aggiungi Canzone','Informazioni Canzone']);
-  $content = file_get_contents("../components/addSong/addSong.html");
-
-  $artist_id = $_GET["artist_id"];
-
-  $db = new Database();
-  $artist_fetch_array = $db->fetch_artist_info_by_id($artist_id);
-  $albums_fetch_array = $db->fetch_albums_info_by_artist_id($artist_id);
-  $db->close();
-
-  $albums = getAlbumsSelectionContent($albums_fetch_array);
-
-  $layout = str_replace("{{content}}", $content, $layout);
-
-  $html_builder = (new Pangine\PangineUnvalidFormManager(
-    $layout
-  ))->getHTMLBuilder();
-  $html = $html_builder
-    ->set("title", $title)
-    ->set("menu", $navbar)
-    ->set("breadcrumbs", $breadcrumbs)
-    ->set("artist_name", $artist_fetch_array["name"])
-    ->set("artist_id-value", $artist_id)
-    ->set("albums", $albums)
-    ->clean("-message")
-    ->clean("-value")
-    ->build();
-  echo $html;
-};
-
 $post_create_song = function () {
   (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
@@ -176,6 +140,42 @@ $post_create_song = function () {
     unlink($uploadFileA);
     unlink($uploadFileG);
   }
+};
+
+$get_create_song = function () {
+  (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
+
+  $layout = file_get_contents("../components/layoutLogged.html");
+  $title = "Aggiungi Canzone - Informazioni Canzone";
+  $navbar = navbar();
+  $breadcrumbs = arraybreadcrumb(['Home','Aggiungi Canzone','Informazioni Canzone']);
+  $content = file_get_contents("../components/addSong/addSong.html");
+
+  $artist_id = $_GET["artist_id"];
+
+  $db = new Database();
+  $artist_fetch_array = $db->fetch_artist_info_by_id($artist_id);
+  $albums_fetch_array = $db->fetch_albums_info_by_artist_id($artist_id);
+  $db->close();
+
+  $albums = getAlbumsSelectionContent($albums_fetch_array);
+
+  $layout = str_replace("{{content}}", $content, $layout);
+
+  $html_builder = (new Pangine\PangineUnvalidFormManager(
+    $layout
+  ))->getHTMLBuilder();
+  $html = $html_builder
+    ->set("title", $title)
+    ->set("menu", $navbar)
+    ->set("breadcrumbs", $breadcrumbs)
+    ->set("artist_name", $artist_fetch_array["name"])
+    ->set("artist_id-value", $artist_id)
+    ->set("albums", $albums)
+    ->clean("-message")
+    ->clean("-value")
+    ->build();
+  echo $html;
 };
 
 $post_update_song = function () {

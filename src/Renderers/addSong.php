@@ -252,19 +252,17 @@ $get_update_song = function () use ($validator_update) {
     ->build();
 };
 
+$validator_delete = new Pangine\PangineValidator([
+  "id" => new Pangine\PangineValidatorConfig(notEmpty: true),
+]);
 
-$post_delete_song = function () {
+$post_delete_song = function () use ($validator_delete) {
   (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
   $song_id = $_POST["id"];
 
-  $expectedParameters = [
-    "id" => new Pangine\PangineValidatorConfig(notEmpty: true),
-  ];
-
-  $validator = new Pangine\PangineValidator($expectedParameters);
   // TODO usare pages
-  $validator->validate("/Pages/addSong.php?delete=true&id=" . $song_id, POST);
+  $validator_delete->validate("/Pages/addSong.php?delete=true&id=" . $song_id, $_POST);
 
   $db = new Database();
   $song = $db->fetch_song_info_by_id($song_id);
@@ -298,7 +296,7 @@ $post_delete_song = function () {
   }
 };
 
-$get_delete_song = function () {
+$get_delete_song = function () use ($validator_delete) {
   (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
   $layout = file_get_contents("../components/layoutLogged.html");

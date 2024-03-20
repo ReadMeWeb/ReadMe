@@ -136,7 +136,7 @@ $get_create_song = function () use ($validator_create) {
     ->build();
 };
 
-$validator = new Pangine\PangineValidator([
+$validator_update = new Pangine\PangineValidator([
   "title" => new Pangine\PangineValidatorConfig(
     notEmpty: true,
     minLength: 4,
@@ -147,7 +147,7 @@ $validator = new Pangine\PangineValidator([
 ]);
 
 
-$post_update_song = function () {
+$post_update_song = function () use ($validator_update) {
   (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
   $song_id = $_POST["song_id"];
@@ -166,7 +166,7 @@ $post_update_song = function () {
   $fileNameG = str_replace(" ", "-", $song_title) . "_" . $artist_id . ".png";
   $uploadFileG = $uploadDirG . $fileNameG;
 
-  $validator->validate(
+  $validator_update->validate(
     "/Pages/addSong.php?producer=" . $artist_id . "&name=" . $song_title . "&update=Modifica",
     $_POST
   );
@@ -216,7 +216,7 @@ $post_update_song = function () {
   }
 };
 
-$get_update_song = function () {
+$get_update_song = function () use ($validator_update) {
   (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
   $layout = file_get_contents("../components/layoutLogged.html");

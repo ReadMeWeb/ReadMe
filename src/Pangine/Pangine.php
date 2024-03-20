@@ -186,7 +186,7 @@ class PangineValidatorConfig {
   }
 
   private function textfield(string $field): string {
-    if ($this->notEmpty && $field == "") {
+    if ($this->notEmpty && trim($field) == "") {
       return "Questo campo non può essere vuoto.";
     }
     if ($this->minLength > strlen($field)) {

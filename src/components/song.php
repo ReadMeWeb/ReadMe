@@ -28,8 +28,10 @@ class song
         $this->graphic_file_name = $graphic_file_name;
     }
 
-    public function toHtml(): string
-    {
+
+    public function toHtml($link_to_producer=true): string{
+        // TODO parsing delle stringhe
+        $link = "<a href=" . pages['Artista'] . "?id=".$this->producer." aria-label='Vai alla pagina personale di ".$this->producer_name."'>".$this->producer_name."</a>";
         $additional_elements = "";
         if($_SESSION["user"]["status"] == "ADMIN"){
             // TODO CONFLITTO
@@ -77,9 +79,8 @@ class song
         return "
             <li>
                 <img src='".assets['songPhotos'].$this->graphic_file_name."' alt='Copertina della canzone ".$this->name."'>
-                <p>".$this->name."</p>
-                <a href='".pages['Artista']."?id=".$this->producer."' aria-label='Vai alla pagina personale di ".$this->producer_name."'>".$this->producer_name."</a>
-                <audio controls>
+                <p>".$this->name."</p>" . ($link_to_producer ? $link : " ") .
+                "<audio controls>
                     <source src='".assets['songAudios'].$this->audio_file_name."' type='audio/mpeg'>
                     Attenzione: il tuo browser non supporta i tag audio (la preghiamo di cambiare browser).
                 </audio>

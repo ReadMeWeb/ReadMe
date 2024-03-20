@@ -29,8 +29,7 @@ CREATE TABLE Playlist (
 CREATE TABLE Artist (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    biography VARCHAR(500) NOT NULL,
-    file_name VARCHAR(255) NOT NULL
+    biography text NOT NULL
 );
 
 -- Codice SQL per creare la tabella Albums
@@ -53,7 +52,7 @@ CREATE TABLE Music (
     added_date DATE NOT NULL DEFAULT (CURRENT_TIMESTAMP),
     CONSTRAINT unique_producer_song UNIQUE (producer, name),
     FOREIGN KEY (producer) REFERENCES Artist(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (album) REFERENCES Album(id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (album) REFERENCES Album(id) ON DELETE CASCADE
 );
 
 -- Codice SQL per creare la tabella Playlist_Music
@@ -79,9 +78,9 @@ INSERT INTO Playlist (id, user, name, description, file_name) VALUES
     (3, 'user2', 'Playlist3', 'Descrizione Playlist3', 'playlist3_file.mp3');
 
 -- Inserimento di esempio nella tabella Artist
-INSERT INTO Artist (id, name, biography, file_name) VALUES
-    (1, 'Artista1', 'Biografia Artista1', 'artist1_photo.jpg'),
-    (2, 'Artista2', 'Biografia Artista2', 'artist2_photo.jpg');
+INSERT INTO Artist (name, biography) VALUES
+    ('Artista1', 'Biografia Artista1'),
+    ('Artista2', 'Biografia Artista2');
 
 -- Inserimento di esempio nella tabella Album
 INSERT INTO Album (name, artist_id) VALUES

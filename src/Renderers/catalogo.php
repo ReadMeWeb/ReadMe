@@ -52,7 +52,7 @@ $get_catalogo = function () {
             $artist["id"],
             $artist["name"],
             $artist["biography"],
-            $artist["file_name"]
+            $artist["id"]
         ))->toHtml();
     }
     $lista_album = [];

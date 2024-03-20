@@ -112,12 +112,6 @@ $post_create_song = function () use ($validator_create) {
 $get_create_song = function () use ($validator_create) {
   (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
-  $layout = file_get_contents("../components/layoutLogged.html");
-  $title = "Aggiungi Canzone - Informazioni Canzone";
-  $navbar = navbar();
-  $breadcrumbs = arraybreadcrumb(['Home', 'Aggiungi Canzone', 'Informazioni Canzone']);
-  $content = file_get_contents("../components/addSong/addSong.html");
-
   $artist_id = $_GET["artist_id"];
 
   $db = new Database();
@@ -126,6 +120,12 @@ $get_create_song = function () use ($validator_create) {
   $db->close();
 
   $albums = getAlbumsSelectionContent($albums_fetch_array);
+
+  $layout = file_get_contents("../components/layoutLogged.html");
+  $title = "Aggiungi Canzone - Informazioni Canzone";
+  $navbar = navbar();
+  $breadcrumbs = arraybreadcrumb(['Home', 'Aggiungi Canzone', 'Informazioni Canzone']);
+  $content = file_get_contents("../components/addSong/addSong.html");
 
   $layout = str_replace("{{content}}", $content, $layout);
 

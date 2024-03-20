@@ -101,10 +101,10 @@ $post_create_song = function () {
     );
     if (!$result_audio) {
       unlink($uploadFileG);
-      header("Location: /Pages/catalogo.php");
+      redirect(pages['Catalogo']);
     }
   } else {
-    header("Location: /Pages/catalogo.php");
+    redirect(pages['Catalogo']);
   }
 
   $db = new Database();
@@ -118,7 +118,7 @@ $post_create_song = function () {
   $db->close();
 
   if ($result) {
-    header("Location: /Pages/catalogo.php");
+    redirect(pages['Catalogo']);
   } else {
     unlink($uploadFileA);
     unlink($uploadFileG);

@@ -121,28 +121,19 @@ $get_create_song = function () use ($validator_create) {
 
   $albums = getAlbumsSelectionContent($albums_fetch_array);
 
-  $layout = file_get_contents("../components/layoutLogged.html");
-  $title = "Aggiungi Canzone - Informazioni Canzone";
-  $navbar = navbar();
-  $breadcrumbs = arraybreadcrumb(['Home', 'Aggiungi Canzone', 'Informazioni Canzone']);
-  $content = file_get_contents("../components/addSong/addSong.html");
-
-  $layout = str_replace("{{content}}", $content, $layout);
-
-  $html_builder = (new Pangine\PangineUnvalidFormManager(
-    $layout
-  ))->getHTMLBuilder();
-  $html = $html_builder
-    ->set("title", $title)
-    ->set("menu", $navbar)
-    ->set("breadcrumbs", $breadcrumbs)
-    ->set("artist_name", $artist_fetch_array["name"])
-    ->set("artist_id-value", $artist_id)
-    ->set("albums", $albums)
-    ->clean("-message")
-    ->clean("-value")
+  echo (new HTMLBuilder("../components/layoutLogged.html"))
+    ->set('title', "Aggiungi Canzone - Informazioni Canzone")
+    ->set('menu', navbar())
+    ->set('breadcrumbs', arraybreadcrumb(['Home', 'Aggiungi Canzone', 'Informazioni Canzone']))
+    ->set('content', $validator_create->setformdata(
+      (new HTMLBuilderCleaner("../components/addSong/addSong.html"))
+        ->clean("-message")
+        ->clean("-value")
+        ->set("artist_name", $artist_fetch_array["name"])
+        ->set("artist_id-value", $artist_id)
+        ->set("albums", $albums)
+    )->build())
     ->build();
-  echo $html;
 };
 
 $post_update_song = function () {

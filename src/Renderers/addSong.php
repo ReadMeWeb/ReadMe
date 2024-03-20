@@ -30,7 +30,7 @@ function getAlbumsSelectionContent(array $albums): string {
 $get_select_artist = function () {
   (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
-  echo (new HTMLBuilder('../components/addSong/selectArtist.html'))
+  echo (new HTMLBuilder('../components/layoutLogged.html'))
     ->set('title', "Aggiungi Canzone - Selezione Artista")
     ->set('menu', navbar())
     ->set('breadcrumbs', arraybreadcrumb(['Home', 'Aggiungi Canzone']))

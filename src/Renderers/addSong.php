@@ -57,12 +57,7 @@ $get_create_song = function () {
   $layout = file_get_contents("../components/layoutLogged.html");
   $title = "Aggiungi Canzone - Informazioni Canzone";
   $navbar = navbar();
-  $breadcrumbs = (new BreadcrumbsBuilder())
-    ->addBreadcrumb(new BreadcrumbItem("Home"))
-    ->addBreadcrumb(new BreadcrumbItem("Aggiungi Canzone"))
-    ->addBreadcrumb(new BreadcrumbItem("Informazioni Canzone", true))
-    ->build()
-    ->getBreadcrumbsHtml();
+  $breadcrumbs = arraybreadcrumb(['Home','Aggiungi Canzone','Informazioni Canzone']);
   $content = file_get_contents("../components/addSong/addSong.html");
 
   $artist_id = $_GET["artist_id"];

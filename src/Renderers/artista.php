@@ -5,18 +5,88 @@ require_once 'components/navbar.php';
 require_once 'components/breadcrumbs.php';
 require_once 'include/sessionEstablisher.php';
 require_once 'components/validator.php';
+require_once 'components/album.php';
+require_once 'components/song.php';
 require_once 'include/utils.php';
 require_once 'include/pages.php';
 require_once 'include/database.php';
 
 const BASE_DIR_IMAGES = '../assets/artistPhotos/';
-
 // ==================================================================================================
 // READ ARTIST
 // ==================================================================================================
+$validator_view = new Pangine\PangineValidator(array(
+  "id"=> (new Pangine\PangineValidatorConfig(
+      notEmpty: true,
+      minVal: 0
+  ))
+));
 
-$get_artist = function () {
-  echo 'GET artist';
+$get_artist = function ()  use ($validator_view){
+  (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN", "USER"));
+
+  $validator_view->validate(pages["404"], $_GET);
+  $id = $_GET['id'];
+
+  $db = new Database();
+
+  if(!$db->status()){
+    throw new Pangine\PangineError500(
+      pages['Artista'] . "&id={$id}", 
+      "Errore durante la connessione con il databse."
+    );
+  }
+
+  $artist = $db->fetch_artist_info_by_id($id);
+
+  if($artist == null) {
+    $db->close();
+    redirect(pages['404']);
+  }
+
+  $albums = $db->fetch_albums_info_by_artist_id($id);
+  $songs = $db->fetch_songs_info_by_artist_id($id); 
+  $db->close();
+
+  [$_, $name, $biography] = array_values($artist);
+
+  $albums_list = "";
+    foreach ($albums as $album){
+        $albums_list .= (new album(
+            $album["id"],
+            $album["name"],
+            $id
+        ))->toHtml();
+    }
+
+    $songs_list = "";
+    foreach ($songs as $song){
+        $songs_list .= (new song(
+            $id,
+            $name,
+            $song["name"],
+            $song["audio_file_name"],
+            $song["graphic_file_name"],
+        ))->toHtml(false);
+    }
+
+    echo (new HTMLBuilder('../components/layout.html'))
+    ->set('keywords', 'Orchestra, visualizza artista')
+    ->set('title', 'Visualizza artista')
+    ->set('menu', navbar())
+    ->set('breadcrumbs', arraybreadcrumb(['Home', 'Catalogo', 'Artista']))
+    ->set('description', "Pagina artista $name")
+    ->set("content", 
+        (new HTMLBuilder('../components/getArtista.html'))
+        ->set('nome', $name)
+        ->set('src', BASE_DIR_IMAGES . $id)
+        ->set('alt', "Immagine artista $name")
+        ->set('singoli', empty($songs_list) ? "$name deve ancora pubblicare dei singoli." : $songs_list)
+        ->set('album', empty($albums_list) ? "$name deve ancora pubblicare un album." : $albums_list)
+        ->set('biografia', $biography)
+        ->build()
+    )
+    ->build();
 };
 
 // ==================================================================================================

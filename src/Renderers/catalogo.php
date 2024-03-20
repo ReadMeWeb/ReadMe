@@ -1,108 +1,50 @@
 <?php
 
-require_once "../components/navbar.php";
-require_once "../components/sessionEstablisher.php";
-require_once "../components/artist.php";
-require_once "../components/album.php";
-require_once "../components/song.php";
-require_once "../components/breadcrumbs/breadcrumbItem.php";
-require_once "../components/breadcrumbs/breadcrumbsBuilder.php";
-require_once "../data/database.php";
+set_include_path($_SERVER['DOCUMENT_ROOT']);
+require_once 'components/navbar.php';
+require_once 'include/sessionEstablisher.php';
+require_once 'components/artist.php';
+require_once 'components/album.php';
+require_once 'components/song.php';
+require_once 'components/breadcrumbs.php';
+require_once 'include/database.php';
+require_once 'include/utils.php';
 
 function isSequencePresent(string $haystack, string $sequence) {
-    $haystackLength = strlen($haystack);
-    $sequenceLength = strlen($sequence);
-
-    // Initialize variables to track positions in both strings
-    $haystackPos = 0;
-    $sequencePos = 0;
-
-    $haystack = strtolower($haystack);
-    $sequence = strtolower($sequence);
-
-    // Iterate through both strings
-    while ($haystackPos < $haystackLength && $sequencePos < $sequenceLength) {
-        // If characters match, move to the next character in the sequence
-        if ($haystack[$haystackPos] === $sequence[$sequencePos]) {
-            $sequencePos++;
-        }
-
-        // Move to the next character in the haystack
-        $haystackPos++;
-    }
-
-    // If all characters in the sequence were found in order, return true
-    return $sequencePos === $sequenceLength;
+    $regex = implode('.*?', array_map(fn ($c) => preg_quote($c), str_split($sequence)));
+    $regex = '/'.$regex.'/i';
+    return preg_match($regex, $haystack) === 1;
 }
 
 $get_catalogo = function () {
     try_session();
 
-    $title = "Catalogo";
-    $description = "Pagina di catalogo musicale di musica classica di Orchestra";
-    $keywords = implode(", ", array("Orchestra", "Catalogo musicale", "Musica", "Album", "Artisti", "Canzoni"));
-
-    $layout = "";
-    $content = file_get_contents("../components/catalogo.html");
+    $layout = ((is_admin_signed_in() || is_user_signed_in())
+        ? (new HTMLBuilder("../components/layoutLogged.html"))
+        : ((new HTMLBuilder("../components/layout.html"))
+        ->set('description', 'Pagina di catalogo musicale di musica classica di Orchestra')
+        ->set('keywords', 'Orchestra, Catalogo musicale, Musica, Album, Artisti, Canzoni')))
+    ->set('title', 'Catalogo')
+    ->set('menu', navbar())
+    ->set('breadcrumbs',arraybreadcrumb(['Home','Catalogo']));
 
 // CREAZIONE CONTENT
 
-    if ($_SESSION["user"]["status"] == "UNREGISTERED") {
-        $layout = file_get_contents("../components/layout.html");
-        $layout = str_replace("{{description}}",$description,$layout);
-        $layout = str_replace("{{keywords}}",$keywords,$layout);
-    } else {
-        $layout = file_get_contents("../components/layoutLogged.html");
+    $content = new HTMLBuilder("../components/catalogo.html");
+
+    [ $artists , $albums, $songs ] = dbcall(fn ($db) => [ 
+      $db->fetch_artist_info(),
+      $db->fetch_albums_info(),
+      $db->fetch_songs_info(),
+    ]);
+
+    if($query = extract_from_array_else("searched", $_GET, false)){
+        $artists = array_filter($artists, fn ($a) => isSequencePresent($a['name'], $query));
+        $albums = array_filter($albums, fn ($a) => isSequencePresent($a['name'], $query));
+        $songs = array_filter($songs, fn ($a) => isSequencePresent($a['name'], $query));
+        $content->set("searched", $query);
     }
-
-    $layout = str_replace("{{menu}}", navbar(), $layout);
-    $layout = str_replace("{{breadcrumbs}}",
-        (new BreadcrumbsBuilder())
-            ->addBreadcrumb(new BreadcrumbItem("Home"))
-            ->addBreadcrumb(new BreadcrumbItem("Catalogo", true))
-            ->build()
-            ->getBreadcrumbsHtml(),
-        $layout);
-    $layout = str_replace("{{title}}",$title,$layout);
-
-    $db = new Database();
-
-    $artists = [];
-    $albums = [];
-    $songs = [];
-
-    if ($db->status()) {
-        $artists = $db->fetch_artist_info();
-        $albums = $db->fetch_albums_info();
-        $songs = $db->fetch_songs_info();
-    }
-    $db->close();
-
-    if(isset($_GET["searched"])){
-        $artists_tmp = [];
-        $albums_tmp = [];
-        $songs_tmp = [];
-        foreach ($artists as $artist){
-            if(isSequencePresent($artist["name"],$_GET["searched"])){
-                $artists_tmp[] = $artist;
-            }
-        }
-        foreach ($albums as $album){
-            if(isSequencePresent($album["name"],$_GET["searched"])){
-                $albums_tmp[] = $album;
-            }
-        }
-        foreach ($songs as $song){
-            if(isSequencePresent($song["name"],$_GET["searched"])){
-                $songs_tmp[] = $song;
-            }
-        }
-        $artists = $artists_tmp;
-        $albums = $albums_tmp;
-        $songs = $songs_tmp;
-        $content = str_replace("{{searched}}", $_GET["searched"], $content);
-    }
-    $content = str_replace("{{searched}}", "", $content);
+    $content->set("searched", "");
 
     $lista_artists = [];
     foreach ($artists as $artist){
@@ -118,7 +60,7 @@ $get_catalogo = function () {
         $lista_album[] = (new album(
             $album["id"],
             $album["name"],
-            $album["file_name"]
+            $album["id"]
         ))->toHtml();
     }
     $lista_songs= [];
@@ -132,26 +74,15 @@ $get_catalogo = function () {
             $song["graphic_file_name"],
         ))->toHtml();
     }
-    $lista_artists = implode("\n",$lista_artists);
-    $lista_album = implode("\n",$lista_album);
-    $lista_songs = implode("\n",$lista_songs);
-    if(count($artists) == 0){
-        $content = str_replace("{{lista-artisti}}", "<p>Nessun artista trovato.</p>", $content);
-    }else{
-        $content = str_replace("{{lista-artisti}}", $lista_artists, $content);
-    }
-    if(count($albums) == 0){
-        $content = str_replace("{{lista-album}}", "<p>Nessun album trovato.</p>", $content);
-    }else{
-        $content = str_replace("{{lista-album}}", $lista_album, $content);
-    }
-    if(count($songs) == 0){
-        $content = str_replace("{{lista-canzoni}}", "<p>Nessuna canzone trovata.</p>", $content);
-    }else{
-        $content = str_replace("{{lista-canzoni}}", $lista_songs, $content);
-    }
-    $layout = str_replace("{{content}}",$content,$layout);
 
-    echo $layout;
+    $implode_else = fn ($list, $else) => count($list) > 0 ? implode("\n", $list) : $else ;
+
+    echo $layout->set('content',$content
+      ->set('lista-artisti',  $implode_else($lista_artists, "<p>Nessun artista trovato.</p>"))
+      ->set('lista-album',    $implode_else($lista_album, "<p>Nessun album trovato.</p>"))
+      ->set('lista-canzoni',  $implode_else($lista_songs, "<p>Nessuna canzone trovata.</p>"))
+      ->set('page-form', pages['Catalogo'])
+    ->build())
+    ->build();
 
 };

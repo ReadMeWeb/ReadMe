@@ -1,0 +1,26 @@
+
+<h1>Modifica artista</h1>
+<p role="alert">Se l'operazione di modifica avrà successo verrai reinderizzato alla pagina di catalogo.</p>
+<form action="{{page-form}}" method="post" enctype="multipart/form-data" id="aggiungi-artista">
+    <fieldset>
+        <legend>Dati artista</legend>
+
+        <label for="nome">Nome Artista</label>
+        <input id="nome" name="nome" type="text" maxlength="150" placeholder="Nome artista" value="{{nome-value}}">
+        {{nome-message}}
+
+        <label for="biografia">Biografia Artista</label>
+        <textarea id="biografia" name="biografia" placeholder="Biografia artista" minlength="20" rows="20" cols="50">{{biografia-value}}</textarea>
+        {{biografia-message}}
+
+        <img src="{{src}}" alt="{{alt}}" width="100" height="100">
+        <label for="immagine">Immagine Artista</label>
+        <input type="file" id="immagine" name="immagine" value="{{immagine-value}}" accept="image/png, image/jpeg">
+        {{immagine-message}}
+        
+        <input type="hidden" name="id" value="{{id-value}}">
+        {{id-message}}
+        
+    </fieldset>
+    <input type="submit" name="update" value="Modifica">
+</form>

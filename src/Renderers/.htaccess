@@ -1,0 +1,5 @@
+# Impedisce l'accesso diretto ai file in questa cartella
+Deny from all
+
+# Reindirizza a una pagina di errore 404 personalizzata
+ErrorDocument 403 /404.php

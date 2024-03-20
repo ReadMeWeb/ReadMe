@@ -1,100 +1,87 @@
 <?php
 
-require_once "../components/breadcrumbs/breadcrumbsBuilder.php";
-require_once "../components/breadcrumbs/breadcrumbItem.php";
-require_once "../components/navbar.php";
-require_once "../Pangine/Pangine.php";
-require_once "../data/database.php";
+set_include_path($_SERVER['DOCUMENT_ROOT']);
+require_once 'components/breadcrumbs.php';
+require_once 'components/navbar.php';
+require_once 'Pangine/Pangine.php';
+require_once 'include/database.php';
+require_once 'include/utils.php';
+require_once 'include/pages.php';
 
-$get_account = function () {
-    (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
+$validator = new Pangine\PangineValidator(
+  array(
+    "username" => (new Pangine\PangineValidatorConfig(
+      notEmpty: true,
+      minLength: 6,
+      maxLength: 40
+    )),
+    "password" => (new Pangine\PangineValidatorConfig(
+      notEmpty: true,
+      minLength: 8,
+      maxLength: 20
+    )),
+  )
+);
 
-    $layout = file_get_contents("../components/layoutLogged.html");
-    $title = "Account";
-    $navbar = navbar();
-    $breadcrumbs = (new BreadcrumbsBuilder())
-        ->addBreadcrumb(new BreadcrumbItem("Home"))
-        ->addBreadcrumb(new BreadcrumbItem("Account", true))
-        ->build()
-        ->getBreadcrumbsHtml();
-    $content = file_get_contents("../components/account.html");
-    $content = str_replace("<input type=\"submit\" name=\"update\" value=\"Modifica\">","",$content);
-    $content = str_replace("<a href=\"/Pages/account.php\">Informazioni</a>","Informazioni",$content);
+$get_account = function () use ($validator) {
+  (new Pangine\PangineAuthenticator())->authenticate(array("USER", "ADMIN"));
 
-    $layout = str_replace(
-        array("{{title}}",
-            "{{menu}}",
-            "{{breadcrumbs}}",
-            "{{content}}",
-            "{{username-value}}",
-            "{{password-value}}",
-            "<p>{{username-message}}</p>",
-            "<p>{{password-message}}</p>")
-        ,array(
-            $title,
-            $navbar,
-            $breadcrumbs,
-            $content,
-            $_SESSION["user"]["username"],
-            $_SESSION["user"]["password"],
-            "",
-            ""),
-        $layout);
-    echo $layout;
+  $content = (new HTMLBuilder("../components/layoutLogged.html"))
+    ->set('title', 'Account')
+    ->set('menu', navbar())
+    ->set('breadcrumbs', arraybreadcrumb(['Home', 'Account']))
+    ->set('content', ($validator->setformdata((new HTMLBuilderCleaner("../components/account.html"))
+      ->set('username-value', $_SESSION["user"]["username"])
+      ->set('password-value', $_SESSION["user"]["password"])
+      ->set('pages-account-update', pages['Account (Modifica)'])
+      ->set('pages-account', '{{pages-account}}')
+      ->set('pages-exit', pages['Esci'])
+      ->set('pages-form', pages['Account'])
+      ->clean('-message')))
+      ->build())
+    ->build();
+
+
+  // TODO soluzione sloppy - potrebbe essere corretta
+  $content = str_replace("<input type=\"submit\" name=\"update\" value=\"Modifica\">", "", $content);
+  $content = str_replace("<a href=\"{{pages-account}}\">Informazioni</a>", "Informazioni", $content);
+
+  echo $content;
 };
 
-$get_edit_account = function () {
-    $database = new Database();
-    (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
+$get_edit_account = function () use ($validator) {
+  (new Pangine\PangineAuthenticator())->authenticate(array("USER", "ADMIN"));
 
-    $layout = file_get_contents("../components/layoutLogged.html");
-    $title = "Account";
-    $navbar = navbar();
-    $breadcrumbs = (new BreadcrumbsBuilder())
-        ->addBreadcrumb(new BreadcrumbItem("Home"))
-        ->addBreadcrumb(new BreadcrumbItem("Account"))
-        ->addBreadcrumb(new BreadcrumbItem("Account (Modifica)", true))
-        ->build()
-        ->getBreadcrumbsHtml();
-    $content = file_get_contents("../components/account.html");
-    $content = str_replace("disabled","",$content);
-    $content = str_replace("<a href=\"/Pages/account.php?update=true\">Modifica</a>","Modifica",$content);
-    $layout = str_replace("{{content}}",$content,$layout);
-    $htmlBuilder = (new \Pangine\PangineUnvalidFormManager($layout))->getHTMLBuilder();
-    $layout = $htmlBuilder->set("title",$title)
-        ->set("menu",$navbar)
-        ->set("breadcrumbs",$breadcrumbs)
-        ->set("username-value",$_SESSION["user"]["username"])
-        ->set("password-value",$_SESSION["user"]["password"])
-        ->clean("-message")
-        ->clean("-value")
-        ->build();
-    echo $layout;
-    $database->close();
+  $content = (new HTMLBuilderCleaner('../components/layoutLogged.html'))
+    ->set('title', 'Account')
+    ->set('menu', navbar())
+    ->set('breadcrumbs', arraybreadcrumb(['Home', 'Account', 'Account (Modifica)']))
+    ->set('content', ($validator->setformdata((new HTMLBuilderCleaner('../components/account.html'))
+      ->set('username-value', $_SESSION["user"]["username"])
+      ->set('password-value', $_SESSION["user"]["password"])
+      ->set('pages-account', pages['Account'])
+      ->set('pages-account-update', '{{pages-account-update}}')
+      ->set('pages-exit', pages['Esci'])
+      ->set('pages-form', pages['Account'])
+      ->clean('-message')))
+      ->build())
+    ->build();
+
+  // TODO soluzione sloppy - potrebbe essere corretta
+  $content = str_replace("disabled", "", $content);
+  $content = str_replace("<a href=\"{{pages-account-update}}\">Modifica</a>", "Modifica", $content);
+  echo $content;
 };
 
-$post_edit_account = function (){
-    (new Pangine\PangineAuthenticator())->authenticate(array("USER","ADMIN"));
-    $expectedParameters = array(
-        "username"=> (new Pangine\PangineValidatorConfig(
-            notEmpty: true,
-            minLength: 6,
-            maxLength: 40
-        )),
-        "password"=>(new Pangine\PangineValidatorConfig(
-            notEmpty: true,
-            minLength: 8,
-            maxLength: 20
-        )),
-    );
-    $validator = new Pangine\PangineValidator("POST",$expectedParameters);
-    $validator->validate("/Pages/account.php?update=true");
-    $database = new Database();
-    $result = $database->update_user_info($_SESSION["user"]["username"],$_POST["username"],$_POST["password"]);
-    $database->close();
-    if($result){
-        $_SESSION["user"]["username"] = $_POST["username"];
-        $_SESSION["user"]["password"] = $_POST["password"];
-        header("Location: /Pages/account.php");
-    }
+$post_edit_account = function () use ($validator) {
+  (new Pangine\PangineAuthenticator())->authenticate(array("USER", "ADMIN"));
+  $validator->validate(pages['Account (Modifica)'], $_POST);
+  $database = new Database();
+  $result = $database->update_user_info($_SESSION["user"]["username"], $_POST["username"], $_POST["password"]);
+  $database->close();
+  if ($result) {
+    $_SESSION["user"]["username"] = $_POST["username"];
+    $_SESSION["user"]["password"] = $_POST["password"];
+    redirect(pages['Account']);
+  }
 };

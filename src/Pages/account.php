@@ -2,8 +2,9 @@
 
 use Pangine\Pangine;
 
-require_once "../Pangine/Pangine.php";
-include "../Renderers/account.php";
+set_include_path($_SERVER['DOCUMENT_ROOT']);
+require_once 'Pangine/Pangine.php';
+require_once 'Renderers/account.php';
 
 /**
  * @var callable $get_account per la pagina di visualizzazione delle informazioni dell'account

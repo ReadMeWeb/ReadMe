@@ -167,7 +167,7 @@ $post_update_song = function () use ($validator_update) {
   $uploadFileG = $uploadDirG . $fileNameG;
 
   $validator_update->validate(
-    "/Pages/addSong.php?producer=" . $artist_id . "&name=" . $song_title . "&update=Modifica",
+    "/Pages/addSong.php?update=true&id=" . $song_id,
     $_POST
   );
 

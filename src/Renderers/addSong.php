@@ -59,13 +59,6 @@ $post_create_song = function () {
   $fileNameG = str_replace(" ", "-", $song_title) . "_" . $artist_id . ".png";
   $uploadFileG = $uploadDirG . $fileNameG;
 
-  // custom validation functions
-  $check_album_belongs_to_artist = function () use ($artist_id, $album_id): string {
-    return dbcall(fn ($db) =>
-      ($album_id == "NULL" || $db->check_album_belong_to_artist($artist_id, $album_id))
-      ? "" : "L'album richiesto non appartiene all'artista selezionato.");
-  };
-
   $expectedParameters = [
     "title" => new Pangine\PangineValidatorConfig(
       notEmpty: true,
@@ -75,7 +68,10 @@ $post_create_song = function () {
     "artist_id" => new Pangine\PangineValidatorConfig(notEmpty: true),
     "album" => new Pangine\PangineValidatorConfig(
       notEmpty: true,
-      customFunction: $check_album_belongs_to_artist
+      customFunction: function () use ($artist_id, $album_id): string {
+        return dbcall(fn ($db) => ($album_id == "NULL" || $db->check_album_belong_to_artist($artist_id, $album_id))
+          ? "" : "L'album richiesto non appartiene all'artista selezionato.");
+      }
     ),
   ];
 

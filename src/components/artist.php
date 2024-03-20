@@ -23,12 +23,12 @@ class artist
         $additional_elements = "";
         if($_SESSION["user"]["status"] == "ADMIN"){
             $additional_elements = "
-            <form action='".pages['Artista']."' method='get'>
+            <a href='" . pages['Artista'] . "?id=" . $this->id . "&update=true' > Modifica </a>
+            <form action='".pages['Artista']."' method='post'>
                 <fieldset>
                     <legend>Azioni possibili</legend>
                     <input type='hidden' name='id' value='".$this->id."'>
                     <input type='submit' name='delete' value='Rimuovi'>
-                    <input type='submit' name='update' value='Modifica'>
                 </fieldset>
             </form>
             ";

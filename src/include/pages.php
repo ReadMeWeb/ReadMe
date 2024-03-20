@@ -3,7 +3,7 @@
 const path = '/';
 
 const pages = [
-    'Home' => path . 'index.php',
+    'Home' => path,
     'Chi Siamo' => path . 'chisiamo.php',
     'Accedi' => path . 'Pages/accedi.php?read=true',
     'Registrati' => path . 'Pages/accedi.php?create=true',
@@ -27,6 +27,8 @@ const pages = [
     'RemoveUpdateSong' => path . 'RemoveUpdateSong.php',
     'AddToPlaylist' => path . 'addToPlaylist.php',
     'Artista' => path . 'Pages/artista.php',
+
+    '404' => path . '404.php',
   ];
 
 

@@ -139,12 +139,12 @@ class  Database
 
     public function fetch_artist_info(): array
     {
-        return $this->execute_query('SELECT id, name, biography, file_name FROM Artist');
+        return $this->execute_query('SELECT id, name, biography FROM Artist');
     }
 
     public function fetch_artist_info_by_id(int $id): array|null
     {
-        $res = $this->execute_query('SELECT id, name, biography, file_name FROM Artist WHERE id = ?', $id);
+        $res = $this->execute_query('SELECT id, name, biography FROM Artist WHERE id = ?', $id);
         if (sizeof($res) == 1) {
             return $res[0];
         }
@@ -163,15 +163,21 @@ class  Database
 
     public function fetch_albums_info_by_artist_id(string $id): array
     {
-        return $this->execute_query('SELECT id, name, file_name FROM Album WHERE artist_id = ?', $id);
+        return $this->execute_query('SELECT id, name FROM Album WHERE artist_id = ?', $id);
     }
 
-    public function insert_artist(string $nome, string $biography, string $image): bool {
-        return $this->execute_query('INSERT INTO Artist(name, biography, file_name) VALUES(?, ?, ?)', $nome, $biography, $image);
+    public function fetch_songs_info_by_artist_id(string $id): array
+    {
+        return $this->execute_query('SELECT name, audio_file_name, graphic_file_name, added_date FROM Music WHERE producer = ? AND album IS NULL', $id);
     }
 
-    public function update_artist(int $id, string $name, string $biography, string $image): bool {
-        return $this->execute_query('UPDATE Artist SET name=?, biography=?, file_name=? WHERE id=?', $name, $biography, $image, $id );
+    public function insert_artist(string $nome, string $biography): int {
+        $this->execute_query('INSERT INTO Artist(name, biography) VALUES(?, ?)', $nome, $biography);
+        return $this->conn->insert_id;   
+    }
+
+    public function update_artist(int $id, string $name, string $biography): bool {
+        return $this->execute_query('UPDATE Artist SET name=?, biography=? WHERE id=?', $name, $biography, $id );
     }
 
     public function delete_artist(string $id): bool{

@@ -27,6 +27,8 @@ const pages = [
     'RemoveUpdateSong' => path . 'RemoveUpdateSong.php',
     'AddToPlaylist' => path . 'addToPlaylist.php',
     'Artista' => path . 'Pages/artista.php',
+
+    '404' => path . '404.php',
   ];
 
 

@@ -142,7 +142,7 @@ $validator_update = new Pangine\PangineValidator([
     minLength: 4,
     maxLength: 40
   ),
-  "artist_id" => new Pangine\PangineValidatorConfig(notEmpty: true),
+  //"artist_id" => new Pangine\PangineValidatorConfig(notEmpty: true),
   "song_id" => new Pangine\PangineValidatorConfig(notEmpty: true),
 ]);
 

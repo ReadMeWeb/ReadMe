@@ -229,8 +229,8 @@ $get_update_song = function () use ($validator_update) {
 
   $artist_options = implode('', array_map(
     fn ($a) => $a['id'] == $song_fetch_array['producer']
-    ? "<option selected value='".$a['id']."'>".$a['name']."</option>"
-    : "<option value='".$a['id']."'>".$a['name']."</option>",
+      ? "<option selected value='" . $a['id'] . "'>" . $a['name'] . "</option>"
+      : "<option value='" . $a['id'] . "'>" . $a['name'] . "</option>",
     $artist_options
   ));
 

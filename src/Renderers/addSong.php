@@ -273,6 +273,7 @@ $post_delete_song = function () use ($validator_delete) {
     $result = $db->delete_song($song_id);
     $db->close();
 
+    // TODO aggiornare con gli id
     if ($result) {
       $audio_dir =
         dirname(__FILE__) .

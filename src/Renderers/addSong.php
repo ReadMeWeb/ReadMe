@@ -262,9 +262,9 @@ $post_delete_song = function () {
     "id" => new Pangine\PangineValidatorConfig(notEmpty: true),
   ];
 
-  $validator = new Pangine\PangineValidator("POST", $expectedParameters);
+  $validator = new Pangine\PangineValidator($expectedParameters);
   // TODO usare pages
-  $validator->validate("/Pages/addSong.php?id=" . $song_id . "&delete=true");
+  $validator->validate("/Pages/addSong.php?delete=true&id=" . $song_id, POST);
 
   $db = new Database();
   $song = $db->fetch_song_info_by_id($song_id);

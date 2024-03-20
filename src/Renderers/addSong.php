@@ -109,7 +109,7 @@ $post_create_song = function () use ($validator_create) {
   }
 };
 
-$get_create_song = function () {
+$get_create_song = function () use ($validator_create) {
   (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
   $layout = file_get_contents("../components/layoutLogged.html");

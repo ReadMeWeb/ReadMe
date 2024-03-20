@@ -142,9 +142,9 @@ class Database {
     return $stripped_res;
   }
 
-  public function fetch_all_artists_except_the_following($id): array {
-    $query = "SELECT * FROM Artist WHERE id != ?;";
-    return $this->execute_query($query, $id);
+  public function fetch_artists(): array {
+    $query = "SELECT id, name FROM Artist ;";
+    return $this->execute_query($query);
   }
 
   public function fetch_artist_info(): array {

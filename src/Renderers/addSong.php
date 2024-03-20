@@ -20,16 +20,10 @@ function getArtistSelectionContent(array $artists): string {
 }
 
 function getAlbumsSelectionContent(array $albums): string {
-  $albums_list = "";
-  foreach ($albums as $album) {
-    $albums_list .=
-      "<option value=\"" .
-      $album["id"] .
-      "\">" .
-      $album["name"] .
-      "</option>";
-  }
-  return $albums_list;
+  return implode('', array_map(
+    fn ($album) => "<option value=\"" . $album["id"] . "\">" . $album["name"] . "</option>",
+    $albums
+  ));
 }
 
 $get_select_artist = function () {

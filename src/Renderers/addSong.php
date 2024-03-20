@@ -91,13 +91,12 @@ $post_create_song = function () {
 
   /* Try update file */
   $result_graphic = move_uploaded_file($tmp_graphic["tmp_name"], $uploadFileG);
-  if ($result_graphic) {
-    $result_audio = move_uploaded_file($tmp_audio["tmp_name"], $uploadFileA);
-    if (!$result_audio) {
-      unlink($uploadFileG);
-      redirect(pages['Catalogo']);
-    }
-  } else {
+  if (!$result_graphic) {
+    redirect(pages['Catalogo']);
+  }
+  $result_audio = move_uploaded_file($tmp_audio["tmp_name"], $uploadFileA);
+  if (!$result_audio) {
+    unlink($uploadFileG);
     redirect(pages['Catalogo']);
   }
 

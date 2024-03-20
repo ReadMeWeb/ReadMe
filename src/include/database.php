@@ -212,25 +212,6 @@ class Database {
     );
   }
 
-  public function insert_song(
-    string $artist_id,
-    string $title,
-    string $audio_file,
-    string $graphic_file,
-    string|null $album_id
-  ): bool {
-    $title_sanitized = mysqli_real_escape_string($this->conn, $title);
-    $query =
-      "INSERT INTO Music(producer, name, audio_file_name, graphic_file_name, album, added_date) VALUES(?, ?, ?, ?, ?, now())";
-    return $this->execute_query(
-      $query,
-      $artist_id,
-      $title_sanitized,
-      $audio_file,
-      $graphic_file,
-      $album_id
-    );
-  }
   public function update_artist(int $id, string $name, string $biography, string $image): bool {
     return $this->execute_query('UPDATE Artist SET name=?, biography=?, file_name=? WHERE id=?', $name, $biography, $image, $id);
   }

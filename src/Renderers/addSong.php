@@ -219,55 +219,34 @@ $post_update_song = function () use ($validator_update) {
 $get_update_song = function () use ($validator_update) {
   (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
-  $layout = file_get_contents("../components/layoutLogged.html");
-  $title = "Modifica Canzone";
-  $navbar = navbar();
-  $breadcrumbs = (new BreadcrumbsBuilder())
-    ->addBreadcrumb(new BreadcrumbItem("Home"))
-    ->addBreadcrumb(new BreadcrumbItem("Modifica Canzone", isCurrent: true))
-    ->build()
-    ->getBreadcrumbsHtml();
-  $content = file_get_contents("../components/addSong/editSong.html");
-
-  $song_id = $_GET["id"];
-  $artist_id = $_GET["producer"];
-
   $db = new Database();
-  $artist_fetch_array = $db->fetch_artist_info_by_id($artist_id);
-  $all_artists_except_selected = $db->fetch_all_artists_except_the_following(
-    $artist_id
-  );
-  $song_fetch_array = $db->fetch_song_info_by_id($song_id);
+  $song_fetch_array = $db->fetch_song_info_by_id($_GET["id"]);
+  $artist_options = $db->fetch_artists();
   $db->close();
 
-  $artist_options = getArtistSelectionContent($all_artists_except_selected);
-  $current_artist_option =
-    "<option selected value=\"" .
-    $artist_fetch_array["id"] .
-    "\">" .
-    $artist_fetch_array["name"] .
-    "</option>";
+  $artist_options = implode('', array_map(
+    fn ($a) => $a['id'] == $song_fetch_array['producer']
+    ? "<option selected value='".$a['id']."'>".$a['name']."</option>"
+    : "<option value='".$a['id']."'>".$a['name']."</option>",
+    $artist_options
+  ));
 
-  $layout = str_replace("{{content}}", $content, $layout);
-
-  $html_builder = (new Pangine\PangineUnvalidFormManager(
-    $layout
-  ))->getHTMLBuilder();
-  $html = $html_builder
-    ->set("title", $title)
-    ->set("menu", $navbar)
-    ->set("breadcrumbs", $breadcrumbs)
-    ->set("current-artist", $current_artist_option)
-    ->set("artists", $artist_options)
-    ->set("song_id-value", $song_fetch_array["id"])
-    ->set("title-value", $song_fetch_array["name"])
-    ->set("title-value2", $song_fetch_array["name"])
-    ->set("current_audio_file", $song_fetch_array["audio_file_name"])
-    ->set("current_graphic_file", $song_fetch_array["graphic_file_name"])
-    ->clean("-message")
-    ->clean("-value")
+  echo (new HTMLBuilder("../components/layoutLogged.html"))
+    ->set('title', "Modifica Canzone")
+    ->set('menu', navbar())
+    ->set('breadcrumbs', arraybreadcrumb(['Home', 'Modifica Canzone']))
+    ->set('content', $validator_update->setformdata(
+      (new HTMLBuilderCleaner("../components/addSong/editSong.html"))
+        ->clean("-message")
+        ->clean("-value")
+        ->set("artists", $artist_options)
+        ->set("song_id-value", $song_fetch_array["id"])
+        ->set("title-value", $song_fetch_array["name"])
+        ->set("title-value2", $song_fetch_array["name"])
+        ->set("current_audio_file", $song_fetch_array["audio_file_name"])
+        ->set("current_graphic_file", $song_fetch_array["graphic_file_name"])
+    )->build())
     ->build();
-  echo $html;
 };
 
 

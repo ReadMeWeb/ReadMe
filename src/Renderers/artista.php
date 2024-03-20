@@ -31,6 +31,7 @@ $get_artist = function ()  use ($validator_view){
   $db = new Database();
 
   if(!$db->status()){
+    $db->close();
     throw new Pangine\PangineError500(
       pages['Artista'] . "&id={$id}", 
       "Errore durante la connessione con il databse."
@@ -122,6 +123,7 @@ $post_edit_artist = function () use ($validator_edit) {
 
   $db = new Database();
   if(!$db->status()){
+    $db_>close();
     throw new Pangine\PangineError500(
       pages['Modifica Artista'] . "&id={$id}", 
       "Errore durante la connessione con il databse."
@@ -134,21 +136,35 @@ $post_edit_artist = function () use ($validator_edit) {
     redirect(pages['404']);
   }
 
-  if ($_FILES['immagine']['tmp_name'] != '') {
-    $tmp_name = $_FILES['immagine']['tmp_name'];
-    $res = move_uploaded_file($tmp_name, BASE_DIR_IMAGES . '/' . $id);
+  $tmp_name = $_FILES['immagine']['tmp_name'];
+
+  if ($tmp_name != '') {
+
+    if(!is_dir(BASE_DIR_IMAGES)) 
+      mkdir(BASE_DIR_IMAGES);
+
+    $upload = move_uploaded_file($tmp_name, BASE_DIR_IMAGES . '/' . $id);
+
+    if(!$upload) {
+      $db->close();
+      throw new Pangine\PangineError500(
+        pages['Modifica Artista'] . "&id={$id}", 
+        "Errore durante il salvataggio dell'immagine dell'artista"
+      );
+    }
   }
 
+
+  $res = $db->update_artist($id, $name, $biography);
+  $db->close();
+
   if(!$res) {
-    $db->close();
     throw new Pangine\PangineError500(
       pages['Modifica Artista'] . "&id={$id}", 
       "Errore durante la modifica dell'artista nel database"
     );
   }
 
-  $db->update_artist($id, $name, $biography);
-  $db->close();
   redirect(pages['Catalogo']);
 };
 
@@ -161,6 +177,7 @@ $get_edit_artist = function () use ($validator_edit, $validator_view) {
   $db = new Database();
 
   if(!$db->status()){
+    $db->close();
     throw new Pangine\PangineError500(
       pages['Modifica Artista'] . "&id={$id}", 
       "Errore durante la connessione con il databse."
@@ -224,6 +241,9 @@ $post_add_artist = function () use ($validator_create) {
   $db = new Database();
 
   if(!$db->status()){
+
+    $db->close();
+
     throw new Pangine\PangineError500(
       pages['Aggiungi Artista'], 
       "Errore durante la connessione con il databse."
@@ -233,18 +253,24 @@ $post_add_artist = function () use ($validator_create) {
   $id = $db->insert_artist($artist_name, $biography);
 
   if(!$id) {
+
+    $db->close();
     throw new Pangine\PangineError500(
       pages['Aggiungi Artista'], 
       "Errore durante l'inserimento dell'artista nel database"
     );
   }
 
-  $tmp_name = $_FILES['immagine']['tmp_name'];
-  $name = $_FILES['immagine']['name'];
-  $res = move_uploaded_file($tmp_name, BASE_DIR_IMAGES . '/' . $id);
+  if(!is_dir(BASE_DIR_IMAGES))
+    mkdir(BASE_DIR_IMAGES);
+
+  $res = move_uploaded_file($_FILES['immagine']['tmp_name'], BASE_DIR_IMAGES . '/' . $id);
 
   if(!$res) {
+
     $db->delete_artist($id);
+    $db->close();
+
     throw new Pangine\PangineError500(
       pages['Aggiungi Artista'], 
       "Errore durante il salvataggio dell'immagine"
@@ -285,9 +311,10 @@ $post_delete_artist = function () use ($validator_view) {
   $db = new Database();
 
   if(!$db->status()){
+    $db->close();
     throw new Pangine\PangineError500(
       pages['Catalogo'], 
-      "Errore durante la connessione con il databse."
+      "Errore durante la connessione con il database."
     );
   }
 
@@ -302,6 +329,7 @@ $post_delete_artist = function () use ($validator_view) {
   $db->close();
 
   $img = BASE_DIR_IMAGES . $id;
+
   if (file_exists($img))
     unlink($img);
 

@@ -237,7 +237,7 @@ $post_update_song = function () {
     $db->close();
 
     if ($result) {
-      header("Location: /Pages/catalogo.php");
+      redirect(pages['Catalogo']);
     } else {
       //TODO error 500
     }
@@ -370,7 +370,7 @@ $post_delete_song = function () {
         unlink($graphic_dir);
       }
 
-      header("Location: /Pages/catalogo.php");
+      redirect(pages['Catalogo']);
     } else {
       //TODO error 500
     }

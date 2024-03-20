@@ -194,7 +194,7 @@ class Database {
 
   public function fetch_albums_info_by_artist_id(string $id): array {
     return $this->execute_query(
-      "SELECT id, name, file_name FROM Album WHERE artist_id = ?",
+      "SELECT id, name FROM Album WHERE artist_id = ?",
       $id
     );
   }

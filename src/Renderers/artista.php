@@ -168,10 +168,13 @@ $post_edit_artist = function () use ($validator_edit) {
   redirect(pages['Catalogo']);
 };
 
-$get_edit_artist = function () use ($validator_edit, $validator_view) {
+$get_edit_artist = function () use ($validator_edit) {
   (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
 
-  $validator_view->validate(pages['404'], $_GET);
+  if (!array_key_exists('id', $_GET)) {
+    redirect(pages['404']);
+  }
+
   $id = $_GET['id'];
 
   $db = new Database();

@@ -41,28 +41,14 @@ function getAlbumsSelectionContent(array $albums): string {
 $get_select_artist = function () {
   (new Pangine\PangineAuthenticator())->authenticate(["ADMIN"]);
 
-  $layout = file_get_contents("../components/layoutLogged.html");
-  $title = "Aggiungi Canzone - Selezione Artista";
-  $navbar = navbar();
-  $breadcrumbs = (new BreadcrumbsBuilder())
-    ->addBreadcrumb(new BreadcrumbItem("Home"))
-    ->addBreadcrumb(new BreadcrumbItem("Aggiungi Canzone", true))
-    ->build()
-    ->getBreadcrumbsHtml();
-  $content = file_get_contents("../components/addSong/selectArtist.html");
-
-  $artists_list = dbcall(fn ($db) => $db->fetch_artist_info());
-
-  $artists = getArtistSelectionContent($artists_list);
-
-  $layout = str_replace("{{content}}", $content, $layout);
-
-  $layout = str_replace(
-    ["{{title}}", "{{menu}}", "{{breadcrumbs}}", "{{artists}}"],
-    [$title, $navbar, $breadcrumbs, $artists],
-    $layout
-  );
-  echo $layout;
+  echo (new HTMLBuilder('../components/addSong/selectArtist.html'))
+    ->set('title', "Aggiungi Canzone - Selezione Artista")
+    ->set('menu', navbar())
+    ->set('breadcrumbs', arraybreadcrumb(['Home', 'Aggiungi Canzone']))
+    ->set('content', (new HTMLBuilder('../components/addSong/selectArtist.html'))
+      ->set('artists', getArtistSelectionContent(dbcall(fn ($db) => $db->fetch_artist_info())))
+      ->build())
+    ->build();
 };
 
 $get_create_song = function () {

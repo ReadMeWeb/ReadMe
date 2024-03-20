@@ -60,9 +60,9 @@ $post_create_song = function () {
   $uploadFileG = $uploadDirG . $fileNameG;
 
   // custom validation functions
-  $check_album_belongs_to_artist = function () use ( $artist_id, $album_id): string {
+  $check_album_belongs_to_artist = function () use ($artist_id, $album_id): string {
     $db = new Database();
-    if ( $album_id == "NULL" || $db->check_album_belong_to_artist($artist_id, $album_id)) {
+    if ($album_id == "NULL" || $db->check_album_belong_to_artist($artist_id, $album_id)) {
       $db->close();
       return "";
     } else {
@@ -90,15 +90,9 @@ $post_create_song = function () {
   );
 
   /* Try update file */
-  $result_graphic = move_uploaded_file(
-    $tmp_graphic["tmp_name"],
-    $uploadFileG
-  );
+  $result_graphic = move_uploaded_file($tmp_graphic["tmp_name"], $uploadFileG);
   if ($result_graphic) {
-    $result_audio = move_uploaded_file(
-      $tmp_audio["tmp_name"],
-      $uploadFileA
-    );
+    $result_audio = move_uploaded_file($tmp_audio["tmp_name"], $uploadFileA);
     if (!$result_audio) {
       unlink($uploadFileG);
       redirect(pages['Catalogo']);

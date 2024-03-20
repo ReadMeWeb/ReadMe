@@ -61,14 +61,9 @@ $post_create_song = function () {
 
   // custom validation functions
   $check_album_belongs_to_artist = function () use ($artist_id, $album_id): string {
-    $db = new Database();
-    if ($album_id == "NULL" || $db->check_album_belong_to_artist($artist_id, $album_id)) {
-      $db->close();
-      return "";
-    } else {
-      $db->close();
-      return "L'album richiesto non appartiene all'artista selezionato.";
-    }
+    return dbcall(fn ($db) =>
+      ($album_id == "NULL" || $db->check_album_belong_to_artist($artist_id, $album_id))
+      ? "" : "L'album richiesto non appartiene all'artista selezionato.");
   };
 
   $expectedParameters = [

@@ -276,11 +276,11 @@ $get_create_artist = function () use ($validator_create) {
 // DELETE ARTIST
 // ==================================================================================================
 
-$get_delete_artist = function () use ($validator_view) {
+$post_delete_artist = function () use ($validator_view) {
   (new Pangine\PangineAuthenticator())->authenticate(array("ADMIN"));
-  $validator_view->validate(pages['404'], $_GET);
+  $validator_view->validate(pages['404'], $_POST);
 
-  $id = $_GET['id'];
+  $id = $_POST['id'];
 
   $db = new Database();
 

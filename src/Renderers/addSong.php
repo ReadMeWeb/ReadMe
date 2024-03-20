@@ -75,9 +75,10 @@ $post_create_song = function () {
     ),
   ];
 
-  $validator = new Pangine\PangineValidator("POST", $expectedParameters);
+  $validator = new Pangine\PangineValidator($expectedParameters);
   $validator->validate(
-    "/Pages/addSong.php?create=true&artist_id=" . $artist_id
+    "/Pages/addSong.php?create=true&artist_id=" . $artist_id,
+    $_POST
   );
 
   /* Try update file */

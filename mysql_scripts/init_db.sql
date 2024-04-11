@@ -20,22 +20,22 @@ CREATE TABLE Books
 (
     id               INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     title            varchar(255)                   NOT NULL,
-    author           varchar(255)                   NOT NULL,
+    author_id        INT                            NOT NULL,
     description      varchar(6000)                  NOT NULL,
     cover_file_name  varchar(255)                   NOT NULL,
     number_of_copies INT                            NOT NULL,
-    FOREIGN KEY (author) REFERENCES Authors (id),
+    FOREIGN KEY (author_id) REFERENCES Authors (id),
     CONSTRAINT non_zero_copies CHECK (number_of_copies > 0)
 );
 
 CREATE TABLE Loans
 (
     id                   INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    book                 VARCHAR(255)                   NOT NULL,
-    user                 VARCHAR(255)                   NOT NULL,
+    book_id              INT                            NOT NULL,
+    user_username        VARCHAR(255)                   NOT NULL,
     loan_start_date      DATE                           NOT NULL DEFAULT (CURRENT_TIMESTAMP),
     loan_expiration_date DATE                           NOT NULL,
-    FOREIGN KEY (book) REFERENCES Books (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (user) REFERENCES Users (username) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (book_id) REFERENCES Books (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_username) REFERENCES Users (username) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT check_dates CHECK (loan_expiration_date > loan_start_date)
 );

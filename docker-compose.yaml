@@ -7,7 +7,7 @@ services:
     hostname: mysql_server
     environment:
       MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: Orchestra
+      MYSQL_DATABASE: mrango
       MYSQL_PASSWORD: admin
     volumes:
       - ./mysql_scripts:/docker-entrypoint-initdb.d

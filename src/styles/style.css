@@ -12,7 +12,7 @@
         --mobileNavLinkBorder: #419f86;
         --linkColor: #348c8c;
         --visitedLinkColor: #4b5d58;
-        --logoUrl: url('../assets/images/OrchestraWideBlack.png');
+        --logoUrl: url('../assets/readme-logo-black-cropped.png');
     }
 }
 @media (prefers-color-scheme: dark) {
@@ -25,7 +25,7 @@
         --mobileNavLinkBorder: #6e968c;
         --linkColor: #00fffb;
         --visitedLinkColor: #c4edff;
-        --logoUrl: url('../assets/images/OrchestraWideWhite.png');
+        --logoUrl: url('../assets/readme-logo-white-cropped.png');
     }
 }
 /* --------- FONTS --------- */

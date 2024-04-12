@@ -25,7 +25,7 @@ CREATE TABLE Books
     cover_file_name  varchar(255)                   NOT NULL,
     number_of_copies INT                            NOT NULL,
     FOREIGN KEY (author_id) REFERENCES Authors (id),
-    CONSTRAINT non_zero_copies CHECK (number_of_copies > 0)
+    CONSTRAINT non_zero_copies CHECK (number_of_copies >= 0)
 );
 
 CREATE TABLE Loans

@@ -5,6 +5,7 @@ namespace Utils;
 use Exception;
 use mysqli;
 use mysqli_sql_exception;
+use Pangine\utils\Exception500;
 
 class Database
 {
@@ -33,7 +34,10 @@ class Database
         $this->close();
     }
 
-    private function execute_query(string $query, ...$params): array | bool
+    /**
+     * @throws Exception500
+     */
+    private function execute_query(string $query, ...$params): array|bool
     {
         try {
             $stmt = $this->conn->prepare($query);
@@ -56,18 +60,20 @@ class Database
             }
 
             $stmt->close();
-        } catch (mysqli_sql_exception $ex) {
-            // TODO: implementazione pagine di errore personalizzate
-            http_response_code(500);
-            echo $ex->getMessage();
-            exit();
         } catch (Exception $ex) {
-            // TODO: Gestione di altri tipi di eccezioni, se necessario
-            http_response_code(500);
-            echo $ex->getMessage();
-            exit();
+            throw new Exception500("Errore di connessione con il database. Si prega di riprovare tra qualche secondo.");
         }
         return $ret_set;
+    }
+
+    public function password_if_user_exists(string $username): string | null
+    {
+        $response = $this->execute_query("SELECT password FROM Users WHERE username = ? LIMIT 1;",$username);
+        if(count($response) == 0){
+            return null;
+        }else{
+            return $response[0]["password"];
+        }
     }
 
     public function add_user(): void

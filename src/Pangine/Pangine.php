@@ -3,7 +3,9 @@
 namespace Pangine;
 require_once(__DIR__ . "/../Utils/Database.php");
 require_once(__DIR__ . "/utils/Exception500.php");
+require_once(__DIR__ . "/utils/Validator.php");
 
+use Pangine\utils\Validator;
 use \Utils\Database;
 use \Pangine\utils\Exception500;
 
@@ -18,6 +20,7 @@ class Pangine
     private array $controlled_renderers_pure = [];
 
     private static string $status_UNREGISTERED = "UNREGISTERED";
+
     private static string $status_USER = "USER";
     private static string $status_ADMIN = "ADMIN";
 
@@ -29,30 +32,43 @@ class Pangine
         self::$pages = array(
             "Chi siamo" => array(
                 "path" => "/Pages/chi_siamo.php",
-                "privileges" => array(self::$status_UNREGISTERED)
+                "privileges" => array(self::UNREGISTERED())
             ),
             "Catalogo" => array(
                 "path" => "/Pages/catalogo.php",
-                "privileges" => array(self::$status_UNREGISTERED, self::$status_USER, self::$status_ADMIN)
+                "privileges" => array(self::UNREGISTERED(), self::USER(), self::ADMIN())
             ),
             "Accedi" => array(
                 "path" => "/Pages/accedi.php",
-                "privileges" => array(self::$status_UNREGISTERED)
+                "privileges" => array(self::UNREGISTERED())
             ),
             "Registrati" => array(
                 "path" => "/Pages/registrati.php",
-                "privileges" => array(self::$status_UNREGISTERED)
+                "privileges" => array(self::UNREGISTERED())
+            ),
+            # TODO: da eliminare vvv
+            "ELIMINAMI_PAGINA_ADMIN_DI_PROVA" => array(
+                "path" => "/Pages/admin.php",
+                "privileges" => array()
             ),
             "Home" => array(
                 "path" => "/Pages/index.php",
                 "privileges" => array() // Rimane vuoto in quanto non si vuole che venga visualizzato nella navbar
-            ),
+            )
         );
     }
 
     public function execute(): void
     {
         try {
+            foreach (self::$pages as $page) {
+                if (strtok($_SERVER['REQUEST_URI'], '?') == $page['path']) {
+                    if (count($page["privileges"]) && !in_array($_SESSION["user"]["status"], $page["privileges"])) {
+                        throw new Exception500("Non hai i permessi sufficienti per entrare in questa pagina.");
+                    }
+                }
+            }
+
             foreach ($this->controlled_renderers_unpure as $renderer) {
                 $renderer();
             }
@@ -60,14 +76,30 @@ class Pangine
                 $renderer();
             }
         } catch (Exception500 $e) {
-
+            echo $e->getMessage();
         }
     }
 
-    public function add_renderer_POST(callable $renderer, string $caller_parameter_name = "", bool $needs_database = false): Pangine
+    public static function UNREGISTERED(): string
     {
-        $renderer_wrapper = function () use ($renderer, $caller_parameter_name, $needs_database) {
+        return self::$status_UNREGISTERED;
+    }
+
+    public static function USER(): string
+    {
+        return self::$status_USER;
+    }
+
+    public static function ADMIN(): string
+    {
+        return self::$status_ADMIN;
+    }
+
+    public function add_renderer_POST(callable $renderer, string $caller_parameter_name = "", bool $needs_database = false, Validator $validator = null): Pangine
+    {
+        $renderer_wrapper = function () use ($renderer, $caller_parameter_name, $needs_database,$validator) {
             if ($_SERVER['REQUEST_METHOD'] == "POST" && ($caller_parameter_name == "" || isset($_POST[$caller_parameter_name]))) {
+                $validator?->validate();
                 if ($needs_database) {
                     $db = new Database();
                     $renderer($db);
@@ -75,6 +107,7 @@ class Pangine
                 } else {
                     $renderer();
                 }
+                Validator::clear_session_parameters();
                 exit();
             }
         };
@@ -86,10 +119,11 @@ class Pangine
         return $this;
     }
 
-    public function add_renderer_GET(callable $renderer, string $caller_parameter_name = "", bool $needs_database = false): Pangine
+    public function add_renderer_GET(callable $renderer, string $caller_parameter_name = "", bool $needs_database = false, Validator $validator = null): Pangine
     {
-        $renderer_wrapper = function () use ($renderer, $caller_parameter_name, $needs_database) {
+        $renderer_wrapper = function () use ($renderer, $caller_parameter_name, $needs_database, $validator) {
             if ($_SERVER['REQUEST_METHOD'] == "GET" && ($caller_parameter_name == "" || isset($_GET[$caller_parameter_name]))) {
+                $validator?->validate();
                 if ($needs_database) {
                     $db = new Database();
                     $renderer($db);
@@ -97,6 +131,7 @@ class Pangine
                 } else {
                     $renderer();
                 }
+                Validator::clear_session_parameters();
                 exit();
             }
         };
@@ -126,8 +161,8 @@ class Pangine
             $link = $page_metadata["path"];
             $pageName = $page_title;
             $allowedStatus = $page_metadata["privileges"];
-            if (in_array($_SESSION["user"]["status"], $allowedStatus)) {
-                if ($selectedLink == $link) {
+            if (in_array($_SESSION["user"]["status"], $allowedStatus) && !str_contains($link, '?')) {
+                if ($selectedLink == $link && !str_contains($_SERVER['REQUEST_URI'], '?')) {
                     $navLinks .= "<li class='selectedNavLink'>" . $pageName . "</li>";
                 } else {
                     $navLinks .= "<li><a href='" . $link . "'>" . $pageName . "</a></li>";

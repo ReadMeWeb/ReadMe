@@ -1,11 +1,11 @@
 <?php
 require_once(__DIR__ . "/../Pangine/Pangine.php");
 require_once(__DIR__ . "/../Pangine/utils/LayoutBuilder.php");
-require_once(__DIR__ . "/../Pangine/utils/Validator.php");
 
 use \Pangine\Pangine;
 use \Pangine\utils\LayoutBuilder;
-use \Pangine\utils\Validator;
+
+# TODO: QUESTA PAGINA È DA ELIMINARE O MODIFICARE (è stata creata solamente per sperimentare con le features di validazione)
 
 (new Pangine())
     ->add_renderer_GET(function() {
@@ -15,6 +15,7 @@ use \Pangine\utils\Validator;
             ->replace("keywords", "ReadMe, biblioteca, libri, narrativa, prenotazioni")
             ->replace("content", "")
             ->replace("menu", Pangine::navbar_list())
-            ->replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Accedi")))
+            ->replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Admin")))
             ->build();
-    })->execute();
+    })
+    ->execute();

@@ -15,6 +15,8 @@ class Database
     private const PASSWORD = 'admin';
     private const DATABASE = 'mrango';
 
+    private bool $db_was_used = false;
+
     private mysqli $conn;
 
     public function __construct()
@@ -22,10 +24,16 @@ class Database
         $this->conn = new mysqli(self::HOST, self::USERNAME, self::PASSWORD, self::DATABASE);
     }
 
+    /**
+     * @throws Exception500
+     */
     public function close(): void
     {
         if ($this->conn->ping()) {
             $this->conn->close();
+            if(!$this->db_was_used){
+                throw new Exception500("DB connection was created but never used.");
+            }
         }
     }
 
@@ -63,6 +71,7 @@ class Database
         } catch (Exception $ex) {
             throw new Exception500("Errore di connessione con il database. Si prega di riprovare tra qualche secondo.");
         }
+        $this->db_was_used = true;
         return $ret_set;
     }
 

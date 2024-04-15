@@ -2,8 +2,6 @@
 
 namespace Pangine\utils;
 
-// TODO: i values vanno passati via query parameters (in quanto il builder utilizzerà quelli), mentre i messaggi via sessione
-
 require_once(__DIR__ . "/Validator.php");
 
 class ValidateMe

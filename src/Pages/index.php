@@ -17,4 +17,5 @@ use \Pangine\utils\Validator;
             ->replace("menu", Pangine::navbar_list())
             ->replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Accedi")))
             ->build();
-    })->execute();
+    }
+)->execute();

@@ -13,7 +13,9 @@ use \Pangine\utils\LayoutBuilder;
             ->replace("title", "Home")
             ->replace("description", "Pagina principale della biblioteca ReadMe")
             ->replace("keywords", "ReadMe, biblioteca, libri, narrativa, prenotazioni")
-            ->replace("content", "")
+            ->replace("content", "{{smtg-value}} --- {{smtg-message}}")
+            ->replace("smtg-value","smtg-value")
+            ->replace("smtg-message","smtg-message")
             ->replace("menu", Pangine::navbar_list())
             ->replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Admin")))
             ->build();

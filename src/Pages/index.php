@@ -10,12 +10,12 @@ use \Pangine\utils\Validator;
 (new Pangine())
     ->add_renderer_GET(function() {
         echo (new LayoutBuilder())
-            ->replace("title", "Home")
-            ->replace("description", "Pagina principale della biblioteca ReadMe")
-            ->replace("keywords", "ReadMe, biblioteca, libri, narrativa, prenotazioni")
-            ->replace("content", "")
-            ->replace("menu", Pangine::navbar_list())
-            ->replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Accedi")))
+            ->lazy_replace("title", "Home")
+            ->lazy_replace("description", "Pagina principale della biblioteca ReadMe")
+            ->lazy_replace("keywords", "ReadMe, biblioteca, libri, narrativa, prenotazioni")
+            ->lazy_replace("menu", Pangine::navbar_list())
+            ->lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Accedi")))
+            ->istant_replace("content", "")
             ->build();
     }
 )->execute();

@@ -4,6 +4,7 @@
 namespace Pangine\utils;
 
 require_once(__DIR__ . "/ValidateMe.php");
+require_once(__DIR__ . "/Exception500.php");
 
 class Validator
 {

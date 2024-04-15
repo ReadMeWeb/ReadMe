@@ -10,14 +10,14 @@ use \Pangine\utils\LayoutBuilder;
 (new Pangine())
     ->add_renderer_GET(function() {
         echo (new LayoutBuilder())
-            ->lazy_replace("title", "Home")
-            ->lazy_replace("description", "Pagina principale della biblioteca ReadMe")
-            ->lazy_replace("keywords", "ReadMe, biblioteca, libri, narrativa, prenotazioni")
-            ->lazy_replace("smtg-value","smtg-value")
-            ->lazy_replace("smtg-message","smtg-message")
-            ->lazy_replace("menu", Pangine::navbar_list())
-            ->lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Admin")))
-            ->istant_replace("content", "{{smtg-value}} --- {{smtg-message}}")
+            ->tag_lazy_replace("title", "Home")
+            ->tag_lazy_replace("description", "Pagina principale della biblioteca ReadMe")
+            ->tag_lazy_replace("keywords", "ReadMe, biblioteca, libri, narrativa, prenotazioni")
+            ->tag_lazy_replace("smtg-value","smtg-value")
+            ->tag_lazy_replace("smtg-message","smtg-message")
+            ->tag_lazy_replace("menu", Pangine::navbar_list())
+            ->tag_lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Admin")))
+            ->tag_istant_replace("content", "{{smtg-value}} --- {{smtg-message}}")
             ->build();
     })
     ->execute();

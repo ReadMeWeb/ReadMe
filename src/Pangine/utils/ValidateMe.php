@@ -19,12 +19,17 @@ class ValidateMe
     }
 
     //Le estensioni vanno senza il punto
+
+    /**
+     * @throws Exception500
+     */
     public function is_file(array $allowed_extensions = []): Validator
     {
-        if (count($allowed_extensions) == 0) {
-            throw new Exception500("Non è stata fornita alcuna estensione al validatore.");
-        }
         $this->validating_functions[] = function () use ($allowed_extensions) {
+            if (count($allowed_extensions) == 0) {
+                throw new Exception500("Non è stata fornita alcuna estensione al validatore.");
+            }
+
             //Controllo dell'esistenza del file
             if (!isset($_FILES[$this->parameter_name])) {
                 $_SESSION["parameters"][$this->parameter_name]["message"] = "Si prega di fornire un file.";
@@ -56,10 +61,11 @@ class ValidateMe
     //Restituisce "" se va tutto bene.
     public function is_string(int $min_length = 0, int $max_length = -1, callable $string_parser = null): Validator
     {
-        if ($min_length < 0 || $max_length < -1) {
-            throw new Exception500("Inserire lunghezze di validazione stringa valide.");
-        }
         $this->validating_functions[] = function () use ($min_length, $max_length, $string_parser) {
+            if ($min_length < 0 || $max_length < -1) {
+                throw new Exception500("Inserire lunghezze di validazione stringa valide.");
+            }
+
             $method = null;
             if (isset($_GET[$this->parameter_name])) {
                 $method = $_GET;
@@ -98,12 +104,16 @@ class ValidateMe
 
     //Lo string parser, deve ritornare la stringa che sarà il messaggio di validazione. NON INTERAGISCE DIRETTAMENTE CON LA SESSIONE.
     //Restituisce "" se va tutto bene.
+    /**
+     * @throws Exception500
+     */
     public function is_numeric(int $min_val = PHP_INT_MIN, int $max_val = PHP_INT_MAX, callable $value_parser = null): Validator
     {
-        if ($min_val > $max_val) {
-            throw new Exception500("Inserire un intervallo di validazione per valori numerici valido.");
-        }
         $this->validating_functions[] = function () use ($min_val, $max_val, $value_parser) {
+            if ($min_val > $max_val) {
+                throw new Exception500("Inserire un intervallo di validazione per valori numerici valido.");
+            }
+
             $method = null;
             if (isset($_GET[$this->parameter_name])) {
                 $method = $_GET;

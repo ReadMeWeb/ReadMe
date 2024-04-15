@@ -37,7 +37,7 @@ class LayoutBuilder
         return $this->base_layout;
     }
 
-    public function lazy_replace(string $tag, string $content): LayoutBuilder
+    public function tag_lazy_replace(string $tag, string $content): LayoutBuilder
     {
         $this->replacers[] = function () use ($tag, $content): void {
             if ($tag == "title") {
@@ -48,12 +48,26 @@ class LayoutBuilder
         return $this;
     }
 
-    public function istant_replace(string $tag, string $content): LayoutBuilder
+    public function tag_istant_replace(string $tag, string $content): LayoutBuilder
     {
         if ($tag == "title") {
             $content .= " - ReadMe";
         }
         $this->base_layout = str_replace("{{" . $tag . "}}", $content, $this->base_layout);
+        return $this;
+    }
+
+    public function plain_lazy_replace(string $plain_text, string $content): LayoutBuilder
+    {
+        $this->replacers[] = function () use ($plain_text, $content): void {
+            $this->base_layout = str_replace($plain_text, $content, $this->base_layout);
+        };
+        return $this;
+    }
+
+    public function plain_instant_replace(string $plain_text, string $content): LayoutBuilder
+    {
+        $this->base_layout = str_replace($plain_text, $content, $this->base_layout);
         return $this;
     }
 

@@ -49,7 +49,7 @@ class Pangine
             # TODO: da eliminare vvv
             "ELIMINAMI_PAGINA_ADMIN_DI_PROVA" => array(
                 "path" => "/Pages/admin.php",
-                "privileges" => array()
+                "privileges" => array(self::ADMIN())
             ),
             "Home" => array(
                 "path" => "/Pages/index.php",
@@ -64,11 +64,11 @@ class Pangine
             foreach (self::$pages as $page) {
                 if (strtok($_SERVER['REQUEST_URI'], '?') == $page['path']) {
                     if (count($page["privileges"]) && !in_array($_SESSION["user"]["status"], $page["privileges"])) {
-                        throw new Exception500("Non hai i permessi sufficienti per entrare in questa pagina.");
+                        header("Location: /Pages/403.php");
+                        exit();
                     }
                 }
             }
-
             foreach ($this->controlled_renderers_unpure as $renderer) {
                 $renderer();
             }
@@ -76,7 +76,9 @@ class Pangine
                 $renderer();
             }
         } catch (Exception500 $e) {
-            echo $e->getMessage();
+            $_SESSION["error500message"] = $e->getMessage();
+            header("Location: /Pages/500.php");
+            exit();
         }
     }
 

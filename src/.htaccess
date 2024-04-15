@@ -1,5 +1,5 @@
-ErrorDocument 404 /404.php
-ErrorDocument 403 /404.php
-ErrorDocument 500 /500.php
+ErrorDocument 404 /Pages/404.php
+ErrorDocument 403 /Pages/404.php
+ErrorDocument 500 /Pages/500.php
 
 DirectoryIndex Pages/index.php

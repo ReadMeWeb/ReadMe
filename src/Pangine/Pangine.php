@@ -46,7 +46,7 @@ class Pangine
                 "path" => "/Pages/registrati.php",
                 "privileges" => array(self::UNREGISTERED())
             ),
-            # TODO: da eliminare vvv
+            # TODO: da eliminare vvv (assieme alla corrisondente pagina farlocca)
             "ELIMINAMI_PAGINA_ADMIN_DI_PROVA" => array(
                 "path" => "/Pages/admin.php",
                 "privileges" => array(self::ADMIN())

@@ -128,12 +128,12 @@ class ValidateMe
             $val_to_analyze = $method[$this->parameter_name];
             $_SESSION["parameters"][$this->parameter_name]["value"] = $val_to_analyze;
 
-            if ($min_val != PHP_INT_MIN && strlen($val_to_analyze) < $min_val) {
+            if ($min_val != PHP_INT_MIN && $val_to_analyze < $min_val) {
                 $_SESSION["parameters"][$this->parameter_name]["message"] = "Si prega di fornire un valore numerico maggiore di" . $min_val . ".";
                 $this->validator->something_went_off();
                 return;
             }
-            if ($max_val != PHP_INT_MAX && strlen($val_to_analyze) > $max_val) {
+            if ($max_val != PHP_INT_MAX && $val_to_analyze > $max_val) {
                 $_SESSION["parameters"][$this->parameter_name]["message"] = "Si prega di fornire un valore numerico minore di " . $max_val . ".";
                 $this->validator->something_went_off();
                 return;

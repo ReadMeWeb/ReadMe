@@ -45,7 +45,7 @@ class Database
     /**
      * @throws Exception500
      */
-    private function execute_query(string $query, ...$params): array|bool
+    public function execute_query(string $query, ...$params): array|bool
     {
         try {
             $stmt = $this->conn->prepare($query);

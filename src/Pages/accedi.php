@@ -2,6 +2,7 @@
 
 use Pangine\Pangine;
 use \Pangine\utils\LayoutBuilder;
+use Utils\Database;
 
 require_once __DIR__ . '/../Utils/ErroriMigliori.php';
 require_once __DIR__ . '/../Utils/Stream.php';
@@ -9,11 +10,22 @@ require_once __DIR__ . '/../Utils/Database.php';
 require_once __DIR__ . '/../Pangine/Pangine.php';
 require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
 
-const registrati = 'signup';
+const registrati = 'registrati';
 
 (new Pangine())
   //accedi
-  ->add_renderer_POST(function () {
+  ->add_renderer_POST($accedi = function (Database $conn) {
+    $profilo = $conn->execute_query(
+      'SELECT username, status FROM Users WHERE username = ? AND password = ?;',
+      $_POST['nome'],
+      $_POST['password']
+    );
+    if (count($profilo) == 1) {
+      $_SESSION['user'] = $profilo;
+      echo "loggato B) ";
+    } else {
+      echo "account non trovato lmao";
+    }
   }, needs_database: true)
   ->add_renderer_GET(function () {
     echo (new LayoutBuilder())

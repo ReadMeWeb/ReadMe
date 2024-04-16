@@ -58,7 +58,7 @@ class Pangine
             ),
             "Esci" => array(
               "path" => "/Pages/esci.php",
-              "privileges" => array(self::UNREGISTERED(), self::USER(), self::ADMIN())
+              "privileges" => array(self::USER(), self::ADMIN())
             )
         );
       }

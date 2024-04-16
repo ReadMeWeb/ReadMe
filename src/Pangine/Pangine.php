@@ -55,8 +55,18 @@ class Pangine
             "Home" => array(
                 "path" => "/Pages/index.php",
                 "privileges" => array() // Rimane vuoto in quanto non si vuole che venga visualizzato nella navbar
+            ),
+            "Esci" => array(
+              "path" => "/Pages/esci.php",
+              "privileges" => array(self::UNREGISTERED(), self::USER(), self::ADMIN())
             )
         );
+      }
+
+    public static function redirect(string $page = ''): void
+    {
+      header('Location: ' . ($page === '' ? '' : self::$pages[$page]['path']));
+      exit();
     }
 
     public function execute(): void

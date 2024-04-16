@@ -69,7 +69,9 @@ class Database
 
             $stmt->close();
         } catch (Exception $ex) {
-            throw new Exception500("Errore di connessione con il database. Si prega di riprovare tra qualche secondo.");
+            // adesso che stiamo costruendo il sito ci serve sapere perché il db è morto 
+            throw $ex;
+            //throw new Exception500("Errore di connessione con il database. Si prega di riprovare tra qualche secondo.");
         }
         $this->db_was_used = true;
         return $ret_set;

@@ -179,7 +179,7 @@ body {
 /*###############################################
 #           Not dimensions properties           #
 ###############################################*/
-/* --------- NAVBAR - menu --------- */
+/* --------- HEADER - menu --------- */
 #logoLink a, #logoLink {
     display: flex;
     justify-content: center;
@@ -215,13 +215,13 @@ nav#menu ul li.selectedNavLink {
     box-shadow: 0 0 0.16em 0 inset var(--primaryColor);
 }
 
-/* --------- NAVBAR - breadcrumbs --------- */
+/* --------- HEADER - breadcrumbs --------- */
 #breadcrumbs {
     display: flex;
     justify-content: center;
 }
 
-/* --------- NAVBAR - logolink --------- */
+/* --------- HEADER - logolink --------- */
 nav h1 {
     background-image: var(--logoUrl);
 }
@@ -256,14 +256,6 @@ nav h1 span {
     justify-content: center;
 }
 
-
-/* --------- CHI SIAMO --------- */
-/*TODO: da sistemare all'interno dei vari breakpoint per le dimensioni*/
-.ritratto {
-    width: 50px;
-    height: auto;
-}
-
 /* ---------- GENERAL ---------- */
 a {
     color: var(--linkColor);
@@ -281,31 +273,11 @@ label {
     display: block;
 }
 
-.input-error {
-    background-color: var(--secondaryColor);
-    border: 1px solid;
-    padding: 1em;
-    margin: 1%;
-}
-
-/* --------- helper --------- */
+/* --------- accessibility content helper --------- */
 .helper {
     position: absolute;
     height: 1px;
     width: 1px;
     overflow: hidden;
     clip: rect(1px, 1px, 1px, 1px);
-}
-
-/*##############################
-#             Input            #
-##############################*/
-form {
-  backround-color: red;
-  display: flex;
-  flex-direction: column;
-  width: min-content;
-}
-select {
-  width: 100%;
 }

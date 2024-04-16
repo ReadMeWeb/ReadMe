@@ -45,7 +45,7 @@ class Database
     /**
      * @throws Exception500
      */
-    private function execute_query(string $query, ...$params): array|bool
+    public function execute_query(string $query, ...$params): array|bool
     {
         try {
             $stmt = $this->conn->prepare($query);
@@ -73,23 +73,5 @@ class Database
         }
         $this->db_was_used = true;
         return $ret_set;
-    }
-
-    public function password_if_user_exists(string $username): string | null
-    {
-        $response = $this->execute_query("SELECT password FROM Users WHERE username = ? LIMIT 1;",$username);
-        if(count($response) == 0){
-            return null;
-        }else{
-            return $response[0]["password"];
-        }
-    }
-
-    public function add_user(): void
-    {
-        $this->execute_query(
-            "INSERT INTO Users(username, password, status) VALUES(?,?,'USER');",
-            strval(random_int(0, 1000)),
-            strval(random_int(0, 1000)));
     }
 }

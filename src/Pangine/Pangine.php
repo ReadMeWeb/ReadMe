@@ -1,6 +1,7 @@
 <?php
  
 namespace Pangine;
+require_once(__DIR__ . "/../Utils/ErroriMigliori.php");
 require_once(__DIR__ . "/../Utils/Database.php");
 require_once(__DIR__ . "/utils/Exception500.php");
 require_once(__DIR__ . "/utils/Validator.php");

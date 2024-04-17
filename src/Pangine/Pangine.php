@@ -57,7 +57,7 @@ class Pangine
                 "privileges" => array() // Rimane vuoto in quanto non si vuole che venga visualizzato nella navbar
             ),
             "Esci" => array(
-              "path" => "/Pages/esci.php",
+              "path" => "/marango/Pages/esci.php",
               "privileges" => array(self::USER(), self::ADMIN())
             )
         );

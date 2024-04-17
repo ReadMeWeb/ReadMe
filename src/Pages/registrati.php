@@ -15,9 +15,14 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
 (new Pangine())
   ->add_renderer_POST(
     function (Database $conn) {
-      if ($conn->execute_query('select count(*) = 0 as c from Users where username = ?;', $_POST['nome'])[0]['c']) {
-        $conn->execute_query('insert into Users values(?,?,\'USER\');', $_POST['nome'], $_POST['password']);
-      }
+      (new Validator(''))->add_parameter('nome')->is_string(
+        string_parser: fn () =>
+        $conn->execute_query('select count(*) = 0 as c from Users where username = ?;', $_POST['nome'])[0]['c']
+          ? ''
+          : 'Nome utente già registrato'
+      )->validate();
+
+      $conn->execute_query('insert into Users values(?,?,\'USER\');', $_POST['nome'], $_POST['password']);
       accedi($conn);
     },
     needs_database: true,

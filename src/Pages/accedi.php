@@ -8,25 +8,14 @@ use Utils\Database;
 
 require_once __DIR__ . '/../Utils/Stream.php';
 require_once __DIR__ . '/../Utils/Database.php';
+require_once __DIR__ . '/../Utils/Accedi.php';
 require_once __DIR__ . '/../Pangine/Pangine.php';
 require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
 
 const registrati = 'registrati';
 
 (new Pangine())
-  //accedi
-  ->add_renderer_POST($accedi = function (Database $conn) {
-    $profilo = $conn->execute_query('
-      SELECT username, status FROM Users WHERE username = ? AND password = ?;
-    ', $_POST['nome'], $_POST['password']);
-    if (count($profilo) == 1) {
-      $_SESSION['user'] = $profilo[0];
-      // TODO sarebbe da reindirizzare alla pagina da cui proveniamo
-      //      che non necessariamente è la home
-      Pangine::redirect('Home');
-    }
-    Pangine::redirect();
-  }, needs_database: true)
+  ->add_renderer_POST('accedi', needs_database: true)
   ->add_renderer_GET(function () {
     echo (new LayoutBuilder())
       ->tag_lazy_replace('title', 'Accedi')
@@ -49,44 +38,4 @@ const registrati = 'registrati';
       ->tag_lazy_replace('password-message', '')
       ->build();
   })
-  //registrati
-  ->add_renderer_POST(
-    function (Database $conn) use ($accedi) {
-      if ($conn->execute_query('select count(*) = 0 as c from Users where username = ?;', $_POST['nome'])[0]['c']) {
-        $conn->execute_query('insert into Users values(?,?,\'USER\');', $_POST['nome'], $_POST['password']);
-      }
-      $accedi($conn);
-    },
-    registrati,
-    true,
-    validator: (new Validator(url_in_case_of_failure: ''))
-      ->add_parameter('nome')->is_string(4, 20)
-      ->add_parameter('password')->is_string(4, 128)
-  )
-  ->add_renderer_GET(
-    function () {
-      echo (new LayoutBuilder())
-        ->tag_lazy_replace('title', 'Registrati')
-        ->tag_lazy_replace('description', 'Pagina di registrazione alla biblioteca di ReadMe')
-        ->tag_lazy_replace('keywords', 'ReadMe, biblioteca, libri, narrativa, prenotazioni, registrazione')
-        ->tag_lazy_replace('menu', Pangine::navbar_list())
-        ->tag_lazy_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Registrati')))
-        ->tag_istant_replace('content', file_get_contents(__DIR__ . '/../templates/accedi.html'))
-        ->tag_lazy_replace('legenda', 'Registrati')
-        ->tag_lazy_replace('nome-autocomplete', 'off')
-        ->tag_lazy_replace('password-autocomplete', 'new-password')
-        ->tag_lazy_replace('crud-name', registrati)
-        ->tag_lazy_replace('crud-innerhtml', 'Registrati')
-        ->tag_lazy_replace('sign-in-up-url', '?')
-        ->tag_lazy_replace('sign-in-up-url-innerhtml', 'Hai già un profilo ? Clicca qui per accedere')
-
-        ->tag_lazy_replace('nome-value', '')
-        ->tag_lazy_replace('nome-message', '')
-        ->tag_lazy_replace('password-value', '')
-        ->tag_lazy_replace('password-message', '')
-
-        ->build();
-    },
-    registrati
-  )
   ->execute();

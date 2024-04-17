@@ -1,7 +1,6 @@
 <?php 
 
 namespace Pangine;
-require_once(__DIR__ . "/../Utils/ErroriMigliori.php");
 require_once(__DIR__ . "/../Utils/Database.php");
 require_once(__DIR__ . "/utils/Exception500.php");
 require_once(__DIR__ . "/utils/Validator.php");
@@ -55,18 +54,8 @@ class Pangine
             "Home" => array(
                 "path" => "/marango/Pages/index.php",
                 "privileges" => array() // Rimane vuoto in quanto non si vuole che venga visualizzato nella navbar
-            ),
-            "Esci" => array(
-              "path" => "/Pages/esci.php",
-              "privileges" => array(self::USER(), self::ADMIN())
             )
         );
-      }
-
-    public static function redirect(string $page = ''): void
-    {
-      header('Location: ' . ($page === '' ? '' : self::$pages[$page]['path']));
-      exit();
     }
 
     public function execute(): void

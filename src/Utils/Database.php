@@ -69,27 +69,11 @@ class Database
 
             $stmt->close();
         } catch (Exception $ex) {
-            throw new Exception500("Errore di connessione con il database. Si prega di riprovare tra qualche secondo.");
+            // adesso che stiamo costruendo il sito ci serve sapere perché il db è morto 
+            throw $ex;
+            //throw new Exception500("Errore di connessione con il database. Si prega di riprovare tra qualche secondo.");
         }
         $this->db_was_used = true;
         return $ret_set;
-    }
-
-    public function password_if_user_exists(string $username): string | null
-    {
-        $response = $this->execute_query("SELECT password FROM Users WHERE username = ? LIMIT 1;",$username);
-        if(count($response) == 0){
-            return null;
-        }else{
-            return $response[0]["password"];
-        }
-    }
-
-    public function add_user(): void
-    {
-        $this->execute_query(
-            "INSERT INTO Users(username, password, status) VALUES(?,?,'USER');",
-            strval(random_int(0, 1000)),
-            strval(random_int(0, 1000)));
     }
 }

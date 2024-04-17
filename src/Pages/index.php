@@ -24,6 +24,10 @@ use \Utils\Database;
             ->tag_lazy_replace("authors-counter",strval($authors_counter))
             ->tag_lazy_replace("books-counter",strval($books_counter))
             ->tag_lazy_replace("loans-counter",strval($loans_counter))
+            ->plain_lazy_replace(
+                "<a href=\"../Pages/index.php\" aria-label=\"Ritorna alla pagina home\"><h1><span lang=\"en\">Read Me</span></h1></a>",
+                "<h1><span lang=\"en\">Read Me</span></h1>"
+            )
             ->tag_istant_replace("content", $content)
             ->build();
     },needs_database: true)->execute();

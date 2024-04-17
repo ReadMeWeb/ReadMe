@@ -183,6 +183,7 @@ body {
 #logoLink a, #logoLink {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 #menu ul {
     display: flex;
@@ -215,16 +216,19 @@ nav#menu ul li.selectedNavLink {
     box-shadow: 0 0 0.16em 0 inset var(--primaryColor);
 }
 
+nav li a {
+    color: var(--textColor);
+}
+nav li a:visited {
+    color: var(--textColor);
+}
+
 /* --------- HEADER - breadcrumbs --------- */
 #breadcrumbs {
     display: flex;
     justify-content: center;
 }
 
-/* --------- HEADER - logolink --------- */
-nav h1 {
-    background-image: var(--logoUrl);
-}
 nav#breadcrumbs p{
     padding-bottom: 0.32em;
     padding-top: 0.32em;
@@ -237,13 +241,18 @@ nav#breadcrumbs p{
     -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
     box-shadow: 0 0 0.16em 0 var(--primaryColor);
 }
-nav li a {
-    color: var(--textColor);
+
+/* --------- HEADER - logolink --------- */
+nav div {
+    background-image: var(--logoUrl);
+    background-size: cover;
+    width: 12em;
+    height: 3em;
+    margin:0;
+    margin-top:0.7em;
 }
-nav li a:visited {
-   color: var(--textColor);
-}
-nav h1 span {
+
+nav div span {
     display: block;
     height: 0;
     overflow: hidden;

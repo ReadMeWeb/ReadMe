@@ -29,7 +29,7 @@ class Validator
             $validator->validate();
         }
         if($this->validation_failed){
-            header("Location: ".$this->url_in_case_of_failure);
+            header("Location: /marango".$this->url_in_case_of_failure);
             exit();
         }
     }

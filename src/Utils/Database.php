@@ -69,7 +69,8 @@ class Database
 
             $stmt->close();
         } catch (Exception $ex) {
-            throw new Exception500("Errore di connessione con il database. Si prega di riprovare tra qualche secondo.");
+            //throw new Exception500("Errore di connessione con il database. Si prega di riprovare tra qualche secondo.");
+            throw $ex;
         }
         $this->db_was_used = true;
         return $ret_set;

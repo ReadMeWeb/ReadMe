@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace Pangine;
 require_once(__DIR__ . "/../Utils/ErroriMigliori.php");
 require_once(__DIR__ . "/../Utils/Database.php");

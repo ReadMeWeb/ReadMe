@@ -1,5 +1,5 @@
 <?php
-
+ 
 use Pangine\Pangine;
 
 require_once __DIR__ . '/../Pangine/Pangine.php';

@@ -1,5 +1,5 @@
 <?php
-
+ 
 require_once __DIR__ . '/Stream.php';
 
 set_error_handler(function ($severity, $message, $file, $line) {

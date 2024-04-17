@@ -2,7 +2,7 @@ name: Deploy Workflow
 on:
   push:
     branches:
-      - 142-upload-server
+      - main
 
 jobs:
   deploy:

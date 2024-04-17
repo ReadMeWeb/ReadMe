@@ -1,7 +1,6 @@
 <?php
  
 namespace Pangine;
-require_once(__DIR__ . "/../Utils/ErroriMigliori.php");
 require_once(__DIR__ . "/../Utils/Database.php");
 require_once(__DIR__ . "/utils/Exception500.php");
 require_once(__DIR__ . "/utils/Validator.php");
@@ -32,41 +31,31 @@ class Pangine
         $this->try_session();
         self::$pages = array(
             "Chi siamo" => array(
-                "path" => "/Pages/chi_siamo.php",
+                "path" => "/marango/Pages/chi_siamo.php",
                 "privileges" => array(self::UNREGISTERED())
             ),
             "Catalogo" => array(
-                "path" => "/Pages/catalogo.php",
+                "path" => "/marango/Pages/catalogo.php",
                 "privileges" => array(self::UNREGISTERED(), self::USER(), self::ADMIN())
             ),
             "Accedi" => array(
-                "path" => "/Pages/accedi.php",
+                "path" => "/marango/Pages/accedi.php",
                 "privileges" => array(self::UNREGISTERED())
             ),
             "Registrati" => array(
-                "path" => "/Pages/registrati.php",
+                "path" => "/marango/Pages/registrati.php",
                 "privileges" => array(self::UNREGISTERED())
             ),
             # TODO: da eliminare vvv (assieme alla corrisondente pagina farlocca)
             "ELIMINAMI_PAGINA_ADMIN_DI_PROVA" => array(
-                "path" => "/Pages/admin.php",
+                "path" => "/marango/Pages/admin.php",
                 "privileges" => array(self::ADMIN())
             ),
             "Home" => array(
-                "path" => "/Pages/index.php",
+                "path" => "/marango/Pages/index.php",
                 "privileges" => array() // Rimane vuoto in quanto non si vuole che venga visualizzato nella navbar
-            ),
-            "Esci" => array(
-              "path" => "/Pages/esci.php",
-              "privileges" => array(self::USER(), self::ADMIN())
             )
         );
-      }
-
-    public static function redirect(string $page = ''): void
-    {
-      header('Location: ' . ($page === '' ? '' : self::$pages[$page]['path']));
-      exit();
     }
 
     public function execute(): void
@@ -75,7 +64,7 @@ class Pangine
             foreach (self::$pages as $page) {
                 if (strtok($_SERVER['REQUEST_URI'], '?') == $page['path']) {
                     if (count($page["privileges"]) && !in_array($_SESSION["user"]["status"], $page["privileges"])) {
-                        header("Location: /Pages/403.php");
+                        header("Location: /marango/Pages/403.php");
                         exit();
                     }
                 }
@@ -88,7 +77,7 @@ class Pangine
             }
         } catch (Exception500 $e) {
             $_SESSION["error500message"] = $e->getMessage();
-            header("Location: /Pages/500.php");
+            header("Location: /marango/Pages/500.php");
             exit();
         }
     }

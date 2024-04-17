@@ -23,7 +23,7 @@ const registrati = 'registrati';
       ->tag_lazy_replace('keywords', 'ReadMe, biblioteca, libri, narrativa, prenotazioni, accedi')
       ->tag_lazy_replace('menu', Pangine::navbar_list())
       ->tag_lazy_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Accedi')))
-      ->tag_istant_replace('content', file_get_contents(__DIR__ . '/../templates/accedi.html'))
+      ->tag_istant_replace('content', file_get_contents(__DIR__ . '/../templates/accedi-registrati-content.html'))
       ->tag_lazy_replace('legenda', 'Accedi')
       ->tag_lazy_replace('nome-autocomplete', 'username')
       ->tag_lazy_replace('password-autocomplete', 'current-password')

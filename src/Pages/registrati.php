@@ -33,7 +33,7 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
         ->tag_lazy_replace('keywords', 'ReadMe, biblioteca, libri, narrativa, prenotazioni, registrazione')
         ->tag_lazy_replace('menu', Pangine::navbar_list())
         ->tag_lazy_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Registrati')))
-        ->tag_istant_replace('content', file_get_contents(__DIR__ . '/../templates/accedi.html'))
+        ->tag_istant_replace('content', file_get_contents(__DIR__ . '/../templates/accedi-registrati-content.html'))
         ->tag_lazy_replace('legenda', 'Registrati')
         ->tag_lazy_replace('nome-autocomplete', 'off')
         ->tag_lazy_replace('password-autocomplete', 'new-password')

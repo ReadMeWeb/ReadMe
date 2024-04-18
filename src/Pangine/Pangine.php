@@ -56,6 +56,10 @@ class Pangine
                 "path" => "/marango/Pages/index.php",
                 "privileges" => array() // Rimane vuoto in quanto non si vuole che venga visualizzato nella navbar
             ),
+            "Libro" => array(
+                "path" => "/marango/Pages/libro.php",
+                "privileges" => array()
+            ),
             "Esci" => array(
               "path" => "/marango/Pages/esci.php",
               "privileges" => array(self::USER(), self::ADMIN())

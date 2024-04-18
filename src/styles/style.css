@@ -124,24 +124,76 @@ body {
     footer#pageFooter {
         padding-bottom: 4em;
     }
+
+    /* -------- BOOK -------*/
+    #book-page div {
+        width: 100%;
+    }
+    #book-page img {
+        display: none;
+    }
 }
 
 /*##############################
 #             Tablet           #
 ##############################*/
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+    /* -------- BOOk -------*/
+    #book-page div {
+        width: 100%;
+    }
+    #book-page img {
+        width: 20%;
+        height: auto; /* Maintain aspect ratio */
+        object-fit: scale-down;
+    }
+    #book-page section {
+        margin-bottom: 20px;
+        display: flow;
+        text-align: center;
+    }
 }
 
 /*##############################
 #             Monitor          #
 ##############################*/
 @media screen and (min-width: 1024px) and (max-width: 1200px) {
+    /* -------- BOOk -------*/
+    #book-page div {
+        width: 45%; /* Adjust this value as needed */
+    }
+    #book-page img {
+        width: 40%;
+        height: auto; /* Maintain aspect ratio */
+        object-fit: scale-down;
+    }
+    #book-page section {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-evenly;
+    }
 }
 
 /*##############################
 #             Bigger           #
 ##############################*/
 @media screen and (min-width: 1200px) {
+    /* -------- BOOk -------*/
+    #book-page div {
+        width: 55%; /* Adjust this value as needed */
+    }
+
+    #book-page img {
+        width: 40%;
+        height: auto; /* Maintain aspect ratio */
+        object-fit: cover;
+    }
+
+    #book-page section {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-evenly;
+    }
 }
 
 /*##############################
@@ -289,4 +341,61 @@ label {
     width: 1px;
     overflow: hidden;
     clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* --------- BOOK --------- */
+
+#book-page h1, #book-page h2, #book-page h3 {
+    color: var(--textColor);
+}
+
+div#book-page {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+}
+
+#book-page h1 {
+    font-size: 2em;
+}
+
+#book-page h2 {
+    font-size: 1.5em;
+}
+
+#book-page h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+#book-page p {
+    line-height: 1.6;
+    color: var(--textColor);
+}
+
+/* Add a border and padding to the book's section */
+#book-page section {
+    border: 1px solid var(--primaryColor);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Style the book's title and author */
+#book-page section h2 {
+    color: var(--primaryColor);
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+#book-page section h3 {
+    color: var(--secondaryColor);
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* Style the paragraph that shows the number of copies remaining */
+#book-page section p:last-of-type {
+    color: var(--accentColor);
+    font-weight: bold;
 }

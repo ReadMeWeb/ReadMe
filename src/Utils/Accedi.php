@@ -14,7 +14,7 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
 
 function accedi(Database $conn) {
   $profilo = null;
-  (new Validator(''))->add_parameter('nome')->is_string(
+  (new Validator('/marango/Pages/accedi.php'))->add_parameter('nome')->is_string(
     string_parser: function () use ($conn, &$profilo) {
       return count($profilo = $conn->execute_query('
       SELECT username, status, password FROM Users WHERE username = ? AND password = ?;

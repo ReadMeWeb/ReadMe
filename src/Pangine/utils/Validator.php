@@ -34,7 +34,7 @@ class Validator
             if ($this->url_in_case_of_failure === '') {
               Pangine::redirect();
             }
-            header("Location: /marango".$this->url_in_case_of_failure);
+            header("Location: ".$this->url_in_case_of_failure);
             exit();
         }
     }

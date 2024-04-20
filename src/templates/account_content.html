@@ -1,0 +1,21 @@
+<div id="operations">
+  <ul>
+    <li><a href="{{pages-account}}">Informazioni</a></li>
+    <li><a href="{{pages-account-update}}">Modifica</a></li>
+    <li><a href="{{pages-exit}}">Esci</a></li>
+  </ul>
+</div>
+<div id="main_zone">
+  <form action="{{pages-form}}" method="POST">
+    <fieldset>
+      <legend>Informazioni account</legend>
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" value="{{username-value}}" disabled>
+      {{username-message}}
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" value="{{password-value}}" disabled>
+      {{password-message}}
+      <input type="submit" name="update" value="Modifica">
+    </fieldset>
+  </form>
+</div>

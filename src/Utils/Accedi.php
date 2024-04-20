@@ -17,7 +17,7 @@ function accedi(Database $conn) {
   (new Validator(''))->add_parameter('nome')->is_string(
     string_parser: function () use ($conn, &$profilo) {
       return count($profilo = $conn->execute_query('
-      SELECT username, status FROM Users WHERE username = ? AND password = ?;
+      SELECT username, status, password FROM Users WHERE username = ? AND password = ?;
     ', $_POST['nome'], $_POST['password'])) == 1
         ? ''
         : 'Le credenziali non risultano registrate.';

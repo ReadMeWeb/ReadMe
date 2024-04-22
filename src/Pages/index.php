@@ -20,7 +20,7 @@ use \Utils\Database;
             ->tag_lazy_replace("description", "Pagina principale della biblioteca ReadMe")
             ->tag_lazy_replace("keywords", "ReadMe, biblioteca, libri, narrativa, prenotazioni")
             ->tag_lazy_replace("menu", Pangine::navbar_list())
-            ->tag_lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Accedi")))
+            ->tag_lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home")))
             ->tag_lazy_replace("authors-counter",strval($authors_counter))
             ->tag_lazy_replace("books-counter",strval($books_counter))
             ->tag_lazy_replace("loans-counter",strval($loans_counter))

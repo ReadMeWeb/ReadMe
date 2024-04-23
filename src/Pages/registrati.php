@@ -15,7 +15,7 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
 (new Pangine())
   ->add_renderer_POST(
     function (Database $conn) {
-      (new Validator(''))->add_parameter('nome')->is_string(
+      (new Validator('/marango/Pages/registrati.php'))->add_parameter('nome')->is_string(
         string_parser: fn () =>
         $conn->execute_query('select count(*) = 0 as c from Users where username = ?;', $_POST['nome'])[0]['c']
           ? ''
@@ -26,7 +26,7 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
       accedi($conn);
     },
     needs_database: true,
-    validator: (new Validator(url_in_case_of_failure: ''))
+    validator: (new Validator(url_in_case_of_failure: '/marango/Pages/registrati.php'))
       ->add_parameter('nome')->is_string(4, 20)
       ->add_parameter('password')->is_string(4, 128)
   )

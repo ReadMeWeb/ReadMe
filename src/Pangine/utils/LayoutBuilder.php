@@ -24,7 +24,7 @@ class LayoutBuilder
                     $this->base_layout = str_replace("{{" . $parameter_name . "-value}}", $parameter_metadata["value"], $this->base_layout);
                 }
                 if (isset($parameter_metadata["message"])) {
-                    $this->base_layout = str_replace("{{" . $parameter_name . "-message}}", $parameter_metadata["message"], $this->base_layout);
+                    $this->base_layout = str_replace("{{" . $parameter_name . "-message}}", "<p class='errorMessage'>".$parameter_metadata["message"]."</p>", $this->base_layout);
                 }
             }
         }

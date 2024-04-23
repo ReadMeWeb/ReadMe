@@ -1,6 +1,13 @@
 /*##############################
 #           General            #
 ##############################*/
+
+:root {
+    --errorMessageColor: #721c24;
+    --errorMessageBackground: #f8d7da;
+    --errorMessageBorderColor: #f5c6cb;
+}
+
 /* --------- COLORS --------- */
 @media (prefers-color-scheme: light) {
     :root {
@@ -250,10 +257,7 @@ nav li a:visited {
 }
 
 nav#breadcrumbs p {
-    padding-bottom: 0.32em;
-    padding-top: 0.32em;
-    padding-left: 0.64em;
-    padding-right: 0.64em;
+    padding: 0.32em 0.64em;
     border-radius: 5px;
     margin-top: 0.32em;
     -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
@@ -357,6 +361,19 @@ input[disabled] {
 
 input {
     margin-bottom: 1em;
+    border: 1px solid black;
+}
+
+.errorMessage {
+    margin-bottom: 1em;
+    color: var(--errorMessageColor);
+    background-color: var(--errorMessageBackground);
+    border-color: var(--errorMessageBorderColor);
+    padding: 0.5em 1em;
+    border-radius: 0.3em;
+}
+.errorMessage::before{
+    content: '❌: ';
 }
 
 /* --------- accessibility content helper --------- */

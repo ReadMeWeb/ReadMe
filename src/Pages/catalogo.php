@@ -12,7 +12,7 @@ use \Utils\Database;
 function get_book_card(string $cover_file_name, string $title, int $copies, string $name_surname, int $id): string {
     return "<li> 
             <article class='book-card'>
-                <img src='{$cover_file_name}' alt='' width='200' height='200'>
+                <img src='/marango/assets/book_covers/{$cover_file_name}' alt='' width='200' height='200'>
                 <dl>
                     <div>
                         <dt>Titolo:</dt>

@@ -1,13 +1,6 @@
 /*##############################
 #           General            #
 ##############################*/
-
-:root {
-    --errorMessageColor: #721c24;
-    --errorMessageBackground: #f8d7da;
-    --errorMessageBorderColor: #f5c6cb;
-}
-
 /* --------- COLORS --------- */
 @media (prefers-color-scheme: light) {
     :root {
@@ -22,7 +15,6 @@
         --logoUrl: url('../assets/readme-logo-black-cropped.png');
     }
 }
-
 @media (prefers-color-scheme: dark) {
     :root {
         --textColor: #e6eae9;
@@ -36,7 +28,6 @@
         --logoUrl: url('../assets/readme-logo-white-cropped.png');
     }
 }
-
 /* --------- FONTS --------- */
 @font-face {
     font-family: 'Montserrat';
@@ -44,7 +35,6 @@
     font-weight: 400;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'Montserrat';
     src: url('../fonts/Montserrat-MediumItalic.ttf');
@@ -79,7 +69,6 @@
     font-weight: 300;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'Montserrat';
     src: url('../fonts/Montserrat-LightItalic.ttf');
@@ -92,7 +81,6 @@ body {
     background-color: var(--backgroundColor);
     color: var(--textColor);
 }
-
 * {
     padding: 0;
     margin: 0;
@@ -113,17 +101,14 @@ body {
         bottom: 0;
         height: 3.2em;
     }
-
     nav h1 {
         background-size: 8em 2em;
         width: 8em;
         height: 2em;
     }
-
-    #menu ul li .selectedNavLink {
+    #menu ul li .selectedNavLink{
         height: 3.2em;
     }
-
     #menu {
         background-color: var(--backgroundColor);
         -moz-box-shadow: 0 0 0.64em 0 var(--primaryColor);
@@ -131,8 +116,7 @@ body {
         -webkit-box-shadow: 0 0 0.64em 0 var(--primaryColor);
         box-shadow: 0 0 0.64em 0 var(--primaryColor);
     }
-
-    #menu ul li.selectedNavLink {
+    #menu ul li.selectedNavLink{
         height: 3.2em;
     }
 
@@ -163,7 +147,7 @@ body {
 /*##############################
 #     Across all non mobile    #
 ##############################*/
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 768px){
     /* -------- nav menu -------*/
     nav#menu ul {
         background-color: var(--backgroundColor);
@@ -172,29 +156,24 @@ body {
         -webkit-box-shadow: 0 0 0.64em 0 var(--primaryColor);
         box-shadow: 0 0 0.64em 0 var(--primaryColor);
     }
-
     nav#menu {
         overflow: hidden;
         padding-bottom: 0.64em;
     }
-
     nav h1 {
         background-size: 10em 2.5em;
         width: 10em;
         height: 2.5em;
     }
-
-    #menu ul li.selectedNavLink {
+    #menu ul li.selectedNavLink{
         height: 3.2em;
     }
-
     nav#menu ul li:hover {
         -moz-box-shadow: 0 0 0.08em 0 var(--primaryColor);
         -o-box-shadow: 0 0 0.08em 0 var(--primaryColor);
         -webkit-box-shadow: 0 0 0.08em 0 var(--primaryColor);
         box-shadow: 0 0 0.08em 0 inset var(--primaryColor);
     }
-
 }
 
 /*###############################################
@@ -206,18 +185,15 @@ body {
     justify-content: center;
     align-items: center;
 }
-
 #menu ul {
     display: flex;
     align-items: center;
     height: 100%;
 }
-
 nav {
     z-index: 100;
 }
-
-#menu ul li {
+#menu ul li{
     list-style: none;
     flex-grow: 1;
     text-align: center;
@@ -225,8 +201,7 @@ nav {
     align-items: center;
     justify-content: center;
 }
-
-nav#menu ul li a {
+nav#menu ul li a{
     width: 100%;
     height: 3.2em;
     display: flex;
@@ -234,7 +209,6 @@ nav#menu ul li a {
     align-items: center;
     justify-content: center;
 }
-
 nav#menu ul li.selectedNavLink {
     -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
     -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
@@ -245,9 +219,20 @@ nav#menu ul li.selectedNavLink {
 nav li a {
     color: var(--textColor);
 }
-
 nav li a:visited {
     color: var(--textColor);
+}
+
+.book-card dt, .book-card dd {
+    display: inline;
+}
+
+.book-card dt {
+    font-weight: bold;
+}
+
+#results-number {
+    font-weight: bold;
 }
 
 /* --------- HEADER - breadcrumbs --------- */
@@ -256,8 +241,11 @@ nav li a:visited {
     justify-content: center;
 }
 
-nav#breadcrumbs p {
-    padding: 0.32em 0.64em;
+nav#breadcrumbs p{
+    padding-bottom: 0.32em;
+    padding-top: 0.32em;
+    padding-left: 0.64em;
+    padding-right: 0.64em;
     border-radius: 5px;
     margin-top: 0.32em;
     -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
@@ -272,8 +260,8 @@ nav div {
     background-size: cover;
     width: 12em;
     height: 3em;
-    margin: 0;
-    margin-top: 0.7em;
+    margin:0;
+    margin-top:0.7em;
 }
 
 nav div span {
@@ -293,28 +281,9 @@ nav div span {
 a {
     color: var(--linkColor);
 }
-
-a:visited {
+a:visited{
     color: var(--visitedLinkColor);
 }
-
-#content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column;
-    margin-top: 1em;
-}
-
-#content > h1 {
-    text-align: center;
-}
-
-#content > div {
-    width: 100%;
-}
-
-/* ---------- form related -----------*/
 
 input, textarea {
     font-family: inherit;
@@ -325,61 +294,6 @@ label {
     display: block;
 }
 
-#content input, #content textarea {
-    padding: 0.5em;
-    border-radius: 0.3em;
-}
-
-form fieldset {
-    display: flex;
-    flex-flow: column;
-    width: 80%;
-}
-
-form {
-    width: 80%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-fieldset {
-    padding: 1em 1em 0 1em;
-    border: none;
-    -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    border-radius: 5px;
-}
-
-legend {
-    float: left;
-    font-size: 1.5em;
-    padding-bottom: 0.5em;
-}
-
-input[disabled] {
-    color: var(--textColor);
-}
-
-input {
-    margin-bottom: 1em;
-    border: 1px solid black;
-}
-
-.errorMessage {
-    margin-bottom: 1em;
-    color: var(--errorMessageColor);
-    background-color: var(--errorMessageBackground);
-    border-color: var(--errorMessageBorderColor);
-    padding: 0.5em 1em;
-    border-radius: 0.3em;
-}
-.errorMessage::before{
-    content: '❌: ';
-}
-
 /* --------- accessibility content helper --------- */
 .helper {
     position: absolute;
@@ -387,26 +301,4 @@ input {
     width: 1px;
     overflow: hidden;
     clip: rect(1px, 1px, 1px, 1px);
-}
-
-/* ------------ ACCOUNT PAGE ------------- */
-ul#operations {
-    list-style: none;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    margin-bottom: 1em;
-    padding: 1em 2em;
-    -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    border-radius: 0.3em;
-}
-
-ul#operations li {
-    padding-bottom: 0.5em;
-}
-ul#operations li:last-child {
-    padding-bottom: 0;
 }

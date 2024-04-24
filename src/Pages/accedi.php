@@ -12,9 +12,8 @@ require_once __DIR__ . '/../Utils/Accedi.php';
 require_once __DIR__ . '/../Pangine/Pangine.php';
 require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
 
-
 (new Pangine())
-  ->add_renderer_POST('accedi', needs_database: true)
+  ->add_renderer_POST('accedi', needs_database: true) // È il nome della funzione definita in Accedi.php
   ->add_renderer_GET(function () {
     echo (new LayoutBuilder())
       ->tag_lazy_replace('title', 'Accedi')
@@ -26,7 +25,7 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
       ->tag_lazy_replace('legenda', 'Accedi')
       ->tag_lazy_replace('nome-autocomplete', 'username')
       ->tag_lazy_replace('password-autocomplete', 'current-password')
-      ->tag_lazy_replace('crud-name', '')
+      ->tag_lazy_replace('crud-name', 'accedi')
       ->tag_lazy_replace('crud-innerhtml', 'Accedi')
       ->tag_lazy_replace('sign-in-up-url', '/marango/Pages/registrati.php')
       ->tag_lazy_replace('sign-in-up-url-innerhtml', 'Sei nuovo ? Clicca qui per registrarti')

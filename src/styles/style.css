@@ -306,6 +306,10 @@ a:visited {
     margin-top: 1em;
 }
 
+#content > h1 {
+    text-align: center;
+}
+
 #content > div {
     width: 100%;
 }
@@ -391,9 +395,18 @@ ul#operations {
     display: flex;
     flex-flow: column;
     align-items: center;
-    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding: 1em 2em;
+    -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    border-radius: 0.3em;
 }
 
 ul#operations li {
     padding-bottom: 0.5em;
+}
+ul#operations li:last-child {
+    padding-bottom: 0;
 }

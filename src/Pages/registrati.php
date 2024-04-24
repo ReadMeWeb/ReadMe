@@ -42,7 +42,7 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
         ->tag_lazy_replace('legenda', 'Registrati')
         ->tag_lazy_replace('nome-autocomplete', 'off')
         ->tag_lazy_replace('password-autocomplete', 'new-password')
-        ->tag_lazy_replace('crud-name', '')
+        ->tag_lazy_replace('crud-name', 'registrati')
         ->tag_lazy_replace('crud-innerhtml', 'Registrati')
         ->tag_lazy_replace('sign-in-up-url', '/marango/Pages/accedi.php')
         ->tag_lazy_replace('sign-in-up-url-innerhtml', 'Hai già un profilo ? Clicca qui per accedere')

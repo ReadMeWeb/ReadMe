@@ -51,30 +51,30 @@ use \Utils\Database;
     ->add_renderer_POST(function (Database $db) {
         (new Validator("/marango/Pages/account.php?update=true"))
             ->add_parameter("username")
-            ->is_string(string_parser: function () use ($db) : string{
+            ->is_string(string_parser: function () use ($db): string {
                 $result = $db->execute_query("SELECT username FROM Users WHERE username = ?", $_POST["username"]);
-                if(count($result) != 0 && $_POST["username"] != $_SESSION["user"]["username"]){
+                if (count($result) != 0 && $_POST["username"] != $_SESSION["user"]["username"]) {
                     return "<p><span lang='en'>Username</span> già utilizzato da un altro account.</p>";
                 }
                 return "";
             })->validate();
-        $result = $db->execute_query("UPDATE Users SET username = ?, password = ? WHERE username = ?", $_POST["username"], $_POST["password"],$_SESSION["user"]["username"]);
+        $result = $db->execute_query("UPDATE Users SET username = ?, password = ? WHERE username = ?", $_POST["username"], $_POST["password"], $_SESSION["user"]["username"]);
 
         $_SESSION["user"]["username"] = $_POST["username"];
         $_SESSION["user"]["password"] = $_POST["password"];
 
         header("Location: /marango/Pages/account.php");
         exit();
-    },caller_parameter_name: "update", needs_database: true, validator: (new Validator("/marango/Pages/account.php?update=true"))
+    }, caller_parameter_name: "update", needs_database: true, validator: (new Validator("/marango/Pages/account.php?update=true"))
         ->add_parameter("username")
         ->is_string(4, 20)
         ->add_parameter("password")
         ->is_string(4, 128)
     )
-    ->add_renderer_GET(function (){
+    ->add_renderer_GET(function () {
         unset($_SESSION["user"]);
         $_SESSION["user"]["status"] = Pangine::UNREGISTERED();
         header("Location: /marango/Pages/index.php");
         exit();
-    },caller_parameter_name: "exit")
+    }, caller_parameter_name: "exit")
     ->execute();

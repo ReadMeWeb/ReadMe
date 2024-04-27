@@ -47,14 +47,12 @@ class Pangine
                 "path" => "/marango/Pages/registrati.php",
                 "privileges" => array(self::UNREGISTERED())
             ),
-            # TODO: da eliminare vvv (assieme alla corrisondente pagina farlocca)
-            "ELIMINAMI_PAGINA_ADMIN_DI_PROVA" => array(
-                "path" => "/marango/Pages/admin.php",
-                "privileges" => array(self::ADMIN())
-            ),
             "Home" => array(
                 "path" => "/marango/Pages/index.php",
                 "privileges" => array() // Rimane vuoto in quanto non si vuole che venga visualizzato nella navbar
+            ),
+            "Account" => array(
+              "path" => "/marango/Pages/account.php",
             ),
             "Libro" => array(
                 "path" => "/marango/Pages/libro.php",

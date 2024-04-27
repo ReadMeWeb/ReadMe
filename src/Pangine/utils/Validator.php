@@ -3,6 +3,8 @@
 
 namespace Pangine\utils;
 
+use Pangine\Pangine;
+
 require_once(__DIR__ . "/ValidateMe.php");
 require_once(__DIR__ . "/Exception500.php");
 
@@ -29,7 +31,10 @@ class Validator
             $validator->validate();
         }
         if($this->validation_failed){
-            header("Location: /marango".$this->url_in_case_of_failure);
+            if ($this->url_in_case_of_failure === '') {
+              Pangine::redirect();
+            }
+            header("Location: ".$this->url_in_case_of_failure);
             exit();
         }
     }

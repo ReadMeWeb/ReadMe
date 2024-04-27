@@ -358,6 +358,18 @@ nav li a:visited {
     color: var(--textColor);
 }
 
+.book-card dt, .book-card dd {
+    display: inline;
+}
+
+.book-card dt {
+    font-weight: bold;
+}
+
+#results-number {
+    font-weight: bold;
+}
+
 /* --------- HEADER - breadcrumbs --------- */
 #breadcrumbs {
     display: flex;

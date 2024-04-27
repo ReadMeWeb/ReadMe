@@ -1,0 +1,13 @@
+<h1>Catalogo ReadMe</h1>
+<fieldset>
+  <legend>Cerca</legend>
+  <form role="search" method="get" action="/marango/Pages/catalogo.php">
+      <label for="search-bar">Cerca:</label>
+      <input type="text" id="search-bar" name="query" placeholder="Nome scrittore o titolo libro" minlength="1" maxlength="200" value="{{searched}}">
+    <input type="submit" value="Cerca">
+  </form>
+</fieldset>
+<p id="results-number">{{results-number}}</p>
+<ul>
+    {{books}}
+</ul>

@@ -39,3 +39,6 @@ CREATE TABLE Loans
     FOREIGN KEY (user_username) REFERENCES Users (username) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT check_dates CHECK (loan_expiration_date > loan_start_date)
 );
+
+INSERT INTO Users (username,password,status) VALUES ('admin','admin','ADMIN');
+INSERT INTO Users (username,password,status) VALUES ('user','user','USER');

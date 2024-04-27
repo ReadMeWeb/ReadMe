@@ -124,24 +124,159 @@ body {
     footer#pageFooter {
         padding-bottom: 4em;
     }
+
+    /* -------- BOOK -------*/
+    #book-page div {
+        width: 100%;
+    }
+    #book-page img {
+        display: none;
+    }
+    #book-page section div #op-section p:last-of-type {
+        color: var(--accentColor);
+        font-weight: bold;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #book-page div#op-section form {
+        text-align: center;
+    }
+    #book-page div#op-section form {
+        text-align: center;
+    }
 }
 
 /*##############################
 #             Tablet           #
 ##############################*/
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+    /* -------- BOOk -------*/
+    #book-page div {
+        width: 100%;
+    }
+    #book-page img {
+        width: 20%;
+        height: auto; /* Maintain aspect ratio */
+        object-fit: scale-down;
+    }
+    #book-page section {
+        margin-bottom: 20px;
+        display: flow;
+        text-align: center;
+    }
+    #book-page section div #op-section p:last-of-type {
+        color: var(--accentColor);
+        font-weight: bold;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 /*##############################
 #             Monitor          #
 ##############################*/
 @media screen and (min-width: 1024px) and (max-width: 1200px) {
+    /* -------- BOOk -------*/
+    #book-page div {
+        width: 45%; /* Adjust this value as needed */
+    }
+    #book-page img {
+        width: 40%;
+        height: auto; /* Maintain aspect ratio */
+        object-fit: scale-down;
+    }
+    #book-page section {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    #book-page div#op-section {
+        width: 100%;
+    }
+
+    #book-page div#op-section div#book_user_op_section {
+        width: 100%;
+    }
+
+    #book-page div#op-section div#book_user_op_section form {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #book-page div#op-section div#book_user_op_section form p{
+        margin-right: 3em;
+    }
+
+    #book-page div#op-section form#book_admin_op_form {
+        display: flex;
+        justify-content: end;
+        margin-top: 1em;
+    }
+
+    #book-page section div #op-section p:last-of-type {
+        color: var(--accentColor);
+        font-weight: bold;
+        display:flex;
+        align-items: center;
+    }
 }
 
 /*##############################
 #             Bigger           #
 ##############################*/
 @media screen and (min-width: 1200px) {
+    /* -------- BOOk -------*/
+    #book-page div {
+        width: 55%; /* Adjust this value as needed */
+    }
+
+    #book-page img {
+        width: 40%;
+        height: auto; /* Maintain aspect ratio */
+        object-fit: cover;
+    }
+
+    #book-page section {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    #book-page div#op-section {
+        width: 100%;
+    }
+
+    #book-page div#op-section div#book_user_op_section {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    #book-page div#op-section div#book_user_op_section form {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #book-page div#op-section div#book_user_op_section p{
+        margin-right: 3em;
+    }
+
+    #book-page div#op-section form#book_admin_op_form {
+        display: flex;
+        justify-content: end;
+        margin-top: 1em;
+    }
+
+    #book-page section div #op-section p:last-of-type {
+        color: var(--accentColor);
+        font-weight: bold;
+        display:flex;
+        align-items: center;
+    }
+
 }
 
 /*##############################
@@ -301,4 +436,81 @@ label {
     width: 1px;
     overflow: hidden;
     clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* --------- BOOK --------- */
+
+#book-page h1, #book-page h2, #book-page h3 {
+    color: var(--textColor);
+}
+
+div#book-page {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+}
+
+#book-page h1 {
+    font-size: 2em;
+}
+
+#book-page h2 {
+    font-size: 1.5em;
+}
+
+#book-page h3 {
+    font-size: 0.6em;
+    margin-bottom: 10px;
+}
+
+#book-page div p {
+    line-height: 1.6;
+    color: var(--textColor);
+}
+
+/* Add a border and padding to the book's section */
+#book-page section {
+    border: 1px solid var(--primaryColor);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Style the book's title and author */
+#book-page section h2 {
+    color: var(--primaryColor);
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+#book-page section h3 {
+    color: var(--secondaryColor);
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+#book-page input[type="submit"] {
+    background-color: var(--primaryColor);
+    color: var(--backgroundColor);
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#book-page input[type="submit"]:hover {
+    background-color: var(--secondaryColor);
+    color: var(--textColor);
+}
+
+#book-page input[type="submit"]:disabled {
+    background-color: var(--textColor);
+    color: var(--backgroundColor);
+    cursor: not-allowed;
 }

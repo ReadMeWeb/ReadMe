@@ -132,6 +132,19 @@ body {
     #book-page img {
         display: none;
     }
+    #book-page section div #op-section p:last-of-type {
+        color: var(--accentColor);
+        font-weight: bold;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #book-page div#op-section form {
+        text-align: center;
+    }
+    #book-page div#op-section form {
+        text-align: center;
+    }
 }
 
 /*##############################
@@ -152,6 +165,13 @@ body {
         display: flow;
         text-align: center;
     }
+    #book-page section div #op-section p:last-of-type {
+        color: var(--accentColor);
+        font-weight: bold;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 /*##############################
@@ -171,6 +191,36 @@ body {
         margin-bottom: 20px;
         display: flex;
         justify-content: space-evenly;
+    }
+
+    #book-page div#op-section {
+        width: 100%;
+    }
+
+    #book-page div#op-section div#book_user_op_section {
+        width: 100%;
+    }
+
+    #book-page div#op-section div#book_user_op_section form {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #book-page div#op-section div#book_user_op_section form p{
+        margin-right: 3em;
+    }
+
+    #book-page div#op-section form#book_admin_op_form {
+        display: flex;
+        justify-content: end;
+        margin-top: 1em;
+    }
+
+    #book-page section div #op-section p:last-of-type {
+        color: var(--accentColor);
+        font-weight: bold;
+        display:flex;
+        align-items: center;
     }
 }
 
@@ -194,6 +244,39 @@ body {
         display: flex;
         justify-content: space-evenly;
     }
+
+    #book-page div#op-section {
+        width: 100%;
+    }
+
+    #book-page div#op-section div#book_user_op_section {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    #book-page div#op-section div#book_user_op_section form {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #book-page div#op-section div#book_user_op_section p{
+        margin-right: 3em;
+    }
+
+    #book-page div#op-section form#book_admin_op_form {
+        display: flex;
+        justify-content: end;
+        margin-top: 1em;
+    }
+
+    #book-page section div #op-section p:last-of-type {
+        color: var(--accentColor);
+        font-weight: bold;
+        display:flex;
+        align-items: center;
+    }
+
 }
 
 /*##############################
@@ -369,7 +452,7 @@ div#book-page {
     margin-bottom: 10px;
 }
 
-#book-page p {
+#book-page div p {
     line-height: 1.6;
     color: var(--textColor);
 }
@@ -394,8 +477,28 @@ div#book-page {
     margin-bottom: 20px;
 }
 
-/* Style the paragraph that shows the number of copies remaining */
-#book-page section p:last-of-type {
-    color: var(--accentColor);
-    font-weight: bold;
+#book-page input[type="submit"] {
+    background-color: var(--primaryColor);
+    color: var(--backgroundColor);
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#book-page input[type="submit"]:hover {
+    background-color: var(--secondaryColor);
+    color: var(--textColor);
+}
+
+#book-page input[type="submit"]:disabled {
+    background-color: var(--textColor);
+    color: var(--backgroundColor);
+    cursor: not-allowed;
 }

@@ -53,6 +53,8 @@ class Pangine
             ),
             "Account" => array(
               "path" => "/marango/Pages/account.php",
+              "privileges" => array(self::USER(), self::ADMIN())
+
             ),
             "Libro" => array(
                 "path" => "/marango/Pages/libro.php",

@@ -29,7 +29,7 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
                         <dd>{$copies}</dd>
                     </div>
                 </dl>
-                <a href='/marango/Pages/libro.php&id={$id}'>Visualizza</a>
+                <a href='/marango/Pages/libro.php?id={$id}'>Visualizza</a>
 
             </article>
         </li>";
@@ -57,14 +57,14 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
                 JOIN Books 
                 ON Authors.id = Books.author_id 
                 WHERE name_surname LIKE ? OR title LIKE ?
-            ) as Books 
+            ) AS Books 
             LEFT JOIN 
             (
                 SELECT book_id, count(book_id) AS loans 
                 FROM Loans 
-                WHERE loan_expiration_date < CURRENT_DATE()
+                WHERE loan_expiration_date >= CURRENT_DATE() AND loan_start_date <= CURRENT_DATE()
                 GROUP BY book_id
-            ) as Loans
+            ) AS Loans
             ON Books.id = book_id", 
             $escaped_query, 
             $escaped_query
@@ -101,7 +101,7 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
     },
     caller_parameter_name: "query",
     needs_database: true, 
-    validator: (new Validator("/marango/Pages/500.php"))
+    validator: (new Validator("/marango/Pages/404.php"))
         ->add_parameter("query")
         ->is_string(0, 200)
     )
@@ -110,9 +110,9 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
 
         $res = $db->execute_query(
             "SELECT Books.id, title, cover_file_name, name_surname, (number_of_copies - COALESCE(loans, 0)) AS number_of_copies FROM 
-            (SELECT Books.id, title, cover_file_name, name_surname, number_of_copies  FROM Authors JOIN Books ON Authors.id = Books.author_id) as Books
+            (SELECT Books.id, title, cover_file_name, name_surname, number_of_copies  FROM Authors JOIN Books ON Authors.id = Books.author_id) AS Books
             LEFT JOIN 
-            (SELECT book_id, count(book_id) AS loans FROM Loans WHERE loan_expiration_date < CURRENT_DATE() GROUP BY book_id) as Loans
+            (SELECT book_id, count(book_id) AS loans FROM Loans WHERE loan_expiration_date >= CURRENT_DATE() AND loan_start_date <= CURRENT_DATE() GROUP BY book_id) AS Loans
             ON Books.id = book_id"
         );
 

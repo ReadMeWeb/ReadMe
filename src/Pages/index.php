@@ -13,7 +13,7 @@ use \Utils\Database;
 
         $authors_counter = $db->execute_query("SELECT COUNT(*) as count FROM Authors")[0]["count"] | 0;
         $books_counter = $db->execute_query("SELECT SUM(number_of_copies) as sum FROM Books")[0]["sum"] | 0;
-        $loans_counter = $db->execute_query("SELECT COUNT(*) as count FROM Books")[0]["count"] | 0;
+        $loans_counter = $db->execute_query("SELECT COUNT(*) as count FROM Loans")[0]["count"] | 0;
 
         echo (new LayoutBuilder())
             ->tag_lazy_replace("title", "Home")

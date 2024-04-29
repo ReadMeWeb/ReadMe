@@ -46,7 +46,12 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
             Pangine::redirect('Catalogo');
         }
 
-        $escaped_query = "%" . addcslashes($query, "%_\\") . "%";
+        $escaped_query = addcslashes($query, "%_\\");
+        $final_query = "%";
+        
+        foreach(str_split($escaped_query) as $char) {
+            $final_query .= ($char . "%");
+        }
         
         $res = $db->execute_query(
             "SELECT Books.id, title, cover_file_name, name_surname, (number_of_copies - COALESCE(loans, 0)) AS number_of_copies
@@ -66,8 +71,8 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
                 GROUP BY book_id
             ) AS Loans
             ON Books.id = book_id", 
-            $escaped_query, 
-            $escaped_query
+            $final_query, 
+            $final_query
         );
 
         $books = "";

@@ -15,10 +15,10 @@ use \Utils\Database;
 
             $book_data = [];
 
-            (new Validator("/Pages/404.php"))
+            (new Validator("/marango/Pages/404.php"))
                 ->add_parameter("id")
                 ->is_numeric(value_parser: function(int $book_id) use ($db, &$book_data) {
-                    $book_query = "SELECT * FROM Books B INNER JOIN Authors A ON A.id = B.author_id WHERE A.id= ?";
+                    $book_query = "SELECT B.id, author_id, title, description, cover_file_name, number_of_copies, name_surname FROM Books B INNER JOIN Authors A ON A.id = B.author_id WHERE B.id= ?";
                     $book_data = $db->execute_query($book_query, $book_id);
                     if (count($book_data) == 0) {
                         return "Il libro richiesto non esiste.";
@@ -39,7 +39,7 @@ use \Utils\Database;
                 ->tag_lazy_replace("book-title", $book_data["title"])
                 ->tag_lazy_replace("book-author", $book_data["name_surname"])
                 ->tag_lazy_replace("book-description", $book_data["description"])
-                ->tag_lazy_replace("cover-image-src", $book_data["cover_file_name"]);
+                ->tag_lazy_replace("cover-image-src", $book_data['cover_file_name']);
             $operations = "";
             if($_SESSION["user"]["status"] != Pangine::UNREGISTERED()) {
                 if ($_SESSION["user"]["status"] == Pangine::USER() || $_SESSION["user"]["status"] == Pangine::ADMIN()) {

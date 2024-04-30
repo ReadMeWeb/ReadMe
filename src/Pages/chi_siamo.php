@@ -8,7 +8,7 @@ use \Pangine\utils\LayoutBuilder;
 (new Pangine())
 ->add_renderer_GET(function () {
 
-    $content = file_get_contents(__DIR__ . "/../templates/chi-siamo_content.html");
+    $content = file_get_contents(__DIR__ . "/../templates/chi_siamo_content.html");
 
     echo (new LayoutBuilder())
         ->tag_lazy_replace("title", "Chi siamo")

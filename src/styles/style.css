@@ -1,6 +1,14 @@
 /*##############################
 #           General            #
 ##############################*/
+
+:root {
+    --errorMessageColor: #721c24;
+    --errorMessageBackground: #f8d7da;
+    --errorMessageBorderColor: #f5c6cb;
+}
+
+
 /* --------- COLORS --------- */
 @media (prefers-color-scheme: light) {
     :root {
@@ -120,9 +128,12 @@ body {
         height: 3.2em;
     }
 
-    /* -------- page footer -------*/
-    footer#pageFooter {
-        padding-bottom: 4em;
+    /* -------- footer -------*/
+    footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 4em;
     }
 
     /* -------- BOOK -------*/
@@ -377,10 +388,7 @@ nav li a:visited {
 }
 
 nav#breadcrumbs p{
-    padding-bottom: 0.32em;
-    padding-top: 0.32em;
-    padding-left: 0.64em;
-    padding-right: 0.64em;
+    padding: 0.32em 0.64em;
     border-radius: 5px;
     margin-top: 0.32em;
     -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
@@ -405,12 +413,6 @@ nav div span {
     overflow: hidden;
 }
 
-/* --------- FOOTER --------- */
-#pageFooter {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 /* ---------- GENERAL ---------- */
 a {
@@ -419,6 +421,24 @@ a {
 a:visited{
     color: var(--visitedLinkColor);
 }
+
+#content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    margin-top: 1em;
+}
+
+#content > h1 {
+    text-align: center;
+}
+
+#content > div {
+    width: 100%;
+}
+
+/* ---------- form related -----------*/
 
 input, textarea {
     font-family: inherit;
@@ -429,6 +449,61 @@ label {
     display: block;
 }
 
+#content input, #content textarea {
+    padding: 0.5em;
+    border-radius: 0.3em;
+}
+
+form fieldset {
+    display: flex;
+    flex-flow: column;
+    width: 80%;
+}
+
+form {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+fieldset {
+    padding: 1em 1em 0 1em;
+    border: none;
+    -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    border-radius: 5px;
+}
+
+legend {
+    float: left;
+    font-size: 1.5em;
+    padding-bottom: 0.5em;
+}
+
+input[disabled] {
+    color: var(--textColor);
+}
+
+input {
+    margin-bottom: 1em;
+    border: 1px solid black;
+}
+
+.errorMessage {
+    margin-bottom: 1em;
+    color: var(--errorMessageColor);
+    background-color: var(--errorMessageBackground);
+    border-color: var(--errorMessageBorderColor);
+    padding: 0.5em 1em;
+    border-radius: 0.3em;
+}
+.errorMessage::before{
+    content: '❌: ';
+}
+
 /* --------- accessibility content helper --------- */
 .helper {
     position: absolute;
@@ -436,6 +511,28 @@ label {
     width: 1px;
     overflow: hidden;
     clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* --------- ACCOUNT PAGE --------- */
+ul#operations {
+    list-style: none;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-bottom: 1em;
+    padding: 1em 2em;
+    -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    border-radius: 0.3em;
+}
+
+ul#operations li {
+    padding-bottom: 0.5em;
+}
+ul#operations li:last-child {
+    padding-bottom: 0;
 }
 
 /* --------- BOOK --------- */
@@ -513,4 +610,15 @@ div#book-page {
     background-color: var(--textColor);
     color: var(--backgroundColor);
     cursor: not-allowed;
+}
+
+/* ------------ CATALOGO PAGE ------------ */
+
+form[role="search"] legend {
+   display: none;
+}
+
+form[role="search"]{
+    margin-top: 1em;
+    margin-bottom: 1em;
 }

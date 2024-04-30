@@ -134,9 +134,10 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
                     $book["id"]
                 );
             }
+            $books = '<ul>' . $books . '</ul>';
         }
         else {
-            $books = "Il catalogo al momento è vuoto.";
+            $books = "<p>Il catalogo al momento è vuoto.</p>";
         }
 
         echo (new LayoutBuilder())

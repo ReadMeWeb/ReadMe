@@ -40,19 +40,6 @@ CREATE TABLE Loans
     CONSTRAINT check_dates CHECK (loan_expiration_date > loan_start_date)
 );
 
-drop view if exists active_loans;
-create view active_loans as
-select b.id as book_id, b.number_of_copies as book_copies, count(b.id) as count_loans
-from Books as b inner join Loans as l on b.id = l.book_id
-where l.loan_start_date <= CURRENT_DATE and CURRENT_DATE <= l.loan_expiration_date
-group by b.id ;
-
-drop view if exists loanable_books;
-create view loanable_books as
-select b.id as id from Books as b left join active_loans as a on b.id = a.book_id
-where a.book_id is null or a.book_copies > a.count_loans
-;
-
 INSERT INTO Users (username,password,status) VALUES ('admin','admin','ADMIN');
 INSERT INTO Users (username,password,status) VALUES ('user','user','USER');
 

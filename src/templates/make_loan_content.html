@@ -1,10 +1,11 @@
 
 <form action="#" method="post">
   <fieldset>
-    <legend>Prestito libro</legend>
+    <legend>Prestito libro: {{libro-titolo}}</legend>
 
-    <label for="k">Libro che si vuole richiedere in prestito: {{libro-nome}}</label>
-    <input id="k" type="text" hidden name="libro" value="{{libro-value}}">
+    <!-- <img src="((libro-copertina))" > opzionale -->
+    
+    <input type="text" hidden name="libro" value="{{libro-value}}">
 
     <input type="text" hidden name="user" value="{{user-value}}">
 

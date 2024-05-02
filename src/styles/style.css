@@ -1,14 +1,6 @@
 /*##############################
 #           General            #
 ##############################*/
-
-:root {
-    --errorMessageColor: #721c24;
-    --errorMessageBackground: #f8d7da;
-    --errorMessageBorderColor: #f5c6cb;
-}
-
-
 /* --------- COLORS --------- */
 @media (prefers-color-scheme: light) {
     :root {
@@ -20,7 +12,7 @@
         --mobileNavLinkBorder: #419f86;
         --linkColor: #348c8c;
         --visitedLinkColor: #4b5d58;
-        --logoUrl: url('../assets/readme-logo-black-cropped.png');
+        --logoUrl: url("../assets/readme-logo-black-cropped.png");
     }
 }
 @media (prefers-color-scheme: dark) {
@@ -33,59 +25,59 @@
         --mobileNavLinkBorder: #6e968c;
         --linkColor: #00fffb;
         --visitedLinkColor: #c4edff;
-        --logoUrl: url('../assets/readme-logo-white-cropped.png');
+        --logoUrl: url("../assets/readme-logo-white-cropped.png");
     }
 }
 /* --------- FONTS --------- */
 @font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-Medium.ttf');
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-Medium.ttf");
     font-weight: 400;
     font-style: normal;
 }
 @font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-MediumItalic.ttf');
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-MediumItalic.ttf");
     font-weight: 400;
     font-style: italic;
 }
 
 @font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-Bold.ttf');
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-Bold.ttf");
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-BoldItalic.ttf');
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-BoldItalic.ttf");
     font-weight: 700;
     font-style: italic;
 }
 
 @font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-Italic.ttf');
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-Italic.ttf");
     font-weight: 400;
     font-style: italic;
 }
 
 @font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-Light.ttf');
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-Light.ttf");
     font-weight: 300;
     font-style: normal;
 }
 @font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-LightItalic.ttf');
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-LightItalic.ttf");
     font-weight: 300;
     font-style: italic;
 }
 
 body {
-    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    font-family: "Montserrat", Arial, Helvetica, sans-serif;
     background-color: var(--backgroundColor);
     color: var(--textColor);
 }
@@ -114,7 +106,7 @@ body {
         width: 8em;
         height: 2em;
     }
-    #menu ul li .selectedNavLink{
+    #menu ul li .selectedNavLink {
         height: 3.2em;
     }
     #menu {
@@ -124,37 +116,30 @@ body {
         -webkit-box-shadow: 0 0 0.64em 0 var(--primaryColor);
         box-shadow: 0 0 0.64em 0 var(--primaryColor);
     }
-    #menu ul li.selectedNavLink{
+    #menu ul li.selectedNavLink {
         height: 3.2em;
     }
 
-    /* -------- footer -------*/
-    footer {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 4em;
+    /* -------- page footer -------*/
+    footer#pageFooter {
+        padding-bottom: 4em;
     }
 
     /* -------- BOOK -------*/
-    #book-page div {
-        width: 100%;
+    #book-page {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
     }
+
+    #book-page #info {
+        width: 100%;
+        padding: 10px;
+    }
+
     #book-page img {
         display: none;
-    }
-    #book-page section div #op-section p:last-of-type {
-        color: var(--accentColor);
-        font-weight: bold;
-        display:flex;
-        justify-content: center;
-        align-items: center;
-    }
-    #book-page div#op-section form {
-        text-align: center;
-    }
-    #book-page div#op-section form {
-        text-align: center;
     }
 }
 
@@ -163,25 +148,28 @@ body {
 ##############################*/
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     /* -------- BOOk -------*/
-    #book-page div {
-        width: 100%;
+    #book-page {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
     }
+
+    #book-page #image {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 10px;
+    }
+
+    #book-page #info {
+        width: 100%;
+        padding: 10px;
+    }
+
     #book-page img {
         width: 20%;
-        height: auto; /* Maintain aspect ratio */
-        object-fit: scale-down;
-    }
-    #book-page section {
-        margin-bottom: 20px;
-        display: flow;
-        text-align: center;
-    }
-    #book-page section div #op-section p:last-of-type {
-        color: var(--accentColor);
-        font-weight: bold;
-        display:flex;
-        justify-content: center;
-        align-items: center;
+        height: auto;
     }
 }
 
@@ -190,48 +178,28 @@ body {
 ##############################*/
 @media screen and (min-width: 1024px) and (max-width: 1200px) {
     /* -------- BOOk -------*/
-    #book-page div {
-        width: 45%; /* Adjust this value as needed */
+    #book-page {
+        display: flex;
+        align-items: space-between;
+        flex-direction: row;
+        padding: 20px;
     }
-    #book-page img {
+
+    #book-page #image {
+        display: flex;
+        justify-content: center;
         width: 40%;
-        height: auto; /* Maintain aspect ratio */
-        object-fit: scale-down;
-    }
-    #book-page section {
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: space-evenly;
+        padding: 10px;
     }
 
-    #book-page div#op-section {
-        width: 100%;
+    #book-page img {
+        max-width: 100%;
+        height: auto;
     }
 
-    #book-page div#op-section div#book_user_op_section {
-        width: 100%;
-    }
-
-    #book-page div#op-section div#book_user_op_section form {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    #book-page div#op-section div#book_user_op_section form p{
-        margin-right: 3em;
-    }
-
-    #book-page div#op-section form#book_admin_op_form {
-        display: flex;
-        justify-content: end;
-        margin-top: 1em;
-    }
-
-    #book-page section div #op-section p:last-of-type {
-        color: var(--accentColor);
-        font-weight: bold;
-        display:flex;
-        align-items: center;
+    #book-page #info {
+        width: 60%;
+        padding: 10px;
     }
 }
 
@@ -240,60 +208,30 @@ body {
 ##############################*/
 @media screen and (min-width: 1200px) {
     /* -------- BOOk -------*/
-    #book-page div {
-        width: 55%; /* Adjust this value as needed */
-    }
-
-    #book-page img {
-        width: 40%;
-        height: auto; /* Maintain aspect ratio */
-        object-fit: cover;
-    }
-
-    #book-page section {
-        margin-bottom: 20px;
+    #book-page {
         display: flex;
-        justify-content: space-evenly;
+        align-items: space-between;
+        flex-direction: row;
+        padding: 20px;
     }
 
-    #book-page div#op-section {
-        width: 100%;
-    }
-
-    #book-page div#op-section div#book_user_op_section {
+    #book-page #image {
         display: flex;
-        justify-content: space-between;
-        width: 100%;
+        justify-content: center;
+        width: 50%;
+        padding: 10px;
     }
 
-    #book-page div#op-section div#book_user_op_section form {
-        display: flex;
-        justify-content: space-between;
+    #book-page #info {
+        width: 50%;
+        padding: 10px;
     }
-
-    #book-page div#op-section div#book_user_op_section p{
-        margin-right: 3em;
-    }
-
-    #book-page div#op-section form#book_admin_op_form {
-        display: flex;
-        justify-content: end;
-        margin-top: 1em;
-    }
-
-    #book-page section div #op-section p:last-of-type {
-        color: var(--accentColor);
-        font-weight: bold;
-        display:flex;
-        align-items: center;
-    }
-
 }
 
 /*##############################
 #     Across all non mobile    #
 ##############################*/
-@media screen and (min-width: 768px){
+@media screen and (min-width: 768px) {
     /* -------- nav menu -------*/
     nav#menu ul {
         background-color: var(--backgroundColor);
@@ -311,7 +249,7 @@ body {
         width: 10em;
         height: 2.5em;
     }
-    #menu ul li.selectedNavLink{
+    #menu ul li.selectedNavLink {
         height: 3.2em;
     }
     nav#menu ul li:hover {
@@ -326,7 +264,8 @@ body {
 #           Not dimensions properties           #
 ###############################################*/
 /* --------- HEADER - menu --------- */
-#logoLink a, #logoLink {
+#logoLink a,
+#logoLink {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -339,7 +278,7 @@ body {
 nav {
     z-index: 100;
 }
-#menu ul li{
+#menu ul li {
     list-style: none;
     flex-grow: 1;
     text-align: center;
@@ -347,7 +286,7 @@ nav {
     align-items: center;
     justify-content: center;
 }
-nav#menu ul li a{
+nav#menu ul li a {
     width: 100%;
     height: 3.2em;
     display: flex;
@@ -369,7 +308,8 @@ nav li a:visited {
     color: var(--textColor);
 }
 
-.book-card dt, .book-card dd {
+.book-card dt,
+.book-card dd {
     display: inline;
 }
 
@@ -387,8 +327,11 @@ nav li a:visited {
     justify-content: center;
 }
 
-nav#breadcrumbs p{
-    padding: 0.32em 0.64em;
+nav#breadcrumbs p {
+    padding-bottom: 0.32em;
+    padding-top: 0.32em;
+    padding-left: 0.64em;
+    padding-right: 0.64em;
     border-radius: 5px;
     margin-top: 0.32em;
     -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
@@ -403,8 +346,8 @@ nav div {
     background-size: cover;
     width: 12em;
     height: 3em;
-    margin:0;
-    margin-top:0.7em;
+    margin: 0;
+    margin-top: 0.7em;
 }
 
 nav div span {
@@ -413,95 +356,29 @@ nav div span {
     overflow: hidden;
 }
 
+/* --------- FOOTER --------- */
+#pageFooter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 /* ---------- GENERAL ---------- */
 a {
     color: var(--linkColor);
 }
-a:visited{
+a:visited {
     color: var(--visitedLinkColor);
 }
 
-#content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column;
-    margin-top: 1em;
-}
-
-#content > h1 {
-    text-align: center;
-}
-
-#content > div {
-    width: 100%;
-}
-
-/* ---------- form related -----------*/
-
-input, textarea {
+input,
+textarea {
     font-family: inherit;
     font-size: inherit;
 }
 
 label {
     display: block;
-}
-
-#content input, #content textarea {
-    padding: 0.5em;
-    border-radius: 0.3em;
-}
-
-form fieldset {
-    display: flex;
-    flex-flow: column;
-    width: 80%;
-}
-
-form {
-    width: 80%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-fieldset {
-    padding: 1em 1em 0 1em;
-    border: none;
-    -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    border-radius: 5px;
-}
-
-legend {
-    float: left;
-    font-size: 1.5em;
-    padding-bottom: 0.5em;
-}
-
-input[disabled] {
-    color: var(--textColor);
-}
-
-input {
-    margin-bottom: 1em;
-    border: 1px solid black;
-}
-
-.errorMessage {
-    margin-bottom: 1em;
-    color: var(--errorMessageColor);
-    background-color: var(--errorMessageBackground);
-    border-color: var(--errorMessageBorderColor);
-    padding: 0.5em 1em;
-    border-radius: 0.3em;
-}
-.errorMessage::before{
-    content: '❌: ';
 }
 
 /* --------- accessibility content helper --------- */
@@ -513,77 +390,22 @@ input {
     clip: rect(1px, 1px, 1px, 1px);
 }
 
-/* --------- ACCOUNT PAGE --------- */
-ul#operations {
-    list-style: none;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    margin-bottom: 1em;
-    padding: 1em 2em;
-    -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    border-radius: 0.3em;
-}
-
-ul#operations li {
-    padding-bottom: 0.5em;
-}
-ul#operations li:last-child {
-    padding-bottom: 0;
-}
-
 /* --------- BOOK --------- */
 
-#book-page h1, #book-page h2, #book-page h3 {
-    color: var(--textColor);
-}
-
-div#book-page {
-    width: 90%;
-    margin: 0 auto;
-    padding: 20px;
-    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
-}
-
 #book-page h1 {
-    font-size: 2em;
+    font-size: 2.5em;
+    margin-bottom: 20px;
 }
 
 #book-page h2 {
-    font-size: 1.5em;
-}
-
-#book-page h3 {
-    font-size: 0.6em;
-    margin-bottom: 10px;
-}
-
-#book-page div p {
-    line-height: 1.6;
-    color: var(--textColor);
-}
-
-/* Add a border and padding to the book's section */
-#book-page section {
-    border: 1px solid var(--primaryColor);
-    padding: 20px;
-    border-radius: 10px;
-}
-
-/* Style the book's title and author */
-#book-page section h2 {
-    color: var(--primaryColor);
     font-size: 2em;
     margin-bottom: 10px;
+    color: var(--secondaryColor);
 }
 
-#book-page section h3 {
-    color: var(--secondaryColor);
-    font-size: 1.5em;
-    margin-bottom: 20px;
+#book-page p {
+    font-size: 1.2em;
+    color: var(--textColor);
 }
 
 #book-page input[type="submit"] {
@@ -612,13 +434,6 @@ div#book-page {
     cursor: not-allowed;
 }
 
-/* ------------ CATALOGO PAGE ------------ */
-
-form[role="search"] legend {
-   display: none;
-}
-
-form[role="search"]{
-    margin-top: 1em;
-    margin-bottom: 1em;
+#book-page #info div p:last-of-type {
+    color: var(--accentColor);
 }

@@ -622,10 +622,3 @@ form[role="search"]{
     margin-top: 1em;
     margin-bottom: 1em;
 }
-
-/* ------------ LIBRI PAGE ------------ */
-
-nav#libri {
-  display: flex;
-  flex-direction: column;
-}

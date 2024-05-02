@@ -2,7 +2,6 @@
 require_once __DIR__ . "/../Pangine/Pangine.php";
 require_once __DIR__ . "/../Pangine/utils/LayoutBuilder.php";
 require_once __DIR__ . "/../Utils/Database.php";
-require_once __DIR__ . "/../Pages/tmp_new_libro.php";
 
 use Pangine\Pangine;
 use Pangine\utils\LayoutBuilder;
@@ -60,53 +59,51 @@ use Utils\Database;
             );
         $operations = "";
         if ($_SESSION["user"]["status"] != Pangine::UNREGISTERED()) {
-            $remaining_query = "
-                    select id, (number_of_copies - COALESCE(number_of_loans, 0)) as copies_remaining
+            if($_SESSION["user"]["status"] == Pangine::USER()){
+                $remaining_query = "
+                        select id, (number_of_copies - COALESCE(number_of_loans, 0)) as copies_remaining
 
-                    from Books as b
+                        from Books as b
 
-                    left join (
+                        left join (
 
-                        select book_id, count(book_id) as number_of_loans
-                        from Loans
-                        where loan_start_date <= now() AND
-                                loan_expiration_date >= now()
-                        group by book_id
+                            select book_id, count(book_id) as number_of_loans
+                            from Loans
+                            where loan_start_date <= now() AND
+                                    loan_expiration_date >= now()
+                            group by book_id
 
-                    ) as l
+                        ) as l
 
-                    on l.book_id = b.id
-                    where b.id = ?
-                ";
-            $remaining = $db->execute_query(
-                $remaining_query,
-                $book_data["id"]
-            )[0]["copies_remaining"];
-            $disabled = $remaining == 0 ? "disabled" : "";
-            $copies = $book_data["number_of_copies"];
-            $operations .= "
-                    <p>Numero di copie possedute: $copies</p>
-                    <form id='book_user_op_form' method='POST' action='/marango/Pages/libro.php?id={$book_data["id"]}'>
-                        <p>Copie rimanenti: $remaining</p>
-                        <input type='submit' name='noleggia' value='Noleggia' $disabled/>
-                    </form>
-                ";
-        }
-        if ($_SESSION["user"]["status"] == Pangine::ADMIN()) {
-            $operations .= "
-                        <form id='book_admin_op_form' method='POST' action='/marango/Pages/libro.php?id={$book_data["id"]}'>
-                            <input type='submit' name='modifica' value='Modifica'/>
-                            <input type='submit' name='elimina' value='Elimina'/>
+                        on l.book_id = b.id
+                        where b.id = ?
+                    ";
+                $remaining = $db->execute_query(
+                    $remaining_query,
+                    $book_data["id"]
+                )[0]["copies_remaining"];
+                $disabled = $remaining == 0 ? "disabled" : "";
+                $copies = $book_data["number_of_copies"];
+                $operations .= "
+                        <p>Numero di copie possedute: $copies</p>
+                        <form id='book_user_op_form' method='GET' action='/marango/Pages/libro.php'>
+                            <p>Copie rimanenti: $remaining</p>
+                            <input type='submit' name='noleggia' value='Noleggia' $disabled/>
+                            <input type='hidden' name='id' value='{$book_data["id"]}'/>
                         </form>
-                ";
+                    ";
+            }
+            if ($_SESSION["user"]["status"] == Pangine::ADMIN()) {
+                $operations .= "
+                            <form id='book_admin_op_form' method='GET' action='/marango/Pages/crud_libro.php'>
+                                <input type='submit' name='modifica' value='Modifica'/>
+                                <input type='submit' name='elimina' value='Elimina'/>
+                                <input type='hidden' name='id' value='{$book_data["id"]}'/>
+                            </form>
+                    ";
+            }
         }
 
         echo $layout->tag_lazy_replace("operations", $operations)->build();
     }, needs_database: true)
-    ->add_renderer_GET(
-        $renderer_get_new,
-        "nuovo",
-        needs_database: true,
-        validator: $validator_get_new
-    )
     ->execute();

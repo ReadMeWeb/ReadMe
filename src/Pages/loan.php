@@ -31,7 +31,7 @@ function a($a, $f, $e) {
         _new_validator('/marango/Pages/loan.php?libro=' . $_POST['libro']),
         a('inizio', fn ($i) => $i >= date('Y-m-d', time()), 'La data di inizio non può essere prima di oggi.'),
         a('fine',   fn ($i) => $i >= date('Y-m-d', time()), 'La data di fine non può essere prima di oggi.'),
-        a('inizio', fn ($i) => $i <= $_POST['fine'], 'La data di inizio non può essere dopo la data di fine.'),
+        a('inizio', fn ($i) => $i < $_POST['fine'], 'La data di fine deve essere dopo la data di inizio.'),
       )->validate();
 
       $conn->execute_query('insert into Loans(book_id,user_username,loan_start_date,loan_expiration_date) values(?,?,?,?);', $_POST['libro'], _username(), $_POST['inizio'], $_POST['fine']);

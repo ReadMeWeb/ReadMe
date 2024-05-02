@@ -32,7 +32,10 @@ class LayoutBuilder
             $replacer();
         }
         if (strpos($this->base_layout, "{{")) {
-            throw new Exception500("Non tutti i tag sono stati consumati dalla pagina precedente.");
+            $misses = [];
+            preg_match_all('/{{(.*?)}}/',$this->base_layout, $misses);
+            $misses = '(' . implode(", ",$misses[1]) . ')';
+            throw new Exception500("Non tutti i tag sono stati consumati dalla pagina precedente $misses.");
         }
         return $this->base_layout;
     }

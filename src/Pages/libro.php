@@ -17,12 +17,12 @@ use Utils\Database;
 
         $book_data = [];
 
-        (new Validator("/Pages/404.php"))
+        (new Validator("/marango/Pages/404.php"))
             ->add_parameter("id")
             ->is_numeric(
                 value_parser: function (int $book_id) use ($db, &$book_data) {
                     $book_query =
-                        "SELECT * FROM Books B INNER JOIN Authors A ON A.id = B.author_id WHERE A.id= ?";
+                        "SELECT * FROM Books B INNER JOIN Authors A ON A.id = B.author_id WHERE B.id= ?";
                     $book_data = $db->execute_query($book_query, $book_id);
                     if (count($book_data) == 0) {
                         return "Il libro richiesto non esiste.";
@@ -90,7 +90,7 @@ use Utils\Database;
                 $copies = $book_data["number_of_copies"];
                 $operations .= "
                         <p>Numero di copie possedute: $copies</p>
-                        <form id='book_user_op_form' method='POST' action='/marango/Pages/libro.php'>
+                        <form id='book_user_op_form' method='POST' action='/marango/Pages/libro.php?id={$book_data["id"]}'>
                             <p>Copie rimanenti: $remaining</p>
                             <input type='submit' name='noleggia' value='Noleggia' $disabled/>
                         </form>
@@ -98,7 +98,7 @@ use Utils\Database;
             }
             if ($_SESSION["user"]["status"] == Pangine::ADMIN()) {
                 $operations .= "
-                            <form id='book_admin_op_form' method='POST' action='/marango/Pages/libro.php'>
+                            <form id='book_admin_op_form' method='POST' action='/marango/Pages/libro.php?id={$book_data["id"]}'>
                                 <input type='submit' name='modifica' value='Modifica'/>
                                 <input type='submit' name='elimina' value='Elimina'/>
                             </form>

@@ -22,7 +22,7 @@ use Utils\Database;
             ->is_numeric(
                 value_parser: function (int $book_id) use ($db, &$book_data) {
                     $book_query =
-                        "SELECT * FROM Books B INNER JOIN Authors A ON A.id = B.author_id WHERE B.id= ?";
+                        "SELECT B.id, B.title, B.description, B.cover_file_name, B.number_of_copies, A.name_surname FROM Books B INNER JOIN Authors A ON A.id = B.author_id WHERE B.id= ?";
                     $book_data = $db->execute_query($book_query, $book_id);
                     if (count($book_data) == 0) {
                         return "Il libro richiesto non esiste.";
@@ -60,50 +60,45 @@ use Utils\Database;
             );
         $operations = "";
         if ($_SESSION["user"]["status"] != Pangine::UNREGISTERED()) {
-            if (
-                $_SESSION["user"]["status"] == Pangine::USER() ||
-                $_SESSION["user"]["status"] == Pangine::ADMIN()
-            ) {
-                $remaining_query = "
-                        select id, (number_of_copies - COALESCE(number_of_loans, 0)) as copies_remaining
+            $remaining_query = "
+                    select id, (number_of_copies - COALESCE(number_of_loans, 0)) as copies_remaining
 
-                        from Books as b
+                    from Books as b
 
-                        left join (
+                    left join (
 
-                            select book_id, count(book_id) as number_of_loans
-                            from Loans
-                            where loan_start_date <= now() AND
-                                  loan_expiration_date >= now()
-                            group by book_id
+                        select book_id, count(book_id) as number_of_loans
+                        from Loans
+                        where loan_start_date <= now() AND
+                                loan_expiration_date >= now()
+                        group by book_id
 
-                        ) as l
+                    ) as l
 
-                        on l.book_id = b.id
-                        where b.id = ?
-                    ";
-                $remaining = $db->execute_query(
-                    $remaining_query,
-                    $book_data["id"]
-                )[0]["copies_remaining"];
-                $disabled = $remaining == 0 ? "disabled" : "";
-                $copies = $book_data["number_of_copies"];
-                $operations .= "
-                        <p>Numero di copie possedute: $copies</p>
-                        <form id='book_user_op_form' method='POST' action='/marango/Pages/libro.php?id={$book_data["id"]}'>
-                            <p>Copie rimanenti: $remaining</p>
-                            <input type='submit' name='noleggia' value='Noleggia' $disabled/>
+                    on l.book_id = b.id
+                    where b.id = ?
+                ";
+            $remaining = $db->execute_query(
+                $remaining_query,
+                $book_data["id"]
+            )[0]["copies_remaining"];
+            $disabled = $remaining == 0 ? "disabled" : "";
+            $copies = $book_data["number_of_copies"];
+            $operations .= "
+                    <p>Numero di copie possedute: $copies</p>
+                    <form id='book_user_op_form' method='POST' action='/marango/Pages/libro.php?id={$book_data["id"]}'>
+                        <p>Copie rimanenti: $remaining</p>
+                        <input type='submit' name='noleggia' value='Noleggia' $disabled/>
+                    </form>
+                ";
+        }
+        if ($_SESSION["user"]["status"] == Pangine::ADMIN()) {
+            $operations .= "
+                        <form id='book_admin_op_form' method='POST' action='/marango/Pages/libro.php?id={$book_data["id"]}'>
+                            <input type='submit' name='modifica' value='Modifica'/>
+                            <input type='submit' name='elimina' value='Elimina'/>
                         </form>
-                    ";
-            }
-            if ($_SESSION["user"]["status"] == Pangine::ADMIN()) {
-                $operations .= "
-                            <form id='book_admin_op_form' method='POST' action='/marango/Pages/libro.php?id={$book_data["id"]}'>
-                                <input type='submit' name='modifica' value='Modifica'/>
-                                <input type='submit' name='elimina' value='Elimina'/>
-                            </form>
-                    ";
-            }
+                ";
         }
 
         echo $layout->tag_lazy_replace("operations", $operations)->build();

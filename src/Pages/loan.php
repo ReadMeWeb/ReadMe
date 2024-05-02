@@ -39,9 +39,9 @@ function validator_loan() {
       ->tag_lazy_replace('libro-titolo',  $conn->execute_query('select title as t from Books where id = ?', $_GET['libro'])[0]['t'])
       ->tag_lazy_replace('user-value', _username())
 
-      ->tag_lazy_replace('inizio-value', '')
+      ->tag_lazy_replace('inizio-value', $today = date('Y-m-d', time()))
       ->tag_lazy_replace('inizio-message', '')
-      ->tag_lazy_replace('fine-value', '')
+      ->tag_lazy_replace('fine-value', $today)
       ->tag_lazy_replace('fine-message', '')
       ->build();
   }, caller_parameter_name: 'libro', needs_database: true)

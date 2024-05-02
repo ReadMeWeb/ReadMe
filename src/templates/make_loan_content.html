@@ -1,0 +1,20 @@
+
+<form action="#" method="post">
+  <fieldset>
+    <legend>Prestito libro</legend>
+
+    <label for="k">Libro che si vuole richiedere in prestito: {{libro-nome}}</label>
+    <input id="k" type="text" hidden name="libro" value="{{libro-value}}">
+
+    <input type="text" hidden name="user" value="{{user-value}}">
+
+    <label for="i">Data di inizio del prestito</label>
+    <input id="i" type="date" name="inizio" value="{{inizio-value}}">
+    {{inizio-message}}
+
+    <label for="f">Data di fine del prestito</label>
+    <input id="f" type="date" name="fine" value="{{fine-value}}">
+    {{fine-message}}
+
+  </fieldset>
+</form>

@@ -59,10 +59,6 @@ class Pangine
             "Libro" => array(
                 "path" => "/marango/Pages/libro.php",
                 "privileges" => array()
-            ),
-            "Esci" => array(
-              "path" => "/marango/Pages/esci.php",
-              "privileges" => array(self::USER(), self::ADMIN())
             )
         );
     }
@@ -117,6 +113,7 @@ class Pangine
         $renderer_wrapper = function () use ($renderer, $caller_parameter_name, $needs_database,$validator) {
             if ($_SERVER['REQUEST_METHOD'] == "POST" && ($caller_parameter_name == "" || isset($_POST[$caller_parameter_name]))) {
                 $validator?->validate();
+                self::parameter_sanitizer("POST");
                 if ($needs_database) {
                     $db = new Database();
                     $renderer($db);
@@ -141,6 +138,7 @@ class Pangine
         $renderer_wrapper = function () use ($renderer, $caller_parameter_name, $needs_database, $validator) {
             if ($_SERVER['REQUEST_METHOD'] == "GET" && ($caller_parameter_name == "" || isset($_GET[$caller_parameter_name]))) {
                 $validator?->validate();
+                self::parameter_sanitizer("GET");
                 if ($needs_database) {
                     $db = new Database();
                     $renderer($db);
@@ -214,5 +212,24 @@ class Pangine
             }
         }
         return $breadcrumb_str . "</p>";
+    }
+
+    private static function parameter_sanitizer(string $method): void{
+        if ($method == "GET"){
+            foreach ($_GET as $parameter_name => $value) {
+                if(is_string($value)){
+                    $_GET[$parameter_name] = htmlspecialchars($value, encoding: "UTF-8");
+                }
+            }
+        }else{
+            foreach ($_POST as $parameter_name => $value) {
+                if(is_string($value)){
+                    $_POST[$parameter_name] = htmlspecialchars($value, encoding: "UTF-8");
+                    if($parameter_name == "password"){
+                        $_POST[$parameter_name] = hash('sha256',$value);
+                    }
+                }
+            }
+        }
     }
 }

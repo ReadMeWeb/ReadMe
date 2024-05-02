@@ -60,6 +60,10 @@ class Pangine
                 "path" => "/marango/Pages/libro.php",
                 "privileges" => array()
             ),
+            "Libri" => array(
+                "path" => "/marango/Pages/loans.php",
+                "privileges" => array(self::USER())
+            ),
             "Esci" => array(
               "path" => "/marango/Pages/esci.php",
               "privileges" => array(self::USER(), self::ADMIN())

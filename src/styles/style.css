@@ -126,19 +126,19 @@ body {
     }
 
     /* -------- BOOK -------*/
-    #book-page {
+    .book-page {
         display: flex;
         flex-direction: column;
         justify-content: center;
         padding: 20px;
     }
 
-    #book-page #info {
+    .book-page .section-info {
         width: 100%;
         padding: 10px;
     }
 
-    #book-page img {
+    .book-page .section-image img {
         display: none;
     }
 }
@@ -148,26 +148,26 @@ body {
 ##############################*/
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     /* -------- BOOk -------*/
-    #book-page {
+    .book-page {
         display: flex;
         flex-direction: column;
         justify-content: center;
         padding: 20px;
     }
 
-    #book-page #image {
+    .book-page .section-image {
         display: flex;
         justify-content: center;
         width: 100%;
         padding: 10px;
     }
 
-    #book-page #info {
+    .book-page .section-info {
         width: 100%;
         padding: 10px;
     }
 
-    #book-page img {
+    .book-page .section-image img {
         width: 20%;
         height: auto;
     }
@@ -178,26 +178,26 @@ body {
 ##############################*/
 @media screen and (min-width: 1024px) and (max-width: 1200px) {
     /* -------- BOOk -------*/
-    #book-page {
+    .book-page {
         display: flex;
         align-items: space-between;
         flex-direction: row;
         padding: 20px;
     }
 
-    #book-page #image {
+    .book-page .section-image {
         display: flex;
         justify-content: center;
         width: 40%;
         padding: 10px;
     }
 
-    #book-page img {
+    .book-page .section-image img {
         max-width: 100%;
         height: auto;
     }
 
-    #book-page #info {
+    .book-page .section-info {
         width: 60%;
         padding: 10px;
     }
@@ -208,21 +208,21 @@ body {
 ##############################*/
 @media screen and (min-width: 1200px) {
     /* -------- BOOk -------*/
-    #book-page {
+    .book-page {
         display: flex;
-        align-items: space-between;
+        align-items: space-around;
         flex-direction: row;
         padding: 20px;
     }
 
-    #book-page #image {
+    .book-page .section-image {
         display: flex;
         justify-content: center;
         width: 50%;
         padding: 10px;
     }
 
-    #book-page #info {
+    .book-page .section-info {
         width: 50%;
         padding: 10px;
     }
@@ -392,23 +392,23 @@ label {
 
 /* --------- BOOK --------- */
 
-#book-page h1 {
+.book-page h1 {
     font-size: 2.5em;
     margin-bottom: 20px;
 }
 
-#book-page h2 {
+.book-page h2 {
     font-size: 2em;
     margin-bottom: 10px;
     color: var(--secondaryColor);
 }
 
-#book-page p {
+.book-page p {
     font-size: 1.2em;
     color: var(--textColor);
 }
 
-#book-page input[type="submit"] {
+.book-page input[type="submit"] {
     background-color: var(--primaryColor);
     color: var(--backgroundColor);
     border: none;
@@ -423,17 +423,41 @@ label {
     border-radius: 5px;
 }
 
-#book-page input[type="submit"]:hover {
+.book-page input[type="submit"]:hover {
     background-color: var(--secondaryColor);
     color: var(--textColor);
 }
 
-#book-page input[type="submit"]:disabled {
+.book-page input[type="submit"]:disabled {
     background-color: var(--textColor);
     color: var(--backgroundColor);
     cursor: not-allowed;
 }
 
-#book-page #info div p:last-of-type {
+.book-page .section-info div p:last-of-type {
     color: var(--accentColor);
+}
+
+.book-page label {
+    font-size: 1.2em;
+    color: var(--textColor);
+}
+
+.book-page input, .book-page select, .book-page textarea {
+    width: 90%;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid var(--primaryColor);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 1em;
+}
+
+.book-page textarea#input-description {
+    resize: none;
+    height: 400px;
+}
+
+.book-page input[type="submit"] {
+    width: auto;
 }

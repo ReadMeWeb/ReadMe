@@ -2,11 +2,11 @@
 require_once __DIR__ . "/../Pangine/Pangine.php";
 require_once __DIR__ . "/../Pangine/utils/LayoutBuilder.php";
 require_once __DIR__ . "/../Utils/Database.php";
-require_once __DIR__ . "/../Pages/tmp_new_libro.php";
-require_once __DIR__ . "/../Pages/tmp_edit_libro.php";
 
 use Pangine\Pangine;
 use Pangine\utils\LayoutBuilder;
+use Utils\Database;
+use Pangine\utils\Validator;
 
 (new Pangine())
 ->add_renderer_GET(
@@ -27,11 +27,35 @@ use Pangine\utils\LayoutBuilder;
             )
             ->build();
     },
-    //needs_database: true,
-    validator: $validator_get_new
 )
 ->add_renderer_GET(
-    function(){
+    function(Database $db){
+
+    $book_data = [];
+    (new Validator("/marango/Pages/404.php"))
+        ->add_parameter("id")
+        ->is_numeric(
+            value_parser: function (int $book_id) use ($db, &$book_data) {
+                $book_query =
+                    "SELECT B.id, B.title, B.description, B.cover_file_name, B.number_of_copies, A.name_surname, B.author_id FROM Books B INNER JOIN Authors A ON A.id = B.author_id WHERE B.id= ?";
+                $book_data = $db->execute_query($book_query, $book_id);
+                if (count($book_data) == 0) {
+                    return "Il libro richiesto non esiste.";
+                }
+                return "";
+            }
+        )
+        ->validate();
+
+        $book_data = $book_data[0];
+
+        $authors_query =
+            "SELECT * FROM Authors WHERE name_surname != ?";
+        $authors = $db->execute_query($authors_query, $book_data["name_surname"]);
+        $authors_options = "";
+        foreach ($authors as $author) {
+            $authors_options .= "<option value='{$author["id"]}'>{$author["name_surname"]}</option>";
+        }
 
         $content = file_get_contents(__DIR__ . "/../templates/libro_edit.html");
 
@@ -47,10 +71,22 @@ use Pangine\utils\LayoutBuilder;
                     "Modifica",
                 ])
             )
+            ->plain_instant_replace(
+                "<main id=\"content\">",
+                "<main class=\"book-page\">"
+            )
+            ->tag_lazy_replace("book_title", $book_data["title"])
+            ->tag_lazy_replace("current_author_id", $book_data["author_id"])
+            ->tag_lazy_replace("current_author", $book_data["name_surname"])
+            ->tag_lazy_replace("description", $book_data["description"])
+            ->tag_lazy_replace("current_cover", $book_data["cover_file_name"])
+            ->tag_lazy_replace("authors_options", $authors_options)
             ->build();
     },
     "modifica",
-    //needs_database: true,
-    validator: $validator_get_edit
+    needs_database: true
 )
+->add_renderer_POST(function(){
+    echo "Hello Update!";
+}, "update")
 ->execute();

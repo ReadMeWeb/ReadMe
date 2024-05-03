@@ -52,6 +52,7 @@ use Pangine\utils\Validator;
         $authors_query =
             "SELECT * FROM Authors WHERE name_surname != ?";
         $authors = $db->execute_query($authors_query, $book_data["name_surname"]);
+        $current_author_option = "<option disabled selected value='{$book_data["author_id"]}'>{$book_data["name_surname"]}</option>";
         $authors_options = "";
         foreach ($authors as $author) {
             $authors_options .= "<option value='{$author["id"]}'>{$author["name_surname"]}</option>";
@@ -76,10 +77,9 @@ use Pangine\utils\Validator;
                 "<main class=\"book-page\">"
             )
             ->tag_lazy_replace("book_title", $book_data["title"])
-            ->tag_lazy_replace("current_author_id", $book_data["author_id"])
-            ->tag_lazy_replace("current_author", $book_data["name_surname"])
             ->tag_lazy_replace("description", $book_data["description"])
             ->tag_lazy_replace("current_cover", $book_data["cover_file_name"])
+            ->tag_lazy_replace("current_author_option", $current_author_option)
             ->tag_lazy_replace("authors_options", $authors_options)
             ->build();
     },

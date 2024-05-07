@@ -408,6 +408,14 @@ label {
     color: var(--textColor);
 }
 
+.book-page section.image-hidden {
+    display: none; !important;
+}
+
+.book-page.image-hidden {
+    justify-content: center; !important;
+}
+
 .book-page input[type="submit"] {
     background-color: var(--primaryColor);
     color: var(--backgroundColor);

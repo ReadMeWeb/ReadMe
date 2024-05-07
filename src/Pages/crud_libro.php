@@ -10,9 +10,17 @@ use Pangine\utils\Validator;
 
 (new Pangine())
 ->add_renderer_GET(
-    function(){
+    function(Database $db){
 
-        $content = file_get_contents(__DIR__ . "/../templates/libro_new.html");
+        $authors_query =
+            "SELECT * FROM Authors";
+        $authors = $db->execute_query($authors_query);
+        $authors_options = "";
+        foreach ($authors as $author) {
+            $authors_options .= "<option value='{$author["id"]}'>{$author["name_surname"]}</option>";
+        }
+
+        $content = file_get_contents(__DIR__ . "/../templates/libro_edit.html");
 
         echo (new LayoutBuilder("priv"))
             ->tag_istant_replace("content", $content)
@@ -25,8 +33,20 @@ use Pangine\utils\Validator;
                     "Nuovo Libro",
                 ])
             )
+            ->plain_instant_replace(
+                "<main id=\"content\">",
+                "<main class=\"book-page image-hidden\">"
+            )
+            ->tag_lazy_replace("book_title", "")
+            ->tag_lazy_replace("description", "")
+            ->tag_lazy_replace("current_cover", "")
+            ->tag_lazy_replace("current_author_option", "")
+            ->tag_lazy_replace("authors_options", $authors_options)
+            ->tag_lazy_replace("image-hidden", "image-hidden")
+            ->tag_lazy_replace("submit-value", "Aggiungi")
+            ->tag_lazy_replace("submit-name", "create")
             ->build();
-    },
+    }, needs_database: true
 )
 ->add_renderer_GET(
     function(Database $db){
@@ -81,6 +101,9 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("current_cover", $book_data["cover_file_name"])
             ->tag_lazy_replace("current_author_option", $current_author_option)
             ->tag_lazy_replace("authors_options", $authors_options)
+            ->tag_lazy_replace("image-hidden", "")
+            ->tag_lazy_replace("submit-value", "Aggiorna")
+            ->tag_lazy_replace("submit-name", "update")
             ->build();
     },
     "modifica",
@@ -89,4 +112,7 @@ use Pangine\utils\Validator;
 ->add_renderer_POST(function(){
     echo "Hello Update!";
 }, "update")
+->add_renderer_POST(function(){
+    echo "Hello Create!";
+}, "create")
 ->execute();

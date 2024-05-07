@@ -1,4 +1,4 @@
-<section class="section-image">
+<section class="section-image {{image-hidden}}">
     <img id="current_cover" src="/marango/assets/book_covers/{{current_cover}}">
 </section>
 <section class="section-info">
@@ -13,13 +13,11 @@
         </select>
 
         <label for="input-description">Descrizione</label>
-        <textarea id="input-description", name="description">
-            {{description}}
-        </textarea>
+        <textarea id="input-description", name="description">{{description}}</textarea>
 
         <label for="input-cover">Copertina</label>
         <input id="input-cover" type="file" name="cover" accept=".jpg,.jpeg,.png"/>
 
-        <input type="submit" value="Aggiorna" name="update" />
+        <input type="submit" value="{{submit-value}}" name="{{submit-name}}" />
     </form>
 </section>

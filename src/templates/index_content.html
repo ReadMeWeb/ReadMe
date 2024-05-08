@@ -1,19 +1,34 @@
 <h1>Prenota i libri della nostra biblioteca direttamente da casa!</h1>
-<div>
-    <h2>I nostri numeri</h2>
-    <p>
-        Autori totali: +{{authors-counter}}
-    </p>
-    <p>
-        Libri totali: +{{books-counter}}
-    </p>
-    <p>
-        Prestiti totali: +{{loans-counter}}
-    </p>
+<div class="index-card" id="description-card">
+    <h2>Read<span class="book-emoji"></span>Me</h2>
+    <p>Immergiti nell'atmosfera accogliente e stimolante della biblioteca ReadMe, un luogo dove la passione per la
+        lettura si fonde con la modernità dei servizi digitali.</p>
+    <p>Situata al centro della città, ReadMe è molto più di una semplice biblioteca; è un'oasi culturale che abbraccia
+        l'innovazione.</p>
+    <p>Con la possibilità di prenotare libri online, il tuo accesso al mondo della conoscenza è reso più facile che
+        mai.</p>
 </div>
-<div>
+<div class="index-card">
+    <h2>I nostri numeri</h2>
+    <ul id="index-numbers">
+        <li>
+            <p>Autori totali:</p>
+            <p class="number">+{{authors-counter}}</p>
+        </li>
+        <li>
+            <p>Libri totali:</p>
+            <p class="number">+{{books-counter}}</p>
+        </li>
+        <li>
+            <p>Prestiti totali:</p>
+            <p class="number">+{{loans-counter}}</p>
+        </li>
+    </ul>
+</div>
+<div class="index-card">
     <h2>Vieni a trovarci!</h2>
-    <p>Una volta prenotato il tuo libro potrai venirlo a ritirare entro la data di scadenza del prestito, presso la nostra sede:</p>
+    <p>Una volta prenotato il tuo libro potrai venirlo a ritirare entro la data di scadenza del prestito, presso la
+        nostra sede:</p>
     <address>
         Via Gran Lettori, 45<br>
         35353, Padova, Veneto

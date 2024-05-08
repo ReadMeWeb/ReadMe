@@ -90,8 +90,7 @@ use Utils\Database;
                             <p>Copie rimanenti: $remaining</p>
                             <input type='submit' name='noleggia' value='Noleggia' $disabled/>
                             <input type='hidden' name='id' value='{$book_data["id"]}'/>
-                        </form>
-                    ";
+                        </form>";
             }
             if ($_SESSION["user"]["status"] == Pangine::ADMIN()) {
                 $operations .= "
@@ -103,7 +102,6 @@ use Utils\Database;
                     ";
             }
         }
-
         echo $layout->tag_lazy_replace("operations", $operations)->build();
     }, needs_database: true)
     ->execute();

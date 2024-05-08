@@ -112,7 +112,32 @@ use Pangine\utils\Validator;
 ->add_renderer_POST(function(){
     echo "Hello Update!";
 }, "update")
-->add_renderer_POST(function(){
-    echo "Hello Create!";
-}, "create")
+->add_renderer_POST(
+    function(Database $db){
+
+        (new Validator("/marango/Pages/500.php"))
+            ->add_parameter("title")
+            ->is_string()
+            ->add_parameter("description")
+            ->is_string()
+            ->add_parameter("cover")
+            ->is_file([
+                "image/jpeg",
+                "image/jpg",
+                "image/png",
+            ])
+            ->add_parameter("author")
+            ->is_string(string_parser: function(string $author_id) use ($db){
+                $author_query =
+                    "SELECT name_surname FROM Authors WHERE id = ?";
+                $author_data = $db->execute_query($author_query, $author_id);
+                return count($author_data) == 0 ? "L'autore o l'autrice selezionato/a non esiste." : "";
+            }
+        );
+
+        $db->execute_query("SELECT 1");
+    },
+    "create",
+    needs_database: true
+)
 ->execute();

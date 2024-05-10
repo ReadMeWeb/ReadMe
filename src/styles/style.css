@@ -105,6 +105,9 @@ body {
     :root {
         --headingSize: 1.8em;
         --textSize: 1.1em;
+        --errorMessageColor: #721c24;
+        --errorMessageBackground: #f8d7da;
+        --errorMessageBorderColor: #f5c6cb;
     }
 
     /* -------- nav menu -------*/
@@ -224,9 +227,17 @@ body {
     /* -------- BOOk -------*/
     .book-page {
         display: flex;
-        align-items: space-between;
+        align-items: center;
         flex-direction: row;
         padding: 20px;
+    }
+
+    /* vvvvvv USA QUESTO vvvvvv */
+    .book-page section form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-flow: column;
     }
 
     .book-page .section-image {
@@ -254,7 +265,7 @@ body {
     /* -------- BOOk -------*/
     .book-page {
         display: flex;
-        align-items: space-around;
+        align-items: center;
         flex-direction: row;
         padding: 20px;
     }
@@ -593,11 +604,13 @@ div#book-page {
 }
 
 .book-page section.image-hidden {
-    display: none; !important;
+    display: none;
+!important;
 }
 
 .book-page.image-hidden {
-    justify-content: center; !important;
+    justify-content: center;
+!important;
 }
 
 .book-page input[type="submit"] {
@@ -652,6 +665,7 @@ div#book-page {
 
 .book-page input[type="submit"] {
     width: auto;
+}
 
 /* ------------ CATALOGO PAGE ------------ */
 
@@ -665,6 +679,7 @@ form[role="search"] {
 }
 
 /* ------------ INDEX PAGE ------------ */
+
 .index-card {
     -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
     -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
@@ -700,15 +715,18 @@ ul#index-numbers li .number {
 }
 
 #description-card p {
-   margin-bottom: 1em;
+    margin-bottom: 1em;
 }
-#description-card p:last-child{
+
+#description-card p:last-child {
     margin-bottom: 0;
 }
-.index-card address{
+
+.index-card address {
     text-align: right;
     width: 100%;
 }
-main div.index-card:last-child p{
+
+main div.index-card:last-child p {
     margin: 1em 0 1em 0;
 }

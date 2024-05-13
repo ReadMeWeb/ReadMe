@@ -232,8 +232,7 @@ body {
         padding: 20px;
     }
 
-    /* vvvvvv USA QUESTO vvvvvv */
-    .book-page section form {
+    .book-page .section-info {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -646,6 +645,17 @@ div#book-page {
 .book-page label {
     font-size: 1.2em;
     color: var(--textColor);
+}
+
+.book-page .section-delete {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#book-page-delete {
+    justify-content: center;
 }
 
 .book-page input, .book-page select, .book-page textarea {

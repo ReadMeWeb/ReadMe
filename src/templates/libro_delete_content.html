@@ -1,0 +1,9 @@
+<section class="section-delete">
+    <h1>Sei sicuro di voler eliminare il libro:</h1>
+    <h2>{{book_title}}</h2>
+    <form method="POST" action="/marango/Pages/crud_libro.php">
+        <input type="hidden" name="id" value="{{book_id}}">
+        <input type="submit" value="Elimina" name="elimina" />
+    </form>
+    <a href="/marango/Pages/crud_libro.php?id={{book_id}}">Torna indietro</a>
+</section>

@@ -620,7 +620,7 @@ a:visited {
 
 /* ---------- form related -----------*/
 
-input, textarea {
+input, textarea, select {
     font-family: inherit;
     font-size: inherit;
 }
@@ -629,7 +629,7 @@ label {
     display: block;
 }
 
-#content input, #content textarea {
+#content input, #content textarea, #loans-form select {
     padding: 0.5rem;
     border-radius: 0.3rem;
 }
@@ -668,7 +668,7 @@ input[disabled] {
     background-color: var(--secondaryBackgroundColor);
 }
 
-input {
+input, select {
     margin-bottom: 1rem;
     border: 1px solid black;
 }
@@ -862,3 +862,17 @@ ul#index-numbers li .number {
 main div.index-card:last-child p {
     margin: 1rem 0 1rem 0;
 }
+
+/* ------------ PRESTITI PAGE ------------ */
+#loans-form {
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#loans-form fieldset {
+    box-sizing: border-box;
+    width: 80%;
+    margin: 1% 10%
+}
+
+

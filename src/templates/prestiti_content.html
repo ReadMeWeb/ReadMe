@@ -1,0 +1,22 @@
+<h1>I tuoi prestiti</h1>
+<form method="get" action="/marango/Pages/prestiti.php" id="loans-form">
+    <fieldset>
+        <legend>Ordinamento prestiti</legend>
+        <label for="order">Ordina per</label>
+        <select name="order" id="order">
+            <option value="start" {{start}}>Data inizio prestito</option>
+            <option value="end" {{end}}>Data fine prestito</option>
+        </select>
+    </fieldset>
+    <fieldset>
+        <legend>Filtro prestiti</legend>
+        <label for="status">Tipo di prestito</label>
+        <select name="status" id="status">
+            <option value="active" {{active}}>Attivi</option>
+            <option value="expired" {{expired}}>Scaduti</option>
+            <option value="all" {{all}}>Tutti</option>
+        </select>
+    </fieldset>
+    <input type="submit" value="Applica">
+</form>
+{{loans}}

@@ -12,13 +12,9 @@ use \Utils\Database;
 function get_book_card(string $cover_file_name, string $title, int $copies, string $name_surname, int $id): string {
     return "<li> 
             <article class='book-card'>
+                <h2>{$title}</h2>
                 <img src='/marango/assets/book_covers/{$cover_file_name}' alt='' width='200' height='200'>
                 <dl>
-                    <div>
-                        <dt>Titolo:</dt>
-                        <dd>{$title}</dd>
-                    </div>
-
                     <div>
                         <dt>Autore:</dt>
                         <dd>{$name_surname}</dd>
@@ -40,7 +36,7 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
 
         $content = file_get_contents(__DIR__ . "/../templates/catalogo_content.html");
 
-        $query =  htmlspecialchars(trim($_GET['query']));
+        $query =  trim($_GET['query']);
 
         if(empty($query)) {
             Pangine::redirect('Catalogo');

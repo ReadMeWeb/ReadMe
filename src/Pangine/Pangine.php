@@ -60,17 +60,14 @@ class Pangine
                 "path" => "/marango/Pages/libro.php",
                 "privileges" => array()
             ),
-<<<<<<< HEAD
             "Nuovo Libro" => array(
                 "path" => "/marango/Pages/crud_libro.php",
                 "privileges" => array(self::ADMIN())
             ),
-=======
             "Prestiti" => array(
                 "path" => "/marango/Pages/prestiti.php?order=start&status=all",
                 "privileges" => array(self::USER())
             )
->>>>>>> main
         );
     }
 

@@ -26,7 +26,7 @@
         --secondaryColor: #218c70;
         --accentColor: #23e7b2;
         --mobileNavLinkBorder: #6e968c;
-        --linkColor: #00fffb;
+        --linkColor: #5BE6E6;
         --visitedLinkColor: #c4edff;
         --logoUrl: url("../assets/readme-logo-white-cropped.png");
     }
@@ -103,11 +103,9 @@ body {
 @media screen and (max-width: 768px) {
     /* -- font sizes -- */
     :root {
-        --headingSize: 1.8em;
-        --textSize: 1.1em;
-        --errorMessageColor: #721c24;
-        --errorMessageBackground: #f8d7da;
-        --errorMessageBorderColor: #f5c6cb;
+        --heading1Size: 2rem;
+        --heading2Size: 1.8rem;
+        --textSize: 1.1rem;
     }
 
     /* -------- nav menu -------*/
@@ -115,34 +113,37 @@ body {
         position: fixed;
         width: 100%;
         bottom: 0;
-        height: 3.2em;
+        height: 3.2rem;
     }
 
     nav h1 {
-        background-size: 8em 2em;
-        width: 8em;
-        height: 2em;
+        background-size: 8rem 2rem;
+        width: 8rem;
+        height: 2rem;
     }
 
     #menu ul li .selectedNavLink {
-        height: 3.2em;
+        height: 3.2rem;
     }
 
     #menu {
         background-color: var(--backgroundColor);
-        -moz-box-shadow: 0 0 0.64em 0 var(--primaryColor);
-        -o-box-shadow: 0 0 0.64em 0 var(--primaryColor);
-        -webkit-box-shadow: 0 0 0.64em 0 var(--primaryColor);
-        box-shadow: 0 0 0.64em 0 var(--primaryColor);
+        -moz-box-shadow: 0 0 0.64rem 0 var(--primaryColor);
+        -o-box-shadow: 0 0 0.64rem 0 var(--primaryColor);
+        -webkit-box-shadow: 0 0 0.64rem 0 var(--primaryColor);
+        box-shadow: 0 0 0.64rem 0 var(--primaryColor);
     }
 
     #menu ul li.selectedNavLink {
-        height: 3.2em;
+        height: 3.2rem;
     }
 
-    /* -------- page footer -------*/
-    footer#pageFooter {
-        padding-bottom: 4em;
+    /* -------- footer -------*/
+    footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 4rem;
     }
 
     /* -------- BOOK -------*/
@@ -181,8 +182,8 @@ body {
         width: 80%;
         background-color: var(--secondaryBackgroundColor);
         padding: var(--textSize);
-        border-radius: 1em;
-        margin-bottom: 1em;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
     }
 
     ul#index-numbers li:last-child {
@@ -194,6 +195,13 @@ body {
 #             Tablet           #
 ##############################*/
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+    /* -- font sizes -- */
+    :root {
+        --heading1Size: 2.2rem;
+        --heading2Size: 2rem;
+        --textSize: 1.3rem;
+    }
+
     /* -------- BOOk -------*/
     .book-page {
         display: flex;
@@ -218,12 +226,43 @@ body {
         width: 20%;
         height: auto;
     }
+
+    /* -- INDEX PAGE -- */
+    ul#index-numbers {
+        list-style: none;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-flow: row;
+        width: 100%;
+        margin-top: var(--textSize);
+        gap: 1rem;
+    }
+
+    ul#index-numbers li {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-flow: column;
+        flex-grow: 1;
+        background-color: var(--secondaryBackgroundColor);
+        padding: var(--textSize);
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+    }
 }
 
 /*##############################
 #             Monitor          #
 ##############################*/
 @media screen and (min-width: 1024px) and (max-width: 1200px) {
+    /* -- font sizes -- */
+    :root {
+        --heading1Size: 2.3rem;
+        --heading2Size: 2.1rem;
+        --textSize: 1.4rem;
+    }
+
     /* -------- BOOk -------*/
     .book-page {
         display: flex;
@@ -255,12 +294,43 @@ body {
         width: 60%;
         padding: 10px;
     }
+
+    /* -- INDEX PAGE -- */
+    ul#index-numbers {
+        list-style: none;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-flow: row;
+        width: 100%;
+        margin-top: var(--textSize);
+        gap: 1rem;
+    }
+
+    ul#index-numbers li {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-flow: column;
+        flex-grow: 1;
+        background-color: var(--secondaryBackgroundColor);
+        padding: var(--textSize);
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+    }
 }
 
 /*##############################
 #             Bigger           #
 ##############################*/
 @media screen and (min-width: 1200px) {
+    /* -- font sizes -- */
+    :root {
+        --heading1Size: 2.3rem;
+        --heading2Size: 2.1rem;
+        --textSize: 1.4rem;
+    }
+
     /* -------- BOOk -------*/
     .book-page {
         display: flex;
@@ -280,6 +350,30 @@ body {
         width: 50%;
         padding: 10px;
     }
+
+    /* -- INDEX PAGE -- */
+    ul#index-numbers {
+        list-style: none;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-flow: row;
+        width: 100%;
+        margin-top: var(--textSize);
+        gap: 1rem;
+    }
+
+    ul#index-numbers li {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-flow: column;
+        flex-grow: 1;
+        background-color: var(--secondaryBackgroundColor);
+        padding: var(--textSize);
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+    }
 }
 
 /*##############################
@@ -289,32 +383,32 @@ body {
     /* -------- nav menu -------*/
     nav#menu ul {
         background-color: var(--backgroundColor);
-        -moz-box-shadow: 0 0 0.64em 0 var(--primaryColor);
-        -o-box-shadow: 0 0 0.64em 0 var(--primaryColor);
-        -webkit-box-shadow: 0 0 0.64em 0 var(--primaryColor);
-        box-shadow: 0 0 0.64em 0 var(--primaryColor);
+        -moz-box-shadow: 0 0 0.64rem 0 var(--primaryColor);
+        -o-box-shadow: 0 0 0.64rem 0 var(--primaryColor);
+        -webkit-box-shadow: 0 0 0.64rem 0 var(--primaryColor);
+        box-shadow: 0 0 0.64rem 0 var(--primaryColor);
     }
 
     nav#menu {
         overflow: hidden;
-        padding-bottom: 0.64em;
+        padding-bottom: 0.64rem;
     }
 
     nav h1 {
-        background-size: 10em 2.5em;
-        width: 10em;
-        height: 2.5em;
+        background-size: 10rem 2.5rem;
+        width: 10rem;
+        height: 2.5rem;
     }
 
     #menu ul li.selectedNavLink {
-        height: 3.2em;
+        height: 3.2rem;
     }
 
     nav#menu ul li:hover {
-        -moz-box-shadow: 0 0 0.08em 0 var(--primaryColor);
-        -o-box-shadow: 0 0 0.08em 0 var(--primaryColor);
-        -webkit-box-shadow: 0 0 0.08em 0 var(--primaryColor);
-        box-shadow: 0 0 0.08em 0 inset var(--primaryColor);
+        -moz-box-shadow: 0 0 0.08rem 0 var(--primaryColor);
+        -o-box-shadow: 0 0 0.08rem 0 var(--primaryColor);
+        -webkit-box-shadow: 0 0 0.08rem 0 var(--primaryColor);
+        box-shadow: 0 0 0.08rem 0 inset var(--primaryColor);
     }
 
 
@@ -334,10 +428,10 @@ body {
         justify-content: space-evenly;
         align-items: center;
         flex-flow: column;
-        width: 7em;
+        width: 7rem;
         background-color: var(--secondaryBackgroundColor);
         padding: var(--textSize);
-        border-radius: 1em;
+        border-radius: 1rem;
     }
 }
 
@@ -373,7 +467,7 @@ nav {
 
 nav#menu ul li a {
     width: 100%;
-    height: 3.2em;
+    height: 3.2rem;
     display: flex;
     flex-grow: 1;
     align-items: center;
@@ -381,10 +475,10 @@ nav#menu ul li a {
 }
 
 nav#menu ul li.selectedNavLink {
-    -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    box-shadow: 0 0 0.16em 0 inset var(--primaryColor);
+    -moz-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -o-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -webkit-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    box-shadow: 0 0 0.16rem 0 inset var(--primaryColor);
 }
 
 nav li a {
@@ -415,22 +509,22 @@ nav#breadcrumbs {
 }
 
 nav#breadcrumbs p {
-    padding: 0.32em 0.64em;
+    padding: 0.32rem 0.64rem;
     border-radius: 5px;
-    margin-top: 0.32em;
-    -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    margin-top: 0.32rem;
+    -moz-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -o-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -webkit-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    box-shadow: 0 0 0.16rem 0 var(--primaryColor);
 }
 
 /* --------- HEADER - logolink --------- */
 nav div {
     background-image: var(--logoUrl);
     background-size: cover;
-    width: 12em;
-    height: 3em;
-    margin: 0.7em 0 0;
+    width: 12rem;
+    height: 3rem;
+    margin: 0.7rem 0 0;
 }
 
 nav div span {
@@ -460,8 +554,8 @@ a:visited {
     justify-content: center;
     align-items: center;
     flex-flow: column;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 #content > h1 {
@@ -474,7 +568,7 @@ a:visited {
 
 /* ---------- form related -----------*/
 
-input, textarea {
+input, textarea, select {
     font-family: inherit;
     font-size: inherit;
 }
@@ -483,38 +577,38 @@ label {
     display: block;
 }
 
-#content input, #content textarea {
-    padding: 0.5em;
-    border-radius: 0.3em;
+#content input, #content textarea, #loans-form select {
+    padding: 0.5rem;
+    border-radius: 0.3rem;
 }
 
-form fieldset {
+form.simple_form fieldset {
     display: flex;
     flex-flow: column;
     width: 80%;
 }
 
-form {
+form.simple_form {
     width: 80%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-fieldset {
-    padding: 1em 1em 0 1em;
+fieldset.simple_form {
+    padding: 1rem 1rem 0 1rem;
     border: none;
-    -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    box-shadow: 0 0 0.16em 0 var(--primaryColor);
+    -moz-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -o-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -webkit-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    box-shadow: 0 0 0.16rem 0 var(--primaryColor);
     border-radius: 5px;
 }
 
-legend {
+legend.simple_form {
     float: left;
-    font-size: 1.5em;
-    padding-bottom: 0.5em;
+    font-size: 1.5rem;
+    padding-bottom: 0.5rem;
 }
 
 input[disabled] {
@@ -522,18 +616,18 @@ input[disabled] {
     background-color: var(--secondaryBackgroundColor);
 }
 
-input {
-    margin-bottom: 1em;
+input, select {
+    margin-bottom: 1rem;
     border: 1px solid black;
 }
 
 .errorMessage {
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
     color: var(--errorMessageColor);
     background-color: var(--errorMessageBackground);
     border-color: var(--errorMessageBorderColor);
-    padding: 0.5em 1em;
-    border-radius: 0.3em;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
 }
 
 .errorMessage::before {
@@ -555,17 +649,17 @@ ul#operations {
     display: flex;
     flex-flow: column;
     align-items: center;
-    margin-bottom: 1em;
-    padding: 1em 2em;
-    -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    border-radius: 0.3em;
+    margin-bottom: 1rem;
+    padding: 1rem 2rem;
+    -moz-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -o-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -webkit-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    border-radius: 0.3rem;
 }
 
 ul#operations li {
-    padding-bottom: 0.5em;
+    padding-bottom: 0.5rem;
 }
 
 ul#operations li:last-child {
@@ -608,8 +702,7 @@ div#book-page {
 }
 
 .book-page.image-hidden {
-    justify-content: center;
-!important;
+    justify-content: center; !important;
 }
 
 .book-page input[type="submit"] {
@@ -684,22 +777,26 @@ form[role="search"] legend {
 }
 
 form[role="search"] {
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* ------------ INDEX PAGE ------------ */
 
 .index-card {
-    -moz-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -o-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    -webkit-box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    box-shadow: 0 0 0.16em 0 var(--primaryColor);
-    border-radius: 0.3em;
+    -moz-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -o-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -webkit-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    border-radius: 0.3rem;
 }
 
 .index-card h2 {
-    font-size: var(--headingSize);
+    font-size: var(--heading2Size);
+}
+
+h1 {
+    font-size: var(--heading1Size);
 }
 
 .index-card {
@@ -720,12 +817,13 @@ form[role="search"] {
 
 
 ul#index-numbers li .number {
-    font-size: var(--headingSize);
+    font-size: var(--heading2Size);
     font-weight: bold;
 }
 
 #description-card p {
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
+    width: 100%;
 }
 
 #description-card p:last-child {
@@ -738,5 +836,20 @@ ul#index-numbers li .number {
 }
 
 main div.index-card:last-child p {
-    margin: 1em 0 1em 0;
+    margin: 1rem 0 1rem 0;
 }
+
+/* ------------ PRESTITI PAGE ------------ */
+#loans-form {
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#loans-form fieldset {
+    box-sizing: border-box;
+    width: 80%;
+    margin: 1% 10%
+}
+
+
+>>>>>>> main

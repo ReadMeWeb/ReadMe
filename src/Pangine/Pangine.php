@@ -60,10 +60,17 @@ class Pangine
                 "path" => "/marango/Pages/libro.php",
                 "privileges" => array()
             ),
+<<<<<<< HEAD
             "Nuovo Libro" => array(
                 "path" => "/marango/Pages/crud_libro.php",
                 "privileges" => array(self::ADMIN())
             ),
+=======
+            "Prestiti" => array(
+                "path" => "/marango/Pages/prestiti.php?order=start&status=all",
+                "privileges" => array(self::USER())
+            )
+>>>>>>> main
         );
     }
 
@@ -180,7 +187,7 @@ class Pangine
             $link = $page_metadata["path"];
             $pageName = $page_title;
             $allowedStatus = $page_metadata["privileges"];
-            if (in_array($_SESSION["user"]["status"], $allowedStatus) && !str_contains($link, '?')) {
+            if (in_array($_SESSION["user"]["status"], $allowedStatus)) {
                 if ($selectedLink == $link && !str_contains($_SERVER['REQUEST_URI'], '?')) {
                     $navLinks .= "<li class='selectedNavLink'>" . $pageName . "</li>";
                 } else {

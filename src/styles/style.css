@@ -634,20 +634,20 @@ label {
     border-radius: 0.3rem;
 }
 
-form fieldset {
+form.simple_form fieldset {
     display: flex;
     flex-flow: column;
     width: 80%;
 }
 
-form {
+form.simple_form {
     width: 80%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-fieldset {
+fieldset.simple_form {
     padding: 1rem 1rem 0 1rem;
     border: none;
     -moz-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
@@ -657,7 +657,7 @@ fieldset {
     border-radius: 5px;
 }
 
-legend {
+legend.simple_form {
     float: left;
     font-size: 1.5rem;
     padding-bottom: 0.5rem;

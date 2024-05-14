@@ -1,0 +1,28 @@
+<section class="section-image {{image-hidden}}">
+    <img id="current_cover" src="/marango/assets/book_covers/{{current_cover}}">
+</section>
+<section class="section-info">
+    <form method="POST" action="/marango/Pages/crud_libro.php" enctype="multipart/form-data">
+        {{book_id_field}}
+
+        <label for="input-title">Titolo del Libro</label>
+        <input id="input-title" type="text" name="title" value="{{book_title}}" required/>
+
+        <label for="input-author">Autore</label>
+        <select id="input-author" name="author">
+            {{current_author_option}}
+            {{authors_options}}
+        </select>
+
+        <label for="input-description">Descrizione</label>
+        <textarea id="input-description" name="description">{{description}}</textarea>
+
+        <label for="input-cover">Copertina</label>
+        <input id="input-cover" type="file" name="cover" accept=".jpg,.jpeg,.png"/>
+
+        <label for="input-no-copies">Numero di Copie</label>
+        <input id="input-no-copies" type="number" name="no_copies" min="1" value="{{no_copies}}"/>
+
+        <input type="submit" value="{{submit-value}}" name="{{submit-name}}" />
+    </form>
+</section>

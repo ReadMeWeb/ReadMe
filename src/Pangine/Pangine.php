@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Pangine;
 require_once(__DIR__ . "/../Utils/ErroriMigliori.php");
@@ -60,13 +60,17 @@ class Pangine
                 "path" => "/marango/Pages/libro.php",
                 "privileges" => array()
             ),
+            "Nuovo Libro" => array(
+                "path" => "/marango/Pages/crud_libro.php",
+                "privileges" => array(self::ADMIN())
+            ),
             "Prestiti" => array(
                 "path" => "/marango/Pages/prestiti.php?order=start&status=all",
                 "privileges" => array(self::USER())
             )
         );
     }
- 
+
     public static function redirect(string $page = ''): void
     {
       header('Location: ' . ($page === '' ? '' : self::$pages[$page]['path']));

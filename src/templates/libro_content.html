@@ -1,14 +1,13 @@
-<div id="book-page">
-  <section aria-labelledby="book-info">
-    <img src="/marango/assets/book_covers/{{cover-image-src}}" alt="Copertina del libro {{book-title}}" />
-    <div>
-      <h1>{{book-title}}</h1>
-      <h3>Autore: {{book-author}}</h3>
-      <p>{{book-description}}</p>
-      <br/>
-      <div id="op-section">
-        {{operations}}
-      </div>
-    </div>
-  </section>
-</div>
+<section class="section-image">
+    <img
+        src="/marango/assets/book_covers/{{cover-image-src}}"
+        alt="Copertina del libro {{book-title}}"
+    />
+</section>
+<section class="section-info">
+    <h1>{{book-title}}</h1>
+    <h2>Autore: {{book-author}}</h2>
+    <p>{{book-description}}</p>
+    <br />
+    <div id="op-section">{{operations}}</div>
+</section>

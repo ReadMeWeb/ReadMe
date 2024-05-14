@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Utils;
 
@@ -22,6 +22,10 @@ class Database
     public function __construct()
     {
         $this->conn = new mysqli(self::HOST, self::USERNAME, self::PASSWORD, self::DATABASE);
+    }
+
+    public function get_connection(): mysqli {
+        return $this->conn;
     }
 
     /**

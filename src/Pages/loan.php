@@ -24,17 +24,17 @@ function a($a, $f, $e) {
 
       stream(
         _new_validator('/marango/Pages/404.php'),
-        _add_parametre('libro', _string(string_parser: fn ($i) => $conn->execute_query('select count(*) = 1 as b from Books where id = ?', $i)[0]['b'] == 1 ? '' : 'Il libro non è stato trovato'))
+        _add_parametre('id', _string(string_parser: fn ($i) => $conn->execute_query('select count(*) = 1 as b from Books where id = ?', $i)[0]['b'] == 1 ? '' : 'Il libro non è stato trovato'))
       )->validate();
 
       stream(
-        _new_validator('/marango/Pages/loan.php?libro=' . $_POST['libro']),
+        _new_validator('/marango/Pages/loan.php?id=' . $_POST['id']),
         a('inizio', fn ($i) => $i >= date('Y-m-d', time()), 'La data di inizio non può essere prima di oggi.'),
         a('fine',   fn ($i) => $i >= date('Y-m-d', time()), 'La data di fine non può essere prima di oggi.'),
         a('inizio', fn ($i) => $i < $_POST['fine'], 'La data di fine deve essere dopo la data di inizio.'),
       )->validate();
 
-      $conn->execute_query('insert into Loans(book_id,user_username,loan_start_date,loan_expiration_date) values(?,?,?,?);', $_POST['libro'], _username(), $_POST['inizio'], $_POST['fine']);
+      $conn->execute_query('insert into Loans(book_id,user_username,loan_start_date,loan_expiration_date) values(?,?,?,?);', $_POST['id'], _username(), $_POST['inizio'], $_POST['fine']);
 
       header('Location: ' . '/marango/Pages/loan.php?success=true');
       exit();
@@ -46,7 +46,7 @@ function a($a, $f, $e) {
 
       stream(
         _new_validator('/marango/Pages/404.php'),
-        _add_parametre('libro', _string(string_parser: fn ($i) => $conn->execute_query('select count(*) = 1 as b from Books where id = ?', $i)[0]['b'] == 1 ? '' : 'Il libro non è stato trovato'))
+        _add_parametre('id', _string(string_parser: fn ($i) => $conn->execute_query('select count(*) = 1 as b from Books where id = ?', $i)[0]['b'] == 1 ? '' : 'Il libro non è stato trovato'))
       )->validate();
 
       echo (new LayoutBuilder())
@@ -58,8 +58,8 @@ function a($a, $f, $e) {
         ->tag_lazy_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Noleggio')))
         ->tag_istant_replace('content', file_get_contents(__DIR__ . '/../templates/make_loan_content.html'))
 
-        ->tag_lazy_replace('libro-value',   $_GET['libro'])
-        ->tag_lazy_replace('libro-titolo',  $conn->execute_query('select title as t from Books where id = ?', $_GET['libro'])[0]['t'])
+        ->tag_lazy_replace('libro-value',   $_GET['id'])
+        ->tag_lazy_replace('libro-titolo',  $conn->execute_query('select title as t from Books where id = ?', $_GET['id'])[0]['t'])
         ->tag_lazy_replace('user-value', _username())
 
         ->tag_lazy_replace('inizio-value', $today = date('Y-m-d', time()))
@@ -68,7 +68,7 @@ function a($a, $f, $e) {
         ->tag_lazy_replace('fine-message', '')
         ->build();
     },
-    caller_parameter_name: 'libro',
+    caller_parameter_name: 'id',
     needs_database: true
   )
   ->add_renderer_GET(

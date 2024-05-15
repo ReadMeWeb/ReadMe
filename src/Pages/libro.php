@@ -86,7 +86,7 @@ use Utils\Database;
                 $copies = $book_data["number_of_copies"];
                 $operations .= "
                         <p>Numero di copie possedute: $copies</p>
-                        <form id='book_user_op_form' method='GET' action='/marango/Pages/libro.php'>
+                        <form id='book_user_op_form' method='GET' action='/marango/Pages/loan.php'>
                             <p>Copie rimanenti: $remaining</p>
                             <input type='submit' name='noleggia' value='Noleggia' $disabled/>
                             <input type='hidden' name='id' value='{$book_data["id"]}'/>

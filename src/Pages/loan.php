@@ -55,7 +55,8 @@ function a($a, $f, $e) {
         ->tag_lazy_replace('keywords', 'ReadMe, biblioteca, libri, noleggi')
         ->tag_lazy_replace('menu', Pangine::navbar_list())
         // TODO sarebbe ideale avere un modo per passare le chiamate get ai link delle breadcrumbs per tornare alla pagina del libro
-        ->tag_lazy_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Noleggio')))
+        ->tag_istant_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Noleggio')))
+        ->plain_instant_replace('Pages/libro.php', 'Pages/libro.php?id=' . $_GET['id'])
         ->tag_istant_replace('content', file_get_contents(__DIR__ . '/../templates/make_loan_content.html'))
 
         ->tag_lazy_replace('libro-value',   $_GET['id'])

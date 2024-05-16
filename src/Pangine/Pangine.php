@@ -203,7 +203,7 @@ class Pangine
         if (count($breadcrumbs_array) == 0) {
             throw new Exception500("Fornire una breadcrumb con almeno una pagina.");
         }
-        $breadcrumb_str = "<p>Ti trovi in: ";
+        $breadcrumb_str = "<div class='breadcrumb-container'><p>Ti trovi in: </p><p>";
         $last_breadcrumb = end($breadcrumbs_array);
         foreach ($breadcrumbs_array as $breadcrumb) {
             if (strcmp($breadcrumb, $last_breadcrumb) == 0) {
@@ -219,7 +219,7 @@ class Pangine
                 $breadcrumb_str .= $breadcrumb . "</a> &gt;&gt; ";
             }
         }
-        return $breadcrumb_str . "</p>";
+        return $breadcrumb_str . "</p></div>";
     }
 
     private static function parameter_sanitizer(string $method): void{
@@ -238,6 +238,14 @@ class Pangine
                     }
                 }
             }
+        }
+    }
+
+    static function set_general_message(string $message, string $type = "err"):void{
+        if($type == "err"){
+           $_SESSION["general-message"] = "<p class='errorMessage'>".$message."</p>";
+        }else{
+            $_SESSION["general-message"] = "<p class='successMessage'>".$message."</p>";
         }
     }
 }

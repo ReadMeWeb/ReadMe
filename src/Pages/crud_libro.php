@@ -91,7 +91,7 @@ use Pangine\utils\Validator;
                 Pangine::breadcrumbs_generator([
                     "Home",
                     "Catalogo",
-                    "Modifica",
+                    "Libro (Modifica)",
                 ])
             )
             ->plain_instant_replace(

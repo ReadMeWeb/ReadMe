@@ -1,6 +1,16 @@
 /*##############################
 #           General            #
 ##############################*/
+:root {
+    --errorMessageColor: #721c24;
+    --errorMessageBackground: #f8d7da;
+    --errorMessageBorderColor: #f5c6cb;
+
+    --successMessageColor: #155724;
+    --successMessageBackground: #d4edda;
+    --successMessageBorderColor: #c3e6cb;
+}
+
 /* --------- COLORS --------- */
 @media (prefers-color-scheme: light) {
     :root {
@@ -188,6 +198,11 @@ body {
 
     ul#index-numbers li:last-child {
         margin-bottom: 0;
+    }
+
+    /* --- breadcrumbs --- */
+    nav#breadcrumbs div.breadcrumb-container {
+        flex-flow: column;
     }
 }
 
@@ -433,6 +448,13 @@ body {
         padding: var(--textSize);
         border-radius: 1rem;
     }
+
+
+    /* --- breadcrumbs --- */
+    nav#breadcrumbs div.breadcrumb-container {
+        flex-flow: row;
+        gap: 1rem;
+    }
 }
 
 /*###############################################
@@ -508,7 +530,10 @@ nav#breadcrumbs {
     justify-content: center;
 }
 
-nav#breadcrumbs p {
+nav#breadcrumbs div.breadcrumb-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0.32rem 0.64rem;
     border-radius: 5px;
     margin-top: 0.32rem;
@@ -519,7 +544,7 @@ nav#breadcrumbs p {
 }
 
 /* --------- HEADER - logolink --------- */
-nav div {
+nav#logoLink div {
     background-image: var(--logoUrl);
     background-size: cover;
     width: 12rem;
@@ -527,7 +552,7 @@ nav div {
     margin: 0.7rem 0 0;
 }
 
-nav div span {
+nav#logoLink div span {
     display: block;
     height: 0;
     overflow: hidden;
@@ -632,6 +657,19 @@ input, select {
 
 .errorMessage::before {
     content: '❌: ';
+}
+
+.successMessage {
+    margin-bottom: 1rem;
+    color: var(--successMessageColor);
+    background-color: var(--successMessageBackground);
+    border-color: var(--successMessageBorderColor);
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+}
+
+.successMessage::before {
+    content: '✅: ';
 }
 
 /* --------- accessibility content helper --------- */

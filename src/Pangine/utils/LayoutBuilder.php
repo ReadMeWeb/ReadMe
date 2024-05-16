@@ -31,6 +31,11 @@ class LayoutBuilder
         foreach ($this->replacers as $replacer) {
             $replacer();
         }
+        if(isset($_SESSION["general-message"])){
+            $this->base_layout = str_replace("{{general-message}}", $_SESSION["general-message"], $this->base_layout);
+            unset($_SESSION["general-message"]);
+        }
+        $this->base_layout = str_replace("{{general-message}}", "", $this->base_layout);
         if (strpos($this->base_layout, "{{")) {
             $misses = [];
             preg_match_all('/{{(.*?)}}/',$this->base_layout, $misses);

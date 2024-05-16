@@ -35,7 +35,7 @@ use \Utils\Database;
         echo (new LayoutBuilder("priv"))
             ->tag_lazy_replace("title", "Account")
             ->tag_lazy_replace("menu", Pangine::navbar_list())
-            ->tag_lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Account")))
+            ->tag_lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Account (Modifica)")))
             ->tag_istant_replace("content", $content)
             ->tag_lazy_replace("username-value", $_SESSION["user"]["username"])
             ->tag_lazy_replace("password-value", "")

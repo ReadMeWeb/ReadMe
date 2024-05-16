@@ -504,11 +504,11 @@ nav#menu ul li.selectedNavLink {
 }
 
 nav li a {
-    color: var(--textColor);
+    color: var(--linkColor);
 }
 
 nav li a:visited {
-    color: var(--textColor);
+    color: var(--visitedLinkColor);
 }
 
 .book-card dt,

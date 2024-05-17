@@ -47,6 +47,13 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("submit-value", "Aggiungi")
             ->tag_lazy_replace("submit-name", "create")
             ->tag_lazy_replace("book_id_field", "")
+            ->tag_lazy_replace("back_button", "")
+
+            ->tag_lazy_replace("title-message", "")
+            ->tag_lazy_replace("description-message", "")
+            ->tag_lazy_replace("no_copies-message", "")
+            ->tag_lazy_replace("author-message", "")
+            ->tag_lazy_replace("cover-message", "")
             ->build();
     }, needs_database: true
 )
@@ -86,14 +93,8 @@ use Pangine\utils\Validator;
             ->tag_istant_replace("content", $content)
             ->tag_lazy_replace("title", "Modifica Libro")
             ->tag_lazy_replace("menu", Pangine::navbar_list())
-            ->tag_lazy_replace(
-                "breadcrumbs",
-                Pangine::breadcrumbs_generator([
-                    "Home",
-                    "Catalogo",
-                    "Libro (Modifica)",
-                ])
-            )
+            ->tag_istant_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Modifica')))
+            ->plain_instant_replace('Pages/libro.php', 'Pages/libro.php?id=' . $book_data['id'])
             ->plain_instant_replace(
                 "<main id=\"content\">",
                 "<main class=\"book-page\">"
@@ -107,14 +108,21 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("image-hidden", "")
             ->tag_lazy_replace("submit-value", "Aggiorna")
             ->tag_lazy_replace("submit-name", "update")
-            ->tag_lazy_replace("book_id_field", "<input type='hidden' name='book_id' value='{$book_data["id"]}'>")
+            ->tag_lazy_replace("book_id_field", "<input type='hidden' name='book_id' value='{$book_data['id']}'>")
+            ->tag_lazy_replace("back_button", "<a href='/marango/Pages/libro.php?id={$book_data['id']}'>Annulla operazione</a>")
+
+            ->tag_lazy_replace("title-message", "")
+            ->tag_lazy_replace("description-message", "")
+            ->tag_lazy_replace("no_copies-message", "")
+            ->tag_lazy_replace("author-message", "")
+            ->tag_lazy_replace("cover-message", "")
             ->build();
     },
     "modifica",
     needs_database: true
 )
 ->add_renderer_POST(function(Database $db){
-    (new Validator("/marango/Pages/500.php"))
+    (new Validator("/marango/Pages/crud_libro.php?id={$_POST['book_id']}&modifica"))
         ->add_parameter("title")
         ->is_string()
         ->add_parameter("description")
@@ -128,12 +136,6 @@ use Pangine\utils\Validator;
         })
         ->add_parameter("no_copies")
         ->is_numeric(min_val: 1)
-        ->add_parameter("cover")
-        ->is_file([
-            "image/jpeg",
-            "image/jpg",
-            "image/png",
-        ])
         ->add_parameter("author")
         ->is_string(string_parser: function(string $author_id) use ($db) {
             $author_query =
@@ -141,13 +143,14 @@ use Pangine\utils\Validator;
             $author_data = $db->execute_query($author_query, $author_id);
             return count($author_data) == 0 ? "L'autore o l'autrice selezionato/a non esiste." : "";
         }
-    );
+    )->validate();
 
     if($_FILES["cover"]["tmp_name"] != ""){
         $new_name = $_POST["book_id"] .".". pathinfo($_FILES["cover"]["name"], PATHINFO_EXTENSION);
         $saved = move_uploaded_file($_FILES["cover"]["tmp_name"], "../assets/book_covers/" . $new_name);
         if(!$saved){
-            header("Location: /marango/Pages/500.php");
+            Pangine::set_general_message("Errore durante il caricamento del file per l'aggiornaento del libro, riprovare (ERR_BOOK_01)");
+            header("Location: /marango/Pages/crud_libro.php?id={$_POST['book_id']}&modifica");
             exit();
         }
     }
@@ -161,17 +164,19 @@ use Pangine\utils\Validator;
         $_POST["book_id"]
     );
     if(!$result){
-        header("Location: /marango/Pages/500.php");
+        Pangine::set_general_message("Errore durante l'aggiornamento del libro, riprovare (ERR_BOOK_02)");
+        header("Location: /marango/Pages/crud_libro.php?id={$_POST['book_id']}&modifica");
         exit();
     }
 
+    Pangine::set_general_message("Libro aggiornato con successo","success");
     header("Location: /marango/Pages/libro.php?id={$_POST["book_id"]}");
     exit();
 }, "update", needs_database: true)
 ->add_renderer_POST(
     function(Database $db){
 
-        (new Validator("/marango/Pages/500.php"))
+        (new Validator("/marango/Pages/crud_libro.php?create"))
             ->add_parameter("title")
             ->is_string()
             ->add_parameter("description")
@@ -180,9 +185,9 @@ use Pangine\utils\Validator;
             ->is_numeric(min_val: 1)
             ->add_parameter("cover")
             ->is_file([
-                "image/jpeg",
-                "image/jpg",
-                "image/png",
+                "jpeg",
+                "jpg",
+                "png",
             ])
             ->add_parameter("author")
             ->is_string(string_parser: function(string $author_id) use ($db) {
@@ -191,14 +196,15 @@ use Pangine\utils\Validator;
                 $author_data = $db->execute_query($author_query, $author_id);
                 return count($author_data) == 0 ? "L'autore o l'autrice selezionato/a non esiste." : "";
             }
-        );
+        )->validate();
 
         $db->get_connection()->begin_transaction();
         $tmp_name = "tmp.jpeg";
         $stmt = $db->get_connection()->prepare("INSERT INTO Books (title, description, cover_file_name, author_id, number_of_copies) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param('sssii', $_POST['title'], $_POST['description'], $tmp_name, $_POST['author'], $_POST['no_copies']);
         if(!$stmt->execute()){
-            header("Location: /marango/Pages/500.php");
+            Pangine::set_general_message("Errore durante l'inserimento del libro, riprovare (ERR_BOOK_03)");
+            header("Location: /marango/Pages/crud_libro.php?create");
             exit();
         }
         $last_id = $db->get_connection()->insert_id;
@@ -207,7 +213,8 @@ use Pangine\utils\Validator;
         $saved = move_uploaded_file($_FILES["cover"]["tmp_name"], "../assets/book_covers/" . $new_name);
         if(!$saved){
             $db->get_connection()->rollback();
-            header("Location: /marango/Pages/500.php");
+            Pangine::set_general_message("Errore durante il caricamento del file per l'inserimento del libro, riprovare (ERR_BOOK_04)");
+            header("Location: /marango/Pages/crud_libro.php?create");
             exit();
         }
 
@@ -215,12 +222,14 @@ use Pangine\utils\Validator;
         $stmt->bind_param('si', $new_name, $last_id);
         if(!$stmt->execute()){
             $db->get_connection()->rollback();
-            header("Location: /marango/Pages/500.php");
+            Pangine::set_general_message("Errore durante l'inserimento del libro, riprovare (ERR_BOOK_05)");
+            header("Location: /marango/Pages/crud_libro.php?create");
             exit();
         }
 
         $db->get_connection()->commit();
 
+        Pangine::set_general_message("Libro inserito con successo","success");
         header("Location: /marango/Pages/libro.php?id=$last_id");
         exit();
     },
@@ -243,14 +252,8 @@ use Pangine\utils\Validator;
         ->tag_istant_replace("content", $content)
         ->tag_lazy_replace("title", "Elimina Libro")
         ->tag_lazy_replace("menu", Pangine::navbar_list())
-        ->tag_lazy_replace(
-            "breadcrumbs",
-            Pangine::breadcrumbs_generator([
-                "Home",
-                "Catalogo",
-                "Elimina",
-            ])
-        )
+        ->tag_istant_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Elimina')))
+        ->plain_instant_replace('Pages/libro.php', 'Pages/libro.php?id=' . $book['id'])
         ->plain_instant_replace(
             "<main id=\"content\">",
             "<main id=\"book-page-delete\" class=\"book-page\">"
@@ -264,7 +267,8 @@ use Pangine\utils\Validator;
         "SELECT cover_file_name FROM Books WHERE id = ?";
     $book_data = $db->execute_query($book_query, $_POST['id']);
     if(count($book_data) != 1){
-        header("Location: /marango/Pages/500.php");
+        Pangine::set_general_message("Non è stato possbile trovare il libro richiesto, riprovare (ERR_BOOK_07)");
+        header("Location: /marango/Pages/catalogo.php");
         exit();
     }
     $file_name = $book_data[0]["cover_file_name"];
@@ -273,7 +277,8 @@ use Pangine\utils\Validator;
     $stmt = $db->get_connection()->prepare("DELETE FROM Books WHERE id = ?");
     $stmt->bind_param('i', $_POST['id']);
     if(!$stmt->execute()){
-        header("Location: /marango/Pages/500.php");
+        Pangine::set_general_message("Non è stato possbile eliminare il libro, riprovare (ERR_BOOK_07)");
+        header("Location: /marango/Pages/libro.php?id='{$_POST['id']}'");
         exit();
     }
 
@@ -281,12 +286,14 @@ use Pangine\utils\Validator;
         $deleted = unlink("../assets/book_covers/" . $file_name);
         if(!$deleted){
             $db->get_connection()->rollback();
-            header("Location: /marango/Pages/500.php");
+            Pangine::set_general_message("Non è stato possbile eliminare il file collegato al libro, riprovare (ERR_BOOK_08)");
+            header("Location: /marango/Pages/libro.php?id='{$_POST['id']}'");
             exit();
         }
     }
 
     $db->get_connection()->commit();
+    Pangine::set_general_message("Libro eliminato con successo","success");
     header("Location: /marango/Pages/catalogo.php");
     exit();
 }, "elimina", needs_database: true)

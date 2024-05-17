@@ -751,7 +751,7 @@ input, select {
 
 .successMessage {
     margin-bottom: 1rem;
-    color: var(--successMessageColor);
+    color: var(--successMessageColor) !important;
     background-color: var(--successMessageBackground);
     border-color: var(--successMessageBorderColor);
     padding: 0.5rem 1rem;

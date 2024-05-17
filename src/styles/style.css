@@ -722,6 +722,10 @@ legend.simple_form {
     padding-bottom: 0.5rem;
 }
 
+legend + * {
+    -webkit-margin-top-collapse: separate;
+}
+
 input[disabled] {
     color: var(--textColor);
     background-color: var(--secondaryBackgroundColor);
@@ -906,13 +910,11 @@ form[role="search"] {
     margin-bottom: 1rem;
 }
 
-#books-container {
-    padding-top: 1rem;
-}
 
 #results-number {
     font-weight: bold;
     font-size: var(--heading2Size);
+    padding: 0.5rem;
 }
 
 #books-container img {
@@ -923,12 +925,16 @@ form[role="search"] {
 #books-container dt {
     margin-bottom: 0.5rem;
 }
+
 #books-container div {
-    background-color: var(--secondaryBackgroundColor);
     box-sizing: border-box;
     padding: 1rem;
     margin: 1rem;
     border-radius: 1rem;
+    -moz-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -o-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -webkit-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    box-shadow: 0 0 0.16rem 0 var(--primaryColor);
 }
 
 /* ------------ INDEX PAGE ------------ */

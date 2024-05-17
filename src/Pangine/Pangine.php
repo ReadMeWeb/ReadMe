@@ -33,40 +33,54 @@ class Pangine
         self::$pages = array(
             "Chi siamo" => array(
                 "path" => "/marango/Pages/chi_siamo.php",
-                "privileges" => array(self::UNREGISTERED())
+                "privileges" => array(self::UNREGISTERED()),
+                "show_in_navbar" => true,
             ),
             "Catalogo" => array(
                 "path" => "/marango/Pages/catalogo.php",
-                "privileges" => array(self::UNREGISTERED(), self::USER(), self::ADMIN())
+                "privileges" => array(self::UNREGISTERED(), self::USER(), self::ADMIN()),
+                "show_in_navbar" => true,
             ),
             "Accedi" => array(
                 "path" => "/marango/Pages/accedi.php",
-                "privileges" => array(self::UNREGISTERED())
+                "privileges" => array(self::UNREGISTERED()),
+                "show_in_navbar" => true,
             ),
             "Registrati" => array(
                 "path" => "/marango/Pages/registrati.php",
-                "privileges" => array(self::UNREGISTERED())
+                "privileges" => array(self::UNREGISTERED()),
+                "show_in_navbar" => true,
             ),
             "Home" => array(
                 "path" => "/marango/Pages/index.php",
-                "privileges" => array() // Rimane vuoto in quanto non si vuole che venga visualizzato nella navbar
+                "privileges" => array(self::UNREGISTERED(),self::USER(),self::ADMIN()),
+                "show_in_navbar" => false,
             ),
             "Account" => array(
               "path" => "/marango/Pages/account.php",
-              "privileges" => array(self::USER(), self::ADMIN())
+              "privileges" => array(self::USER(), self::ADMIN()),
+                "show_in_navbar" => true,
 
             ),
             "Libro" => array(
                 "path" => "/marango/Pages/libro.php",
-                "privileges" => array()
+                "privileges" => array(self::UNREGISTERED(),self::USER(),self::ADMIN()),
+                "show_in_navbar" => false,
+            ),
+            "Noleggia" => array(
+                "path" => "/marango/Pages/loan.php",
+                "privileges" => array(self::USER(),self::ADMIN()),
+                "show_in_navbar" => false,
             ),
             "Nuovo Libro" => array(
                 "path" => "/marango/Pages/crud_libro.php",
-                "privileges" => array(self::ADMIN())
+                "privileges" => array(self::ADMIN()),
+                "show_in_navbar" => true,
             ),
             "Prestiti" => array(
                 "path" => "/marango/Pages/prestiti.php?order=start&status=all",
-                "privileges" => array(self::USER())
+                "privileges" => array(self::USER()),
+                "show_in_navbar" => true,
             )
         );
     }
@@ -184,7 +198,8 @@ class Pangine
             $link = $page_metadata["path"];
             $pageName = $page_title;
             $allowedStatus = $page_metadata["privileges"];
-            if (in_array($_SESSION["user"]["status"], $allowedStatus)) {
+            $show_in_navbar = $page_metadata["show_in_navbar"];
+            if (in_array($_SESSION["user"]["status"], $allowedStatus) && $show_in_navbar) {
                 if ($selectedLink == $link && !str_contains($_SERVER['REQUEST_URI'], '?')) {
                     $navLinks .= "<li class='selectedNavLink'>" . $pageName . "</li>";
                 } else {

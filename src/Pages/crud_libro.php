@@ -47,6 +47,13 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("submit-value", "Aggiungi")
             ->tag_lazy_replace("submit-name", "create")
             ->tag_lazy_replace("book_id_field", "")
+            ->tag_lazy_replace("back_button", "")
+
+            ->tag_lazy_replace("title-message", "")
+            ->tag_lazy_replace("description-message", "")
+            ->tag_lazy_replace("no_copies-message", "")
+            ->tag_lazy_replace("author-message", "")
+            ->tag_lazy_replace("cover-message", "")
             ->build();
     }, needs_database: true
 )
@@ -86,14 +93,8 @@ use Pangine\utils\Validator;
             ->tag_istant_replace("content", $content)
             ->tag_lazy_replace("title", "Modifica Libro")
             ->tag_lazy_replace("menu", Pangine::navbar_list())
-            ->tag_lazy_replace(
-                "breadcrumbs",
-                Pangine::breadcrumbs_generator([
-                    "Home",
-                    "Catalogo",
-                    "Libro (Modifica)",
-                ])
-            )
+            ->tag_istant_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Modifica')))
+            ->plain_instant_replace('Pages/libro.php', 'Pages/libro.php?id=' . $book_data['id'])
             ->plain_instant_replace(
                 "<main id=\"content\">",
                 "<main class=\"book-page\">"
@@ -107,14 +108,21 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("image-hidden", "")
             ->tag_lazy_replace("submit-value", "Aggiorna")
             ->tag_lazy_replace("submit-name", "update")
-            ->tag_lazy_replace("book_id_field", "<input type='hidden' name='book_id' value='{$book_data["id"]}'>")
+            ->tag_lazy_replace("book_id_field", "<input type='hidden' name='book_id' value='{$book_data['id']}'>")
+            ->tag_lazy_replace("back_button", "<a href='/marango/Pages/libro.php?id={$book_data['id']}'>Annulla operazione</a>")
+
+            ->tag_lazy_replace("title-message", "")
+            ->tag_lazy_replace("description-message", "")
+            ->tag_lazy_replace("no_copies-message", "")
+            ->tag_lazy_replace("author-message", "")
+            ->tag_lazy_replace("cover-message", "")
             ->build();
     },
     "modifica",
     needs_database: true
 )
 ->add_renderer_POST(function(Database $db){
-    (new Validator("/marango/Pages/500.php"))
+    (new Validator("/marango/Pages/crud_libro.php?id={$_POST['book_id']}&modifica"))
         ->add_parameter("title")
         ->is_string()
         ->add_parameter("description")
@@ -128,12 +136,6 @@ use Pangine\utils\Validator;
         })
         ->add_parameter("no_copies")
         ->is_numeric(min_val: 1)
-        ->add_parameter("cover")
-        ->is_file([
-            "image/jpeg",
-            "image/jpg",
-            "image/png",
-        ])
         ->add_parameter("author")
         ->is_string(string_parser: function(string $author_id) use ($db) {
             $author_query =
@@ -141,7 +143,7 @@ use Pangine\utils\Validator;
             $author_data = $db->execute_query($author_query, $author_id);
             return count($author_data) == 0 ? "L'autore o l'autrice selezionato/a non esiste." : "";
         }
-    );
+    )->validate();
 
     if($_FILES["cover"]["tmp_name"] != ""){
         $new_name = $_POST["book_id"] .".". pathinfo($_FILES["cover"]["name"], PATHINFO_EXTENSION);
@@ -171,7 +173,7 @@ use Pangine\utils\Validator;
 ->add_renderer_POST(
     function(Database $db){
 
-        (new Validator("/marango/Pages/500.php"))
+        (new Validator("/marango/Pages/crud_libro.php?id={$_POST['book_id']}&create"))
             ->add_parameter("title")
             ->is_string()
             ->add_parameter("description")
@@ -191,7 +193,7 @@ use Pangine\utils\Validator;
                 $author_data = $db->execute_query($author_query, $author_id);
                 return count($author_data) == 0 ? "L'autore o l'autrice selezionato/a non esiste." : "";
             }
-        );
+        )->validate();
 
         $db->get_connection()->begin_transaction();
         $tmp_name = "tmp.jpeg";

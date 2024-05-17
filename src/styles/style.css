@@ -738,7 +738,7 @@ input, select {
 
 .errorMessage {
     margin-bottom: 1rem;
-    color: var(--errorMessageColor);
+    color: var(--errorMessageColor) !important;
     background-color: var(--errorMessageBackground);
     border-color: var(--errorMessageBorderColor);
     padding: 0.5rem 1rem;

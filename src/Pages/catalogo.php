@@ -10,25 +10,13 @@ use Pangine\utils\Validator;
 use \Utils\Database;
 
 function get_book_card(string $cover_file_name, string $title, int $copies, string $name_surname, int $id): string {
-    return "<li> 
-            <article class='book-card'>
-                <h2>{$title}</h2>
-                <img src='/marango/assets/book_covers/{$cover_file_name}' alt='' width='200' height='200'>
-                <dl>
-                    <div>
-                        <dt>Autore:</dt>
-                        <dd>{$name_surname}</dd>
-                    </div>
-
-                    <div>
-                        <dt>Disponibilità:</dt>
-                        <dd>{$copies}</dd>
-                    </div>
-                </dl>
-                <a href='/marango/Pages/libro.php?id={$id}'>Visualizza</a>
-
-            </article>
-        </li>";
+    return "<div>
+                    <dt>{$title}</dt>
+                    <dd><img src='/marango/assets/book_covers/{$cover_file_name}' alt='' width='200' height='200'></dd>
+                    <dd>Autore: {$name_surname}</dd>
+                    <dd>Disponibilità: {$copies}</dd>
+                    <dd><a href='/marango/Pages/libro.php?id={$id}'>Visualizza</a></dd>
+            </div>";
 }
 
 (new Pangine())
@@ -130,7 +118,7 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
                     $book["id"]
                 );
             }
-            $books = '<ul>' . $books . '</ul>';
+            $books = '<dl id="books-container">' . $books . '</dl>';
         }
         else {
             $books = "<p>Il catalogo al momento è vuoto.</p>";

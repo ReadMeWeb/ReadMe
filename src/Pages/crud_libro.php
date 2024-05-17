@@ -34,8 +34,8 @@ use Pangine\utils\Validator;
                 ])
             )
             ->plain_instant_replace(
-                "<main id=\"content\">",
-                "<main class=\"book-page image-hidden\">"
+                "book-page",
+                "book-page image-hidden"
             )
             ->tag_lazy_replace("book_title", "")
             ->tag_lazy_replace("description", "")
@@ -95,10 +95,6 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("menu", Pangine::navbar_list())
             ->tag_istant_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Modifica')))
             ->plain_instant_replace('Pages/libro.php', 'Pages/libro.php?id=' . $book_data['id'])
-            ->plain_instant_replace(
-                "<main id=\"content\">",
-                "<main class=\"book-page\">"
-            )
             ->tag_lazy_replace("book_title", $book_data["title"])
             ->tag_lazy_replace("description", $book_data["description"])
             ->tag_lazy_replace("current_cover", $book_data["cover_file_name"])

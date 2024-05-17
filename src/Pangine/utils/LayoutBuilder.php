@@ -2,6 +2,8 @@
 
 namespace Pangine\utils;
 
+require_once(__DIR__ . "/../../Utils/Stream.php");
+
 class LayoutBuilder
 {
     private string $base_layout;
@@ -18,28 +20,28 @@ class LayoutBuilder
 
     public function build(): string
     {
-        if (isset($_SESSION["parameters"])) {
+        if (isset($_SESSION["parameters"]) && (new \Stream($_SESSION["parameters"]))->filter(fn($parameter) => isset($parameter["message"]))->count() != 0) {
             foreach ($_SESSION["parameters"] as $parameter_name => $parameter_metadata) {
                 if (isset($parameter_metadata["value"])) {
                     $this->base_layout = str_replace("{{" . $parameter_name . "-value}}", $parameter_metadata["value"], $this->base_layout);
                 }
                 if (isset($parameter_metadata["message"])) {
-                    $this->base_layout = str_replace("{{" . $parameter_name . "-message}}", "<p class='errorMessage'>".$parameter_metadata["message"]."</p>", $this->base_layout);
+                    $this->base_layout = str_replace("{{" . $parameter_name . "-message}}", "<p class='errorMessage'>" . $parameter_metadata["message"] . "</p>", $this->base_layout);
                 }
             }
         }
         foreach ($this->replacers as $replacer) {
             $replacer();
         }
-        if(isset($_SESSION["general-message"])){
+        if (isset($_SESSION["general-message"])) {
             $this->base_layout = str_replace("{{general-message}}", $_SESSION["general-message"], $this->base_layout);
             unset($_SESSION["general-message"]);
         }
         $this->base_layout = str_replace("{{general-message}}", "", $this->base_layout);
         if (strpos($this->base_layout, "{{")) {
             $misses = [];
-            preg_match_all('/{{(.*?)}}/',$this->base_layout, $misses);
-            $misses = '(' . implode(", ",$misses[1]) . ')';
+            preg_match_all('/{{(.*?)}}/', $this->base_layout, $misses);
+            $misses = '(' . implode(", ", $misses[1]) . ')';
             throw new Exception500("Non tutti i tag sono stati consumati dalla pagina precedente $misses.");
         }
         return $this->base_layout;

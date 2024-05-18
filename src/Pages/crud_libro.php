@@ -153,7 +153,7 @@ use Pangine\utils\Validator;
 
     $result = $db->execute_query(
         "UPDATE Books SET title = ?, description = ?, author_id = ?, number_of_copies = ? WHERE id = ?",
-        $_POST["title"],
+        $_POST["book_title"],
         $_POST["description"],
         $_POST["author"],
         $_POST["no_copies"],

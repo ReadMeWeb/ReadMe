@@ -765,6 +765,7 @@ input, select {
     content: '✅: ';
 }
 
+
 /* --------- accessibility content helper --------- */
 .helper {
     position: absolute;
@@ -926,6 +927,20 @@ form[role="search"] {
     -o-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
     -webkit-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
     box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+}
+
+#page_selector{
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    width: 80%;
+}
+#page_selector div{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-flow: row;
+    width: 100%;
 }
 
 /* ------------ INDEX PAGE ------------ */

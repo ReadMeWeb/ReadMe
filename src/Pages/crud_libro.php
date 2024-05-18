@@ -37,11 +37,11 @@ use Pangine\utils\Validator;
                 "book-page",
                 "book-page image-hidden"
             )
-            ->tag_lazy_replace("book_title", "")
-            ->tag_lazy_replace("description", "")
+            ->tag_lazy_replace("book_title-value", "")
+            ->tag_lazy_replace("description-value", "")
             ->tag_lazy_replace("current_cover", "")
-            ->tag_lazy_replace("current_author_option", "")
-            ->tag_lazy_replace("no_copies", "1")
+            ->tag_lazy_replace("author-value", "")
+            ->tag_lazy_replace("no_copies-value", "1")
             ->tag_lazy_replace("authors_options", $authors_options)
             ->tag_lazy_replace("image-hidden", "image-hidden")
             ->tag_lazy_replace("submit-value", "Aggiungi")
@@ -49,7 +49,7 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("book_id_field", "")
             ->tag_lazy_replace("back_button", "")
 
-            ->tag_lazy_replace("title-message", "")
+            ->tag_lazy_replace("book_title-message", "")
             ->tag_lazy_replace("description-message", "")
             ->tag_lazy_replace("no_copies-message", "")
             ->tag_lazy_replace("author-message", "")
@@ -95,11 +95,11 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("menu", Pangine::navbar_list())
             ->tag_istant_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Modifica')))
             ->plain_instant_replace('Pages/libro.php', 'Pages/libro.php?id=' . $book_data['id'])
-            ->tag_lazy_replace("book_title", $book_data["title"])
-            ->tag_lazy_replace("description", $book_data["description"])
+            ->tag_lazy_replace("book_title-value", $book_data["title"])
+            ->tag_lazy_replace("description-value", $book_data["description"])
             ->tag_lazy_replace("current_cover", $book_data["cover_file_name"])
-            ->tag_lazy_replace("no_copies", $book_data["number_of_copies"])
-            ->tag_lazy_replace("current_author_option", $current_author_option)
+            ->tag_lazy_replace("no_copies-value", $book_data["number_of_copies"])
+            ->tag_lazy_replace("author-value", $current_author_option)
             ->tag_lazy_replace("authors_options", $authors_options)
             ->tag_lazy_replace("image-hidden", "")
             ->tag_lazy_replace("submit-value", "Aggiorna")
@@ -107,7 +107,7 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("book_id_field", "<input type='hidden' name='book_id' value='{$book_data['id']}'>")
             ->tag_lazy_replace("back_button", "<a href='/marango/Pages/libro.php?id={$book_data['id']}'>Annulla operazione</a>")
 
-            ->tag_lazy_replace("title-message", "")
+            ->tag_lazy_replace("book_title-message", "")
             ->tag_lazy_replace("description-message", "")
             ->tag_lazy_replace("no_copies-message", "")
             ->tag_lazy_replace("author-message", "")
@@ -119,7 +119,7 @@ use Pangine\utils\Validator;
 )
 ->add_renderer_POST(function(Database $db){
     (new Validator("/marango/Pages/crud_libro.php?id={$_POST['book_id']}&modifica"))
-        ->add_parameter("title")
+        ->add_parameter("book_title")
         ->is_string()
         ->add_parameter("description")
         ->is_string()
@@ -173,7 +173,7 @@ use Pangine\utils\Validator;
     function(Database $db){
 
         (new Validator("/marango/Pages/crud_libro.php?create"))
-            ->add_parameter("title")
+            ->add_parameter("book_title")
             ->is_string()
             ->add_parameter("description")
             ->is_string()

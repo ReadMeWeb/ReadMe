@@ -197,7 +197,7 @@ use Pangine\utils\Validator;
         $db->get_connection()->begin_transaction();
         $tmp_name = "tmp.jpeg";
         $stmt = $db->get_connection()->prepare("INSERT INTO Books (title, description, cover_file_name, author_id, number_of_copies) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param('sssii', $_POST['title'], $_POST['description'], $tmp_name, $_POST['author'], $_POST['no_copies']);
+        $stmt->bind_param('sssii', $_POST['book_title'], $_POST['description'], $tmp_name, $_POST['author'], $_POST['no_copies']);
         if(!$stmt->execute()){
             Pangine::set_general_message("Errore durante l'inserimento del libro, riprovare (ERR_BOOK_03)");
             header("Location: /marango/Pages/crud_libro.php?create");

@@ -55,8 +55,7 @@ use Utils\Database;
             );
         $operations = "";
         if ($_SESSION["user"]["status"] != Pangine::UNREGISTERED()) {
-            if($_SESSION["user"]["status"] == Pangine::USER()){
-                $remaining_query = "
+            $remaining_query = "
                         select id, (number_of_copies - COALESCE(number_of_loans, 0)) as copies_remaining
 
                         from Books as b
@@ -74,10 +73,11 @@ use Utils\Database;
                         on l.book_id = b.id
                         where b.id = ?
                     ";
-                $remaining = $db->execute_query(
-                    $remaining_query,
-                    $book_data["id"]
-                )[0]["copies_remaining"];
+            $remaining = $db->execute_query(
+                $remaining_query,
+                $book_data["id"]
+            )[0]["copies_remaining"];
+            if($_SESSION["user"]["status"] == Pangine::USER()){
                 $disabled = $remaining == 0 ? "disabled" : "";
                 $copies = $book_data["number_of_copies"];
                 $operations .= "
@@ -91,6 +91,7 @@ use Utils\Database;
             if ($_SESSION["user"]["status"] == Pangine::ADMIN()) {
                 $operations .= "
                             <form id='book_admin_op_form' method='GET' action='/marango/Pages/crud_libro.php'>
+                                <p>Copie rimanenti: $remaining</p>
                                 <input type='submit' name='modifica' value='Modifica'/>
                                 <input type='submit' name='elimina' value='Elimina'/>
                                 <input type='hidden' name='id' value='{$book_data["id"]}'/>

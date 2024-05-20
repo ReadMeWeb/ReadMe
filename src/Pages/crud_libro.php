@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/../Pangine/Pangine.php";
 require_once __DIR__ . "/../Pangine/utils/LayoutBuilder.php";
+require_once __DIR__ . "/../Pangine/utils/Exception500.php";
 require_once __DIR__ . "/../Utils/Database.php";
 
 use Pangine\Pangine;
@@ -33,17 +34,12 @@ use Pangine\utils\Validator;
                     "Nuovo Libro",
                 ])
             )
-            ->plain_instant_replace(
-                "book-page",
-                "book-page image-hidden"
-            )
             ->tag_lazy_replace("book_title-value", "")
             ->tag_lazy_replace("description-value", "")
             ->tag_lazy_replace("current_cover", "")
             ->tag_lazy_replace("author-value", "")
             ->tag_lazy_replace("no_copies-value", "1")
             ->tag_lazy_replace("authors_options", $authors_options)
-            ->tag_lazy_replace("image-hidden", "image-hidden")
             ->tag_lazy_replace("submit-value", "Aggiungi")
             ->tag_lazy_replace("submit-name", "create")
             ->tag_lazy_replace("book_id_field", "")
@@ -101,7 +97,6 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("no_copies-value", $book_data["number_of_copies"])
             ->tag_lazy_replace("author-value", $current_author_option)
             ->tag_lazy_replace("authors_options", $authors_options)
-            ->tag_lazy_replace("image-hidden", "")
             ->tag_lazy_replace("submit-value", "Aggiorna")
             ->tag_lazy_replace("submit-name", "update")
             ->tag_lazy_replace("book_id_field", "<input type='hidden' name='book_id' value='{$book_data['id']}'>")
@@ -237,7 +232,7 @@ use Pangine\utils\Validator;
         "SELECT * FROM Books WHERE id = ?";
     $book_data = $db->execute_query($book_query, $_GET['id']);
     if(count($book_data) != 1){
-        header("Location: /marango/Pages/500.php");
+        throw new \Pangine\utils\Exception500("Stai cercando di eliminare un libro che non esiste!");
         exit();
     }
     $book = $book_data[0];
@@ -249,7 +244,7 @@ use Pangine\utils\Validator;
         ->tag_lazy_replace("title", "Elimina Libro")
         ->tag_lazy_replace("menu", Pangine::navbar_list())
         ->tag_istant_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Elimina')))
-        ->plain_instant_replace('Pages/libro.php', 'Pages/libro.php?id=' . $book['id'])
+        ->plain_instant_replace("libro.php'", "libro.php?id=". $book["id"] ."'")
         ->plain_instant_replace(
             "<main id=\"content\">",
             "<main id=\"book-page-delete\" class=\"book-page\">"

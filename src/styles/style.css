@@ -159,19 +159,22 @@ body {
     /* -------- BOOK -------*/
     .book-page {
         display: flex;
-        flex-direction: column;
+        flex-flow: column;
+        flex-wrap: wrap;
         justify-content: center;
-        padding: 20px;
+        align-items: center;
+        padding: 1rem 0 1rem 0;
         width: 100%;
     }
 
     .book-page .section-info {
-        width: 100%;
-        padding: 10px;
+        width: fit-content;
+        padding: 1rem;
     }
 
-    .book-page .section-image img {
-        display: none;
+    .book-page .section-image {
+        width: 20rem;
+        height: auto;
     }
 
     /* -- INDEX PAGE -- */
@@ -248,26 +251,20 @@ body {
     .book-page {
         display: flex;
         flex-direction: column;
+        align-items: center;
         justify-content: center;
-        padding: 20px;
+        padding: 1rem 0 1rem 0;
         width: 100%;
     }
 
     .book-page .section-image {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        padding: 10px;
+        width: 20rem;
+        padding: 1rem;
     }
 
     .book-page .section-info {
-        width: 100%;
+        width: fit-content;
         padding: 10px;
-    }
-
-    .book-page .section-image img {
-        width: 20%;
-        height: auto;
     }
 
     /* -- INDEX PAGE -- */
@@ -334,8 +331,10 @@ body {
     .book-page {
         display: flex;
         flex-direction: row;
-        padding: 20px;
-        width: 80%;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem 0 1rem 0;
+        width: 100%;
     }
 
     .book-page .section-info {
@@ -346,19 +345,12 @@ body {
     }
 
     .book-page .section-image {
-        display: flex;
-        justify-content: center;
-        width: 40%;
-        padding: 10px;
-    }
-
-    .book-page .section-image img {
-        max-width: 100%;
+        width: 30rem;
         height: auto;
+        padding: 1rem;
     }
 
     .book-page .section-info {
-        width: 60%;
         padding: 10px;
     }
 
@@ -425,22 +417,21 @@ body {
     /* -------- BOOk -------*/
     .book-page {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
+        align-items: center;
         flex-direction: row;
-        padding: 20px;
-        width: 80%;
+        padding: 1rem 0 1rem 0;
+        width: 100%;
     }
 
     .book-page .section-image {
-        display: flex;
-        justify-content: center;
-        width: 50%;
-        padding: 10px;
+        width: 35rem;
+        height: auto;
+        padding: 1rem;
     }
 
     .book-page .section-info {
-        width: 50%;
-        padding: 10px;
+        padding: 1rem;
     }
 
     /* -- INDEX PAGE -- */
@@ -752,6 +743,15 @@ input, select {
     content: '❌: ';
 }
 
+.httpErrorMessage {
+    margin: 1rem;
+    padding: 1.5rem;
+    -moz-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -o-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -webkit-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+}
+
 .successMessage {
     margin-bottom: 1rem;
     color: var(--successMessageColor) !important;
@@ -813,16 +813,6 @@ ul#operations li:last-child {
 .book-page p {
     font-size: 1.2em;
     color: var(--textColor);
-}
-
-.book-page section.image-hidden {
-    display: none;
-!important;
-}
-
-.book-page.image-hidden {
-    justify-content: center;
-!important;
 }
 
 .book-page input[type="submit"] {

@@ -31,12 +31,15 @@ function a($a, $f, $e) {
         _new_validator('/marango/Pages/loan.php?id=' . $_POST['id']),
         a('inizio', fn ($i) => $i >= date('Y-m-d', time()), 'La data di inizio non può essere prima di oggi.'),
         a('fine',   fn ($i) => $i >= date('Y-m-d', time()), 'La data di fine non può essere prima di oggi.'),
-        a('inizio', fn ($i) => $i < $_POST['fine'], 'La data di fine deve essere dopo la data di inizio.'),
+        a('fine', fn ($i) => $_POST['inizio'] < 'i', 'La data di fine deve essere dopo la data di inizio.'),
       )->validate();
+
+      $book_name = $conn->execute_query('select title from Books where id = ?', $_POST["id"])[0]['title'];
 
       $conn->execute_query('insert into Loans(book_id,user_username,loan_start_date,loan_expiration_date) values(?,?,?,?);', $_POST['id'], _username(), $_POST['inizio'], $_POST['fine']);
 
-      header('Location: ' . '/marango/Pages/loan.php?success=true');
+      Pangine::set_general_message("Noleggio di '". $book_name ."' avvenuto con successo!","succ");
+      Pangine::redirect('Prestiti');
       exit();
     },
     needs_database: true
@@ -71,18 +74,5 @@ function a($a, $f, $e) {
     },
     caller_parameter_name: 'id',
     needs_database: true
-  )
-  ->add_renderer_GET(
-    function () {
-      echo (new LayoutBuilder())
-        ->tag_lazy_replace('title', 'Prestito libri')
-        ->tag_lazy_replace('description', 'Pagina di successo per i noleggi di un libro della biblioteca di ReadMe')
-        ->tag_lazy_replace('keywords', 'ReadMe, biblioteca, libri, noleggi')
-        ->tag_lazy_replace('menu', Pangine::navbar_list())
-        ->tag_lazy_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Noleggio')))
-        ->tag_istant_replace('content', file_get_contents(__DIR__ . '/../templates/loan_success_content.html'))
-        ->build();
-    },
-    caller_parameter_name: 'success'
   )
   ->execute();

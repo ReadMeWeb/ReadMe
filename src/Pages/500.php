@@ -17,7 +17,7 @@ use \Pangine\utils\LayoutBuilder;
             ->tag_lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("500")))
             ->tag_istant_replace("content", $content);
         if(isset($_SESSION["error500message"])){
-            $layout_builder->plain_lazy_replace("<p>Qualcosa è andato storto nel nostro <span lang=\"en\">backend</span>. Riprova più tardi.</p>", "<p>".$_SESSION["error500message"]."</p>");
+            $layout_builder->plain_lazy_replace("<p class='httpErrorMessage'>Qualcosa è andato storto nel nostro <span lang=\"en\">backend</span>. Riprova più tardi.</p>", "<p>".$_SESSION["error500message"]."</p>");
             unset($_SESSION["error500message"]);
         }
         echo $layout_builder->build();

@@ -1,7 +1,5 @@
 <div class="book-page">
-    <section class="section-image {{image-hidden}}">
-        <img id="current_cover" src="/marango/assets/book_covers/{{current_cover}}">
-    </section>
+    <img class="section-image" src="/marango/assets/book_covers/{{current_cover}}">
     <section class="section-info">
         <form method="POST" action="/marango/Pages/crud_libro.php" enctype="multipart/form-data">
             {{book_id_field}}
@@ -29,7 +27,7 @@
             <input id="input-no-copies" type="number" name="no_copies" min="1" value="{{no_copies-value}}"/>
             {{no_copies-message}}
 
-            <input type="submit" value="{{submit-value}}" name="{{submit-name}}" />
+            <input type="submit" value="{{submit-value}}" name="{{submit-name}}"/>
             {{back_button}}
         </form>
     </section>

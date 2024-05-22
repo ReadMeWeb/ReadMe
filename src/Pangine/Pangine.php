@@ -101,8 +101,7 @@ class Pangine
             foreach (self::$pages as $page) {
                 if (strtok($_SERVER['REQUEST_URI'], '?') == $page['path']) {
                     if (count($page["privileges"]) && !in_array($_SESSION["user"]["status"], $page["privileges"])) {
-                        header("Location: /marango/Pages/403.php");
-                        exit();
+                        		Pangine::redirect("Pages/403.php");
                     }
                 }
             }
@@ -114,8 +113,7 @@ class Pangine
             }
         } catch (Exception500 $e) {
             $_SESSION["error500message"] = $e->getMessage();
-            header("Location: /marango/Pages/500.php");
-            exit();
+            		Pangine::redirect("Pages/500.php");
         }
     }
 

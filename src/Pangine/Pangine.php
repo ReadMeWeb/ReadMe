@@ -27,7 +27,7 @@ class Pangine
 
     private static array $pages = [];
 
-    private static function path() {
+    public static function path() {
       return '/marango/';
     }
 

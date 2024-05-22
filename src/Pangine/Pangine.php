@@ -27,58 +27,62 @@ class Pangine
 
     private static array $pages = [];
 
+    public static function path() {
+      return '/marango/';
+    }
+
     public function __construct()
     {
         $this->try_session();
         self::$pages = array(
             "Chi siamo" => array(
-                "path" => "/marango/Pages/chi_siamo.php",
+                "path" => Pangine::path() . "Pages/chi_siamo.php",
                 "privileges" => array(self::UNREGISTERED()),
                 "show_in_navbar" => true,
             ),
             "Catalogo" => array(
-                "path" => "/marango/Pages/catalogo.php",
+                "path" => Pangine::path() . "Pages/catalogo.php",
                 "privileges" => array(self::UNREGISTERED(), self::USER(), self::ADMIN()),
                 "show_in_navbar" => true,
             ),
             "Accedi" => array(
-                "path" => "/marango/Pages/accedi.php",
+                "path" => Pangine::path() . "Pages/accedi.php",
                 "privileges" => array(self::UNREGISTERED()),
                 "show_in_navbar" => true,
             ),
             "Registrati" => array(
-                "path" => "/marango/Pages/registrati.php",
+                "path" => Pangine::path() . "Pages/registrati.php",
                 "privileges" => array(self::UNREGISTERED()),
                 "show_in_navbar" => true,
             ),
             "Home" => array(
-                "path" => "/marango/Pages/index.php",
+                "path" => Pangine::path() . "Pages/index.php",
                 "privileges" => array(self::UNREGISTERED(),self::USER(),self::ADMIN()),
                 "show_in_navbar" => false,
             ),
             "Account" => array(
-              "path" => "/marango/Pages/account.php",
+              "path" => Pangine::path() . "Pages/account.php",
               "privileges" => array(self::USER(), self::ADMIN()),
                 "show_in_navbar" => true,
 
             ),
             "Libro" => array(
-                "path" => "/marango/Pages/libro.php",
+                "path" => Pangine::path() . "Pages/libro.php",
                 "privileges" => array(self::UNREGISTERED(),self::USER(),self::ADMIN()),
                 "show_in_navbar" => false,
             ),
             "Noleggia" => array(
-                "path" => "/marango/Pages/loan.php",
+                "path" => Pangine::path() . "Pages/loan.php",
                 "privileges" => array(self::USER(),self::ADMIN()),
                 "show_in_navbar" => false,
             ),
             "Nuovo Libro" => array(
-                "path" => "/marango/Pages/crud_libro.php",
+                "path" => Pangine::path() . "Pages/crud_libro.php",
                 "privileges" => array(self::ADMIN()),
                 "show_in_navbar" => true,
             ),
             "Prestiti" => array(
-                "path" => "/marango/Pages/prestiti.php?order=start&status=all",
+                "path" => Pangine::path() . "Pages/prestiti.php?order=start&status=all",
                 "privileges" => array(self::USER()),
                 "show_in_navbar" => true,
             )

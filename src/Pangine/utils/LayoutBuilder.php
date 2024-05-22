@@ -2,6 +2,8 @@
 
 namespace Pangine\utils;
 
+use Pangine\Pangine;
+
 require_once(__DIR__ . "/../../Utils/Stream.php");
 
 class LayoutBuilder
@@ -16,6 +18,7 @@ class LayoutBuilder
         } else {
             $this->base_layout = file_get_contents(__DIR__ . "/../../templates/public_layout.html");
         }
+        $this->tag_istant_replace('pangine_path',Pangine::path());
     }
 
     public function build(): string

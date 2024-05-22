@@ -99,7 +99,7 @@ class Pangine
     {
         try {
             foreach (self::$pages as $page) {
-                if (strtok($_SERVER['REQUEST_URI'], '?') == $page['path']) {
+                if (str_contains($_SERVER['REQUEST_URI'], $page['path'])) {
                     if (count($page["privileges"]) && !in_array($_SESSION["user"]["status"], $page["privileges"])) {
                         		Pangine::redirect("Pages/403.php");
                     }

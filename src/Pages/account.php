@@ -64,8 +64,7 @@ use \Utils\Database;
         $_SESSION["user"]["username"] = $_POST["username"];
         $_SESSION["user"]["password"] = $_POST["password"];
 
-        header("Location: /marango/Pages/account.php");
-        exit();
+        		Pangine::redirect("Pages/account.php");
     }, caller_parameter_name: "update", needs_database: true, validator: (new Validator("Pages/account.php?update=true"))
         ->add_parameter("username")
         ->is_string(4, 20)
@@ -75,7 +74,6 @@ use \Utils\Database;
     ->add_renderer_GET(function () {
         unset($_SESSION["user"]);
         $_SESSION["user"]["status"] = Pangine::UNREGISTERED();
-        header("Location: /marango/Pages/index.php");
-        exit();
+        		Pangine::redirect("Pages/index.php");
     }, caller_parameter_name: "exit")
     ->execute();

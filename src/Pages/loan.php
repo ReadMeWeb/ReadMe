@@ -23,12 +23,12 @@ function a($a, $f, $e) {
     function ($conn) {
 
       stream(
-        _new_validator('/marango/Pages/404.php'),
+        _new_validator(Pangine::path() . 'Pages/404.php'),
         _add_parametre('id', _string(string_parser: fn ($i) => $conn->execute_query('select count(*) = 1 as b from Books where id = ?', $i)[0]['b'] == 1 ? '' : 'Il libro non è stato trovato'))
       )->validate();
 
       stream(
-        _new_validator('/marango/Pages/loan.php?id=' . $_POST['id']),
+        _new_validator(Pangine::path() . 'Pages/loan.php?id=' . $_POST['id']),
         a('inizio', fn ($i) => $i >= date('Y-m-d', time()), 'La data di inizio non può essere prima di oggi.'),
         a('fine',   fn ($i) => $i >= date('Y-m-d', time()), 'La data di fine non può essere prima di oggi.'),
         a('fine', fn ($i) => $_POST['inizio'] < 'i', 'La data di fine deve essere dopo la data di inizio.'),
@@ -48,7 +48,7 @@ function a($a, $f, $e) {
     function ($conn) {
 
       stream(
-        _new_validator('/marango/Pages/404.php'),
+        _new_validator(Pangine::path() . 'Pages/404.php'),
         _add_parametre('id', _string(string_parser: fn ($i) => $conn->execute_query('select count(*) = 1 as b from Books where id = ?', $i)[0]['b'] == 1 ? '' : 'Il libro non è stato trovato'))
       )->validate();
 

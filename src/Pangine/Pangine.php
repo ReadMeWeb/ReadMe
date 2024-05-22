@@ -27,78 +27,81 @@ class Pangine
 
     private static array $pages = [];
 
+    public static function path() {
+      return '/marango/';
+    }
+
+    public static function redirect(string $url = ''): void
+    {
+      header('Location: ' . Pangine::path() . $url);
+      exit();
+    }
+
     public function __construct()
     {
         $this->try_session();
         self::$pages = array(
             "Chi siamo" => array(
-                "path" => "/marango/Pages/chi_siamo.php",
+                "path" => "Pages/chi_siamo.php",
                 "privileges" => array(self::UNREGISTERED()),
                 "show_in_navbar" => true,
             ),
             "Catalogo" => array(
-                "path" => "/marango/Pages/catalogo.php",
+                "path" => "Pages/catalogo.php",
                 "privileges" => array(self::UNREGISTERED(), self::USER(), self::ADMIN()),
                 "show_in_navbar" => true,
             ),
             "Accedi" => array(
-                "path" => "/marango/Pages/accedi.php",
+                "path" => "Pages/accedi.php",
                 "privileges" => array(self::UNREGISTERED()),
                 "show_in_navbar" => true,
             ),
             "Registrati" => array(
-                "path" => "/marango/Pages/registrati.php",
+                "path" => "Pages/registrati.php",
                 "privileges" => array(self::UNREGISTERED()),
                 "show_in_navbar" => true,
             ),
             "Home" => array(
-                "path" => "/marango/Pages/index.php",
+                "path" => "Pages/index.php",
                 "privileges" => array(self::UNREGISTERED(),self::USER(),self::ADMIN()),
                 "show_in_navbar" => false,
             ),
             "Account" => array(
-              "path" => "/marango/Pages/account.php",
+              "path" => "Pages/account.php",
               "privileges" => array(self::USER(), self::ADMIN()),
                 "show_in_navbar" => true,
 
             ),
             "Libro" => array(
-                "path" => "/marango/Pages/libro.php",
+                "path" => "Pages/libro.php",
                 "privileges" => array(self::UNREGISTERED(),self::USER(),self::ADMIN()),
                 "show_in_navbar" => false,
             ),
             "Noleggia" => array(
-                "path" => "/marango/Pages/loan.php",
+                "path" => "Pages/loan.php",
                 "privileges" => array(self::USER(),self::ADMIN()),
                 "show_in_navbar" => false,
             ),
             "Nuovo Libro" => array(
-                "path" => "/marango/Pages/crud_libro.php",
+                "path" => "Pages/crud_libro.php",
                 "privileges" => array(self::ADMIN()),
                 "show_in_navbar" => true,
             ),
             "Prestiti" => array(
-                "path" => "/marango/Pages/prestiti.php?order=start&status=all",
+                "path" => "Pages/prestiti.php?order=start&status=all",
                 "privileges" => array(self::USER()),
                 "show_in_navbar" => true,
             )
         );
     }
 
-    public static function redirect(string $page = ''): void
-    {
-      header('Location: ' . ($page === '' ? '' : self::$pages[$page]['path']));
-      exit();
-    }
-
     public function execute(): void
     {
         try {
             foreach (self::$pages as $page) {
-                if (strtok($_SERVER['REQUEST_URI'], '?') == $page['path']) {
+                if (str_contains($_SERVER['REQUEST_URI'], $page['path'])) {
                     if (count($page["privileges"]) && !in_array($_SESSION["user"]["status"], $page["privileges"])) {
-                        header("Location: /marango/Pages/403.php");
-                        exit();
+                        		Pangine::redirect("Pages/403.php");
                     }
                 }
             }
@@ -110,8 +113,7 @@ class Pangine
             }
         } catch (Exception500 $e) {
             $_SESSION["error500message"] = $e->getMessage();
-            header("Location: /marango/Pages/500.php");
-            exit();
+            		Pangine::redirect("Pages/500.php");
         }
     }
 

@@ -57,7 +57,7 @@ use Pangine\utils\Validator;
     function(Database $db){
 
     $book_data = [];
-    (new Validator("/marango/Pages/404.php"))
+    (new Validator("Pages/404.php"))
         ->add_parameter("id")
         ->is_numeric(
             value_parser: function (int $book_id) use ($db, &$book_data) {
@@ -100,7 +100,7 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("submit-value", "Aggiorna")
             ->tag_lazy_replace("submit-name", "update")
             ->tag_lazy_replace("book_id_field", "<input type='hidden' name='book_id' value='{$book_data['id']}'>")
-            ->tag_lazy_replace("back_button", "<a href='/marango/Pages/libro.php?id={$book_data['id']}'>Annulla operazione</a>")
+            ->tag_lazy_replace("back_button", "<a href='Pages/libro.php?id={$book_data['id']}'>Annulla operazione</a>")
 
             ->tag_lazy_replace("book_title-message", "")
             ->tag_lazy_replace("description-message", "")
@@ -113,7 +113,7 @@ use Pangine\utils\Validator;
     needs_database: true
 )
 ->add_renderer_POST(function(Database $db){
-    (new Validator("/marango/Pages/crud_libro.php?id={$_POST['book_id']}&modifica"))
+    (new Validator("Pages/crud_libro.php?id={$_POST['book_id']}&modifica"))
         ->add_parameter("book_title")
         ->is_string()
         ->add_parameter("description")
@@ -141,8 +141,7 @@ use Pangine\utils\Validator;
         $saved = move_uploaded_file($_FILES["cover"]["tmp_name"], "../assets/book_covers/" . $new_name);
         if(!$saved){
             Pangine::set_general_message("Errore durante il caricamento del file per l'aggiornaento del libro, riprovare (ERR_BOOK_01)");
-            header("Location: /marango/Pages/crud_libro.php?id={$_POST['book_id']}&modifica");
-            exit();
+            		Pangine::redirect("Pages/crud_libro.php?id={$_POST['book_id']}&modifica");
         }
     }
 
@@ -156,18 +155,16 @@ use Pangine\utils\Validator;
     );
     if(!$result){
         Pangine::set_general_message("Errore durante l'aggiornamento del libro, riprovare (ERR_BOOK_02)");
-        header("Location: /marango/Pages/crud_libro.php?id={$_POST['book_id']}&modifica");
-        exit();
+        		Pangine::redirect("Pages/crud_libro.php?id={$_POST['book_id']}&modifica");
     }
 
     Pangine::set_general_message("Libro aggiornato con successo","success");
-    header("Location: /marango/Pages/libro.php?id={$_POST["book_id"]}");
-    exit();
+    		Pangine::redirect("Pages/libro.php?id={$_POST["book_id"]}");
 }, "update", needs_database: true)
 ->add_renderer_POST(
     function(Database $db){
 
-        (new Validator("/marango/Pages/crud_libro.php?create"))
+        (new Validator("Pages/crud_libro.php?create"))
             ->add_parameter("book_title")
             ->is_string()
             ->add_parameter("description")
@@ -195,8 +192,7 @@ use Pangine\utils\Validator;
         $stmt->bind_param('sssii', $_POST['book_title'], $_POST['description'], $tmp_name, $_POST['author'], $_POST['no_copies']);
         if(!$stmt->execute()){
             Pangine::set_general_message("Errore durante l'inserimento del libro, riprovare (ERR_BOOK_03)");
-            header("Location: /marango/Pages/crud_libro.php?create");
-            exit();
+            		Pangine::redirect("Pages/crud_libro.php?create");
         }
         $last_id = $db->get_connection()->insert_id;
 
@@ -205,8 +201,7 @@ use Pangine\utils\Validator;
         if(!$saved){
             $db->get_connection()->rollback();
             Pangine::set_general_message("Errore durante il caricamento del file per l'inserimento del libro, riprovare (ERR_BOOK_04)");
-            header("Location: /marango/Pages/crud_libro.php?create");
-            exit();
+            		Pangine::redirect("Pages/crud_libro.php?create");
         }
 
         $stmt = $db->get_connection()->prepare("UPDATE Books SET cover_file_name = ? WHERE id = ?");
@@ -214,15 +209,13 @@ use Pangine\utils\Validator;
         if(!$stmt->execute()){
             $db->get_connection()->rollback();
             Pangine::set_general_message("Errore durante l'inserimento del libro, riprovare (ERR_BOOK_05)");
-            header("Location: /marango/Pages/crud_libro.php?create");
-            exit();
+            		Pangine::redirect("Pages/crud_libro.php?create");
         }
 
         $db->get_connection()->commit();
 
         Pangine::set_general_message("Libro inserito con successo","success");
-        header("Location: /marango/Pages/libro.php?id=$last_id");
-        exit();
+        		Pangine::redirect("Pages/libro.php?id=$last_id");
     },
     "create",
     needs_database: true
@@ -259,8 +252,7 @@ use Pangine\utils\Validator;
     $book_data = $db->execute_query($book_query, $_POST['id']);
     if(count($book_data) != 1){
         Pangine::set_general_message("Non è stato possbile trovare il libro richiesto, riprovare (ERR_BOOK_07)");
-        header("Location: /marango/Pages/catalogo.php");
-        exit();
+        		Pangine::redirect("Pages/catalogo.php");
     }
     $file_name = $book_data[0]["cover_file_name"];
 
@@ -269,8 +261,7 @@ use Pangine\utils\Validator;
     $stmt->bind_param('i', $_POST['id']);
     if(!$stmt->execute()){
         Pangine::set_general_message("Non è stato possbile eliminare il libro, riprovare (ERR_BOOK_07)");
-        header("Location: /marango/Pages/libro.php?id='{$_POST['id']}'");
-        exit();
+        		Pangine::redirect("Pages/libro.php?id='{$_POST['id']}'");
     }
 
     if(file_exists("../assets/book_covers/" . $file_name)){
@@ -278,14 +269,12 @@ use Pangine\utils\Validator;
         if(!$deleted){
             $db->get_connection()->rollback();
             Pangine::set_general_message("Non è stato possbile eliminare il file collegato al libro, riprovare (ERR_BOOK_08)");
-            header("Location: /marango/Pages/libro.php?id='{$_POST['id']}'");
-            exit();
+            		Pangine::redirect("Pages/libro.php?id='{$_POST['id']}'");
         }
     }
 
     $db->get_connection()->commit();
     Pangine::set_general_message("Libro eliminato con successo","success");
-    header("Location: /marango/Pages/catalogo.php");
-    exit();
+    		Pangine::redirect("Pages/catalogo.php");
 }, "elimina", needs_database: true)
 ->execute();

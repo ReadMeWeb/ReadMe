@@ -42,53 +42,53 @@ class Pangine
         $this->try_session();
         self::$pages = array(
             "Chi siamo" => array(
-                "path" => Pangine::path() . "Pages/chi_siamo.php",
+                "path" => "Pages/chi_siamo.php",
                 "privileges" => array(self::UNREGISTERED()),
                 "show_in_navbar" => true,
             ),
             "Catalogo" => array(
-                "path" => Pangine::path() . "Pages/catalogo.php",
+                "path" => "Pages/catalogo.php",
                 "privileges" => array(self::UNREGISTERED(), self::USER(), self::ADMIN()),
                 "show_in_navbar" => true,
             ),
             "Accedi" => array(
-                "path" => Pangine::path() . "Pages/accedi.php",
+                "path" => "Pages/accedi.php",
                 "privileges" => array(self::UNREGISTERED()),
                 "show_in_navbar" => true,
             ),
             "Registrati" => array(
-                "path" => Pangine::path() . "Pages/registrati.php",
+                "path" => "Pages/registrati.php",
                 "privileges" => array(self::UNREGISTERED()),
                 "show_in_navbar" => true,
             ),
             "Home" => array(
-                "path" => Pangine::path() . "Pages/index.php",
+                "path" => "Pages/index.php",
                 "privileges" => array(self::UNREGISTERED(),self::USER(),self::ADMIN()),
                 "show_in_navbar" => false,
             ),
             "Account" => array(
-              "path" => Pangine::path() . "Pages/account.php",
+              "path" => "Pages/account.php",
               "privileges" => array(self::USER(), self::ADMIN()),
                 "show_in_navbar" => true,
 
             ),
             "Libro" => array(
-                "path" => Pangine::path() . "Pages/libro.php",
+                "path" => "Pages/libro.php",
                 "privileges" => array(self::UNREGISTERED(),self::USER(),self::ADMIN()),
                 "show_in_navbar" => false,
             ),
             "Noleggia" => array(
-                "path" => Pangine::path() . "Pages/loan.php",
+                "path" => "Pages/loan.php",
                 "privileges" => array(self::USER(),self::ADMIN()),
                 "show_in_navbar" => false,
             ),
             "Nuovo Libro" => array(
-                "path" => Pangine::path() . "Pages/crud_libro.php",
+                "path" => "Pages/crud_libro.php",
                 "privileges" => array(self::ADMIN()),
                 "show_in_navbar" => true,
             ),
             "Prestiti" => array(
-                "path" => Pangine::path() . "Pages/prestiti.php?order=start&status=all",
+                "path" => "Pages/prestiti.php?order=start&status=all",
                 "privileges" => array(self::USER()),
                 "show_in_navbar" => true,
             )

@@ -31,11 +31,7 @@ class Validator
             $validator->validate();
         }
         if($this->validation_failed){
-            if ($this->url_in_case_of_failure === '') {
-              Pangine::redirect();
-            }
-            header("Location: ".$this->url_in_case_of_failure);
-            exit();
+            Pangine::redirect($this->url_in_case_of_failure);
         }
     }
 

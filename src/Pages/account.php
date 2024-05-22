@@ -50,7 +50,7 @@ use \Utils\Database;
             ->build();
     }, caller_parameter_name: "update")
     ->add_renderer_POST(function (Database $db) {
-        (new Validator(Pangine::path() . "Pages/account.php?update=true"))
+        (new Validator("Pages/account.php?update=true"))
             ->add_parameter("username")
             ->is_string(string_parser: function () use ($db): string {
                 $result = $db->execute_query("SELECT username FROM Users WHERE username = ?", $_POST["username"]);
@@ -66,7 +66,7 @@ use \Utils\Database;
 
         header("Location: /marango/Pages/account.php");
         exit();
-    }, caller_parameter_name: "update", needs_database: true, validator: (new Validator(Pangine::path() . "Pages/account.php?update=true"))
+    }, caller_parameter_name: "update", needs_database: true, validator: (new Validator("Pages/account.php?update=true"))
         ->add_parameter("username")
         ->is_string(4, 20)
         ->add_parameter("password")

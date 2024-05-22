@@ -15,7 +15,7 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
 function accedi(Database $conn)
 {
     $profilo = null;
-    (new Validator(Pangine::path().'Pages/accedi.php'))
+    (new Validator('Pages/accedi.php'))
         ->add_parameter('nome')
         ->is_string(string_parser: function () use ($conn, &$profilo) {
             return count(

@@ -28,7 +28,7 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
       ->tag_lazy_replace('password-autocomplete', 'current-password')
       ->tag_lazy_replace('crud-name', 'accedi')
       ->tag_lazy_replace('crud-innerhtml', 'Accedi')
-      ->tag_lazy_replace('sign-in-up-url', '/marango/Pages/registrati.php')
+      ->tag_lazy_replace('sign-in-up-url', 'Pages/registrati.php')
       ->tag_lazy_replace('sign-in-up-url-innerhtml', 'Sei nuovo ? Clicca qui per registrarti')
 
       ->tag_lazy_replace('nome-value', '')

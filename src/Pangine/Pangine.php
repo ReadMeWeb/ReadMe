@@ -31,6 +31,12 @@ class Pangine
       return '/marango/';
     }
 
+    public static function redirect(string $url = ''): void
+    {
+      header('Location: ' . Pangine::path() . $url);
+      exit();
+    }
+
     public function __construct()
     {
         $this->try_session();
@@ -87,12 +93,6 @@ class Pangine
                 "show_in_navbar" => true,
             )
         );
-    }
-
-    public static function redirect(string $page = ''): void
-    {
-      header('Location: ' . ($page === '' ? '' : self::$pages[$page]['path']));
-      exit();
     }
 
     public function execute(): void

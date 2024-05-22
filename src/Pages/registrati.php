@@ -27,7 +27,7 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
       Pangine::redirect("Accedi");
     },
     needs_database: true,
-    validator: (new Validator(url_in_case_of_failure: Pangine::path() . 'Pages/registrati.php'))
+    validator: (new Validator(url_in_case_of_failure: 'Pages/registrati.php'))
       ->add_parameter('nome')->is_string(4, 20)
       ->add_parameter('password')->is_string(4, 128)
   )
@@ -46,7 +46,7 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
         ->tag_lazy_replace('password-autocomplete', 'new-password')
         ->tag_lazy_replace('crud-name', 'registrati')
         ->tag_lazy_replace('crud-innerhtml', 'Registrati')
-        ->tag_lazy_replace('sign-in-up-url', Pangine::path() . 'Pages/accedi.php')
+        ->tag_lazy_replace('sign-in-up-url', 'Pages/accedi.php')
         ->tag_lazy_replace('sign-in-up-url-innerhtml', 'Hai già un profilo ? Clicca qui per accedere')
 
         ->tag_lazy_replace('nome-value', '')

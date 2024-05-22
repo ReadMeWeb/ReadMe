@@ -61,6 +61,7 @@ function a($a, $f, $e) {
         ->tag_istant_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Noleggio')))
         ->plain_instant_replace('Pages/libro.php', 'Pages/libro.php?id=' . $_GET['id'])
         ->tag_istant_replace('content', file_get_contents(__DIR__ . '/../templates/make_loan_content.html'))
+        ->tag_lazy_replace('form_action','Pages/loan.php')
 
         ->tag_lazy_replace('libro-value',   $_GET['id'])
         ->tag_lazy_replace('libro-titolo',  $conn->execute_query('select title as t from Books where id = ?', $_GET['id'])[0]['t'])

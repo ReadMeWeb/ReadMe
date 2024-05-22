@@ -22,6 +22,7 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
       ->tag_lazy_replace('menu', Pangine::navbar_list())
       ->tag_lazy_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Accedi')))
       ->tag_istant_replace('content', file_get_contents(__DIR__ . '/../templates/accedi_registrati_content.html'))
+      ->tag_lazy_replace('form_action', 'Pages/accedi.php')
       ->tag_lazy_replace('legenda', 'Accedi')
       ->tag_lazy_replace('nome-autocomplete', 'username')
       ->tag_lazy_replace('password-autocomplete', 'current-password')

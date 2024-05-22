@@ -57,7 +57,7 @@ use Pangine\utils\Validator;
     function(Database $db){
 
     $book_data = [];
-    (new Validator("/marango/Pages/404.php"))
+    (new Validator(Pangine::path() . "Pages/404.php"))
         ->add_parameter("id")
         ->is_numeric(
             value_parser: function (int $book_id) use ($db, &$book_data) {
@@ -113,7 +113,7 @@ use Pangine\utils\Validator;
     needs_database: true
 )
 ->add_renderer_POST(function(Database $db){
-    (new Validator("/marango/Pages/crud_libro.php?id={$_POST['book_id']}&modifica"))
+    (new Validator(Pangine::path() . "Pages/crud_libro.php?id={$_POST['book_id']}&modifica"))
         ->add_parameter("book_title")
         ->is_string()
         ->add_parameter("description")
@@ -167,7 +167,7 @@ use Pangine\utils\Validator;
 ->add_renderer_POST(
     function(Database $db){
 
-        (new Validator("/marango/Pages/crud_libro.php?create"))
+        (new Validator(Pangine::path() . "Pages/crud_libro.php?create"))
             ->add_parameter("book_title")
             ->is_string()
             ->add_parameter("description")

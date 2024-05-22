@@ -16,7 +16,7 @@ use Utils\Database;
 
         $book_data = [];
 
-        (new Validator("/marango/Pages/404.php"))
+        (new Validator(Pangine::path() . "Pages/404.php"))
             ->add_parameter("id")
             ->is_numeric(
                 value_parser: function (int $book_id) use ($db, &$book_data) {

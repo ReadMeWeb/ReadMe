@@ -98,7 +98,7 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
     },
         caller_parameter_name: "query",
         needs_database: true,
-        validator: (new Validator("/marango/Pages/404.php"))
+        validator: (new Validator(Pangine::path() . "Pages/404.php"))
             ->add_parameter("query")
             ->is_string(0, 200)
     )

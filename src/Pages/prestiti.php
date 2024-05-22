@@ -96,7 +96,7 @@ function get_loan_card(string $title, string $start_date, string $end_date, stri
         
     },
     needs_database: true,
-    validator: (new Validator("/marango/Pages/404.php"))
+    validator: (new Validator(Pangine::path() . "Pages/404.php"))
         ->add_parameter("status")->is_string(string_parser: function (string $status) {
             if($status == "active" || $status == "expired" || $status = "all") 
                 return "";

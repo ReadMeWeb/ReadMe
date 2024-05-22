@@ -23,8 +23,8 @@ use \Utils\Database;
             ->tag_lazy_replace("username-message", "")
             ->tag_lazy_replace("password-message", "")
             ->plain_instant_replace("<li><a href=\"{{pages-account}}\">Informazioni</a></li>", "<li>Informazioni</li>")
-            ->tag_lazy_replace("pages-account-update", "/marango/Pages/account.php?update=true")
-            ->tag_lazy_replace("pages-exit", "/marango/Pages/account.php?exit=true")
+            ->tag_lazy_replace("pages-account-update", Pangine::path() . "Pages/account.php?update=true")
+            ->tag_lazy_replace("pages-exit", Pangine::path() . "Pages/account.php?exit=true")
             ->tag_lazy_replace("pages-form", "")
             ->plain_instant_replace("<input type=\"submit\" name=\"update\" value=\"Modifica\">", "")
             ->build();
@@ -43,14 +43,14 @@ use \Utils\Database;
             ->plain_lazy_replace(" disabled>", ">")
             ->tag_lazy_replace("username-message", "")
             ->tag_lazy_replace("password-message", "")
-            ->tag_lazy_replace("pages-account", "/marango/Pages/account.php")
+            ->tag_lazy_replace("pages-account", Pangine::path() . "Pages/account.php")
             ->plain_instant_replace("<li><a href=\"{{pages-account-update}}\">Modifica</a></li>", "<li>Modifica</li>")
-            ->tag_lazy_replace("pages-exit", "/marango/Pages/account.php?exit=true")
-            ->tag_lazy_replace("pages-form", "/marango/Pages/account.php?update=true")
+            ->tag_lazy_replace("pages-exit", Pangine::path() . "Pages/account.php?exit=true")
+            ->tag_lazy_replace("pages-form", Pangine::path() . "Pages/account.php?update=true")
             ->build();
     }, caller_parameter_name: "update")
     ->add_renderer_POST(function (Database $db) {
-        (new Validator("/marango/Pages/account.php?update=true"))
+        (new Validator(Pangine::path() . "Pages/account.php?update=true"))
             ->add_parameter("username")
             ->is_string(string_parser: function () use ($db): string {
                 $result = $db->execute_query("SELECT username FROM Users WHERE username = ?", $_POST["username"]);
@@ -66,7 +66,7 @@ use \Utils\Database;
 
         header("Location: /marango/Pages/account.php");
         exit();
-    }, caller_parameter_name: "update", needs_database: true, validator: (new Validator("/marango/Pages/account.php?update=true"))
+    }, caller_parameter_name: "update", needs_database: true, validator: (new Validator(Pangine::path() . "Pages/account.php?update=true"))
         ->add_parameter("username")
         ->is_string(4, 20)
         ->add_parameter("password")

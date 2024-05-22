@@ -39,7 +39,7 @@ function a($a, $f, $e) {
       $conn->execute_query('insert into Loans(book_id,user_username,loan_start_date,loan_expiration_date) values(?,?,?,?);', $_POST['id'], _username(), $_POST['inizio'], $_POST['fine']);
 
       Pangine::set_general_message("Noleggio di '". $book_name ."' avvenuto con successo!","succ");
-      Pangine::redirect('Prestiti');
+      Pangine::redirect("Pages/prestiti.php?order=start&status=all");
       exit();
     },
     needs_database: true

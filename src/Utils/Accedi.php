@@ -29,9 +29,9 @@ function accedi(Database $conn)
     if ($profilo !== null && count($profilo) == 1) {
         $_SESSION['user'] = $profilo[0];
         Pangine::set_general_message("Accesso avvenuto con successo! Benvenuto ".$_SESSION['user']['username'] . ".","succ");
-        Pangine::redirect('Home');
+        Pangine::redirect('');
     }
-    Pangine::redirect('Registrati');
+    Pangine::redirect("Pages/registrati.php");
 }
 
 ;

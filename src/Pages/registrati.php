@@ -24,7 +24,7 @@ require_once __DIR__ . '/../Pangine/utils/LayoutBuilder.php';
 
       $conn->execute_query('insert into Users values(?,?,\'USER\');', $_POST['nome'], $_POST['password']);
       Pangine::set_general_message("Creazione dell'account avvenuta con successo!","success");
-      Pangine::redirect("Accedi");
+      Pangine::redirect("Pages/accedi.php");
     },
     needs_database: true,
     validator: (new Validator(url_in_case_of_failure: 'Pages/registrati.php'))

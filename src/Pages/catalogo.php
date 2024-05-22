@@ -30,7 +30,7 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
         $query = trim($_GET['query']);
 
         if (empty($query)) {
-            Pangine::redirect('Catalogo');
+            Pangine::redirect("Pages/catalogo.php");
         }
 
         $escaped_query = addcslashes($query, "%_\\");

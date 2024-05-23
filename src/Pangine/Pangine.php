@@ -28,7 +28,7 @@ class Pangine
     private static array $pages = [];
 
     public static function path() {
-      return "/marango/";
+      return $panginepath = "/marango/";
     }
 
     public static function redirect(string $url = ''): void

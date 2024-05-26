@@ -18,6 +18,11 @@ function a($a, $f, $e) {
   return _add_parametre($a, _string(string_parser: fn ($i) => $f($i) ? '' : $e));
 }
 
+function datediff($d1, $d2) {
+  $d = (int)((new DateTime($d1))->diff(new DateTime($d2))->format('%a'));
+  return $d;
+}
+
 (new Pangine())
   ->add_renderer_POST(
     function ($conn) {
@@ -31,14 +36,15 @@ function a($a, $f, $e) {
         _new_validator('Pages/loan.php?id=' . $_POST['id']),
         a('inizio', fn ($i) => $i >= date('Y-m-d', time()), 'La data di inizio non può essere prima di oggi.'),
         a('fine',   fn ($i) => $i >= date('Y-m-d', time()), 'La data di fine non può essere prima di oggi.'),
-        a('fine', fn ($i) => $_POST['inizio'] < 'i', 'La data di fine deve essere dopo la data di inizio.'),
+        a('fine', fn ($i) => datediff($_POST['inizio'], $_POST['fine']) >= 07, 'La data di fine deve essere almeno 7 giorni dopo la data di inizio.'),
+        a('fine', fn ($i) => datediff($_POST['inizio'], $_POST['fine']) <= 30, 'La data di fine può essere al massimo 30 giorni dopo la data di inizio.'),
       )->validate();
 
       $book_name = $conn->execute_query('select title from Books where id = ?', $_POST["id"])[0]['title'];
 
       $conn->execute_query('insert into Loans(book_id,user_username,loan_start_date,loan_expiration_date) values(?,?,?,?);', $_POST['id'], _username(), $_POST['inizio'], $_POST['fine']);
 
-      Pangine::set_general_message("Noleggio di '". $book_name ."' avvenuto con successo!","succ");
+      Pangine::set_general_message("Noleggio di '" . $book_name . "' avvenuto con successo!", "succ");
       Pangine::redirect("Pages/prestiti.php?order=start&status=all");
       exit();
     },
@@ -61,15 +67,15 @@ function a($a, $f, $e) {
         ->tag_istant_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Noleggio')))
         ->plain_instant_replace('Pages/libro.php', 'Pages/libro.php?id=' . $_GET['id'])
         ->tag_istant_replace('content', file_get_contents(__DIR__ . '/../templates/make_loan_content.html'))
-        ->tag_lazy_replace('form_action','Pages/loan.php')
+        ->tag_lazy_replace('form_action', 'Pages/loan.php')
 
         ->tag_lazy_replace('libro-value',   $_GET['id'])
         ->tag_lazy_replace('libro-titolo',  $conn->execute_query('select title as t from Books where id = ?', $_GET['id'])[0]['t'])
         ->tag_lazy_replace('user-value', _username())
 
-        ->tag_lazy_replace('inizio-value', $today = date('Y-m-d', time()))
+        ->tag_lazy_replace('inizio-value', date('Y-m-d', time()))
         ->tag_lazy_replace('inizio-message', '')
-        ->tag_lazy_replace('fine-value', $today)
+        ->tag_lazy_replace('fine-value', date_add(new DateTime(), new DateInterval('P7D'))->format('Y-m-d'))
         ->tag_lazy_replace('fine-message', '')
         ->build();
     },

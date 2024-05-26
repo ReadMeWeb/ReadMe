@@ -23,6 +23,27 @@ function datediff($d1, $d2) {
   return $d;
 }
 
+function redirect_if_already_loaned_to_user($conn, $id, $inizio, $fine) {
+  if ($a = ($conn->execute_query('
+    select
+      count(*) != 0 as c
+    -- *,
+    -- l.loan_start_date <= inizio and inizio <= l.loan_expiration_date as inizio_between,
+    -- l.loan_start_date <= fine   and fine   <= l.loan_expiration_date as   fine_between
+    from (select ? as libro, ? as user, ? as inizio, ? as fine) as vars
+    inner join Loans as l
+    on l.book_id = libro and l.user_username = user
+    where (l.loan_start_date <= inizio and inizio <= l.loan_expiration_date)
+    or    (l.loan_start_date <= fine   and fine   <= l.loan_expiration_date)
+    ', $id, _username(), $inizio, $fine)) [0]['c']) {
+    //echo "<pre>";
+    //print_r($a);
+    //echo "</pre>";
+    Pangine::set_general_message("Sei già in possesso di questo libro nel periodo selezionato ");
+    Pangine::redirect("Pages/catalogo.php");
+  }
+}
+
 (new Pangine())
   ->add_renderer_POST(
     function ($conn) {
@@ -31,6 +52,8 @@ function datediff($d1, $d2) {
         _new_validator('Pages/404.php'),
         _add_parametre('id', _string(string_parser: fn ($i) => $conn->execute_query('select count(*) = 1 as b from Books where id = ?', $i)[0]['b'] == 1 ? '' : 'Il libro non è stato trovato'))
       )->validate();
+
+      redirect_if_already_loaned_to_user($conn, $_POST['id'], $_POST['inizio'], $_POST['fine']);
 
       stream(
         _new_validator('Pages/loan.php?id=' . $_POST['id']),
@@ -57,6 +80,8 @@ function datediff($d1, $d2) {
         _new_validator('Pages/404.php'),
         _add_parametre('id', _string(string_parser: fn ($i) => $conn->execute_query('select count(*) = 1 as b from Books where id = ?', $i)[0]['b'] == 1 ? '' : 'Il libro non è stato trovato'))
       )->validate();
+
+      //redirect_if_already_loaned_to_user($conn);
 
       echo (new LayoutBuilder())
         ->tag_lazy_replace('title', 'Prestito libri')

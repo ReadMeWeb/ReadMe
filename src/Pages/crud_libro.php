@@ -44,7 +44,7 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("submit-name", "create")
             ->tag_lazy_replace("book_id_field", "")
             ->tag_lazy_replace("back_button", "")
-
+            ->tag_lazy_replace("edit", false)
             ->tag_lazy_replace("book_title-message", "")
             ->tag_lazy_replace("description-message", "")
             ->tag_lazy_replace("no_copies-message", "")
@@ -101,7 +101,7 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("submit-name", "update")
             ->tag_lazy_replace("book_id_field", "<input type='hidden' name='book_id' value='{$book_data['id']}'>")
             ->tag_lazy_replace("back_button", "<a href='Pages/libro.php?id={$book_data['id']}'>Annulla operazione</a>")
-
+            ->tag_lazy_replace("edit", true)
             ->tag_lazy_replace("book_title-message", "")
             ->tag_lazy_replace("description-message", "")
             ->tag_lazy_replace("no_copies-message", "")

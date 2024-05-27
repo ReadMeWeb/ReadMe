@@ -3,7 +3,7 @@
     <li><a href="{{pages-account-update}}">Modifica</a></li>
     <li><a href="{{pages-exit}}">Esci</a></li>
 </ul>
-<form class="simple_form" id="main_zone" action="{{pages-form}}" method="POST">
+<form class="simple_form" id="main_zone" action="{{pages-form}}" method="POST" onsubmit="return validateAccountInfo()">
     <fieldset class="simple_form">
         <legend class="simple_form">Informazioni account</legend>
         <label for="username">Username</label>

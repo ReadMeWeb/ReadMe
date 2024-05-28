@@ -243,15 +243,16 @@ class Pangine
         if ($method == "GET"){
             foreach ($_GET as $parameter_name => $value) {
                 if(is_string($value)){
-                    $_GET[$parameter_name] = htmlspecialchars($value, encoding: "UTF-8");
+                    $_GET[$parameter_name] = trim(htmlspecialchars($value, encoding: "UTF-8"));
                 }
             }
         }else{
             foreach ($_POST as $parameter_name => $value) {
                 if(is_string($value)){
-                    $_POST[$parameter_name] = htmlspecialchars($value, encoding: "UTF-8");
                     if($parameter_name == "password"){
                         $_POST[$parameter_name] = hash('sha256',$value);
+                    }else{
+                        $_POST[$parameter_name] = trim(htmlspecialchars($value, encoding: "UTF-8"));
                     }
                 }
             }

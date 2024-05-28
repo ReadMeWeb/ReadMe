@@ -36,8 +36,8 @@ function validateFile(fileName, input, isNeeded) {
     return true;
 }
 
-function validateString(str, input, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_SAFE_INTEGER) {
-    str = str.trim();
+function validateString(str, input, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_SAFE_INTEGER, trim=true) {
+    str = trim ? str.trim() : str;
 
     if(str == '') {
         input.insertAdjacentElement(
@@ -97,7 +97,7 @@ function validateAccountInfo() {
     
     return Array.from([
         validateString(usernameInput.value, usernameInput, 4, 20),
-        validateString(passwordInput.value, passwordInput, 4, 120)
+        validateString(passwordInput.value, passwordInput, 4, 120, false)
     ]).find((e) => e===false) === undefined;
 
 

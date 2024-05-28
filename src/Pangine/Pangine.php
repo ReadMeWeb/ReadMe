@@ -47,7 +47,7 @@ class Pangine
                 "show_in_navbar" => true,
             ),
             "Catalogo" => array(
-                "path" => "Pages/catalogo.php",
+                "path" => "Pages/catalogo.php?query=&page=1",
                 "privileges" => array(self::UNREGISTERED(), self::USER(), self::ADMIN()),
                 "show_in_navbar" => true,
             ),
@@ -265,32 +265,5 @@ class Pangine
         }else{
             $_SESSION["general-message"] = "<p class='successMessage'>".$message."</p>";
         }
-    }
-
-    static function page_selector_generator(int $last_page_number): string{
-        $page_num = 1;
-        if(isset($_GET["page_num"])){
-            $page_num = max($_GET["page_num"],1);
-        }
-        $page_selector = "<div id='page_selector'>";
-        $page_selector .= "<p><abbr title='Corrente:'>Corr: </abbr>". $page_num ."</p>";
-        if($last_page_number != 1){
-            $page_selector .= "<div>";
-            if($page_num != 1 && $last_page_number != 0){
-                $page_selector .= "<a href='". self::$pages["Catalogo"]["path"] ."'>Inizio</a>";
-            }
-            if($page_num > 1){
-                $page_selector .= "<a href='". self::$pages["Catalogo"]["path"] . "?page_num=" . ($page_num - 1) . "'><abbr title='Precedente'>Prec</abbr></a>";
-            }
-            if($page_num < $last_page_number){
-                $page_selector .= "<a href='". self::$pages["Catalogo"]["path"] . "?page_num=" . ($page_num + 1) . "'><abbr title='Successivo'>Succ</abbr></a>";
-            }
-            if($page_num != $last_page_number && $last_page_number != 0){
-                $page_selector .= "<a href='" . self::$pages["Catalogo"]["path"] . "?page_num=" . $last_page_number . "'>Fine</a>";
-            }
-            $page_selector .= "</div>";
-        }
-        $page_selector .= "</div>";
-        return $page_selector;
     }
 }

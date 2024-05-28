@@ -158,7 +158,7 @@ function validateLoanInfo() {
             res = false;
         }
         else if(dateDiff < 7) {
-            endDateInput.insertAdjacentElement('afterend', getErrorMessage('La data di fine può essere al massimo 30 giorni dopo la data di inizio.'))
+            endDateInput.insertAdjacentElement('afterend', getErrorMessage('La data di fine deve essere almeno 7 giorni dopo la data di inizio.'))
             res = false;
         }
         

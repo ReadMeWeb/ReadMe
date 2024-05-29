@@ -47,7 +47,7 @@ class Pangine
                 "show_in_navbar" => true,
             ),
             "Catalogo" => array(
-                "path" => "Pages/catalogo.php?query=&page=1",
+                "path" => "Pages/catalogo.php?page=1&query=",
                 "privileges" => array(self::UNREGISTERED(), self::USER(), self::ADMIN()),
                 "show_in_navbar" => true,
             ),

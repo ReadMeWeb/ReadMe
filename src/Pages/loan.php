@@ -40,7 +40,7 @@ function redirect_if_already_loaned_to_user($conn, $id, $inizio, $fine) {
     //print_r($a);
     //echo "</pre>";
     Pangine::set_general_message("Sei già in possesso di questo libro nel periodo selezionato ");
-    Pangine::redirect("Pages/catalogo.php?query=&page=1");
+    Pangine::redirect("Pages/catalogo.php?page=1&query=");
   }
 }
 

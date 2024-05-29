@@ -8,6 +8,7 @@ use \Pangine\utils\LayoutBuilder;
 
 (new Pangine())
     ->add_renderer_GET(function () {
+        http_response_code(500);
         $content = file_get_contents(__DIR__ . "/../templates/500_content.html");
         $layout_builder = (new LayoutBuilder())
             ->tag_lazy_replace("title", "500")

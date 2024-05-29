@@ -7,6 +7,7 @@ use \Pangine\utils\LayoutBuilder;
 
 (new Pangine())
     ->add_renderer_GET(function () {
+        http_response_code(404);
         $content = file_get_contents(__DIR__ . "/../templates/404_content.html");
         echo (new LayoutBuilder())
             ->tag_lazy_replace("title", "404")

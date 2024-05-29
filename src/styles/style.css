@@ -105,6 +105,14 @@ body {
     -moz-transition: box-shadow 0.5s;
     -webkit-transition: box-shadow 0.5s;
     transition: box-shadow 0.5s;
+    line-height: calc(1.5 * var(--textSize));
+}
+h1 {
+    line-height: calc(1.5 * var(--heading1Size));
+}
+
+h2 {
+    line-height: calc(1.5 * var(--heading2Size));
 }
 
 /*##############################

@@ -783,6 +783,15 @@ input, select {
     clip: rect(1px, 1px, 1px, 1px);
 }
 
+/* --------- PAGES NAVIGATION --------- */
+.pages-nav * {
+    display: inline;
+}
+
+.pages-nav a {
+    margin: 1em;
+}
+
 /* --------- ACCOUNT PAGE --------- */
 ul#operations {
     list-style: none;

@@ -108,15 +108,25 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
             $page = $_GET["page"];
 
             if($books_count[0]["books"] > BOOKS_PER_PAGE * $page) {
-                $next_page = "<a href='Pages/catalogo.php?query={$query}&page=" . ($page+1) . "'><abbr title='Successivo'>Succ</abbr></a>";
+                if($page == floor($books_count[0]["books"] / BOOKS_PER_PAGE)) {
+                    $next_page = "<a href='Pages/catalogo.php?page=" . ($page+1) . "&query={$query}'>Fine</a>";
+                }
+                else {
+                    $next_page = "<a href='Pages/catalogo.php?page=" . ($page+1) . "&query={$query}'><abbr title='Successivo'>Succ</abbr></a>";
+                }
             }
 
             if($page > 1) {
-                $prev_page = "<a href='Pages/catalogo.php?query={$query}&page=" . ($page-1) . "'><abbr title='Precedente'>Prec</abbr></a>";
+                if($page == 2) {
+                    $prev_page = "<a href='Pages/catalogo.php?page=" . ($page-1) . "&query={$query}'>Inizio</a>";
+                }
+                else {
+                    $prev_page = "<a href='Pages/catalogo.php?page=" . ($page-1) . "&query={$query}'><abbr title='Precedente'>Prec</abbr></a>";
+                }
             }
 
             $page_selector = "
-                <nav>
+                <nav class='pages-nav'>
                     {$prev_page}
                     <p><p><abbr title='Corrente:'>Corr: </abbr>{$page}</p>
                     {$next_page}

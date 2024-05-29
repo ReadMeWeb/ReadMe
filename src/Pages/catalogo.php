@@ -138,7 +138,6 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
             ->tag_lazy_replace("page-selector", $page_selector)
             ->build();
     },
-        caller_parameter_name: "query",
         needs_database: true,
         validator: (new Validator("Pages/404.php"))
             ->add_parameter("query")

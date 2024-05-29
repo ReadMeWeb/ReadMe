@@ -7,11 +7,12 @@ function getErrorMessage(msg) {
     return errMsg;
 }
 
-function clearErrorMessages() {
-    let errors = Array.from(document.getElementsByClassName('errorMessage'));
-    errors.forEach(err => {
-        err.remove();
-    });
+function clearErrorMessage(input) {
+    let sibling = input.nextElementSibling;
+
+    if(sibling && sibling.className == 'errorMessage') {
+        sibling.remove();
+    }
 }
 
 function validateFile(fileName, input, isNeeded) {
@@ -89,63 +90,83 @@ function validateNumber(num, input, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_
 /* --- ACCOUNT PAGE --- */
 
 function validateAccountInfo() {
-    
-    clearErrorMessages();
-
-    let usernameInput = document.getElementById('username');
-    let passwordInput = document.getElementById('password');
-    
     return Array.from([
-        validateString(usernameInput.value, usernameInput, 4, 20),
-        validateString(passwordInput.value, passwordInput, 4, 120, false)
+        validateUsername(),
+        validatePassword()
     ]).find((e) => e===false) === undefined;
 
-
-
 }
+
+function validateUsername() {
+    let usernameInput = document.getElementById('username');
+    clearErrorMessage(usernameInput);
+    return validateString(usernameInput.value, usernameInput, 4, 20);
+}
+
+function validatePassword() {
+    let passwordInput = document.getElementById('password');
+    clearErrorMessage(passwordInput);
+    return validateString(passwordInput.value, passwordInput, 4, 120, false);
+}
+
 
 /* --- BOOK PAGE --- */
 
 function validateBookInfo(edit) {
-    clearErrorMessages();
-
-    let titleInput = document.getElementById('input-title');
-    let authorInput = document.getElementById('input-author');
-    let descInput = document.getElementById('input-description');
-    let coverInput = document.getElementById('input-cover');
-    let copiesInput = document.getElementById('input-no-copies');
 
     return Array.from([
-        validateString(titleInput.value, titleInput, 4, 255),
-        validateString(authorInput.options[authorInput.selectedIndex].text, authorInput, 4, 255),
-        validateString(descInput.value, descInput, 20),
-        validateNumber(copiesInput.value, copiesInput, 1),
-        validateFile( coverInput.value, coverInput, !edit)
+        validateTitle(),
+        validateAuthor(),
+        validateDesc(),
+        validateCopiesNumber(),
+        validateCover(edit)
 
     ]).find((e)=> e===false) === undefined;
+}
+
+function validateTitle() {
+    let titleInput = document.getElementById('input-title');
+    clearErrorMessage(titleInput);
+    return validateString(titleInput.value, titleInput, 4, 255);
+}
+
+function validateAuthor() {
+    let authorInput = document.getElementById('input-author');
+    clearErrorMessage(authorInput);
+    return validateString(authorInput.options[authorInput.selectedIndex].text, authorInput, 4, 255);
+}
+
+function validateDesc() {
+    let  descInput = document.getElementById('input-description');
+    clearErrorMessage(descInput);
+    return validateString(descInput.value, descInput, 20);
+}
+
+function validateCopiesNumber() {
+    let copiesInput = document.getElementById('input-no-copies');
+    clearErrorMessage(copiesInput);
+    return validateNumber(copiesInput.value, copiesInput, 1);
+}
+
+function validateCover(edit) {
+    let coverInput = document.getElementById('input-cover');
+    clearErrorMessage(coverInput);
+    return validateFile( coverInput.value, coverInput, !edit);
 }
 
 
 /* --- LOAN PAGE --- */
 function validateLoanInfo() {
 
-    clearErrorMessages();
+    let endDateInput = document.getElementById("f");
+    clearErrorMessage(endDateInput);
 
     let res = true;
 
-    let startDateInput = document.getElementById("i");
-    let startDate = new Date(startDateInput.value);
-
-    let endDateInput = document.getElementById("f");
     let endDate = new Date(endDateInput.value);
 
-    let today = new Date(new Date().toDateString());
+    let startDate = new Date(new Date().toDateString());
     let dateDiff = Math.round((endDate.getTime() - startDate.getTime()) / (24 * Math.pow(60,2) * 1000));
-
-    if(startDate < today) {
-        startDateInput.insertAdjacentElement('afterend', getErrorMessage('La data di inizio non può essere prima di oggi'));
-        res = false;
-    }
 
     if(endDate <=  startDate) {
         endDateInput.insertAdjacentElement('afterend', getErrorMessage('La data di fine deve essere dopo la data di inizio.'));

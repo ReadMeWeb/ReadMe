@@ -7,10 +7,10 @@
     <fieldset class="simple_form">
         <legend class="simple_form">Informazioni account</legend>
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" value="{{username-value}}" disabled>
+        <input type="text" id="username" name="username" value="{{username-value}}" onblur="validateUsername()" disabled>
         {{username-message}}
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" value="{{password-value}}" disabled>
+        <input type="password" id="password" name="password" value="{{password-value}}" onblur="validatePassword()" disabled>
         {{password-message}}
         <input type="submit" name="update" value="Modifica">
     </fieldset>

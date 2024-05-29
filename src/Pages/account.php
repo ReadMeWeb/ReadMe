@@ -18,7 +18,7 @@ use \Utils\Database;
             ->tag_lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Account")))
             ->tag_istant_replace("content", $content)
             ->tag_lazy_replace("username-value", $_SESSION["user"]["username"])
-            ->plain_instant_replace("<input type=\"password\" id=\"password\" name=\"password\" value=\"{{password-value}}\" disabled>","")
+            ->plain_instant_replace("<input type=\"password\" id=\"password\" name=\"password\" value=\"{{password-value}}\" onblur=\"validatePassword()\" disabled>","")
             ->plain_instant_replace("<label for=\"password\">Password</label>","")
             ->tag_lazy_replace("username-message", "")
             ->tag_lazy_replace("password-message", "")

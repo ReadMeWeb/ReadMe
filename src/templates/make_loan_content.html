@@ -14,7 +14,7 @@
     {{inizio-message}}
 
     <label for="f">Data di fine del prestito</label>
-    <input id="f" type="date" name="fine" value="{{fine-value}}">
+    <input id="f" type="date" name="fine" value="{{fine-value}}" onblur="validateLoanInfo()">
     {{fine-message}}
 
     <input type="submit" value="Noleggia">

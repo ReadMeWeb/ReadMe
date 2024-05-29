@@ -5,26 +5,26 @@
             {{book_id_field}}
 
             <label for="input-title">Titolo del Libro</label>
-            <input id="input-title" type="text" name="book_title" value="{{book_title-value}}" required/>
+            <input id="input-title" type="text" name="book_title" value="{{book_title-value}}" required onblur="validateTitle()"/>
             {{book_title-message}}
 
             <label for="input-author">Autore</label>
-            <select id="input-author" name="author">
+            <select id="input-author" name="author" onblur="validateAuthor()">
                 {{author-value}}
                 {{authors_options}}
             </select>
             {{author-message}}
 
             <label for="input-description">Descrizione</label>
-            <textarea id="input-description" name="description">{{description-value}}</textarea>
+            <textarea id="input-description" name="description" onblur="validateDesc()">{{description-value}}</textarea>
             {{description-message}}
 
             <label for="input-cover">Copertina</label>
-            <input id="input-cover" type="file" name="cover" accept=".jpg,.jpeg,.png"/>
+            <input id="input-cover" type="file" name="cover" accept=".jpg,.jpeg,.png" onblur="validateCover({{edit}})"/>
             {{cover-message}}
 
             <label for="input-no-copies">Numero di Copie</label>
-            <input id="input-no-copies" type="number" name="no_copies" min="1" value="{{no_copies-value}}"/>
+            <input id="input-no-copies" type="number" name="no_copies" min="1" value="{{no_copies-value}}" onblur="validateCopiesNumber()"//>
             {{no_copies-message}}
 
             <input type="submit" value="{{submit-value}}" name="{{submit-name}}"/>

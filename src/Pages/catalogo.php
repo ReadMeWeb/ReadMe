@@ -90,7 +90,7 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
         $res_number = "Tutti i libri.";
 
         if(!empty($query))
-            $res_number = $books_count[0]["books"] . " libri per la ricerca: '$query'";
+            $res_number = $books_count . " libri per la ricerca: '$query'";
         
         if(!empty($res)) {
             foreach ($res as $book) {
@@ -104,32 +104,29 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
             }
             $books = '<dl id="books-container">' . $books . '</dl>';
 
-            $next_page = $prev_page = "";
+            $forward_links = $back_links = "";
+            $books_count = $books_count[0]['books'];
             $page = $_GET["page"];
+            $last_page = ceil($books_count / BOOKS_PER_PAGE);
 
-            if($books_count[0]["books"] > BOOKS_PER_PAGE * $page) {
-                if($page == floor($books_count[0]["books"] / BOOKS_PER_PAGE)) {
-                    $next_page = "<a href='Pages/catalogo.php?page=" . ($page+1) . "&query={$query}'>Fine</a>";
-                }
-                else {
-                    $next_page = "<a href='Pages/catalogo.php?page=" . ($page+1) . "&query={$query}'><abbr title='Successivo'>Succ</abbr></a>";
+            if($books_count > BOOKS_PER_PAGE * $page) {
+                if($page != $last_page) {
+                    $forward_links .= "<a href='Pages/catalogo.php?page=" . ($page+1) . "&query={$query}'><abbr title='Successivo'>Succ</abbr></a>";
+                    $forward_links .= "<a href='Pages/catalogo.php?page={$last_page}&query={$query}'>Fine</a>";
+                    
                 }
             }
 
             if($page > 1) {
-                if($page == 2) {
-                    $prev_page = "<a href='Pages/catalogo.php?page=" . ($page-1) . "&query={$query}'>Inizio</a>";
-                }
-                else {
-                    $prev_page = "<a href='Pages/catalogo.php?page=" . ($page-1) . "&query={$query}'><abbr title='Precedente'>Prec</abbr></a>";
-                }
+                    $back_links .= "<a href='Pages/catalogo.php?page=1&query={$query}'>Inizio</a>";
+                    $back_links .= "<a href='Pages/catalogo.php?page=" . ($page-1) . "&query={$query}'><abbr title='Precedente'>Prec</abbr></a>";
             }
 
             $page_selector = "
                 <nav class='pages-nav'>
-                    {$prev_page}
+                    {$back_links}
                     <p><p><abbr title='Corrente:'>Corr: </abbr>{$page}</p>
-                    {$next_page}
+                    {$forward_links}
                 </nav>
             ";
         }

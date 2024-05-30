@@ -83,10 +83,8 @@ function redirect_if_already_loaned_to_user($conn, $id, $inizio, $fine) {
 
       //redirect_if_already_loaned_to_user($conn);
 
-      echo (new LayoutBuilder())
+      echo (new LayoutBuilder('priv'))
         ->tag_lazy_replace('title', 'Prestito libri')
-        ->tag_lazy_replace('description', 'Pagina di noleggio di un libro della biblioteca di ReadMe')
-        ->tag_lazy_replace('keywords', 'ReadMe, biblioteca, libri, noleggi')
         ->tag_lazy_replace('menu', Pangine::navbar_list())
         // TODO sarebbe ideale avere un modo per passare le chiamate get ai link delle breadcrumbs per tornare alla pagina del libro
         ->tag_istant_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Noleggio')))

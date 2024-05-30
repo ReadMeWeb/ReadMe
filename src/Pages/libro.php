@@ -51,7 +51,7 @@ use Utils\Database;
             ->tag_lazy_replace("book-description", $book_data["description"])
             ->tag_lazy_replace(
                 "cover-image-src",
-                $book_data["cover_file_name"]
+                str_replace("'","",$book_data["cover_file_name"])
             );
         $operations = "";
         if ($_SESSION["user"]["status"] != Pangine::UNREGISTERED()) {

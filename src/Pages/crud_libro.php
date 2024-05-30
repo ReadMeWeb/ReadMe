@@ -94,7 +94,7 @@ use Pangine\utils\Validator;
             ->plain_instant_replace('Pages/libro.php', 'Pages/libro.php?id=' . $book_data['id'])
             ->tag_lazy_replace("book_title-value", $book_data["title"])
             ->tag_lazy_replace("description-value", $book_data["description"])
-            ->tag_lazy_replace("current_cover", $book_data["cover_file_name"])
+            ->tag_lazy_replace("current_cover", str_replace("'","",$book_data["cover_file_name"]))
             ->tag_lazy_replace("no_copies-value", $book_data["number_of_copies"])
             ->tag_lazy_replace("author-value", $current_author_option)
             ->tag_lazy_replace("authors_options", $authors_options)

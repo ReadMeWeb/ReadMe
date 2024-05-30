@@ -1,0 +1,223 @@
+[
+  {
+    "author": "Jane Austen",
+    "books": [
+      {
+        "title": "Orgoglio e pregiudizio",
+        "description": "Orgoglio e pregiudizio è un romanzo che esplora lo sviluppo emotivo di Elizabeth Bennet, la protagonista, che impara l'errore di fare giudizi affrettati e comincia ad apprezzare la differenza tra la bontà superficiale e quella autentica."
+      },
+      {
+        "title": "Emma",
+        "description": "Emma racconta la storia di Emma Woodhouse, una giovane donna di buona famiglia che si diletta a fare da appaiatrice amorosa per i suoi amici, con risultati spesso imprevisti e complicati."
+      },
+      {
+        "title": "Ragione e sentimento",
+        "description": "Ragione e sentimento segue le sorelle Dashwood, Elinor e Marianne, le cui prospettive e reazioni agli amori perduti contrastano tra di loro in un mondo governato da rigide regole sociali."
+      }
+    ]
+  },
+  {
+    "author": "Charles Dickens",
+    "books": [
+      {
+        "title": "Oliver Twist",
+        "description": "Oliver Twist è un romanzo che ritrae le condizioni difficili e gli ambienti sfruttatori dei poveri e degli orfani nel sottobosco londinese del XIX secolo."
+      },
+      {
+        "title": "Canto di Natale",
+        "description": "Canto di Natale racconta la storia di Ebenezer Scrooge, un vecchio avaro che cambia il suo atteggiamento egoista dopo essere stato visitato da una serie di fantasmi la vigilia di Natale."
+      },
+      {
+        "title": "Grandi speranze",
+        "description": "Grandi speranze segue la vita di Pip, un orfano elevato da uno stato di povertà a quello di ricchezza grazie a un benefattore misterioso, esplorando temi come la crescita personale e le disillusioni."
+      }
+    ]
+  },
+  {
+    "author": "Leo Tolstoy",
+    "books": [
+      {
+        "title": "Guerra e pace",
+        "description": "Guerra e pace dettaglia gli eventi dell'invasione francese della Russia e le vite di cinque famiglie aristocratiche."
+      },
+      {
+        "title": "Anna Karenina",
+        "description": "Anna Karenina è un'analisi profonda delle complessità dell'amore e della vita attraverso la storia di Anna, una donna sposata che inizia una tormentata relazione extraconiugale."
+      },
+      {
+        "title": "Resurrezione",
+        "description": "Resurrezione narra la storia di un nobile che cerca di redimersi dopo aver causato la rovina di una donna innocente, esplorando tematiche di giustizia sociale e redenzione personale."
+      }
+    ]
+  },
+  {
+    "author": "Fyodor Dostoevsky",
+    "books": [
+      {
+        "title": "Delitto e castigo",
+        "description": "Delitto e castigo segue la storia di Raskolnikov, un ex studente che pianifica e realizza l'omicidio di una vecchia usuraia per provare una teoria personale, ma poi è tormentato dal rimorso e dall'angoscia."
+      },
+      {
+        "title": "I fratelli Karamazov",
+        "description": "I fratelli Karamazov esplora temi di fede, dubbio e moralità attraverso la storia di una famiglia russa e il complesso rapporto tra il padre e i suoi figli."
+      },
+      {
+        "title": "L'idiota",
+        "description": "L'idiota racconta la storia del principe Myskin, un uomo di straordinaria innocenza e bontà, la cui purezza mette in luce la corruzione e l'ipocrisia della società russa del XIX secolo."
+      }
+    ]
+  },
+  {
+    "author": "Mark Twain",
+    "books": [
+      {
+        "title": "Le avventure di Tom Sawyer",
+        "description": "Le avventure di Tom Sawyer narra le avventure di un ragazzo ribelle e fantasioso che vive sulle rive del Mississippi, evidenziando l'innocenza e la vivacità dell'infanzia."
+      },
+      {
+        "title": "Le avventure di Huckleberry Finn",
+        "description": "Le avventure di Huckleberry Finn segue il viaggio di Huck e Jim, uno schiavo in fuga, lungo il fiume Mississippi, esplorando temi di razzismo e libertà."
+      },
+      {
+        "title": "Il principe e il povero",
+        "description": "Il principe e il povero racconta la storia di due ragazzi identici per aspetto ma di condizioni sociali opposte che si scambiano le vite, portando a una serie di eventi che rivelano le ingiustizie sociali."
+      }
+    ]
+  },
+  {
+    "author": "William Shakespeare",
+    "books": [
+      {
+        "title": "Amleto",
+        "description": "Amleto è una tragedia che segue il principe Amleto mentre cerca di vendicare l'omicidio di suo padre, esplorando temi di vendetta, corruzione e follia."
+      },
+      {
+        "title": "Romeo e Giulietta",
+        "description": "Romeo e Giulietta è una tragedia romantica che racconta la storia di due giovani amanti la cui morte riconcilia le loro famiglie rivali."
+      },
+      {
+        "title": "Macbeth",
+        "description": "Macbeth è una tragedia che esplora la brama di potere e le sue conseguenze distruttive attraverso la storia del generale scozzese Macbeth e della sua ambiziosa moglie."
+      }
+    ]
+  },
+  {
+    "author": "Herman Melville",
+    "books": [
+      {
+        "title": "Moby Dick",
+        "description": "Moby Dick racconta la caccia ossessiva del capitano Achab alla balena bianca Moby Dick, esplorando temi di vendetta, destino e la natura umana."
+      },
+      {
+        "title": "Benito Cereno",
+        "description": "Benito Cereno è un racconto che esplora temi di schiavitù, inganno e paura attraverso la storia di una nave spagnola di schiavi che viene incontrata da un capitano americano."
+      },
+      {
+        "title": "Bartleby lo scrivano",
+        "description": "Bartleby lo scrivano è un racconto che narra la storia di un misterioso scrivano che lavora per un avvocato a Wall Street e che lentamente si rifiuta di svolgere qualsiasi lavoro, dicendo solo 'Preferirei di no'."
+      }
+    ]
+  },
+  {
+    "author": "Mary Shelley",
+    "books": [
+      {
+        "title": "Frankenstein",
+        "description": "Frankenstein narra la storia di Victor Frankenstein, uno scienziato che crea una creatura vivente assemblando parti di cadaveri, esplorando temi di creazione, responsabilità e isolamento."
+      },
+      {
+        "title": "L'ultimo uomo",
+        "description": "L'ultimo uomo è un romanzo apocalittico che segue la storia di Lionel Verney in un mondo devastato da una peste mortale, esplorando temi di sopravvivenza e umanità."
+      },
+      {
+        "title": "Mathilda",
+        "description": "Mathilda è un racconto breve che esplora i temi dell'amore incestuoso e della perdita attraverso la storia di una giovane donna che è perseguitata dal segreto di suo padre."
+      }
+    ]
+  },
+  {
+    "author": "Oscar Wilde",
+    "books": [
+      {
+        "title": "Il ritratto di Dorian Gray",
+        "description": "Il ritratto di Dorian Gray segue la storia di un giovane uomo che desidera restare eternamente giovane, mentre un suo ritratto invecchia al suo posto, esplorando temi di moralità, bellezza e decadenza."
+      },
+      {
+        "title": "L'importanza di chiamarsi Ernesto",
+        "description": "L'importanza di chiamarsi Ernesto è una commedia che gioca sull'uso di false identità e giochi di parole per creare situazioni comiche, esplorando temi di verità e inganno."
+      },
+      {
+        "title": "De Profundis",
+        "description": "De Profundis è una lunga lettera scritta da Oscar Wilde durante la sua prigionia, riflettendo sulla sua vita, il suo processo e il suo amante, esplorando temi di sofferenza e redenzione."
+      }
+    ]
+  },
+  {
+    "author": "Nathaniel Hawthorne",
+    "books": [
+      {
+        "title": "La lettera scarlatta",
+        "description": "La lettera scarlatta segue la storia di Hester Prynne, una donna che viene condannata all'ostracismo nella società puritana del New England dopo aver avuto un figlio fuori dal matrimonio, esplorando temi di peccato, colpa e redenzione."
+      },
+      {
+        "title": "La casa dei sette abbaini",
+        "description": "La casa dei sette abbaini è un romanzo gotico che racconta la storia della famiglia Pyncheon e della loro maledetta dimora, esplorando temi di colpa ereditaria e redenzione."
+      },
+      {
+        "title": "Il fauno di marmo",
+        "description": "Il fauno di marmo segue le vicende di quattro viaggiatori americani a Roma e le loro interazioni con una statua antica, esplorando temi di arte, peccato e redenzione."
+      }
+    ]
+  },
+  {
+    "author": "Miguel de Cervantes",
+    "books": [
+      {
+        "title": "Don Chisciotte della Mancia",
+        "description": "Don Chisciotte della Mancia segue le avventure di un nobile che, influenzato dai romanzi cavallereschi, decide di diventare un cavaliere errante per riportare la giustizia nel mondo, esplorando temi di idealismo e realtà."
+      },
+      {
+        "title": "Novelle esemplari",
+        "description": "Novelle esemplari è una raccolta di racconti brevi che esplorano una vasta gamma di temi e personaggi, riflettendo la società spagnola del XVII secolo."
+      },
+      {
+        "title": "La Galatea",
+        "description": "La Galatea è un romanzo pastorale che racconta le storie intrecciate di pastori e pastorelle, esplorando temi di amore e natura."
+      }
+    ]
+  },
+  {
+    "author": "Franz Kafka",
+    "books": [
+      {
+        "title": "Il processo",
+        "description": "Il processo racconta la storia di Josef K., un uomo arrestato e perseguitato da un sistema giudiziario misterioso e opprimente senza mai essere informato del crimine di cui è accusato, esplorando temi di burocrazia e alienazione."
+      },
+      {
+        "title": "La metamorfosi",
+        "description": "La metamorfosi narra la storia di Gregor Samsa, un commesso viaggiatore che si sveglia una mattina trasformato in un gigantesco insetto, esplorando temi di identità, alienazione e famiglia."
+      },
+      {
+        "title": "Il castello",
+        "description": "Il castello segue la storia di K., un agrimensore che cerca di ottenere accesso al misterioso e inaccessibile castello che domina il villaggio, esplorando temi di burocrazia e isolamento."
+      }
+    ]
+  },
+  {
+    "author": "Edgar Allan Poe",
+    "books": [
+      {
+        "title": "Il corvo",
+        "description": "Il corvo è una poesia che narra la visita di un corvo parlante a un uomo in lutto per la perdita della sua amata, esplorando temi di amore, morte e disperazione."
+      },
+      {
+        "title": "I racconti del terrore",
+        "description": "I racconti del terrore è una raccolta di racconti brevi che esplorano temi di paura, colpa e follia attraverso una serie di storie macabre e inquietanti."
+      },
+      {
+        "title": "Il cuore rivelatore",
+        "description": "Il cuore rivelatore è un racconto breve che narra la storia di un uomo che uccide un anziano e cerca di nascondere il corpo, ma è tormentato dal battito del cuore della vittima, esplorando temi di colpa e paranoia."
+      }
+    ]
+  }
+]

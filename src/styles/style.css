@@ -900,10 +900,6 @@ ul#operations li:last-child {
 
 /* ------------ CATALOGO PAGE ------------ */
 
-form[role="search"] legend {
-    display: none;
-}
-
 form[role="search"] {
     margin-top: 1rem;
     margin-bottom: 1rem;

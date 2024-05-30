@@ -3,8 +3,7 @@
     <input type="hidden" name="page" value="1">
     <fieldset class="simple_form">
         <legend class="simple_form">Cerca</legend>
-        <label for="search-bar">Cerca:</label>
-        <input type="text" id="search-bar" name="query" placeholder="Nome scrittore o titolo libro" minlength="1"
+        <input aria-label="Cerca" type="text" id="search-bar" name="query" placeholder="Nome scrittore o titolo libro" minlength="1"
                maxlength="200" value="{{searched}}">
         <input type="submit" value="Cerca">
     </fieldset>

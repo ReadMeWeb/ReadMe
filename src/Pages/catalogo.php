@@ -126,7 +126,7 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
             }
 
             $page_selector = "
-                <nav class='pages-nav'>
+                <nav class='pages-nav' aria-label='Navigazione tramite pagine'>
                     {$prev_page}
                     <p><p><abbr title='Corrente:'>Corr: </abbr>{$page}</p>
                     {$next_page}

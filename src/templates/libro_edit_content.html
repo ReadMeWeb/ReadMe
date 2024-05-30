@@ -1,5 +1,5 @@
 <div class="book-page">
-    <img class="section-image" src="assets/book_covers/{{current_cover}}">
+    <img alt="Copertina del libro" class="section-image" src="assets/book_covers/{{current_cover}}">
     <section class="section-info">
         <form method="POST" action="Pages/crud_libro.php" enctype="multipart/form-data" onsubmit="return validateBookInfo({{edit}})">
             {{book_id_field}}

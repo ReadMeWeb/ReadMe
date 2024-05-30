@@ -25,7 +25,7 @@ use \Utils\Database;
             ->plain_instant_replace("<li><a href=\"{{pages-account}}\">Informazioni</a></li>", "<li>Informazioni</li>")
             ->tag_lazy_replace("pages-account-update", "Pages/account.php?update=true")
             ->tag_lazy_replace("pages-exit", "Pages/account.php?exit=true")
-            ->tag_lazy_replace("pages-form", "")
+            ->tag_lazy_replace("pages-form", "#")
             ->plain_instant_replace("<input type=\"submit\" name=\"update\" value=\"Modifica\">", "")
             ->build();
     })
@@ -55,7 +55,7 @@ use \Utils\Database;
             ->is_string(string_parser: function () use ($db): string {
                 $result = $db->execute_query("SELECT username FROM Users WHERE username = ?", $_POST["username"]);
                 if (count($result) != 0 && $_POST["username"] != $_SESSION["user"]["username"]) {
-                    return "<p><span lang='en'>Username</span> già utilizzato da un altro account.</p>";
+                    return "<span lang='en'>Username</span> già utilizzato da un altro account.";
                 }
                 return "";
             })->validate();
@@ -64,6 +64,7 @@ use \Utils\Database;
         $_SESSION["user"]["username"] = $_POST["username"];
         $_SESSION["user"]["password"] = $_POST["password"];
 
+        Pangine::set_general_message($_POST["username"] . " il suo account è stato aggiornato con successo.","succ");
         		Pangine::redirect("Pages/account.php");
     }, caller_parameter_name: "update", needs_database: true, validator: (new Validator("Pages/account.php?update=true"))
         ->add_parameter("username")

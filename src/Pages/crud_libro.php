@@ -246,6 +246,7 @@ use Pangine\utils\Validator;
         )
         ->tag_lazy_replace("book_title", $book["title"])
         ->tag_lazy_replace("book_id", $book["id"])
+        ->plain_lazy_replace("#content","#book-page-delete")
         ->build();
 }, "elimina", needs_database: true)
 ->add_renderer_POST(function(Database $db){

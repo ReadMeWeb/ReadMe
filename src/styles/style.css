@@ -23,7 +23,7 @@
         --mobileNavLinkBorder: #419f86;
         --linkColor: #348c8c;
         --visitedLinkColor: #4b5d58;
-        --logoUrl: url("../assets/readme-logo-black-cropped.png");
+        --logoUrl: url("../assets/readme-logo-black-cropped.webp");
     }
 }
 
@@ -38,7 +38,7 @@
         --mobileNavLinkBorder: #6e968c;
         --linkColor: #5BE6E6;
         --visitedLinkColor: #c4edff;
-        --logoUrl: url("../assets/readme-logo-white-cropped.png");
+        --logoUrl: url("../assets/readme-logo-white-cropped.webp");
     }
 }
 
@@ -839,12 +839,15 @@ ul#operations li:last-child {
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
     transition-duration: 0.4s;
     cursor: pointer;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
 }
 
 .book-page input[type="submit"]:hover {
@@ -879,7 +882,7 @@ ul#operations li:last-child {
     width: 100% !important;
 }
 
-.book-page input, .book-page select, .book-page textarea {
+.book-page select, .book-page textarea {
     width: 90%;
     height: 40px;
     padding: 10px;
@@ -894,9 +897,6 @@ ul#operations li:last-child {
     height: 400px;
 }
 
-.book-page input[type="submit"] {
-    width: auto;
-}
 
 /* ------------ CATALOGO PAGE ------------ */
 

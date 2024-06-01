@@ -48,6 +48,8 @@ function redirect_if_already_loaned_to_user($conn, $id, $inizio, $fine) {
   ->add_renderer_POST(
     function ($conn) {
 
+      $_POST['inizio'] = (new DateTime())->format('Y-m-d');
+
       stream(
         _new_validator('Pages/404.php'),
         _add_parametre('id', _string(string_parser: fn ($i) => $conn->execute_query('select count(*) = 1 as b from Books where id = ?', $i)[0]['b'] == 1 ? '' : 'Il libro non è stato trovato'))

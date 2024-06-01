@@ -738,6 +738,14 @@ input, select {
     border: 1px solid black;
 }
 
+/* --- TODO: FARE FUNZIONARE STO HOVER --- */
+input:hover{
+    -moz-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -o-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    -webkit-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+    box-shadow: 0 0 0.16rem 0 var(--primaryColor);
+}
+
 .errorMessage {
     margin-bottom: 1rem;
     color: var(--errorMessageColor) !important;

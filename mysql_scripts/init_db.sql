@@ -41,9 +41,13 @@ CREATE TABLE Loans
 );
 
 INSERT INTO Users (username,password,status) VALUES ('admin','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','ADMIN');
+# pwd: admin
 INSERT INTO Users (username,password,status) VALUES ('user','04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb','USER');
+# pwd: user
 INSERT INTO Users (username,password,status) VALUES ('user1','0a041b9462caa4a31bac3567e0b6e6fd9100787db2ab433d96f6d178cabfce90','USER');
+# pwd: user1
 INSERT INTO Users (username,password,status) VALUES ('user2','6025d18fe48abd45168528f18a82e265dd98d421a7084aa09f61b341703901a3','USER');
+# pwd: user2
 
 INSERT INTO Authors (id, name_surname) VALUES (1, 'Jane Austen');
 INSERT INTO Authors (id, name_surname) VALUES (2, 'Charles Dickens');
@@ -98,9 +102,30 @@ INSERT INTO Books (title, description, cover_file_name, number_of_copies, author
 INSERT INTO Books (title, description, cover_file_name, number_of_copies, author_id) VALUES ('I racconti del terrore', 'I racconti del terrore è una raccolta di racconti brevi che esplorano temi di paura, colpa e follia attraverso una serie di storie macabre e inquietanti.', 'I_racconti_del_terrore.jpg', 11, 13);
 INSERT INTO Books (title, description, cover_file_name, number_of_copies, author_id) VALUES ('Il cuore rivelatore', 'Il cuore rivelatore è un racconto breve che narra la storia di un uomo che uccide un anziano e cerca di nascondere il corpo, ma è tormentato dal battito del cuore della vittima, esplorando temi di colpa e paranoia.', 'Il_cuore_rivelatore.jpg', 8, 13);
 
-INSERT INTO  Loans (id, book_id, user_username, loan_start_date, loan_expiration_date) VALUES (1, 1, 'user', '2024/04/18', '2024/05/09');
-INSERT INTO  Loans (id, book_id, user_username, loan_start_date, loan_expiration_date) VALUES (2, 2, 'user', '2024/04/28', '2024/06/24');
-INSERT INTO  Loans (id, book_id, user_username, loan_start_date, loan_expiration_date) VALUES (3, 1, 'user', '2024/04/24', '2024/05/25');
-INSERT INTO  Loans (id, book_id, user_username, loan_start_date, loan_expiration_date) VALUES (4, 5, 'user', '2024/03/05', '2024/04/30');
-INSERT INTO  Loans (id, book_id, user_username, loan_start_date, loan_expiration_date) VALUES (5, 10, 'user', '2024/04/10', '2024/05/07');
-INSERT INTO  Loans (id, book_id, user_username, loan_start_date, loan_expiration_date) VALUES (6, 3, 'user', '2024/03/14', '2024/06/19');
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (15, 'user1', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (20, 'user1', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (7, 'user1', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (2, 'user1', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (8, 'user1', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (9, 'user1', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (23, 'user1', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (18, 'user1', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (1, 'user1', NOW(), NOW() + INTERVAL 30 DAY);
+
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (12, 'user2', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (25, 'user2', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (3, 'user2', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (19, 'user2', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (26, 'user2', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (13, 'user2', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (10, 'user2', NOW(), NOW() + INTERVAL 30 DAY);
+
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (1, 'user', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (2, 'user', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (3, 'user', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (4, 'user', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (5, 'user', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (6, 'user', NOW(), NOW() + INTERVAL 30 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (7, 'user', NOW(), NOW() + INTERVAL 7 DAY);
+INSERT INTO Loans (book_id, user_username, loan_start_date, loan_expiration_date) VALUES (8, 'user', NOW(), NOW() + INTERVAL 7 DAY);
+

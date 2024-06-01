@@ -194,7 +194,6 @@ class Pangine
 
     public static function navbar_list(): string
     {
-        $selectedLink = strtok($_SERVER['REQUEST_URI'], '?');
         $navLinks = "";
         foreach (self::$pages as $page_title => $page_metadata) {
             $link = $page_metadata["path"];
@@ -202,7 +201,7 @@ class Pangine
             $allowedStatus = $page_metadata["privileges"];
             $show_in_navbar = $page_metadata["show_in_navbar"];
             if (in_array($_SESSION["user"]["status"], $allowedStatus) && $show_in_navbar) {
-                if ($selectedLink == $link && !str_contains($_SERVER['REQUEST_URI'], '?')) {
+                if ($_SERVER['REQUEST_URI'] == (self::path(). $link) ) {
                     $navLinks .= "<li class='selectedNavLink'>" . $pageName . "</li>";
                 } else {
                     $navLinks .= "<li><a href='" . $link . "'>" . $pageName . "</a></li>";

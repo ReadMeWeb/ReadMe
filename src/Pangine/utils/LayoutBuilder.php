@@ -41,6 +41,7 @@ class LayoutBuilder
             unset($_SESSION["general-message"]);
         }
         $this->base_layout = str_replace("{{general-message}}", "", $this->base_layout);
+        $this->base_layout = str_replace("{{page_path}}", $_SERVER['REQUEST_URI'], $this->base_layout);
         if (strpos($this->base_layout, "{{")) {
             $misses = [];
             preg_match_all('/{{(.*?)}}/', $this->base_layout, $misses);

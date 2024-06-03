@@ -255,7 +255,7 @@ use Pangine\utils\Validator;
     $book_data = $db->execute_query($book_query, $_POST['id']);
     if(count($book_data) != 1){
         Pangine::set_general_message("Non è stato possbile trovare il libro richiesto, riprovare (ERR_BOOK_07)");
-        		Pangine::redirect("Pages/catalogo.php?page=1&query=");
+        		Pangine::redirect("Pages/catalogo.php");
     }
     $file_name = $book_data[0]["cover_file_name"];
 
@@ -278,6 +278,6 @@ use Pangine\utils\Validator;
 
     $db->get_connection()->commit();
     Pangine::set_general_message("Libro eliminato con successo","success");
-    		Pangine::redirect("Pages/catalogo.php?page=1&query=");
+    		Pangine::redirect("Pages/catalogo.php");
 }, "elimina", needs_database: true)
 ->execute();

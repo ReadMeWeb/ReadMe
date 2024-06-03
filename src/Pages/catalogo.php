@@ -29,66 +29,60 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
 
         $content = file_get_contents(__DIR__ . "/../templates/catalogo_content.html");
 
-        $query = trim($_GET['query']);
+        $query = isset($_GET["query"])? $_GET["query"] : "";
+        $page_n = isset($_GET["page"]) ? $_GET["page"] : 1;
 
-        (new Validator("Pages/404.php"))
-        ->add_parameter("page")
-        ->is_numeric(
-            value_parser: function (int $page_n) use ($db, &$res, $query, &$books_count) {
+        if($page_n < 1) 
+            Pangine::redirect("Pages/404.php");
+        
 
-                if($page_n < 1) 
-                    return "Pagina richiesta inesistente";
+        $escaped_query = addcslashes($query, "%_\\");
+        $final_query = "%";
 
-                $escaped_query = addcslashes($query, "%_\\");
-                $final_query = "%";
+        foreach (str_split($escaped_query) as $char) {
+            $final_query .= ($char . "%");
+        }
 
-                foreach (str_split($escaped_query) as $char) {
-                    $final_query .= ($char . "%");
-                }
+        $books_count = $db->execute_query(
+            "SELECT COUNT(*) AS books FROM Books 
+            JOIN Authors ON Authors.id = Books.author_id 
+            WHERE  name_surname LIKE ? OR title LIKE ?",
+            $final_query,
+            $final_query
+        );
 
-                $books_count = $db->execute_query(
-                    "SELECT COUNT(*) AS books FROM Books 
-                    JOIN Authors ON Authors.id = Books.author_id 
-                    WHERE  name_surname LIKE ? OR title LIKE ?",
-                    $final_query,
-                    $final_query
-                );
+        $res = $db->execute_query(
+            "SELECT Books.id, title, cover_file_name, name_surname, (number_of_copies - COALESCE(loans, 0)) AS number_of_copies
+            FROM 
+            (
+                SELECT Books.id, title, cover_file_name, name_surname, number_of_copies
+                FROM Authors 
+                JOIN Books 
+                ON Authors.id = Books.author_id 
+                WHERE name_surname LIKE ? OR title LIKE ?
+            ) AS Books 
+            LEFT JOIN 
+            (
+                SELECT book_id, count(book_id) AS loans 
+                FROM Loans 
+                WHERE loan_expiration_date >= CURRENT_DATE() AND loan_start_date <= CURRENT_DATE()
+                GROUP BY book_id
+            ) AS Loans
+            ON Books.id = book_id
+            LIMIT ?, ?",
+            $final_query,
+            $final_query,
+            ($page_n-1)  * BOOKS_PER_PAGE,
+            BOOKS_PER_PAGE 
+        );
 
-                $res = $db->execute_query(
-                    "SELECT Books.id, title, cover_file_name, name_surname, (number_of_copies - COALESCE(loans, 0)) AS number_of_copies
-                    FROM 
-                    (
-                        SELECT Books.id, title, cover_file_name, name_surname, number_of_copies
-                        FROM Authors 
-                        JOIN Books 
-                        ON Authors.id = Books.author_id 
-                        WHERE name_surname LIKE ? OR title LIKE ?
-                    ) AS Books 
-                    LEFT JOIN 
-                    (
-                        SELECT book_id, count(book_id) AS loans 
-                        FROM Loans 
-                        WHERE loan_expiration_date >= CURRENT_DATE() AND loan_start_date <= CURRENT_DATE()
-                        GROUP BY book_id
-                    ) AS Loans
-                    ON Books.id = book_id
-                    LIMIT ?, ?",
-                    $final_query,
-                    $final_query,
-                    ($page_n-1)  * BOOKS_PER_PAGE,
-                    BOOKS_PER_PAGE 
-                );
-
-                if(empty($res) && $page_n > 1)
-                    return "Pagina richiesta inesistente";
-                return "";
-                
-            }
-        )->validate();
+        if(empty($res) && $page_n > 1) 
+            Pangine::redirect("Pages/404.php");
 
         $books = "";
         $page_selector = "";
         $res_number = "Tutti i libri.";
+        $books_count = $books_count[0]['books'];
 
         if(!empty($query))
             $res_number = $books_count . " libri per la ricerca: '$query'";
@@ -106,27 +100,27 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
             $books = '<dl id="books-container">' . $books . '</dl>';
 
             $forward_links = $back_links = "";
-            $books_count = $books_count[0]['books'];
-            $page = $_GET["page"];
             $last_page = ceil($books_count / BOOKS_PER_PAGE);
 
-            if($books_count > BOOKS_PER_PAGE * $page) {
-                if($page != $last_page) {
-                    $forward_links .= "<a href='Pages/catalogo.php?page=" . ($page+1) . "&query={$query}'><abbr title='Successivo'>Succ</abbr></a>";
-                    $forward_links .= "<a href='Pages/catalogo.php?page={$last_page}&query={$query}'>Fine</a>";
-                    
-                }
+            if($page_n != $last_page) {
+                $next_page = $page_n + 1;
+
+                $forward_links .= "<a href='Pages/catalogo.php?page={$next_page}&query={$query}'><abbr title='Successivo'>Succ</abbr></a>";
+                $forward_links .= "<a href='Pages/catalogo.php?page={$last_page}&query={$query}'>Fine</a>";
+                
             }
 
-            if($page > 1) {
-                    $back_links .= "<a href='Pages/catalogo.php?page=1&query={$query}'>Inizio</a>";
-                    $back_links .= "<a href='Pages/catalogo.php?page=" . ($page-1) . "&query={$query}'><abbr title='Precedente'>Prec</abbr></a>";
+            if($page_n > 1) {
+                $prev_page = $page_n - 1;
+
+                $back_links .= "<a href='Pages/catalogo.php?page=1&query={$query}'>Inizio</a>";
+                $back_links .= "<a href='Pages/catalogo.php?page={$prev_page}&query={$query}'><abbr title='Precedente'>Prec</abbr></a>";
             }
 
             $page_selector = "
                 <nav class='pages-nav' aria-label='Navigazione tramite pagine'>
                     {$back_links}
-                    <p><p><abbr title='Corrente:'>Corr: </abbr>{$page}</p>
+                    <p><abbr title='Corrente:'>Corr: </abbr>{$page_n}</p>
                     {$forward_links}
                 </nav>
             ";
@@ -140,14 +134,11 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
             ->tag_lazy_replace("menu", Pangine::navbar_list())
             ->tag_lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Catalogo")))
             ->tag_istant_replace("content", $content)
-            ->tag_istant_replace("searched", $query)
-            ->tag_istant_replace("results-number", $res_number)
-            ->tag_istant_replace("books", $books)
+            ->tag_lazy_replace("searched", $query)
+            ->tag_lazy_replace("results-number", $res_number)
+            ->tag_lazy_replace("books", $books)
             ->tag_lazy_replace("page-selector", $page_selector)
             ->build();
     },
-        needs_database: true,
-        validator: (new Validator("Pages/404.php"))
-            ->add_parameter("query")
-            ->is_string(0, 200)
+        needs_database: true
 )->execute();

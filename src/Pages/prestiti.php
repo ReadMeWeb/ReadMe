@@ -9,6 +9,8 @@ use \Pangine\utils\LayoutBuilder;
 use Pangine\utils\Validator;
 use \Utils\Database;
 
+define("LOANS_PER_PAGE", 6);
+
 function get_loan_card(string $title, string $start_date, string $end_date, string $status): string {
     return "<li> 
             <article class='loan-card'>
@@ -39,33 +41,47 @@ function get_loan_card(string $title, string $start_date, string $end_date, stri
         $where_cond = "";
         $order_field = "";
 
-        if( $_GET["order"] == "start") {
+        $page_n = isset($_GET["page"])? $_GET["page"] : 1;
+        
+        if($page_n < 1) 
+            Pangine::redirect("Pages/404.php"); 
+
+        if( !isset($_GET["order"]) || $_GET["order"] == "start") {
+            $_GET["order"] = "start";
             $order_field = "loan_start_date";
         }
         else {
             $order_field = "loan_expiration_date";
         }
 
-        if($_GET["status"] != "all") {
+        if(isset($_GET["status"]) && $_GET["status"] != "all") {
             if($_GET["status"] == "expired") {
                 $where_cond = "AND loan_expiration_date < CURRENT_DATE()";
             }
             else {
                 $where_cond = "AND loan_expiration_date > CURRENT_DATE()";
             }
-        } 
+        }
+        else {
+            $_GET["status"] = "all";
+        }
                 
         $query = " SELECT *, IF(loan_expiration_date < CURRENT_DATE(), 'scaduto', 'attivo') AS status FROM Loans JOIN Books on Books.id = book_id
             WHERE user_username = ? {$where_cond}
-            ORDER BY  {$order_field} DESC";
-        
-        $res = $db->execute_query($query, $_SESSION["user"]["username"]);
+            ORDER BY  {$order_field} DESC 
+            LIMIT ?, ?";
+        $res = $db->execute_query($query, $_SESSION["user"]["username"], LOANS_PER_PAGE*($page_n-1), LOANS_PER_PAGE);
        
+        $query = "SELECT count(*) AS loans FROM Loans WHERE user_username = ? {$where_cond}";
+        $loans_count = $db->execute_query($query, $_SESSION["user"]["username"]);
 
+        if(empty($res) and $page_n > 1)
+            Pangine::redirect("Pages/404.php");
 
-        $loans = "";
+        $loans = $page_selector = "";
+
         if(!empty($res)) {
-            $loans .= "<ol>";
+            $loans .= "<ol id='loans-list'>";
             foreach($res as $loan)  {
                     $loans .= get_loan_card(
                     $loan["title"], 
@@ -74,37 +90,62 @@ function get_loan_card(string $title, string $start_date, string $end_date, stri
                     $loan["status"]);                
             }
             $loans .= "</ol>";
+
+            $forward_links = $back_links = "";
+            $loans_count = $loans_count[0]['loans'];
+            $last_page = ceil($loans_count / LOANS_PER_PAGE);
+
+            if($page_n != $last_page) {
+
+                $next_page = $page_n +1;
+
+                $forward_links .= "<a href='Pages/prestiti.php?page={$next_page}&order={$_GET['order']}&status={$_GET['status']}'><abbr title='Successivo'>Succ</abbr></a>";
+                $forward_links .= "<a href='Pages/prestiti.php?page={$last_page}&order={$_GET['order']}&status={$_GET['status']}'>Fine</a>";;
+                
+            }
+
+            if($page_n > 1) {
+                $prev_page = $page_n -1;
+                
+                $back_links = "<a href='Pages/prestiti.php?page=1&order={$_GET['order']}&status={$_GET['status']}'>Inizio</a>";
+                $back_links .= "<a href='Pages/prestiti.php?page={$prev_page}&order={$_GET['order']}&status={$_GET['status']}'><abbr title='Precedente'>Prec</abbr></a>";
+            }
+
+            $page_selector = "
+                <nav class='pages-nav' aria-label='Navigazione tramite pagine'>
+                    {$back_links}
+                    <p><abbr title='Corrente:'>Corr: </abbr>{$page_n}</p>
+                    {$forward_links}
+                </nav>";
         }
         else {
-            $loans = "<p>Non hai ancora effettuato alcun prestito.</p>";
+            switch($_GET["status"]) {
+                case "all":
+                    $loans = "<p>Non hai ancora effettuato alcun prestito.</p>";
+                    break;
+                case "expired":
+                    $loans = "<p>Non possiedi alcun prestito scaduto.</p>";
+                    break;
+                case "active":
+                    $loans = "<p>Non possiedi alcun prestito attivo.</p>";
+                    break;
+            }
         }
 
-        echo (new LayoutBuilder())
+        echo (new LayoutBuilder("priv"))
             ->tag_lazy_replace("title", "Prestiti")
-            ->tag_lazy_replace("description", "I tuoi prestiti")
-            ->tag_lazy_replace("keywords", "Prestiti")
             ->tag_lazy_replace("menu", Pangine::navbar_list())
             ->tag_lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Prestiti")))
             ->tag_istant_replace("content", $content)
-            ->tag_istant_replace("start", $_GET["order"] == "start" ? "selected" : "")
-            ->tag_istant_replace("end", $_GET["order"] == "end" ? "selected" : "")
-            ->tag_istant_replace("expired", $_GET["status"] == "expired" ? "selected" : "")
-            ->tag_istant_replace("active", $_GET["status"] == "active" ? "selected" : "")
-            ->tag_istant_replace("all", $_GET["status"] == "all" ? "selected" : "")
-            ->tag_istant_replace("loans", $loans)
+            ->tag_lazy_replace("start", $_GET["order"] == "start" ? "selected" : "")
+            ->tag_lazy_replace("end", $_GET["order"] == "end" ? "selected" : "")
+            ->tag_lazy_replace("expired", $_GET["status"] == "expired" ? "selected" : "")
+            ->tag_lazy_replace("active", $_GET["status"] == "active" ? "selected" : "")
+            ->tag_lazy_replace("all", $_GET["status"] == "all" ? "selected" : "")
+            ->tag_lazy_replace("loans", $loans)
+            ->tag_lazy_replace("page-selector", $page_selector)
             ->build();
         
     },
-    needs_database: true,
-    validator: (new Validator("Pages/404.php"))
-        ->add_parameter("status")->is_string(string_parser: function (string $status) {
-            if($status == "active" || $status == "expired" || $status = "all") 
-                return "";
-            return "Filtro dei prestiti non valido";
-        })
-        ->add_parameter("order")->is_string(string_parser: function(string $order) {
-            if($order == "start" || $order="end") 
-                return "";
-            return "Ordinamento dei prestiti non valido";
-        }))
-->execute();
+    needs_database: true
+    )->execute();

@@ -88,7 +88,7 @@ class Pangine
                 "show_in_navbar" => true,
             ),
             "Prestiti" => array(
-                "path" => "Pages/prestiti.php?order=start&status=all",
+                "path" => "Pages/prestiti.php",
                 "privileges" => array(self::USER()),
                 "show_in_navbar" => true,
             )

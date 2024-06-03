@@ -242,6 +242,10 @@ h2 {
         font-size: calc(var(--textSize) - 0.1rem);
     }
 
+    /* --- PRESTITI ---- */ 
+    #loans-list {
+        grid-template-columns: 1fr;
+    }
 }
 
 /*##############################
@@ -321,6 +325,11 @@ h2 {
 
     #books-container dd {
         font-size: calc(var(--textSize) - 0.3rem);
+    }
+
+    /* --- PRESTITI ---- */ 
+    #loans-list {
+        grid-template-columns: 1fr 1fr;
     }
 }
 
@@ -409,6 +418,11 @@ h2 {
     #books-container dd {
         font-size: calc(var(--textSize) - 0.3rem);
     }
+
+    /* --- PRESTITI ---- */ 
+    #loans-list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 
 /*##############################
@@ -488,6 +502,11 @@ h2 {
 
     #books-container dd {
         font-size: calc(var(--textSize) - 0.3rem);
+    }
+
+    /* --- PRESTITI ---- */ 
+    #loans-list {
+        grid-template-columns: 1fr 1fr 1fr;
     }
 }
 
@@ -1008,4 +1027,29 @@ main div.index-card:last-child p {
     box-sizing: border-box;
     width: 80%;
     margin: 1% 10%
+}
+
+
+#loans-list {
+    display: grid;
+    row-gap: 1rem;
+    list-style: none;
+    width: 100%;
+}
+
+.loan-card dt, .loan-card dd {
+    display: inline;
+}
+
+.loan-card dt {
+    font-weight: bold;
+}
+
+.loan-card {
+    width: 70%;
+    margin: auto;
+    border: 1px solid var(--primaryColor);
+    border-radius: 5px;
+    text-align: center; 
+    padding: 1rem;
 }

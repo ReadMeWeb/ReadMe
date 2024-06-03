@@ -1061,3 +1061,48 @@ main div.index-card:last-child p {
     text-align: center;
     padding: 1rem;
 }
+
+/** ------------ CHI SIAMO ------------ */
+
+.chi-siamo-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.chi-siamo-page h1 span[lang="en"] {
+    color: var(--primaryColor);
+    text-align: center;
+    padding: 20px 0;
+}
+.chi-siamo-page article {
+    color: var(--textColor);
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    width: 60%;
+}
+.chi-siamo-page article h2 {
+    color: var(--secondaryColor);
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+.chi-siamo-page article p {
+    text-align: justify;
+}
+.chi-siamo-page article dl {
+    margin-top: 20px;
+}
+.chi-siamo-page article dl dt {
+    font-weight: bold;
+    color: var(--primaryColor);
+}
+.chi-siamo-page article dl dd {
+    margin-bottom: 10px;
+}
+.chi-siamo-page article address {
+    font-style: italic;
+    text-align: center;
+    margin-top: 10px;
+}

@@ -34,11 +34,11 @@ use Pangine\utils\Validator;
                     "Nuovo Libro",
                 ])
             )
-            ->plain_instant_replace("<main id=\"content\">", "<main id=\"content\" class=\"book-page\">")
             ->tag_lazy_replace("book_title-value", "")
             ->tag_lazy_replace("description-value", "")
             ->tag_lazy_replace("current_cover", "")
             ->tag_lazy_replace("author-value", "")
+            ->tag_lazy_replace("author-new-value", "")
             ->tag_lazy_replace("no_copies-value", "1")
             ->tag_lazy_replace("authors_options", $authors_options)
             ->tag_lazy_replace("submit-value", "Aggiungi")
@@ -51,6 +51,7 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("description-message", "")
             ->tag_lazy_replace("no_copies-message", "")
             ->tag_lazy_replace("author-message", "")
+            ->tag_lazy_replace("author-new-message", "")
             ->tag_lazy_replace("cover-message", "")
             ->build();
     }, needs_database: true
@@ -89,7 +90,6 @@ use Pangine\utils\Validator;
 
         echo (new LayoutBuilder("priv"))
             ->tag_istant_replace("content", $content)
-            ->plain_instant_replace("<main id=\"content\">", "<main id=\"content\" class=\"book-page\">")
             ->tag_lazy_replace("title", "Modifica Libro")
             ->tag_lazy_replace("menu", Pangine::navbar_list())
             ->tag_istant_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Modifica')))
@@ -99,6 +99,7 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("current_cover", str_replace("'","",$book_data["cover_file_name"]))
             ->tag_lazy_replace("no_copies-value", $book_data["number_of_copies"])
             ->tag_lazy_replace("author-value", $current_author_option)
+            ->tag_lazy_replace("author-new-value", "")
             ->tag_lazy_replace("authors_options", $authors_options)
             ->tag_lazy_replace("submit-value", "Aggiorna")
             ->tag_lazy_replace("submit-name", "update")
@@ -110,6 +111,7 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("description-message", "")
             ->tag_lazy_replace("no_copies-message", "")
             ->tag_lazy_replace("author-message", "")
+            ->tag_lazy_replace("author-new-message", "")
             ->tag_lazy_replace("cover-message", "")
             ->build();
     },
@@ -131,15 +133,21 @@ use Pangine\utils\Validator;
         })
         ->add_parameter("no_copies")
         ->is_numeric(min_val: 1)
-        ->add_parameter("author")
-        ->is_string(string_parser: function(string $author_id) use ($db) {
-            $author_query =
-                "SELECT name_surname FROM Authors WHERE id = ?";
-            $author_data = $db->execute_query($author_query, $author_id);
-            return count($author_data) == 0 ? "L'autore o l'autrice selezionato/a non esiste." : "";
+        ->add_parameter("author-new")
+        ->is_string(string_parser: function(string $author) use ($db) {
+            if($author != "") {
+                strlen($author) < 4 ? "Il nome dell'autore o dell'autrice deve essere lungo almeno 4 caratteri." : "";
+            }else{
+                (new Validator("Pages/crud_libro.php?id={$_POST['book_id']}&modifica"))
+                ->add_parameter("author")
+                ->is_string(string_parser: function(string $author_id) use ($db) {
+                    $author_query =
+                        "SELECT name_surname FROM Authors WHERE id = ?";
+                    $author_data = $db->execute_query($author_query, $author_id);
+                    return count($author_data) == 0 ? "L'autore o l'autrice selezionato/a non esiste." : "";
+                })->validate();
+            }
         })
-        ->add_parameter("input-cover")
-        ->is_file(allowed_extensions: ["jpg", "jpeg", "png"])
         ->validate();
 
     if($_FILES["cover"]["tmp_name"] != ""){
@@ -151,19 +159,37 @@ use Pangine\utils\Validator;
         }
     }
 
+    $last_id = 0;
+    $new_author = false;
+
+    if(isset($_POST['author-new']) && $_POST['author-new'] != ""){
+        $new_author = true;
+        $stmt = $db->get_connection()->prepare("INSERT INTO Authors (name_surname) VALUES (?)");
+        $stmt->bind_param('s', $_POST['author-new']);
+        if(!$stmt->execute()){
+        $db->get_connection()->rollback();
+            Pangine::set_general_message("Errore durante l'inserimento del libro, riprovare (ERR_BOOK_10)");
+          		Pangine::redirect("Pages/crud_libro.php?id={$_POST['book_id']}&modifica");
+        }
+        $last_id = $db->get_connection()->insert_id;
+    }
+
+    $author = $new_author ? $last_id : $_POST['author'];
     $result = $db->execute_query(
         "UPDATE Books SET title = ?, description = ?, author_id = ?, number_of_copies = ? WHERE id = ?",
         $_POST["book_title"],
         $_POST["description"],
-        $_POST["author"],
+        $author,
         $_POST["no_copies"],
         $_POST["book_id"]
     );
     if(!$result){
+        $db->get_connection()->rollback();
         Pangine::set_general_message("Errore durante l'aggiornamento del libro, riprovare (ERR_BOOK_02)");
         		Pangine::redirect("Pages/crud_libro.php?id={$_POST['book_id']}&modifica");
     }
 
+    $db->get_connection()->commit();
     Pangine::set_general_message("Libro aggiornato con successo","success");
     		Pangine::redirect("Pages/libro.php?id={$_POST["book_id"]}");
 }, "update", needs_database: true)
@@ -183,20 +209,45 @@ use Pangine\utils\Validator;
                 "jpg",
                 "png",
             ])
-            ->add_parameter("author")
-            ->is_string(string_parser: function(string $author_id) use ($db) {
-                $author_query =
-                    "SELECT name_surname FROM Authors WHERE id = ?";
-                $author_data = $db->execute_query($author_query, $author_id);
-                return count($author_data) == 0 ? "L'autore o l'autrice selezionato/a non esiste." : "";
-            }
-        )->validate();
+            ->add_parameter("author-new")
+            ->is_string(string_parser: function(string $author) use ($db) {
+                if($author != "") {
+                    strlen($author) < 4 ? "Il nome dell'autore o dell'autrice deve essere lungo almeno 4 caratteri." : "";
+                }else{
+                    (new Validator("Pages/crud_libro.php?create"))
+                    ->add_parameter("author")
+                    ->is_string(string_parser: function(string $author_id) use ($db) {
+                        $author_query =
+                            "SELECT name_surname FROM Authors WHERE id = ?";
+                        $author_data = $db->execute_query($author_query, $author_id);
+                        return count($author_data) == 0 ? "L'autore o l'autrice selezionato/a non esiste." : "";
+                    })->validate();
+                }
+            })->validate();
 
         $db->get_connection()->begin_transaction();
         $tmp_name = "tmp.jpeg";
+        $last_id = 0;
+        $new_author = false;
+
+        if(isset($_POST['author-new']) && $_POST['author-new'] != ""){
+            $new_author = true;
+            $stmt = $db->get_connection()->prepare("INSERT INTO Authors (name_surname) VALUES (?)");
+            $stmt->bind_param('s', $_POST['author-new']);
+            if(!$stmt->execute()){
+                $db->get_connection()->rollback();
+                Pangine::set_general_message("Errore durante l'inserimento del libro, riprovare (ERR_BOOK_10)");
+              		Pangine::redirect("Pages/crud_libro.php?create");
+            }
+            $last_id = $db->get_connection()->insert_id;
+        }
+
+
+        $author = $new_author ? $last_id : $_POST['author'];
         $stmt = $db->get_connection()->prepare("INSERT INTO Books (title, description, cover_file_name, author_id, number_of_copies) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param('sssii', $_POST['book_title'], $_POST['description'], $tmp_name, $_POST['author'], $_POST['no_copies']);
+        $stmt->bind_param('sssii', $_POST['book_title'], $_POST['description'], $tmp_name, $author, $_POST['no_copies']);
         if(!$stmt->execute()){
+            $db->get_connection()->rollback();
             Pangine::set_general_message("Errore durante l'inserimento del libro, riprovare (ERR_BOOK_03)");
             		Pangine::redirect("Pages/crud_libro.php?create");
         }
@@ -267,7 +318,7 @@ use Pangine\utils\Validator;
     $stmt = $db->get_connection()->prepare("DELETE FROM Books WHERE id = ?");
     $stmt->bind_param('i', $_POST['id']);
     if(!$stmt->execute()){
-        Pangine::set_general_message("Non è stato possbile eliminare il libro, riprovare (ERR_BOOK_07)");
+        Pangine::set_general_message("Non è stato possbile eliminare il libro, riprovare (ERR_BOOK_08)");
         		Pangine::redirect("Pages/libro.php?id='{$_POST['id']}'");
     }
 
@@ -275,7 +326,7 @@ use Pangine\utils\Validator;
         $deleted = unlink("../assets/book_covers/" . $file_name);
         if(!$deleted){
             $db->get_connection()->rollback();
-            Pangine::set_general_message("Non è stato possbile eliminare il file collegato al libro, riprovare (ERR_BOOK_08)");
+            Pangine::set_general_message("Non è stato possbile eliminare il file collegato al libro, riprovare (ERR_BOOK_09)");
             		Pangine::redirect("Pages/libro.php?id='{$_POST['id']}'");
         }
     }

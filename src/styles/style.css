@@ -909,9 +909,14 @@ ul#operations li:last-child {
     width: 100% !important;
 }
 
+#author-input {
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+}
+
 .book-page select, .book-page textarea {
     width: 90%;
-    height: 40px;
     padding: 10px;
     border: 1px solid var(--primaryColor);
     border-radius: 5px;
@@ -924,6 +929,9 @@ ul#operations li:last-child {
     height: 400px;
 }
 
+.book-page p {
+    width: 90%
+}
 
 /* ------------ CATALOGO PAGE ------------ */
 

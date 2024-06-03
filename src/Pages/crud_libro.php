@@ -34,6 +34,7 @@ use Pangine\utils\Validator;
                     "Nuovo Libro",
                 ])
             )
+            ->plain_instant_replace("<main id=\"content\">", "<main id=\"content\" class=\"book-page\">")
             ->tag_lazy_replace("book_title-value", "")
             ->tag_lazy_replace("description-value", "")
             ->tag_lazy_replace("current_cover", "")
@@ -88,6 +89,7 @@ use Pangine\utils\Validator;
 
         echo (new LayoutBuilder("priv"))
             ->tag_istant_replace("content", $content)
+            ->plain_instant_replace("<main id=\"content\">", "<main id=\"content\" class=\"book-page\">")
             ->tag_lazy_replace("title", "Modifica Libro")
             ->tag_lazy_replace("menu", Pangine::navbar_list())
             ->tag_istant_replace('breadcrumbs', Pangine::breadcrumbs_generator(array('Home', 'Catalogo', 'Libro', 'Modifica')))
@@ -117,9 +119,9 @@ use Pangine\utils\Validator;
 ->add_renderer_POST(function(Database $db){
     (new Validator("Pages/crud_libro.php?id={$_POST['book_id']}&modifica"))
         ->add_parameter("book_title")
-        ->is_string()
+        ->is_string(min_length: 4)
         ->add_parameter("description")
-        ->is_string()
+        ->is_string(min_length: 20)
         ->add_parameter("book_id")
         ->is_numeric(value_parser:function(int $book_id) use ($db) {
             $book_query =
@@ -135,8 +137,10 @@ use Pangine\utils\Validator;
                 "SELECT name_surname FROM Authors WHERE id = ?";
             $author_data = $db->execute_query($author_query, $author_id);
             return count($author_data) == 0 ? "L'autore o l'autrice selezionato/a non esiste." : "";
-        }
-    )->validate();
+        })
+        ->add_parameter("input-cover")
+        ->is_file(allowed_extensions: ["jpg", "jpeg", "png"])
+        ->validate();
 
     if($_FILES["cover"]["tmp_name"] != ""){
         $new_name = $_POST["book_id"] .".". pathinfo($_FILES["cover"]["name"], PATHINFO_EXTENSION);
@@ -168,9 +172,9 @@ use Pangine\utils\Validator;
 
         (new Validator("Pages/crud_libro.php?create"))
             ->add_parameter("book_title")
-            ->is_string()
+            ->is_string(min_length: 4)
             ->add_parameter("description")
-            ->is_string()
+            ->is_string(min_length: 20)
             ->add_parameter("no_copies")
             ->is_numeric(min_val: 1)
             ->add_parameter("cover")

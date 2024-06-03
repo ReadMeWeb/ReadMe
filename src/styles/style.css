@@ -242,7 +242,7 @@ h2 {
         font-size: calc(var(--textSize) - 0.1rem);
     }
 
-    /* --- PRESTITI ---- */ 
+    /* --- PRESTITI ---- */
     #loans-list {
         grid-template-columns: 1fr;
     }
@@ -327,7 +327,7 @@ h2 {
         font-size: calc(var(--textSize) - 0.3rem);
     }
 
-    /* --- PRESTITI ---- */ 
+    /* --- PRESTITI ---- */
     #loans-list {
         grid-template-columns: 1fr 1fr;
     }
@@ -347,7 +347,7 @@ h2 {
     /* -------- BOOk -------*/
     .book-page {
         display: flex;
-        flex-direction: row;
+        flex-direction: row !important;
         justify-content: center;
         align-items: center;
         padding: 1rem 0 1rem 0;
@@ -419,7 +419,7 @@ h2 {
         font-size: calc(var(--textSize) - 0.3rem);
     }
 
-    /* --- PRESTITI ---- */ 
+    /* --- PRESTITI ---- */
     #loans-list {
         grid-template-columns: 1fr 1fr 1fr;
     }
@@ -441,7 +441,7 @@ h2 {
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: row;
+        flex-direction: row !important;
         padding: 1rem 0 1rem 0;
         width: 100%;
     }
@@ -504,7 +504,7 @@ h2 {
         font-size: calc(var(--textSize) - 0.3rem);
     }
 
-    /* --- PRESTITI ---- */ 
+    /* --- PRESTITI ---- */
     #loans-list {
         grid-template-columns: 1fr 1fr 1fr;
     }
@@ -1050,6 +1050,6 @@ main div.index-card:last-child p {
     margin: auto;
     border: 1px solid var(--primaryColor);
     border-radius: 5px;
-    text-align: center; 
+    text-align: center;
     padding: 1rem;
 }

@@ -35,6 +35,7 @@ use Utils\Database;
 
         $layout = (new LayoutBuilder())
             ->tag_istant_replace("content", $content)
+            ->plain_instant_replace("<main id=\"content\">", "<main id=\"content\" class=\"book-page\">")
             ->tag_lazy_replace("title", $book_data["title"])
             ->tag_lazy_replace("description", $book_data["description"])
             ->tag_lazy_replace(

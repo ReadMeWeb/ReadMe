@@ -242,7 +242,7 @@ h2 {
         font-size: calc(var(--textSize) - 0.1rem);
     }
 
-    /* --- PRESTITI ---- */ 
+    /* --- PRESTITI ---- */
     #loans-list {
         grid-template-columns: 1fr;
     }
@@ -327,7 +327,7 @@ h2 {
         font-size: calc(var(--textSize) - 0.3rem);
     }
 
-    /* --- PRESTITI ---- */ 
+    /* --- PRESTITI ---- */
     #loans-list {
         grid-template-columns: 1fr 1fr;
     }
@@ -347,7 +347,7 @@ h2 {
     /* -------- BOOk -------*/
     .book-page {
         display: flex;
-        flex-direction: row;
+        flex-direction: row !important;
         justify-content: center;
         align-items: center;
         padding: 1rem 0 1rem 0;
@@ -419,7 +419,7 @@ h2 {
         font-size: calc(var(--textSize) - 0.3rem);
     }
 
-    /* --- PRESTITI ---- */ 
+    /* --- PRESTITI ---- */
     #loans-list {
         grid-template-columns: 1fr 1fr 1fr;
     }
@@ -441,7 +441,7 @@ h2 {
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: row;
+        flex-direction: row !important;
         padding: 1rem 0 1rem 0;
         width: 100%;
     }
@@ -504,7 +504,7 @@ h2 {
         font-size: calc(var(--textSize) - 0.3rem);
     }
 
-    /* --- PRESTITI ---- */ 
+    /* --- PRESTITI ---- */
     #loans-list {
         grid-template-columns: 1fr 1fr 1fr;
     }
@@ -909,9 +909,14 @@ ul#operations li:last-child {
     width: 100% !important;
 }
 
+#author-input {
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+}
+
 .book-page select, .book-page textarea {
     width: 90%;
-    height: 40px;
     padding: 10px;
     border: 1px solid var(--primaryColor);
     border-radius: 5px;
@@ -924,6 +929,9 @@ ul#operations li:last-child {
     height: 400px;
 }
 
+.book-page p {
+    width: 90%
+}
 
 /* ------------ CATALOGO PAGE ------------ */
 
@@ -1050,6 +1058,51 @@ main div.index-card:last-child p {
     margin: auto;
     border: 1px solid var(--primaryColor);
     border-radius: 5px;
-    text-align: center; 
+    text-align: center;
     padding: 1rem;
+}
+
+/** ------------ CHI SIAMO ------------ */
+
+.chi-siamo-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.chi-siamo-page h1 span[lang="en"] {
+    color: var(--primaryColor);
+    text-align: center;
+    padding: 20px 0;
+}
+.chi-siamo-page article {
+    color: var(--textColor);
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    width: 60%;
+}
+.chi-siamo-page article h2 {
+    color: var(--secondaryColor);
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+.chi-siamo-page article p {
+    text-align: justify;
+}
+.chi-siamo-page article dl {
+    margin-top: 20px;
+}
+.chi-siamo-page article dl dt {
+    font-weight: bold;
+    color: var(--primaryColor);
+}
+.chi-siamo-page article dl dd {
+    margin-bottom: 10px;
+}
+.chi-siamo-page article address {
+    font-style: italic;
+    text-align: center;
+    margin-top: 10px;
 }

@@ -17,5 +17,6 @@ use \Pangine\utils\LayoutBuilder;
         ->tag_lazy_replace("menu", Pangine::navbar_list())
         ->tag_lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Chi siamo")))
         ->tag_istant_replace("content", $content)
+        ->plain_instant_replace('<main id="content">', '<main id="content" class="chi-siamo-page">')
         ->build();
 })->execute();

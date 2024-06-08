@@ -17,7 +17,7 @@ function clearErrorMessage(input) {
 
 function validateFile(fileName, input, isNeeded) {
     let extensions = new Array("jpg", "png", "jpeg");
-    let fileExt = fileName.split('.').pop(); 
+    let fileExt = fileName.split('.').pop();
 
     if(isNeeded && fileName === '') {
         input.insertAdjacentElement(
@@ -49,40 +49,54 @@ function validateString(str, input, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_
     }
 
     if(str.length < min) {
-   
+
         input.insertAdjacentElement(
-                'afterend', 
+                'afterend',
                 getErrorMessage(`Si prega di fornire un valore con un numero di caratteri maggiori di ${min}.`));
-        
+
         return false;
     }
 
     if(str.length > max) {
         input.insertAdjacentElement(
-            'afterend', 
+            'afterend',
             getErrorMessage(`Si prega di fornire un valore con un numero di caratteri minore di ${max}.`));
         return false;
-    }   
+    }
+
+    return true;
+}
+
+function validateStringOrNot(str, input, min=Number.MIN_SAFE_INTEGER, trim=true) {
+    str = trim ? str.trim() : str;
+
+    if(str.length != 0 && str.length < min) {
+        input.insertAdjacentElement(
+                'afterend',
+                getErrorMessage(`Si prega di fornire un valore con un numero di caratteri maggiori di ${min}.`));
+
+        return false;
+    }
 
     return true;
 }
 
 function validateNumber(num, input, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_SAFE_INTEGER) {
     if(num < min) {
-   
+
         input.insertAdjacentElement(
-                'afterend', 
+                'afterend',
                 getErrorMessage(`Si prega di fornire un valore numerico maggiore di ${min}.`));
-        
+
         return false;
     }
 
     if(num > max) {
         input.insertAdjacentElement(
-            'afterend', 
+            'afterend',
             getErrorMessage(`Si prega di fornire un valore numerico minore di ${max}.`));
         return false;
-    }   
+    }
 
     return true;
 }
@@ -136,6 +150,12 @@ function validateAuthor() {
     return validateString(authorInput.options[authorInput.selectedIndex].text, authorInput, 4, 255);
 }
 
+function validateAuthorNew() {
+    let authorInput = document.getElementById('input-author-new');
+    clearErrorMessage(authorInput);
+    return validateStringOrNot(authorInput.value, authorInput, 4);
+}
+
 function validateDesc() {
     let  descInput = document.getElementById('input-description');
     clearErrorMessage(descInput);
@@ -172,7 +192,7 @@ function validateLoanInfo() {
         endDateInput.insertAdjacentElement('afterend', getErrorMessage('La data di fine deve essere dopo la data di inizio.'));
         res = false;
     }
-    
+
     if(res) {
         if(dateDiff > 30) {
             endDateInput.insertAdjacentElement('afterend', getErrorMessage('La data di fine può essere al massimo 30 giorni dopo la data di inizio.'))
@@ -182,11 +202,8 @@ function validateLoanInfo() {
             endDateInput.insertAdjacentElement('afterend', getErrorMessage('La data di fine deve essere almeno 7 giorni dopo la data di inizio.'))
             res = false;
         }
-        
+
     }
-    
+
     return res;
 }
-
-
-

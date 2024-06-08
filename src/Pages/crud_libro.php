@@ -21,7 +21,7 @@ use Pangine\utils\Validator;
             $authors_options .= "<option value='{$author["id"]}'>{$author["name_surname"]}</option>";
         }
 
-        $content = file_get_contents(__DIR__ . "/../templates/libro_edit_content.html");
+        $content = file_get_contents(__DIR__ . "/../templates/libro_new_content.html");
 
         echo (new LayoutBuilder("priv"))
             ->tag_istant_replace("content", $content)
@@ -34,6 +34,7 @@ use Pangine\utils\Validator;
                     "Nuovo Libro",
                 ])
             )
+            ->plain_instant_replace('<main id="content">', '<main id="content" class="book-page">')
             ->tag_lazy_replace("book_title-value", "")
             ->tag_lazy_replace("description-value", "")
             ->tag_lazy_replace("current_cover", "")
@@ -45,7 +46,6 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("submit-name", "create")
             ->tag_lazy_replace("book_id_field", "")
             ->tag_lazy_replace("back_button", "")
-            ->tag_lazy_replace("edit", false)
             ->tag_lazy_replace("edit", false)
             ->tag_lazy_replace("book_title-message", "")
             ->tag_lazy_replace("description-message", "")

@@ -1,11 +1,11 @@
 <div class="book-page">
-    <img alt="Copertina del libro" class="section-image" src="assets/book_covers/{{current_cover}}">
+    <img alt="Copertina del libro" class="section-image" src="assets/book_covers/{{current_cover}}"/>
     <section class="section-info">
-        <form method="POST" action="Pages/crud_libro.php" enctype="multipart/form-data" onsubmit="return validateBookInfo({{edit}})">
+        <form method="post" action="Pages/crud_libro.php" enctype="multipart/form-data" onsubmit="return validateBookInfo({{edit}})">
             {{book_id_field}}
 
             <label for="input-title">Titolo del Libro</label>
-            <input id="input-title" type="text" name="book_title" value="{{book_title-value}}" required onblur="validateTitle()"/>
+            <input id="input-title" type="text" name="book_title" value="{{book_title-value}}" required='required' onblur="validateTitle()"/>
             {{book_title-message}}
 
             <p>Selezionare un autore oppure inserire un nuovo nome da aggiungere. Se si aggiunge un autore, la selezione non avrà alcun effetto.</p>
@@ -34,7 +34,7 @@
             {{cover-message}}
 
             <label for="input-no-copies">Numero di Copie</label>
-            <input id="input-no-copies" type="number" name="no_copies" min="1" value="{{no_copies-value}}" onblur="validateCopiesNumber()"//>
+            <input id="input-no-copies" type="number" name="no_copies" min="1" value="{{no_copies-value}}" onblur="validateCopiesNumber()"/>
             {{no_copies-message}}
 
             <input type="submit" value="{{submit-value}}" name="{{submit-name}}"/>

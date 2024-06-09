@@ -1,8 +1,8 @@
-<form method="POST" action="Pages/crud_libro.php" enctype="multipart/form-data" onsubmit="return validateBookInfo({{edit}})">
+<form method="post" action="Pages/crud_libro.php" enctype="multipart/form-data" onsubmit="return validateBookInfo({{edit}})">
     {{book_id_field}}
 
     <label for="input-title">Titolo del Libro</label>
-    <input id="input-title" type="text" name="book_title" value="{{book_title-value}}" required onblur="validateTitle()"/>
+    <input id="input-title" type="text" name="book_title" value="{{book_title-value}}" required='required' onblur="validateTitle()"/>
     {{book_title-message}}
 
     <p>Selezionare un autore oppure inserire un nuovo nome da aggiungere. Se si aggiunge un autore, la selezione non avrà alcun effetto.</p>

@@ -5,18 +5,18 @@
 
     <!-- <img src="((libro-copertina))" > opzionale -->
     
-    <input type="text" hidden name="id" value="{{libro-value}}">
+    <input type="text" hidden='hidden' name="id" value="{{libro-value}}"/>
 
-    <input type="text" hidden name="user" value="{{user-value}}">
+    <input type="text" hidden='hidden' name="user" value="{{user-value}}"/>
 
     <label for="i">Data di inizio del prestito</label>
-    <input id="i" type="date" name="inizio" value="{{inizio-value}}" readonly>
+    <input id="i" type="date" name="inizio" value="{{inizio-value}}" readonly='readonly'/>
     {{inizio-message}}
 
     <label for="f">Data di fine del prestito</label>
-    <input id="f" type="date" name="fine" value="{{fine-value}}" onblur="validateLoanInfo()">
+    <input id="f" type="date" name="fine" value="{{fine-value}}" onblur="validateLoanInfo()"/>
     {{fine-message}}
 
-    <input type="submit" value="Noleggia">
+    <input type="submit" value="Noleggia"/>
   </fieldset>
 </form>

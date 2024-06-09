@@ -18,7 +18,7 @@ use \Utils\Database;
             ->tag_lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Account")))
             ->tag_istant_replace("content", $content)
             ->tag_lazy_replace("username-value", $_SESSION["user"]["username"])
-            ->plain_instant_replace("<input type=\"password\" id=\"password\" name=\"password\" value=\"{{password-value}}\" onblur=\"validatePassword()\" disabled>","")
+            ->plain_instant_replace("<input type=\"password\" id=\"password\" name=\"password\" value=\"{{password-value}}\" onblur=\"validatePassword()\" disabled='disabled'/>","")
             ->plain_instant_replace("<label for=\"password\">Password</label>","")
             ->tag_lazy_replace("username-message", "")
             ->tag_lazy_replace("password-message", "")
@@ -26,7 +26,7 @@ use \Utils\Database;
             ->tag_lazy_replace("pages-account-update", "Pages/account.php?update=true")
             ->tag_lazy_replace("pages-exit", "Pages/account.php?exit=true")
             ->tag_lazy_replace("pages-form", "#")
-            ->plain_instant_replace("<input type=\"submit\" name=\"update\" value=\"Modifica\">", "")
+            ->plain_instant_replace("<input type=\"submit\" name=\"update\" value=\"Modifica\"/>", "")
             ->build();
     })
     ->add_renderer_GET(function () {
@@ -39,8 +39,8 @@ use \Utils\Database;
             ->tag_istant_replace("content", $content)
             ->tag_lazy_replace("username-value", $_SESSION["user"]["username"])
             ->tag_lazy_replace("password-value", "")
-            ->plain_lazy_replace(" disabled>", ">")
-            ->plain_lazy_replace(" disabled>", ">")
+            ->plain_lazy_replace(" disabled='disabled'/>", "/>")
+            ->plain_lazy_replace(" disabled='disabled'/>", "/>")
             ->tag_lazy_replace("username-message", "")
             ->tag_lazy_replace("password-message", "")
             ->tag_lazy_replace("pages-account", "Pages/account.php")

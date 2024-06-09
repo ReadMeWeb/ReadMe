@@ -354,12 +354,6 @@ h2 {
         width: 100%;
     }
 
-    .book-page .section-info {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-flow: column;
-    }
 
     .book-page .section-image {
         width: 30rem;
@@ -1084,7 +1078,7 @@ main div.index-card:last-child p {
     width: 60%;
 }
 .chi-siamo-page article h2 {
-    color: var(--secondaryColor);
+    color: var(--primaryColor);
     font-size: 22px;
     margin-bottom: 10px;
 }

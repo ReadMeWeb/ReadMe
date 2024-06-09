@@ -3,15 +3,15 @@
     <li><a href="{{pages-account-update}}">Modifica</a></li>
     <li><a href="{{pages-exit}}">Esci</a></li>
 </ul>
-<form class="simple_form" id="main_zone" action="{{pages-form}}" method="POST" onsubmit="return validateAccountInfo()">
+<form class="simple_form" id="main_zone" action="{{pages-form}}" method="post" onsubmit="return validateAccountInfo()">
     <fieldset class="simple_form">
         <legend class="simple_form">Informazioni account</legend>
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" value="{{username-value}}" onblur="validateUsername()" disabled>
+        <input type="text" id="username" name="username" value="{{username-value}}" onblur="validateUsername()" disabled='disabled'/>
         {{username-message}}
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" value="{{password-value}}" onblur="validatePassword()" disabled>
+        <input type="password" id="password" name="password" value="{{password-value}}" onblur="validatePassword()" disabled='disabled'/>
         {{password-message}}
-        <input type="submit" name="update" value="Modifica">
+        <input type="submit" name="update" value="Modifica"/>
     </fieldset>
 </form>

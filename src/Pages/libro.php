@@ -9,7 +9,7 @@ use Pangine\utils\Validator;
 use Utils\Database;
 
 (new Pangine())
-    ->add_renderer_GET(function (Database $db) {
+    ->add_renderer_get(function (Database $db) {
         $content = file_get_contents(
             __DIR__ . "/../templates/libro_content.html"
         );
@@ -82,7 +82,7 @@ use Utils\Database;
                 $copies = $book_data["number_of_copies"];
                 $operations .= "
                         <p>Numero di copie possedute: $copies</p>
-                        <form id='book_user_op_form' method='GET' action='Pages/loan.php'>
+                        <form id='book_user_op_form' method='get' action='Pages/loan.php'>
                             <p>Copie rimanenti: $remaining</p>
                             <input type='submit' name='noleggia' value='Noleggia' $disabled/>
                             <input type='hidden' name='id' value='{$book_data["id"]}'/>
@@ -90,7 +90,7 @@ use Utils\Database;
             }
             if ($_SESSION["user"]["status"] == Pangine::ADMIN()) {
                 $operations .= "
-                            <form id='book_admin_op_form' method='GET' action='Pages/crud_libro.php'>
+                            <form id='book_admin_op_form' method='get' action='Pages/crud_libro.php'>
                                 <p>Copie rimanenti: $remaining</p>
                                 <input type='submit' name='modifica' value='Modifica'/>
                                 <input type='submit' name='elimina' value='Elimina'/>

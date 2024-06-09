@@ -80,7 +80,7 @@ use Pangine\utils\Validator;
         $authors_query =
             "SELECT * FROM Authors WHERE name_surname != ?";
         $authors = $db->execute_query($authors_query, $book_data["name_surname"]);
-        $current_author_option = "<option selected value='{$book_data["author_id"]}'>{$book_data["name_surname"]}</option>";
+        $current_author_option = "<option selected='selected' value='{$book_data["author_id"]}'>{$book_data["name_surname"]}</option>";
         $authors_options = "";
         foreach ($authors as $author) {
             $authors_options .= "<option value='{$author["id"]}'>{$author["name_surname"]}</option>";
@@ -103,7 +103,7 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("authors_options", $authors_options)
             ->tag_lazy_replace("submit-value", "Aggiorna")
             ->tag_lazy_replace("submit-name", "update")
-            ->tag_lazy_replace("book_id_field", "<input type='hidden' name='book_id' value='{$book_data['id']}'>")
+            ->tag_lazy_replace("book_id_field", "<input type='hidden' name='book_id' value='{$book_data['id']}'/>")
             ->tag_lazy_replace("back_button", "<a href='Pages/libro.php?id={$book_data['id']}'>Annulla operazione</a>")
             ->tag_lazy_replace("edit", true)
             ->tag_lazy_replace("edit", true)

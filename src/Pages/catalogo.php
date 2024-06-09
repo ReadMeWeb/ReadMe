@@ -16,7 +16,7 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
     $cover_file_name = str_replace("'","",$cover_file_name);
     return '<div>
                     <dt>'.$title.'</dt>
-                    <dd><img src="assets/book_covers/'.$cover_file_name.'" alt="" width="200" height="200"></dd>
+                    <dd><img src="assets/book_covers/'.$cover_file_name.'" alt="" width="200" height="200"/></dd>
                     <dd>Autore: '.$name_surname.'</dd>
                     <dd>Disponibilità: '.$copies.'</dd>
                     <dd><a href="Pages/libro.php?id='.$id.'">Visualizza</a></dd>

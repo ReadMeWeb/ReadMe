@@ -2,18 +2,18 @@
     <fieldset class="simple_form">
         <legend class="simple_form">{{legenda}}</legend>
         <label for="username">Nome Utente</label>
-        <input id="username" name="nome" type="text" required placeholder="Digita qui il tuo nome utente"
+        <input id="username" name="nome" type="text" required='required' placeholder="Digita qui il tuo nome utente"
                value="{{nome-value}}" autocomplete="{{nome-autocomplete}}"
-               onblur="validateUsername()">
+               onblur="validateUsername()"/>
         {{nome-message}}
 
         <label for="password" lang="en">Password</label>
-        <input id="password" name="password" value="{{password-value}}" required type="password"
+        <input id="password" name="password" value="{{password-value}}" required='required' type="password"
                placeholder="Digita la tua password"
                autocomplete="{{password-autocomplete}}"
-               onblur="validatePassword()">
+               onblur="validatePassword()"/>
         {{password-message}}
-        <input type="submit" name="{{crud-name}}" value="{{crud-innerhtml}}">
+        <input type="submit" name="{{crud-name}}" value="{{crud-innerhtml}}"/>
     </fieldset>
 </form>
 <a href="{{sign-in-up-url}}">{{sign-in-up-url-innerhtml}}</a>

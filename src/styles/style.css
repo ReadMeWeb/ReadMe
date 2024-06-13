@@ -175,11 +175,6 @@ h2 {
         width: 100%;
     }
 
-    .book-page .section-info {
-        width: fit-content;
-        padding: 1rem;
-    }
-
     .book-page .section-image {
         width: 20rem;
         height: auto;
@@ -256,11 +251,6 @@ h2 {
         padding: 1rem;
     }
 
-    .book-page .section-info {
-        width: fit-content;
-        padding: 10px;
-    }
-
     /* -- INDEX PAGE -- */
     ul#index-numbers {
         list-style: none;
@@ -324,10 +314,6 @@ h2 {
         padding: 1rem;
     }
 
-    .book-page .section-info {
-        padding: 10px;
-    }
-
     /* -- INDEX PAGE -- */
     ul#index-numbers {
         list-style: none;
@@ -387,10 +373,6 @@ h2 {
     .book-page .section-image {
         width: 35rem;
         height: auto;
-        padding: 1rem;
-    }
-
-    .book-page .section-info {
         padding: 1rem;
     }
 
@@ -731,6 +713,7 @@ input:hover{
 
 /* --------- PAGES NAVIGATION --------- */
 .pages-nav {
+    z-index: 0;
     border-radius: 1rem;
     -moz-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
     -o-box-shadow: 0 0 0.16rem 0 var(--primaryColor);
@@ -770,10 +753,6 @@ ul#operations li:last-child {
 }
 
 /* --------- BOOK --------- */
-
-.book-page form {
-    width: 90%;
-}
 
 .book-page h1 {
     font-size: 2.5rem;
@@ -818,6 +797,13 @@ ul#operations li:last-child {
     color: var(--primaryColor);
 }
 
+.section-info {
+    box-sizing: border-box;
+    width: 100%;
+    overflow-wrap: break-word;
+    padding: 1rem;
+}
+
 .book-page #input-cover {
     box-sizing: border-box;
     width: 80%;
@@ -828,16 +814,16 @@ ul#operations li:last-child {
     color: var(--textColor);
 }
 
-.book-page .section-delete {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.book-page .section-delete{
+    text-align: center;
 }
 
-#book-page-delete {
-    justify-content: center;
-    width: 100% !important;
+.book-page .section-delete form input {
+    margin: 1rem auto;
+}
+
+#new-book-form {
+    padding: 1rem;
 }
 
 #author-input {
@@ -845,10 +831,6 @@ ul#operations li:last-child {
     justify-content: start;
     flex-direction: row;
     flex-wrap: wrap;
-}
-
-.book-page #old-author {
-    width: 50%;
 }
 
 .book-page select, .book-page textarea {
@@ -866,7 +848,7 @@ ul#operations li:last-child {
 }
 
 .book-page p {
-    width: 90%
+    width: 100%
 }
 
 /* ------------ CATALOGO PAGE ------------ */

@@ -1,4 +1,4 @@
-<form method="post" action="Pages/crud_libro.php" enctype="multipart/form-data" onsubmit="return validateBookInfo({{edit}})">
+<form method="post" action="Pages/crud_libro.php" enctype="multipart/form-data" onsubmit="return validateBookInfo({{edit}})" id="new-book-form">
     {{book_id_field}}
 
     <label for="input-title">Titolo del Libro</label>
@@ -31,7 +31,7 @@
     {{cover-message}}
 
     <label for="input-no-copies">Numero di Copie</label>
-    <input id="input-no-copies" type="number" name="no_copies" min="1" value="{{no_copies-value}}" onblur="validateCopiesNumber()"//>
+    <input id="input-no-copies" type="number" name="no_copies" min="1" value="{{no_copies-value}}" onblur="validateCopiesNumber()"/>
     {{no_copies-message}}
 
     <input type="submit" value="{{submit-value}}" name="{{submit-name}}"/>

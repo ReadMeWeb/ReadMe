@@ -67,20 +67,6 @@ function validateString(str, input, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_
     return true;
 }
 
-function validateStringOrNot(str, input, min=Number.MIN_SAFE_INTEGER, trim=true) {
-    str = trim ? str.trim() : str;
-
-    if(str.length != 0 && str.length < min) {
-        input.insertAdjacentElement(
-                'afterend',
-                getErrorMessage(`Si prega di fornire un valore con un numero di caratteri maggiori di ${min}.`));
-
-        return false;
-    }
-
-    return true;
-}
-
 function validateNumber(num, input, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_SAFE_INTEGER) {
     if(num < min) {
 
@@ -146,14 +132,15 @@ function validateTitle() {
 
 function validateAuthor() {
     let authorInput = document.getElementById('input-author');
-    clearErrorMessage(authorInput);
-    return validateString(authorInput.options[authorInput.selectedIndex].text, authorInput, 4, 40);
-}
+    let newAuthorInput = document.getElementById('input-author-new');
 
-function validateAuthorNew() {
-    let authorInput = document.getElementById('input-author-new');
     clearErrorMessage(authorInput);
-    return validateStringOrNot(authorInput.value, authorInput, 4, 40);
+    clearErrorMessage(newAuthorInput);
+
+    if(newAuthorInput.value.length !== 0) {
+        return validateString(newAuthorInput.value, newAuthorInput, 4, 40);
+    }
+    return validateString(authorInput.options[authorInput.selectedIndex].text, authorInput, 4, 40);
 }
 
 function validateDesc() {

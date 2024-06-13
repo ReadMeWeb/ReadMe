@@ -39,7 +39,7 @@ use Utils\Database;
             ->tag_lazy_replace("description", $book_data["description"])
             ->tag_lazy_replace(
                 "keywords",
-                "ReadMe, biblioteca, libri, narrativa, prenotazioni"
+                "ReadMe, biblioteca, libri, narrativa, prenotazioni, ".$book_data["name_surname"].", ".$book_data["title"]
             )
             ->tag_lazy_replace("menu", Pangine::navbar_list())
             ->tag_lazy_replace(

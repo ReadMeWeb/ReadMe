@@ -17,12 +17,12 @@
         --textColor: #151918;
         --backgroundColor: #e0e0e0;
         --secondaryBackgroundColor: #c8c8c8;
-        --primaryColor: #276254;
+        --primaryColor: #1D4E4A;
         --secondaryColor: #73dec1;
         --accentColor: #18dca8;
         --mobileNavLinkBorder: #419f86;
-        --linkColor: #348c8c;
-        --visitedLinkColor: #4b5d58;
+        --linkColor: #02487E;
+        --visitedLinkColor: #5A00A3;
         --logoUrl: url("../assets/readme-logo-black-cropped.webp");
     }
 }
@@ -845,7 +845,7 @@ ul#operations li:last-child {
 .book-page h2 {
     font-size: 2em;
     margin-bottom: 10px;
-    color: var(--accentColor);
+    color: var(--primaryColor);
 }
 
 .book-page p {
@@ -883,7 +883,7 @@ ul#operations li:last-child {
 }
 
 .book-page .section-info div p:last-of-type {
-    color: var(--accentColor);
+    color: var(--primaryColor);
 }
 
 .book-page label {

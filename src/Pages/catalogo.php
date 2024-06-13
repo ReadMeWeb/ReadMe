@@ -130,7 +130,7 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
         echo (new LayoutBuilder())
             ->tag_lazy_replace("title", "Catalogo")
             ->tag_lazy_replace("description", "Catalogo della libreria ReadMe")
-            ->tag_lazy_replace("keywords", "ReadMe")
+            ->tag_lazy_replace("keywords", "ReadMe, Catalogo, Libreria, Libri, Autori, Copertine")
             ->tag_lazy_replace("menu", Pangine::navbar_list())
             ->tag_lazy_replace("breadcrumbs", Pangine::breadcrumbs_generator(array("Home", "Catalogo")))
             ->tag_istant_replace("content", $content)

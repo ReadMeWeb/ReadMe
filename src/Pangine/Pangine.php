@@ -111,6 +111,7 @@ class Pangine
             foreach ($this->controlled_renderers_pure as $renderer) {
                 $renderer();
             }
+            Pangine::redirect("Pages/404.php"); //If arrived here it means that no renderer was activated
         } catch (Exception500 $e) {
             $_SESSION["error500message"] = $e->getMessage();
             		Pangine::redirect("Pages/500.php");

@@ -59,7 +59,6 @@ use Pangine\utils\Validator;
 ->add_renderer_GET(
     function(Database $db){
 
-    $book_data = [];
     (new Validator("Pages/404.php"))
         ->add_parameter("id")
         ->is_numeric(
@@ -125,7 +124,7 @@ use Pangine\utils\Validator;
         ->add_parameter("description")
         ->is_string(min_length: 20)
         ->add_parameter("book_id")
-        ->is_numeric(value_parser:function(int $book_id) use ($db) {
+        ->is_numeric(value_parser:function(int $book_id) use ($db, &$book_data) {
             $book_query =
                 "SELECT * FROM Books WHERE id = ?";
             $book_data = $db->execute_query($book_query, $book_id);
@@ -149,6 +148,8 @@ use Pangine\utils\Validator;
             }
         })
         ->validate();
+    
+    $old_author = $book_data[0]["author_id"];
 
     if($_FILES["cover"]["tmp_name"] != ""){
         $new_name = $_POST["book_id"] .".". pathinfo($_FILES["cover"]["name"], PATHINFO_EXTENSION);
@@ -190,6 +191,15 @@ use Pangine\utils\Validator;
     }
 
     $db->get_connection()->commit();
+
+    $db->execute_query(
+        "DELETE FROM Authors 
+            WHERE Authors.id=? AND 
+            (SELECT COUNT(*) FROM Books WHERE Books.author_id = ?)=0", 
+            $old_author, 
+            $old_author
+    );
+
     Pangine::set_general_message("Libro aggiornato con successo","success");
     		Pangine::redirect("Pages/libro.php?id={$_POST["book_id"]}");
 }, "update", needs_database: true)
@@ -306,7 +316,7 @@ use Pangine\utils\Validator;
 }, "elimina", needs_database: true)
 ->add_renderer_POST(function(Database $db){
     $book_query =
-        "SELECT cover_file_name FROM Books WHERE id = ?";
+        "SELECT cover_file_name, author_id FROM Books WHERE id = ?";
     $book_data = $db->execute_query($book_query, $_POST['id']);
     if(count($book_data) != 1){
         Pangine::set_general_message("Non è stato possbile trovare il libro richiesto, riprovare (ERR_BOOK_07)");
@@ -321,6 +331,17 @@ use Pangine\utils\Validator;
         Pangine::set_general_message("Non è stato possbile eliminare il libro, riprovare (ERR_BOOK_08)");
         		Pangine::redirect("Pages/libro.php?id='{$_POST['id']}'");
     }
+
+    $old_author = $book_data[0]["author_id"];
+
+    $db->execute_query(
+        "DELETE FROM Authors
+            WHERE Authors.id = ? AND 
+            (SELECT COUNT(*) FROM Books WHERE Books.author_id = ?) = 0", 
+            $old_author , 
+            $old_author 
+    );
+
 
     if(file_exists("../assets/book_covers/" . $file_name)){
         $deleted = unlink("../assets/book_covers/" . $file_name);

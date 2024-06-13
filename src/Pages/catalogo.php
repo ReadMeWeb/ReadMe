@@ -14,13 +14,24 @@ define("BOOKS_PER_PAGE", 6);
 function get_book_card(string $cover_file_name, string $title, int $copies, string $name_surname, int $id): string
 {
     $cover_file_name = str_replace("'","",$cover_file_name);
-    return '<div>
-                    <dt>'.$title.'</dt>
-                    <dd><img src="assets/book_covers/'.$cover_file_name.'" alt="" width="200" height="200"/></dd>
-                    <dd>Autore: '.$name_surname.'</dd>
-                    <dd>Disponibilità: '.$copies.'</dd>
-                    <dd><a href="Pages/libro.php?id='.$id.'">Visualizza</a></dd>
-            </div>';
+    return "<li>
+                <article class='book-card'>
+                    <h2>{$title}</h2>
+                    <img src='assets/book_covers/{$cover_file_name}' alt='' width='200' height='200'/>
+                    <dl>
+                        <div>
+                            <dt>Autore:</dt>
+                            <dd>{$name_surname}</dd>
+                        </div>
+
+                        <div>
+                            <dt>Disponibilità: </dt>
+                            <dd>{$copies}</dd>
+                        </div>
+                    </dl>
+                    <a href='Pages/libro.php?id={$id}'>Visualizza</a>
+                </article>
+            </li>";
 }
 
 
@@ -97,7 +108,7 @@ function get_book_card(string $cover_file_name, string $title, int $copies, stri
                     $book["id"]
                 );
             }
-            $books = '<dl id="books-container">' . $books . '</dl>';
+            $books = '<ul id="books-container">' . $books . '</ul>';
 
             $forward_links = $back_links = "";
             $last_page = ceil($books_count / BOOKS_PER_PAGE);

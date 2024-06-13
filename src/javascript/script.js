@@ -141,19 +141,19 @@ function validateBookInfo(edit) {
 function validateTitle() {
     let titleInput = document.getElementById('input-title');
     clearErrorMessage(titleInput);
-    return validateString(titleInput.value, titleInput, 4, 255);
+    return validateString(titleInput.value, titleInput, 4, 40);
 }
 
 function validateAuthor() {
     let authorInput = document.getElementById('input-author');
     clearErrorMessage(authorInput);
-    return validateString(authorInput.options[authorInput.selectedIndex].text, authorInput, 4, 255);
+    return validateString(authorInput.options[authorInput.selectedIndex].text, authorInput, 4, 40);
 }
 
 function validateAuthorNew() {
     let authorInput = document.getElementById('input-author-new');
     clearErrorMessage(authorInput);
-    return validateStringOrNot(authorInput.value, authorInput, 4);
+    return validateStringOrNot(authorInput.value, authorInput, 4, 40);
 }
 
 function validateDesc() {
@@ -165,7 +165,7 @@ function validateDesc() {
 function validateCopiesNumber() {
     let copiesInput = document.getElementById('input-no-copies');
     clearErrorMessage(copiesInput);
-    return validateNumber(copiesInput.value, copiesInput, 1);
+    return validateNumber(copiesInput.value, copiesInput, 1, 1000000);
 }
 
 function validateCover(edit) {

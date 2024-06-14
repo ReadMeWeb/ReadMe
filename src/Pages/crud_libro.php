@@ -46,7 +46,6 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("submit-name", "create")
             ->tag_lazy_replace("book_id_field", "")
             ->tag_lazy_replace("back_button", "")
-            ->tag_lazy_replace("edit", false)
             ->tag_lazy_replace("book_title-message", "")
             ->tag_lazy_replace("description-message", "")
             ->tag_lazy_replace("no_copies-message", "")
@@ -104,8 +103,6 @@ use Pangine\utils\Validator;
             ->tag_lazy_replace("submit-name", "update")
             ->tag_lazy_replace("book_id_field", "<input type='hidden' name='book_id' value='{$book_data['id']}'/>")
             ->tag_lazy_replace("back_button", "<a href='Pages/libro.php?id={$book_data['id']}'>Annulla operazione</a>")
-            ->tag_lazy_replace("edit", true)
-            ->tag_lazy_replace("edit", true)
             ->tag_lazy_replace("book_title-message", "")
             ->tag_lazy_replace("description-message", "")
             ->tag_lazy_replace("no_copies-message", "")
@@ -120,7 +117,7 @@ use Pangine\utils\Validator;
 ->add_renderer_POST(function(Database $db){
     (new Validator("Pages/crud_libro.php?id={$_POST['book_id']}&modifica"))
         ->add_parameter("book_title")
-        ->is_string(min_length: 4)
+        ->is_string(min_length: 4, max_length: 30)
         ->add_parameter("description")
         ->is_string(min_length: 20)
         ->add_parameter("book_id")
@@ -131,11 +128,17 @@ use Pangine\utils\Validator;
             return count($book_data) == 0 ? "Il libro selezionato non esiste." : "";
         })
         ->add_parameter("no_copies")
-        ->is_numeric(min_val: 1)
+        ->is_numeric(min_val: 1, max_val: 1000000)
         ->add_parameter("author-new")
         ->is_string(string_parser: function(string $author) use ($db) {
             if($author != "") {
-                strlen($author) < 4 ? "Il nome dell'autore o dell'autrice deve essere lungo almeno 4 caratteri." : "";
+                if(strlen($author) < 4) {
+                    return "Il nome dell'autore o dell'autrice deve essere lungo almeno 4 caratteri.";
+                } 
+                if(strlen($author) > 30 ) {
+                    return "Il nome dell'autore o dell'autrice deve essere lungo meno di 30 caratteri.";
+                }
+                return "";
             }else{
                 (new Validator("Pages/crud_libro.php?id={$_POST['book_id']}&modifica"))
                 ->add_parameter("author")
@@ -208,11 +211,11 @@ use Pangine\utils\Validator;
 
         (new Validator("Pages/crud_libro.php?create"))
             ->add_parameter("book_title")
-            ->is_string(min_length: 4)
+            ->is_string(min_length: 4, max_length: 30)
             ->add_parameter("description")
             ->is_string(min_length: 20)
             ->add_parameter("no_copies")
-            ->is_numeric(min_val: 1)
+            ->is_numeric(min_val: 1, max_val: 1000000)
             ->add_parameter("cover")
             ->is_file([
                 "jpeg",
@@ -222,7 +225,16 @@ use Pangine\utils\Validator;
             ->add_parameter("author-new")
             ->is_string(string_parser: function(string $author) use ($db) {
                 if($author != "") {
-                    strlen($author) < 4 ? "Il nome dell'autore o dell'autrice deve essere lungo almeno 4 caratteri." : "";
+
+                    if(strlen($author) < 4) {
+                        return "Il nome dell'autore o dell'autrice deve essere lungo almeno 4 caratteri.";
+                    } 
+
+                    if(strlen($author) > 30 ) {
+                        return "Il nome dell'autore o dell'autrice deve essere lungo meno di 30 caratteri.";
+                    }
+
+                    return "";
                 }else{
                     (new Validator("Pages/crud_libro.php?create"))
                     ->add_parameter("author")

@@ -725,7 +725,7 @@ input:hover{
 
 .pages-nav * {
     display: inline;
-    padding: 0.3rem ;
+    padding: 0.2rem ;
     margin: 0.1rem;
 }
 
@@ -826,6 +826,14 @@ ul#operations li:last-child {
     padding: 1rem;
 }
 
+.book-page .errorMessage {
+    width: 90%;
+}
+
+#old-author {
+    margin-right: 1rem;
+}
+
 #author-input {
     display: flex;
     justify-content: start;
@@ -834,7 +842,6 @@ ul#operations li:last-child {
 }
 
 .book-page select, .book-page textarea {
-    width: 90%;
     padding: 0.6rem;
     border: 1px solid var(--primaryColor);
     border-radius: 5px;
@@ -843,6 +850,7 @@ ul#operations li:last-child {
 }
 
 .book-page textarea#input-description {
+    width: 90%;
     resize: none;
     height: 25rem;
 }

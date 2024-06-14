@@ -1,7 +1,7 @@
 <div class="book-page">
     <img alt="Copertina del libro" class="section-image" src="assets/book_covers/{{current_cover}}"/>
     <section class="section-info">
-        <form method="post" action="Pages/crud_libro.php" enctype="multipart/form-data" onsubmit="return validateBookInfo({{edit}})">
+        <form method="post" action="Pages/crud_libro.php" enctype="multipart/form-data" onsubmit="return validateBookInfo(true)">
             {{book_id_field}}
 
             <label for="input-title">Titolo del Libro</label>
@@ -16,13 +16,13 @@
                         {{author-value}}
                         {{authors_options}}
                     </select>
-                    {{author-message}}
                 </section>
                 <section id="new-author">
                     <label for="input-author-new">Nuovo Autore</label>
                     <input id="input-author-new" type="text" name="author-new" value="{{author-new-value}}" onblur="validateAuthor()"/>
-                    {{author-new-message}}
                 </section>
+                {{author-message}}
+                {{author-new-message}}
             </div>
 
             <label for="input-description">Descrizione</label>
@@ -30,7 +30,7 @@
             {{description-message}}
 
             <label for="input-cover">Copertina</label>
-            <input id="input-cover" type="file" name="cover" accept=".jpg,.jpeg,.png" onblur="validateCover({{edit}})"/>
+            <input id="input-cover" type="file" name="cover" accept=".jpg,.jpeg,.png" onblur="validateCover(true)"/>
             {{cover-message}}
 
             <label for="input-no-copies">Numero di Copie</label>

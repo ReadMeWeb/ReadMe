@@ -72,7 +72,7 @@ function validateNumber(num, input, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_
 
         input.insertAdjacentElement(
                 'afterend',
-                getErrorMessage(`Si prega di fornire un valore numerico maggiore di ${min}.`));
+                getErrorMessage(`Si prega di fornire un valore numerico maggiore di ${min-1}.`));
 
         return false;
     }
@@ -80,7 +80,7 @@ function validateNumber(num, input, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_
     if(num > max) {
         input.insertAdjacentElement(
             'afterend',
-            getErrorMessage(`Si prega di fornire un valore numerico minore di ${max}.`));
+            getErrorMessage(`Si prega di fornire un valore numerico minore di ${max-1}.`));
         return false;
     }
 
@@ -127,20 +127,21 @@ function validateBookInfo(edit) {
 function validateTitle() {
     let titleInput = document.getElementById('input-title');
     clearErrorMessage(titleInput);
-    return validateString(titleInput.value, titleInput, 4, 40);
+    return validateString(titleInput.value, titleInput, 4, 30);
 }
 
 function validateAuthor() {
+
+    let authorInputDiv = document.getElementById('author-input')
     let authorInput = document.getElementById('input-author');
     let newAuthorInput = document.getElementById('input-author-new');
 
-    clearErrorMessage(authorInput);
-    clearErrorMessage(newAuthorInput);
+    clearErrorMessage(authorInputDiv);
 
-    if(newAuthorInput.value.length !== 0) {
-        return validateString(newAuthorInput.value, newAuthorInput, 4, 40);
+    if(newAuthorInput.value.trim().length !== 0) {
+        return validateString(newAuthorInput.value, authorInputDiv, 4, 30);
     }
-    return validateString(authorInput.options[authorInput.selectedIndex].text, authorInput, 4, 40);
+    return validateString(authorInput.options[authorInput.selectedIndex].text, authorInputDiv, 4, 30);
 }
 
 function validateDesc() {

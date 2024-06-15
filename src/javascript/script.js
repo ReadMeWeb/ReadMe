@@ -80,7 +80,7 @@ function validateNumber(num, input, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_
     if(num > max) {
         input.insertAdjacentElement(
             'afterend',
-            getErrorMessage(`Si prega di fornire un valore numerico minore di ${max-1}.`));
+            getErrorMessage(`Si prega di fornire un valore numerico minore di ${max}.`));
         return false;
     }
 

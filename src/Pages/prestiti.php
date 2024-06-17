@@ -48,7 +48,7 @@ function get_loan_card(string $title, string $start_date, string $end_date, stri
 
         if( !isset($_GET["order"]) || $_GET["order"] == "start") {
             $_GET["order"] = "start";
-            $order_field = "loan_start_date";
+            $order_field = "loan_start_date DESC";
         }
         else {
             $order_field = "loan_expiration_date";
@@ -68,7 +68,7 @@ function get_loan_card(string $title, string $start_date, string $end_date, stri
                 
         $query = " SELECT *, IF(loan_expiration_date < CURRENT_DATE(), 'scaduto', 'attivo') AS status FROM Loans JOIN Books on Books.id = book_id
             WHERE user_username = ? {$where_cond}
-            ORDER BY  {$order_field} DESC 
+            ORDER BY  {$order_field} 
             LIMIT ?, ?";
         $res = $db->execute_query($query, $_SESSION["user"]["username"], LOANS_PER_PAGE*($page_n-1), LOANS_PER_PAGE);
        
